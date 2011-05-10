@@ -427,7 +427,11 @@ public class MCServerGUIView extends FrameView {
             ServerExec = new MCServerGUIExec("java","-Djline.terminal=jline.UnsupportedTerminal","-Xmx1024M","-Xms1024M","-jar","craftbukkit-0.0.1-SNAPSHOT.jar");
         }
         if (startstopButton.getText().equals("Stop")) {
-            ServerExec.stop();
+            boolean serverStopped = ServerExec.stop();
+            System.out.println(serverStopped);
+            if (serverStopped) {
+                ServerExec = null;
+            }
         }
     }//GEN-LAST:event_startstopButtonActionPerformed
 

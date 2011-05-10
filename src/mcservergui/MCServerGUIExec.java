@@ -8,6 +8,7 @@ package mcservergui;
 //import java.util.*;
 import java.io.*;
 //import java.net.*;
+import javax.swing.SwingWorker;
 
 /**
  *
@@ -25,8 +26,6 @@ public class MCServerGUIExec {
             is = ps.getInputStream();
             isr = new InputStreamReader(is);
             br = new BufferedReader(isr);
-            bw = new BufferedWriter(new OutputStreamWriter(ps.getOutputStream()));
-            //os = ps.getOutputStream();
             //bw = new BufferedWriter(new OutputStreamWriter(ps.getOutputStream()));
             
             System.out.println("Server launched");
@@ -50,46 +49,61 @@ public class MCServerGUIExec {
                                 }
                             }
                         } catch (IOException e) {
-                            System.out.println("IOException");
+                            return("[GUI] Error receiving server data.");
                         }
                     }
                     return line.toString();
                 } catch (IOException e) {
-                    return "Error receiving console.";
+                    return "[GUI] Error receiving server data.";
                 }
             }
         } catch (IOException e) {
-            return "Error receiving console.";
+            return "[GUI] Error receiving server data.";
         }
         return null;
     }
 
     public void send(String string) {
-        //string += "\r\n";
         try {
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(ps.getOutputStream()));
             bw.write(string);
             bw.flush();
             bw.close();
-            System.out.println("Sent " + string + " to console.");
         } catch (IOException e) {
-            System.out.println("Error sending to console.");
+            System.out.println("[GUI] Error sending server data.");
         }
     }
 
-    public void stop() {
-        this.send("stop");
+    public boolean stop() {
+        send("stop");
+ 
+        System.out.println("[GUI] Waiting for process to end.");
+        SwingWorker worker = new SwingWorker<Boolean, Integer>() {
+
+            @Override
+            public Boolean doInBackground() {
+                try {
+                    System.out.println("[GUI] Stopping server.");
+                    ps.waitFor();
+                    System.out.println("[GUI] Stopped server succesfully.");
+                    return true;
+                } catch (InterruptedException e) {
+                    System.out.println("[GUI] Error stopping the server!");
+                    return false;
+                }
+            }
+
+            @Override
+            public void done() {
+
+            }
+        };
         
     }
 
-
-    //private StringBuffer sb;
-    private int lastRead;
     private Process ps;
     private java.io.InputStream is;
     private InputStreamReader isr;
     private BufferedReader br;
-    //private java.io.OutputStream os;
     //private BufferedWriter bw;
-    private BufferedWriter bw;
-    //private OutputStreamWriter bw;
 }
