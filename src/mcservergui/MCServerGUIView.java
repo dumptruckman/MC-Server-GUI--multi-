@@ -510,6 +510,7 @@ public class MCServerGUIView extends FrameView {
             if (stopMode) {
                 if (ServerExec.Stop.isDone()) {
                     stopMode = false;
+                    consoleOutput.setText(consoleOutput.getText() + "[GUI] Server Stopped");
                     controlSwitcher("OFF");
                 }
             }

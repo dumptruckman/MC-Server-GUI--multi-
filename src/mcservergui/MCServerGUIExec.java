@@ -143,7 +143,7 @@ public class MCServerGUIExec {
     
 
     // Method for checking if the server is running
-    public boolean isRunning() {
+    /*public boolean isRunning() {
 
         if ((serverStarted) && (ps != null)) {
             try {
@@ -156,7 +156,7 @@ public class MCServerGUIExec {
         } else {
             return false;
         }
-    }
+    }*/
 
     // Method for stopping the server
     //public boolean stop() {
