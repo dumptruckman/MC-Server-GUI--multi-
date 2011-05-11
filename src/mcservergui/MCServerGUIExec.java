@@ -51,16 +51,15 @@ public class MCServerGUIExec {
 
     // Method for receiving the output of the server
     public String receive() {
-
-        SwingWorker stringReceiver = new SwingWorker<String, Void>() {
+        SwingWorker serverReceiveWorker = new SwingWorker<String, String>() {
             @Override
             public String doInBackground() {
                 if (isr != null) {
                     try {
-                        if (isr.ready()) {
+                        if ((isr.ready()) && (br != null)) {
                             try {
                                 StringBuilder line = new StringBuilder();
-                                //System.out.println("About to read");
+                                System.out.println("About to read");
                                 while(br.ready()) {
                                     try {
                                         int character = br.read();
@@ -74,7 +73,7 @@ public class MCServerGUIExec {
                                         return("[GUI] Error receiving server data.");
                                     }
                                 }
-                                //System.out.println(line.toString());
+                                System.out.println(line.toString());
                                 return line.toString();
                             } catch (IOException e) {
                                 return "[GUI] Error receiving server data.";
@@ -91,12 +90,18 @@ public class MCServerGUIExec {
             }
 
         };
-        stringReceiver.execute();
+        serverReceiveWorker.execute();
         try {
-            return stringReceiver.get().toString();
+            if (serverReceiveWorker.get() != null) {
+                return serverReceiveWorker.get().toString();
+            } else {
+                return null;
+            }
         } catch (InterruptedException e) {
+            System.out.println("stringReceiver.get().toString() interrupted");
             return null;
         } catch (ExecutionException e) {
+            System.out.println("stringReceiver.get().toString() execution exception");
             return null;
         }
         
@@ -105,13 +110,13 @@ public class MCServerGUIExec {
     // Method for sending commands to the server
     public void send(final String string) {
 
-        SwingWorker stringSender = new SwingWorker<Void, Void>() {
+        SwingWorker serverSendWorker = new SwingWorker<Void, Void>() {
 
             @Override
             public Void doInBackground() {
                 try {
-                    osw = new OutputStreamWriter(ps.getOutputStream());
-                    MCServerGUIExec.this.osw.write(string + "\r\n");
+                    OutputStreamWriter osw = new OutputStreamWriter(ps.getOutputStream());
+                    osw.write(string + "\n");
                     osw.flush();
                     
                     // This Thread.sleep() is suposeduly suspicious.  Some say it should work without it, but it doesn't
@@ -132,18 +137,14 @@ public class MCServerGUIExec {
                     return null;
                 }
             }
-
-            @Override
-            public void done() {
-
-            }
         };
-        stringSender.execute();
+        serverSendWorker.execute();
     }
     
 
     // Method for checking if the server is running
     public boolean isRunning() {
+
         if ((serverStarted) && (ps != null)) {
             try {
                 ps.exitValue();
@@ -158,35 +159,44 @@ public class MCServerGUIExec {
     }
 
     // Method for stopping the server
-    public boolean stop() {
-        this.send("stop");
-        try {
-            //serverStarted = false;
-            System.out.println("[GUI] Stopping server.");
-            ps.waitFor();
+    //public boolean stop() {
+    //    serverStopWorker.execute();
+    //}
+
+    SwingWorker Stop = new SwingWorker<Boolean, Boolean>() {
+        @Override
+        public Boolean doInBackground() {
+            send("stop");
             try {
-                isr.close();
-                br.close();
-            } catch (IOException e) {
-                System.out.println("Error stopping streams");
+                //serverStarted = false;
+                System.out.println("[GUI] Stopping server.");
+                ps.waitFor();
+                try {
+                    isr.close();
+                    isr = null;
+                    br.close();
+                    br = null;
+                } catch (IOException e) {
+                    System.out.println("Error stopping streams");
+                }
+
+                //ps = null;
+                serverStarted = false;
+                System.out.println("[GUI] Stopped server succesfully.");
+                return true;
+            } catch (InterruptedException e) {
+                System.out.println("[GUI] Error stopping the server!");
+                return false;
             }
-            
-            //ps = null;
-            serverStarted = false;
-            System.out.println("[GUI] Stopped server succesfully.");
-            return true;
-        } catch (InterruptedException e) {
-            System.out.println("[GUI] Error stopping the server!");
-            return false;
         }
-    }
+    };
 
 
     public Process ps;
     private boolean serverStarted;
     private String[] cmdLine;
-    private java.io.InputStream is = null;
+    //private java.io.InputStream is = null;
     private InputStreamReader isr = null;
     private BufferedReader br = null;
-    private OutputStreamWriter osw;
+    //private OutputStreamWriter osw;
 }

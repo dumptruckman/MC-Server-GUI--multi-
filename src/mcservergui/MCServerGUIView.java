@@ -433,9 +433,8 @@ public class MCServerGUIView extends FrameView {
                 consoleOutput.setText("[GUI] Error launching server.");
             }
         } else {
-            if (ServerExec.stop()) {
-                controlSwitcher("OFF");
-            }
+            stopMode = true;
+            ServerExec.Stop.execute();
         }
     }//GEN-LAST:event_startstopButtonActionPerformed
 
@@ -486,29 +485,16 @@ public class MCServerGUIView extends FrameView {
     // My classes
     public class MainTimer implements ActionListener {
         Timer timer;
-        private ServerOutTimer serverOutTimer = new ServerOutTimer();
 
         public MainTimer () {
             //Set and start the main timer to run every 250ms
-            timer = new Timer(50, this);
+            timer = new Timer(100, this);
             timer.setInitialDelay(0);
             timer.start();
         }
 
         public void actionPerformed(ActionEvent e) {
-            /*
-            if (ServerExec.isRunning()) {
-                    // SERVER IS RUNNING
-                if (!serverOutTimer.isRunning()) {
-                    serverOutTimer.start();                                     // Start receiving console output if not already started
-                }
-            } else {
-                    // SERVER IS STOPPED
-                if (serverOutTimer.isRunning()) {
-                    serverOutTimer.stop();                                      // Stop receiving console output if not already stopped
-                }
-            }
-             */
+            // Receive and display server output
             String line = ServerExec.receive();
             if (line != null) {
                 if (consoleOutput.getText().equals("")) {
@@ -520,51 +506,19 @@ public class MCServerGUIView extends FrameView {
                     consoleOutput.setText(consoleOutput.getText() + line);
                 }
             }
-        }
-    }
 
-    private class ServerOutTimer implements ActionListener {
-        private Timer timer;
-
-        public ServerOutTimer () {
-            //Set and start the log grabber to run every 100ms
-            timer = new Timer(100, this);
-            timer.setInitialDelay(0);
-        }
-
-        public void start() {
-            timer.start();
-        }
-
-        public void stop() {
-            timer.stop();
-        }
-
-        public boolean isRunning() {
-            return timer.isRunning();
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            if (ServerExec.isRunning()) {
-                String line = ServerExec.receive();
-                if (line != null) {
-                    if (consoleOutput.getText().equals("")) {
-                        //System.out.println("1 time");
-                        consoleOutput.setText(line);
-                    }
-                        // If consoleOutput already has data, add to it
-                    else {
-                        consoleOutput.setText(consoleOutput.getText() + line);
-                    }
+            if (stopMode) {
+                if (ServerExec.Stop.isDone()) {
+                    stopMode = false;
+                    controlSwitcher("OFF");
                 }
-            } else {
-                stop();
             }
         }
     }
 
     private MCServerGUIExec ServerExec = new MCServerGUIExec();
     private MainTimer mainTimer;
+    private boolean stopMode = false;
 
     //Auto created
     private final Timer messageTimer;
