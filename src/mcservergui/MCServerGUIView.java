@@ -17,6 +17,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 // java.util.regex.Pattern;
 import javax.swing.SwingWorker;
+import java.util.TimerTask;
 
 /**
  * The application's main frame.
@@ -81,6 +82,7 @@ public class MCServerGUIView extends FrameView {
                 }
             }
         });
+        ServerExec = new MCServerGUIExec(consoleOutput);
         mainTimer = new MainTimer();
     }
 
@@ -435,6 +437,7 @@ public class MCServerGUIView extends FrameView {
         } else {
             stopMode = true;
             ServerExec.Stop.execute();
+            //ServerExec.stop();
         }
     }//GEN-LAST:event_startstopButtonActionPerformed
 
@@ -483,41 +486,17 @@ public class MCServerGUIView extends FrameView {
     }
 
     // My classes
-    public class MainTimer implements ActionListener {
-        Timer timer;
+    public class MainTimer{
+        
+    }
 
-        public MainTimer () {
-            //Set and start the main timer to run every 250ms
-            timer = new Timer(100, this);
-            timer.setInitialDelay(0);
-            timer.start();
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            // Receive and display server output
-            String line = ServerExec.receive();
-            if (line != null) {
-                if (consoleOutput.getText().equals("")) {
-                    //System.out.println("1 time");
-                    consoleOutput.setText(line);
-                }
-                    // If consoleOutput already has data, add to it
-                else {
-                    consoleOutput.setText(consoleOutput.getText() + line);
-                }
-            }
-
-            if (stopMode) {
-                if (ServerExec.Stop.isDone()) {
-                    stopMode = false;
-                    consoleOutput.setText(consoleOutput.getText() + "[GUI] Server Stopped");
-                    controlSwitcher("OFF");
-                }
-            }
+    class serverReceiveTimer extends TimerTask {
+        public void run() {
+            
         }
     }
 
-    private MCServerGUIExec ServerExec = new MCServerGUIExec();
+    private MCServerGUIExec ServerExec;
     private MainTimer mainTimer;
     private boolean stopMode = false;
 

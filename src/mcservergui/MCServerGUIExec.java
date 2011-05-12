@@ -5,11 +5,10 @@
 
 package mcservergui;
 
-//import java.util.*;
 import java.io.*;
-//import java.net.*;
 import javax.swing.SwingWorker;
 import java.util.concurrent.ExecutionException;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -17,9 +16,10 @@ import java.util.concurrent.ExecutionException;
  */
 public class MCServerGUIExec {
     
-    public MCServerGUIExec()
+    public MCServerGUIExec(javax.swing.JTextPane new_consoleOutput)
     {
         serverStarted = false;
+        consoleOutput = new_consoleOutput;
     }
 
     // Method for building the cmdLine
@@ -49,76 +49,82 @@ public class MCServerGUIExec {
         }
     }
 
-    // Method for receiving the output of the server
-    public String receive() {
-        SwingWorker serverReceiveWorker = new SwingWorker<String, String>() {
+    // Method for receiving from server
+    public void receive() {
+        SwingWorker serverReceiver = new SwingWorker<Void, Void>() {
             @Override
-            public String doInBackground() {
+            public Void doInBackground() {
+        /*Runnable serverReceiver = new Runnable() {
+            public void run() {*/
+                // Generally the isr (InputStreamReader) is set to null after Process.waitFor() is finished.
                 if (isr != null) {
-                    try {
-                        if ((isr.ready()) && (br != null)) {
-                            try {
+                    /*try {*/
+                        // Generally the br (BufferedReader) is set to null after Process.waitFor() is finished.
+                        //if ((isr.ready()) && (br != null)) {
+                        if (br != null) {
+                            /*try {*/
                                 StringBuilder line = new StringBuilder();
                                 System.out.println("About to read");
-                                while(br.ready()) {
+                                boolean doneReading = false;
+                                // Reads from the BufferedReader while it's got stuff to share.
+                                /*while(br.ready()) {
                                     try {
                                         int character = br.read();
-                                        if (character == -1) {
-                                        } else {
+                                        if (character != -1) {
                                             if ((!Character.toString(Character.toChars(character)[0]).equals(">")) && (!Character.toString(Character.toChars(character)[0]).equals("\n"))) {
                                                 line.append(Character.toChars(character));
                                             }
                                         }
                                     } catch (IOException e) {
-                                        return("[GUI] Error receiving server data.");
+                                        System.out.println("IOException on br.read()");
+                                    }
+                                }*/
+                                while (!doneReading) {
+                                    try {
+                                        int character = br.read();
+                                        if (character != -1) {
+                                            if ((!Character.toString(Character.toChars(character)[0]).equals(">")) && (!Character.toString(Character.toChars(character)[0]).equals("\n"))) {
+                                                line.append(Character.toChars(character));
+                                            }
+                                        }
+                                    } catch (IOException e) {
+                                        System.out.println("IOException on br.read()");
                                     }
                                 }
-                                System.out.println(line.toString());
-                                return line.toString();
-                            } catch (IOException e) {
-                                return "[GUI] Error receiving server data.";
-                            }
+                                System.out.println(line.toString());        // Debug output
+
+                                // Replace a blank console output but add to a non-blank one
+                                if (consoleOutput.getText().equals("")) {
+                                    //System.out.println("1 time");
+                                    consoleOutput.setText(line.toString());
+                                }
+                                    // If consoleOutput already has data, add to it
+                                else {
+                                    consoleOutput.setText(consoleOutput.getText() + line.toString());
+                                }
+                            /*} catch (IOException e) {
+                                System.out.println("IOException on br.ready()");
+                            }*/
                         }
-                    } catch (IOException e) {
-                        return null;
-                    }
-                    return null;
-                } else {
-                    return null;
+                    /*} catch (IOException e) {
+                        System.out.println("IOException on isr.ready()");
+                    }*/
                 }
-
-            }
-
-        };
-        serverReceiveWorker.execute();
-        try {
-            if (serverReceiveWorker.get() != null) {
-                return serverReceiveWorker.get().toString();
-            } else {
                 return null;
             }
-        } catch (InterruptedException e) {
-            System.out.println("stringReceiver.get().toString() interrupted");
-            return null;
-        } catch (ExecutionException e) {
-            System.out.println("stringReceiver.get().toString() execution exception");
-            return null;
-        }
-        
+        };
+        serverReceiver.execute();
     }
 
     // Method for sending commands to the server
     public void send(final String string) {
-
-        SwingWorker serverSendWorker = new SwingWorker<Void, Void>() {
-
-            @Override
-            public Void doInBackground() {
+        Runnable serverSender = new Runnable() {
+            public void run() {
                 try {
                     OutputStreamWriter osw = new OutputStreamWriter(ps.getOutputStream());
                     osw.write(string + "\n");
                     osw.flush();
-                    
+
                     // This Thread.sleep() is suposeduly suspicious.  Some say it should work without it, but it doesn't
                     try {
                         Thread.sleep(1000);
@@ -129,16 +135,14 @@ public class MCServerGUIExec {
                     osw.close();
 
                     //Comment out the thread.sleep() and uncomment these and see the issue
-                    //DataInputStream dis = new DataInputStream(ps.getInputStream());
-                    //System.out.println("from subtask: " + dis.readLine());
+                    DataInputStream dis = new DataInputStream(ps.getInputStream());
+                    System.out.println("from subtask: " + dis.readLine());
                 } catch (IOException e) {
                     System.out.println("[GUI] Error sending server data.");
-                } finally {
-                    return null;
                 }
             }
         };
-        serverSendWorker.execute();
+        SwingUtilities.invokeLater(serverSender);
     }
     
 
@@ -163,33 +167,67 @@ public class MCServerGUIExec {
     //    serverStopWorker.execute();
     //}
 
+    // Worker to stop the server
     SwingWorker Stop = new SwingWorker<Boolean, Boolean>() {
         @Override
         public Boolean doInBackground() {
-            send("stop");
+            send("stop");                           // Sends the command to shut down the server
             try {
-                //serverStarted = false;
-                System.out.println("[GUI] Stopping server.");
+                System.out.println("Stopping server.");
                 ps.waitFor();
-                try {
+
+                serverStarted = false;
+                System.out.println("Stopped server succesfully.");
+                return true;
+            } catch (InterruptedException e) {
+                System.out.println("ps.waitFor() interrupted!");
+                return false;
+            }
+        }
+
+        @Override
+        public void done() {
+            try {
+                    // Close the reading streams
                     isr.close();
                     isr = null;
                     br.close();
                     br = null;
                 } catch (IOException e) {
-                    System.out.println("Error stopping streams");
+                    System.out.println("Error stopping read streams");
                 }
-
-                //ps = null;
-                serverStarted = false;
-                System.out.println("[GUI] Stopped server succesfully.");
-                return true;
-            } catch (InterruptedException e) {
-                System.out.println("[GUI] Error stopping the server!");
-                return false;
-            }
         }
     };
+    /*
+    public void stop() {
+        Runnable serverStopper = new Runnable() {
+            public void run() {
+                send("stop");
+                try {
+                    //serverStarted = false;
+                    System.out.println("[GUI] Stopping server.");
+                    ps.waitFor();
+                    try {
+                        isr.close();
+                        isr = null;
+                        br.close();
+                        br = null;
+                    } catch (IOException e) {
+                        System.out.println("Error stopping streams");
+                    }
+
+                    //ps = null;
+                    serverStarted = false;
+                    System.out.println("[GUI] Stopped server succesfully.");
+                    //return true;
+                } catch (InterruptedException e) {
+                    System.out.println("[GUI] Error stopping the server!");
+                    //return false;
+                }
+            }
+        };
+        SwingUtilities.invokeLater(serverStopper);
+    }*/
 
 
     public Process ps;
@@ -198,5 +236,6 @@ public class MCServerGUIExec {
     //private java.io.InputStream is = null;
     private InputStreamReader isr = null;
     private BufferedReader br = null;
+    private javax.swing.JTextPane consoleOutput;
     //private OutputStreamWriter osw;
 }
