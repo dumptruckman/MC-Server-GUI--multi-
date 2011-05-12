@@ -18,13 +18,15 @@ import javax.swing.JFrame;
 // java.util.regex.Pattern;
 import javax.swing.SwingWorker;
 import java.util.TimerTask;
+import java.util.Observer;
+import java.util.Observable;
 
 /**
  * The application's main frame.
  */
-public class MCServerGUIView extends FrameView {
+public class MCServerGUIView extends FrameView implements Observer {
 
-    public MCServerGUIView(SingleFrameApplication app) {
+    public MCServerGUIView(SingleFrameApplication app, MCServerGUIServerModel newServer) {
         super(app);
 
         initComponents();
@@ -82,8 +84,9 @@ public class MCServerGUIView extends FrameView {
                 }
             }
         });
-        ServerExec = new MCServerGUIExec(consoleOutput);
-        mainTimer = new MainTimer();
+        //ServerExec = new MCServerGUIExec(consoleOutput);
+        //mainTimer = new MainTimer();
+        Server = newServer;
     }
 
     @Action
@@ -426,17 +429,18 @@ public class MCServerGUIView extends FrameView {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startstopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startstopButtonActionPerformed
+
         if (startstopButton.getText().equals("Start")) {
             consoleOutput.setText("");
-            ServerExec.setCmdLine("java","-Djline.terminal=jline.UnsupportedTerminal","-Xmx256M","-Xms256M","-jar","craftbukkit-0.0.1-SNAPSHOT.jar");
-            if (ServerExec.start()) {
+            //Server.addObserver(this);
+            Server.setCmdLine("java","-Djline.terminal=jline.UnsupportedTerminal","-Xmx256M","-Xms256M","-jar","craftbukkit-0.0.1-SNAPSHOT.jar");
+            if (Server.start()) {
                 controlSwitcher("ON");
             } else {
                 consoleOutput.setText("[GUI] Error launching server.");
             }
         } else {
-            stopMode = true;
-            ServerExec.Stop.execute();
+            Server.Stop.execute();
             //ServerExec.stop();
         }
     }//GEN-LAST:event_startstopButtonActionPerformed
@@ -471,6 +475,16 @@ public class MCServerGUIView extends FrameView {
     // End of variables declaration//GEN-END:variables
 
     // My methods
+    public void update(Observable o, Object arg) {
+        String newLine = Server.getReceived();
+        //System.out.println(newLine);
+        if (consoleOutput.getText().equals("")) {
+            consoleOutput.setText(newLine);
+        } else {
+            consoleOutput.setText(consoleOutput.getText() + newLine);
+        }
+    }
+
     private void controlSwitcher(String serverState) {
         if (serverState.equals("ON")) {
             // Switch GUI control to "ON" status
@@ -485,20 +499,7 @@ public class MCServerGUIView extends FrameView {
         }
     }
 
-    // My classes
-    public class MainTimer{
-        
-    }
-
-    class serverReceiveTimer extends TimerTask {
-        public void run() {
-            
-        }
-    }
-
-    private MCServerGUIExec ServerExec;
-    private MainTimer mainTimer;
-    private boolean stopMode = false;
+    public MCServerGUIServerModel Server;
 
     //Auto created
     private final Timer messageTimer;

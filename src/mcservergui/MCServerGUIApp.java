@@ -6,18 +6,26 @@ package mcservergui;
 
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
+import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 
 /**
  * The main class of the application.
  */
 public class MCServerGUIApp extends SingleFrameApplication {
 
+    public MCServerGUIApp() {
+        Server = new MCServerGUIServerModel();
+        MainWorker = new MCServerGUIMainWorker();
+    }
+
     /**
      * At startup create and show the main frame of the application.
      */
     @Override protected void startup() {
-        GUI = new MCServerGUIView(this);
+        GUI = new MCServerGUIView(this, Server);
         show(GUI);
+        Server.addObserver(GUI);
     }
 
     /**
@@ -43,5 +51,7 @@ public class MCServerGUIApp extends SingleFrameApplication {
         launch(MCServerGUIApp.class, args);
     }
 
-    public MCServerGUIView GUI;    
+    private MCServerGUIView GUI;
+    private MCServerGUIServerModel Server;
+    private MCServerGUIMainWorker MainWorker;
 }
