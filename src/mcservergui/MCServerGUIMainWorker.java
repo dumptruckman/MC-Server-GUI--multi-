@@ -20,7 +20,6 @@ public class MCServerGUIMainWorker {
 
     class BackgroundWork extends TimerTask {
         public void run() {
-            //Do background work here
         }
     }
 

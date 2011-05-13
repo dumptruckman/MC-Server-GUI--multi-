@@ -119,7 +119,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         jList1 = new javax.swing.JList();
         jPanel6 = new javax.swing.JPanel();
         jCheckBox1 = new javax.swing.JCheckBox();
-        jTextField1 = new javax.swing.JTextField();
+        consoleInput = new javax.swing.JTextField();
         submitButton = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         startstopButton = new javax.swing.JButton();
@@ -150,7 +150,10 @@ public class MCServerGUIView extends FrameView implements Observer {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
+        consoleOutput.setEditable(false);
+        consoleOutput.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         consoleOutput.setName("consoleOutput"); // NOI18N
+        consoleOutput.setVerifyInputWhenFocusTarget(false);
         jScrollPane1.setViewportView(consoleOutput);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -194,14 +197,29 @@ public class MCServerGUIView extends FrameView implements Observer {
         jCheckBox1.setText(resourceMap.getString("jCheckBox1.text")); // NOI18N
         jCheckBox1.setName("jCheckBox1"); // NOI18N
 
-        jTextField1.setText(resourceMap.getString("jTextField1.text")); // NOI18N
-        jTextField1.setEnabled(false);
-        jTextField1.setName("jTextField1"); // NOI18N
+        consoleInput.setText(resourceMap.getString("consoleInput.text")); // NOI18N
+        consoleInput.setEnabled(false);
+        consoleInput.setName("consoleInput"); // NOI18N
+        consoleInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consoleInputActionPerformed(evt);
+            }
+        });
+        consoleInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                consoleInputKeyPressed(evt);
+            }
+        });
 
         submitButton.setText(resourceMap.getString("submitButton.text")); // NOI18N
         submitButton.setToolTipText(resourceMap.getString("submitButton.toolTipText")); // NOI18N
         submitButton.setEnabled(false);
         submitButton.setName("submitButton"); // NOI18N
+        submitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -211,14 +229,14 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addContainerGap()
                 .addComponent(jCheckBox1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
+                .addComponent(consoleInput, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(submitButton))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(consoleInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(submitButton)
                 .addComponent(jCheckBox1))
         );
@@ -308,9 +326,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -432,20 +448,33 @@ public class MCServerGUIView extends FrameView implements Observer {
 
         if (startstopButton.getText().equals("Start")) {
             consoleOutput.setText("");
-            //Server.addObserver(this);
             Server.setCmdLine("java","-Djline.terminal=jline.UnsupportedTerminal","-Xmx256M","-Xms256M","-jar","craftbukkit-0.0.1-SNAPSHOT.jar");
-            if (Server.start()) {
-                controlSwitcher("ON");
-            } else {
+            if (!Server.start()) {
                 consoleOutput.setText("[GUI] Error launching server.");
             }
         } else {
             Server.Stop.execute();
-            //ServerExec.stop();
         }
     }//GEN-LAST:event_startstopButtonActionPerformed
 
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        String stringToSend = consoleInput.getText();
+        Server.send(stringToSend);
+        consoleInput.setText("");
+    }//GEN-LAST:event_submitButtonActionPerformed
+
+    private void consoleInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_consoleInputKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_consoleInputKeyPressed
+
+    private void consoleInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consoleInputActionPerformed
+        String stringToSend = consoleInput.getText();
+        Server.send(stringToSend);
+        consoleInput.setText("");
+    }//GEN-LAST:event_consoleInputActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JTextField consoleInput;
     public javax.swing.JTextPane consoleOutput;
     public javax.swing.JButton jButton3;
     public javax.swing.JButton jButton4;
@@ -463,7 +492,6 @@ public class MCServerGUIView extends FrameView implements Observer {
     public javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JTabbedPane jTabbedPane1;
-    public javax.swing.JTextField jTextField1;
     public javax.swing.JPanel mainPanel;
     public javax.swing.JMenuBar menuBar;
     private javax.swing.JProgressBar progressBar;
@@ -476,26 +504,38 @@ public class MCServerGUIView extends FrameView implements Observer {
 
     // My methods
     public void update(Observable o, Object arg) {
-        String newLine = Server.getReceived();
-        //System.out.println(newLine);
-        if (consoleOutput.getText().equals("")) {
-            consoleOutput.setText(newLine);
-        } else {
-            consoleOutput.setText(consoleOutput.getText() + newLine);
+        if (arg.equals("newOutput")) {
+            String newLine = Server.getReceived();
+            if ((newLine != null) && (!newLine.equals("null\n"))) {
+                try {
+                    consoleOutput.getDocument().insertString(consoleOutput.getDocument().getLength(), newLine, null);
+                } catch (javax.swing.text.BadLocationException e) {
+                    System.out.println("BadLocationException");
+                }
+            }
+        }
+        
+        if (arg.equals("serverStatus")) {
+            System.out.println("CheckingServerStatus");
+            if (Server.isRunning()) {
+                controlSwitcher("ON");
+            } else {
+                controlSwitcher("OFF");
+            }
         }
     }
 
     private void controlSwitcher(String serverState) {
         if (serverState.equals("ON")) {
             // Switch GUI control to "ON" status
-            if (startstopButton.getText().equals("Start")) {
-                startstopButton.setText("Stop");
-            }
+            startstopButton.setText("Stop");
+            consoleInput.setEnabled(true);
+            submitButton.setEnabled(true);
         } else {
             // Switch GUI controls to "OFF" status
-            if (startstopButton.getText().equals("Stop")) {
-               startstopButton.setText("Start");
-            }
+            startstopButton.setText("Start");
+            consoleInput.setEnabled(false);
+            submitButton.setEnabled(false);
         }
     }
 

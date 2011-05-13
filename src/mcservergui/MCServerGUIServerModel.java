@@ -35,16 +35,24 @@ public class MCServerGUIServerModel extends Observable {
             pb.redirectErrorStream(true);
             ps = pb.start();
 
+            // debugging
+            System.out.println("Server launched");
+
+            // Flag this as started
+            serverStarted = true;
+            setChanged();
+            notifyObservers("serverStatus");
+
             serverReceiveString = null;
 
             // Collect necessary streams
-            isr = new InputStreamReader(ps.getInputStream());
-            br = new BufferedReader(isr);
+            //isr = new InputStreamReader(ps.getInputStream());
+            br = new BufferedReader(new InputStreamReader(ps.getInputStream()));
+            osw = new OutputStreamWriter(ps.getOutputStream());
 
-            // debugging
-            System.out.println("Server launched");
-            receive();
-            serverStarted = true;
+            // Start receiving server output
+            serverReceiver.execute();
+           
             return true;
         } catch (Exception e) {
             System.out.println("Problem launching server");
@@ -53,22 +61,24 @@ public class MCServerGUIServerModel extends Observable {
     }
 
     // Method for receiving from server
-    public void receive() {
-        serverReceiver.execute();
-    }
     SwingWorker serverReceiver = new SwingWorker<Void, Void>() {
         @Override
         public Void doInBackground() {
-            System.out.println("test");
-            while (!hasChanged()) {
+            System.out.println("serverReceiver started: serverStarted = " + serverStarted);
+            while ((!hasChanged()) && (serverStarted)) {
                 try {
                     serverReceiveString = br.readLine() + "\n";
+                    if (serverReceiveString.equals(">\n")) {
+                        serverReceiveString = null;
+                    }
+                    setChanged();
+                    notifyObservers("newOutput");
                 } catch (IOException e) {
+                    serverStarted = false;
+                    setChanged();
+                    notifyObservers("serverStatus");
                     System.out.println("failed to readline()");
                 }
-
-                setChanged();
-                notifyObservers();
             }
             return null;
         }
@@ -78,27 +88,22 @@ public class MCServerGUIServerModel extends Observable {
         return serverReceiveString;
     }
 
+    public boolean isRunning() {
+        System.out.println("Checking isRunning() = " + serverStarted);
+        return serverStarted;
+    }
+
     // Method for sending commands to the server
     public void send(final String string) {
         Runnable serverSender = new Runnable() {
             public void run() {
                 try {
-                    OutputStreamWriter osw = new OutputStreamWriter(ps.getOutputStream());
-                    osw.write(string);
+                    System.out.println("sending " + string);
+                    osw.write(string + "\n");
                     osw.flush();
-
-                    // This Thread.sleep() is suposeduly suspicious.  Some say it should work without it, but it doesn't
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        System.out.println("error sleeping");
-                    }
-
-                    osw.close();
-
-                    //Comment out the thread.sleep() and uncomment these and see the issue
-                    DataInputStream dis = new DataInputStream(ps.getInputStream());
-                    System.out.println("from subtask: " + dis.readLine());
+                    //Following is for testing purposes
+                    //DataInputStream dis = new DataInputStream(ps.getInputStream());
+                    //System.out.println("from subtask: " + dis.readLine());
                 } catch (IOException e) {
                     System.out.println("[GUI] Error sending server data.");
                 }
@@ -115,9 +120,6 @@ public class MCServerGUIServerModel extends Observable {
             try {
                 System.out.println("Stopping server.");
                 ps.waitFor();
-                System.out.println("Stopped server succesfully.");
-                serverReceiver.cancel(true);
-                serverStarted = false;
                 return true;
             } catch (InterruptedException e) {
                 System.out.println("ps.waitFor() interrupted!");
@@ -127,26 +129,29 @@ public class MCServerGUIServerModel extends Observable {
 
         @Override
         public void done() {
+            System.out.println("Stop done()");
+            serverReceiver.cancel(true);
+            System.out.println("setting serverStarted to false");
+            while(!MCServerGUIServerModel.this.serverReceiver.isDone()) {}
+            serverStarted = false;
+            setChanged();
+            notifyObservers("serverStatus");
+            
             try {
-                    System.out.println("Stop done()");
-                    // Close the reading streams
-                    isr.close();
-                   // isr = null;
-                    br.close();
-                    //br = null;
-                } catch (IOException e) {
-                    System.out.println("Error stopping read streams");
-                }
+                // Close the io streams
+                br.close();
+                osw.close();
+            } catch (IOException e) {
+                System.out.println("Error stopping read streams");
+            }
         }
     };
 
 
-    public Process ps;
+    private Process ps;
     private boolean serverStarted;
     private String[] cmdLine;
     private String serverReceiveString;
-    //private java.io.InputStream is = null;
-    private InputStreamReader isr = null;
-    private BufferedReader br = null;
-    //private OutputStreamWriter osw;
+    private BufferedReader br;
+    private OutputStreamWriter osw;
 }

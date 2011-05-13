@@ -127,7 +127,12 @@
                       <SubComponents>
                         <Component class="javax.swing.JTextPane" name="consoleOutput">
                           <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                              <Color id="Text Cursor"/>
+                            </Property>
                             <Property name="name" type="java.lang.String" value="consoleOutput" noResource="true"/>
+                            <Property name="verifyInputWhenFocusTarget" type="boolean" value="false"/>
                           </Properties>
                         </Component>
                       </SubComponents>
@@ -206,7 +211,7 @@
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jTextField1" pref="432" max="32767" attributes="0"/>
+                              <Component id="consoleInput" pref="432" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="submitButton" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -215,7 +220,7 @@
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="consoleInput" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="submitButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jCheckBox1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -229,12 +234,16 @@
                         <Property name="name" type="java.lang.String" value="jCheckBox1" noResource="true"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField1">
+                    <Component class="javax.swing.JTextField" name="consoleInput">
                       <Properties>
-                        <Property name="text" type="java.lang.String" resourceKey="jTextField1.text"/>
+                        <Property name="text" type="java.lang.String" resourceKey="consoleInput.text"/>
                         <Property name="enabled" type="boolean" value="false"/>
-                        <Property name="name" type="java.lang.String" value="jTextField1" noResource="true"/>
+                        <Property name="name" type="java.lang.String" value="consoleInput" noResource="true"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="consoleInputActionPerformed"/>
+                        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="consoleInputKeyPressed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="submitButton">
                       <Properties>
@@ -243,6 +252,9 @@
                         <Property name="enabled" type="boolean" value="false"/>
                         <Property name="name" type="java.lang.String" value="submitButton" noResource="true"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="submitButtonActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
