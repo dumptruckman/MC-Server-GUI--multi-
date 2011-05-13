@@ -453,7 +453,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                 consoleOutput.setText("[GUI] Error launching server.");
             }
         } else {
-            Server.Stop.execute();
+            Server.stop();
         }
     }//GEN-LAST:event_startstopButtonActionPerformed
 
@@ -516,7 +516,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         }
         
         if (arg.equals("serverStatus")) {
-            System.out.println("CheckingServerStatus");
+            System.out.println("Checking server status");
             if (Server.isRunning()) {
                 controlSwitcher("ON");
             } else {

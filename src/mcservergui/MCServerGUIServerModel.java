@@ -43,7 +43,7 @@ public class MCServerGUIServerModel extends Observable {
             setChanged();
             notifyObservers("serverStatus");
 
-            serverReceiveString = null;
+            serverReceiveString = "";
 
             // Collect necessary streams
             //isr = new InputStreamReader(ps.getInputStream());
@@ -64,7 +64,6 @@ public class MCServerGUIServerModel extends Observable {
     SwingWorker serverReceiver = new SwingWorker<Void, Void>() {
         @Override
         public Void doInBackground() {
-            System.out.println("serverReceiver started: serverStarted = " + serverStarted);
             while ((!hasChanged()) && (serverStarted)) {
                 try {
                     serverReceiveString = br.readLine() + "\n";
@@ -77,7 +76,7 @@ public class MCServerGUIServerModel extends Observable {
                     serverStarted = false;
                     setChanged();
                     notifyObservers("serverStatus");
-                    System.out.println("failed to readline()");
+                    System.out.println("Failed to readLine().  Process likely terminated");
                 }
             }
             return null;
@@ -112,13 +111,17 @@ public class MCServerGUIServerModel extends Observable {
         SwingUtilities.invokeLater(serverSender);
     }
 
-    // Worker to stop the server
-    SwingWorker Stop = new SwingWorker<Boolean, Boolean>() {
+    // Method for stopping server
+    public void stop() {
+        send("stop");
+        processEndThread.execute();
+    }
+
+    // Worker thread to wait for process to end and then finish up the stop process
+    SwingWorker processEndThread = new SwingWorker<Boolean, Boolean>() {
         @Override
         public Boolean doInBackground() {
-            send("stop");                           // Sends the command to shut down the server
             try {
-                System.out.println("Stopping server.");
                 ps.waitFor();
                 return true;
             } catch (InterruptedException e) {
@@ -129,20 +132,25 @@ public class MCServerGUIServerModel extends Observable {
 
         @Override
         public void done() {
-            System.out.println("Stop done()");
-            serverReceiver.cancel(true);
-            System.out.println("setting serverStarted to false");
-            while(!MCServerGUIServerModel.this.serverReceiver.isDone()) {}
-            serverStarted = false;
-            setChanged();
-            notifyObservers("serverStatus");
-            
             try {
-                // Close the io streams
-                br.close();
-                osw.close();
-            } catch (IOException e) {
-                System.out.println("Error stopping read streams");
+                if (this.get() == true) {
+                    try {
+                        // Close the io streams
+                        br.close();
+                        osw.close();
+                    } catch (IOException e) {
+                        System.out.println("Error stopping read streams");
+                    } finally {
+                        serverReceiver.cancel(true);
+                    }
+                    System.out.println("done() complete");
+                } else {
+                    System.out.println("Stop failed");
+                }
+            } catch (ExecutionException e) {
+                System.out.println("Execution Exception");
+            } catch (InterruptedException e) {
+                System.out.println("Interrupted Exception");
             }
         }
     };
