@@ -13,9 +13,10 @@ import java.util.TimerTask;
  */
 public class MCServerGUIMainWorker {
 
-    public MCServerGUIMainWorker() {
+    public MCServerGUIMainWorker(MCServerGUIServerModel newServer) {
         timer = new java.util.Timer();
-        timer.scheduleAtFixedRate(new BackgroundWork(), 0, 100);
+        timer.scheduleAtFixedRate(new BackgroundWork(), 0, 1000);
+        Server = newServer;
     }
 
     class BackgroundWork extends TimerTask {
@@ -23,5 +24,6 @@ public class MCServerGUIMainWorker {
         }
     }
 
+    MCServerGUIServerModel Server;
     Timer timer;
 }

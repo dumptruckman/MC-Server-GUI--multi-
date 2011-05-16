@@ -6,8 +6,7 @@ package mcservergui;
 
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
-//import javax.swing.SwingUtilities;
-//import javax.swing.SwingWorker;
+
 
 /**
  * The main class of the application.
@@ -16,7 +15,7 @@ public class MCServerGUIApp extends SingleFrameApplication {
 
     public MCServerGUIApp() {
         Server = new MCServerGUIServerModel();
-        MainWorker = new MCServerGUIMainWorker();
+        
     }
 
     /**
@@ -26,7 +25,7 @@ public class MCServerGUIApp extends SingleFrameApplication {
         GUI = new MCServerGUIView(this, Server);
         show(GUI);
         Server.addObserver(GUI);
-        Server.serverReceiver.addPropertyChangeListener(GUI);
+        MainWorker = new MCServerGUIMainWorker(Server);
     }
 
     /**
@@ -35,6 +34,7 @@ public class MCServerGUIApp extends SingleFrameApplication {
      * builder, so this additional configuration is not needed.
      */
     @Override protected void configureWindow(java.awt.Window root) {
+        root.addWindowListener(new MCServerGUIWindowListener(GUI));
     }
 
     /**
