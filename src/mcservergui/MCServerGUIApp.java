@@ -6,8 +6,8 @@ package mcservergui;
 
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
-import javax.swing.SwingUtilities;
-import javax.swing.SwingWorker;
+//import javax.swing.SwingUtilities;
+//import javax.swing.SwingWorker;
 
 /**
  * The main class of the application.
@@ -26,6 +26,7 @@ public class MCServerGUIApp extends SingleFrameApplication {
         GUI = new MCServerGUIView(this, Server);
         show(GUI);
         Server.addObserver(GUI);
+        Server.serverReceiver.addPropertyChangeListener(GUI);
     }
 
     /**

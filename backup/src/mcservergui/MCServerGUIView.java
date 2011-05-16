@@ -15,8 +15,7 @@ import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import java.util.regex.Pattern;
-//import org.jdesktop.swingworker.SwingWorker;
+import java.util.TimerTask;
 
 /**
  * The application's main frame.
@@ -81,6 +80,7 @@ public class MCServerGUIView extends FrameView {
                 }
             }
         });
+        ServerExec = new MCServerGUIExec(consoleOutput);
         mainTimer = new MainTimer();
     }
 
@@ -115,7 +115,7 @@ public class MCServerGUIView extends FrameView {
         jPanel6 = new javax.swing.JPanel();
         jCheckBox1 = new javax.swing.JCheckBox();
         jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        submitButton = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         startstopButton = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -135,8 +135,6 @@ public class MCServerGUIView extends FrameView {
         statusAnimationLabel = new javax.swing.JLabel();
         progressBar = new javax.swing.JProgressBar();
 
-        mainPanel.setName("mainPanel"); // NOI18N
-
         jTabbedPane1.setName("jTabbedPane1"); // NOI18N
 
         jPanel1.setName("jPanel1"); // NOI18N
@@ -154,7 +152,7 @@ public class MCServerGUIView extends FrameView {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,7 +176,7 @@ public class MCServerGUIView extends FrameView {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,28 +190,32 @@ public class MCServerGUIView extends FrameView {
         jCheckBox1.setName("jCheckBox1"); // NOI18N
 
         jTextField1.setText(resourceMap.getString("jTextField1.text")); // NOI18N
+        jTextField1.setEnabled(false);
         jTextField1.setName("jTextField1"); // NOI18N
 
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setName("jButton1"); // NOI18N
+        submitButton.setText(resourceMap.getString("submitButton.text")); // NOI18N
+        submitButton.setToolTipText(resourceMap.getString("submitButton.toolTipText")); // NOI18N
+        submitButton.setEnabled(false);
+        submitButton.setName("submitButton"); // NOI18N
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jCheckBox1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1))
+                .addComponent(submitButton))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jCheckBox1)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jButton1))
+                .addComponent(submitButton)
+                .addComponent(jCheckBox1))
         );
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel7.border.title"))); // NOI18N
@@ -282,25 +284,24 @@ public class MCServerGUIView extends FrameView {
                         .addGap(71, 71, 71)
                         .addComponent(jButton6)
                         .addGap(416, 416, 416))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGap(223, 223, 223))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addContainerGap()))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -321,7 +322,7 @@ public class MCServerGUIView extends FrameView {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 811, Short.MAX_VALUE)
+            .addGap(0, 815, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -336,7 +337,7 @@ public class MCServerGUIView extends FrameView {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 811, Short.MAX_VALUE)
+            .addGap(0, 815, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -349,7 +350,7 @@ public class MCServerGUIView extends FrameView {
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -392,15 +393,15 @@ public class MCServerGUIView extends FrameView {
         statusPanel.setLayout(statusPanelLayout);
         statusPanelLayout.setHorizontalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 816, Short.MAX_VALUE)
+            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(statusMessageLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 796, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 800, Short.MAX_VALUE)
                 .addComponent(statusAnimationLabel)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusPanelLayout.createSequentialGroup()
-                .addContainerGap(660, Short.MAX_VALUE)
+                .addContainerGap(664, Short.MAX_VALUE)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -424,20 +425,22 @@ public class MCServerGUIView extends FrameView {
 
     private void startstopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startstopButtonActionPerformed
         if (startstopButton.getText().equals("Start")) {
-            ServerExec = new MCServerGUIExec("java","-Djline.terminal=jline.UnsupportedTerminal","-Xmx1024M","-Xms1024M","-jar","craftbukkit-0.0.1-SNAPSHOT.jar");
-        }
-        if (startstopButton.getText().equals("Stop")) {
-            boolean serverStopped = ServerExec.stop();
-            System.out.println(serverStopped);
-            if (serverStopped) {
-                ServerExec = null;
+            consoleOutput.setText("");
+            ServerExec.setCmdLine("java","-Djline.terminal=jline.UnsupportedTerminal","-Xmx256M","-Xms256M","-jar","craftbukkit-0.0.1-SNAPSHOT.jar");
+            if (ServerExec.start()) {
+                controlSwitcher("ON");
+            } else {
+                consoleOutput.setText("[GUI] Error launching server.");
             }
+        } else {
+            stopMode = true;
+            ServerExec.Stop.execute();
+            //ServerExec.stop();
         }
     }//GEN-LAST:event_startstopButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JTextPane consoleOutput;
-    public javax.swing.JButton jButton1;
     public javax.swing.JButton jButton3;
     public javax.swing.JButton jButton4;
     public javax.swing.JButton jButton5;
@@ -462,70 +465,38 @@ public class MCServerGUIView extends FrameView {
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     public javax.swing.JPanel statusPanel;
+    public javax.swing.JButton submitButton;
     // End of variables declaration//GEN-END:variables
 
+    // My methods
+    private void controlSwitcher(String serverState) {
+        if (serverState.equals("ON")) {
+            // Switch GUI control to "ON" status
+            if (startstopButton.getText().equals("Start")) {
+                startstopButton.setText("Stop");
+            }
+        } else {
+            // Switch GUI controls to "OFF" status
+            if (startstopButton.getText().equals("Stop")) {
+               startstopButton.setText("Start");
+            }
+        }
+    }
+
     // My classes
-    public class MainTimer implements ActionListener {
-        Timer timer;
-        private ServerOutTimer serverOutTimer = null;
+    public class MainTimer{
+        
+    }
 
-        public MainTimer () {
-            timer = new Timer(250, this);
-            timer.setInitialDelay(0);
-            timer.start();
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            if (ServerExec != null) {
-                    // SERVER IS RUNNING
-                // Switch GUI control to "ON" status
-                if (startstopButton.getText().equals("Start")) {
-                    startstopButton.setText("Stop");
-                }
-
-                if (serverOutTimer == null) {
-                    serverOutTimer = new ServerOutTimer();                      // Start receiving console output if not already started
-                }
-            } else {
-                    // SERVER IS STOPPED
-                // Switch GUI controls to "OFF" status
-                if (startstopButton.getText().equals("Stop")) {
-                   startstopButton.setText("Start");
-                }
-
-                if (serverOutTimer != null) {
-                    serverOutTimer = null;                 // Stop receiving console output if not already stopped
-                }
-            }
+    class serverReceiveTimer extends TimerTask {
+        public void run() {
+            
         }
     }
 
-    private class ServerOutTimer implements ActionListener {
-        Timer timer;
-
-        public ServerOutTimer () {
-            timer = new Timer(50, this);
-            timer.setInitialDelay(0);
-            timer.start();
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            String line = ServerExec.receive();
-            if (line != null) {
-                if (consoleOutput.getText().equals("")) {
-                    //System.out.println("1 time");
-                    consoleOutput.setText(line);
-                }
-                    // If consoleOutput already has data, add to it
-                else {
-                    consoleOutput.setText(consoleOutput.getText() + line);
-                }
-            }
-        }
-    }
-
-    private MCServerGUIExec ServerExec = null;
+    private MCServerGUIExec ServerExec;
     private MainTimer mainTimer;
+    private boolean stopMode = false;
 
     //Auto created
     private final Timer messageTimer;

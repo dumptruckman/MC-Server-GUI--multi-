@@ -15,16 +15,16 @@ import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-// java.util.regex.Pattern;
-import javax.swing.SwingWorker;
-import java.util.TimerTask;
+//import java.util.regex.Pattern;
+//import javax.swing.SwingWorker;
+//import java.util.TimerTask;
 import java.util.Observer;
 import java.util.Observable;
 
 /**
  * The application's main frame.
  */
-public class MCServerGUIView extends FrameView implements Observer {
+public class MCServerGUIView extends FrameView implements Observer, java.beans.PropertyChangeListener {
 
     public MCServerGUIView(SingleFrameApplication app, MCServerGUIServerModel newServer) {
         super(app);
@@ -448,7 +448,7 @@ public class MCServerGUIView extends FrameView implements Observer {
 
         if (startstopButton.getText().equals("Start")) {
             consoleOutput.setText("");
-            Server.setCmdLine("java","-Djline.terminal=jline.UnsupportedTerminal","-Xmx256M","-Xms256M","-jar","craftbukkit-0.0.1-SNAPSHOT.jar");
+            Server.setCmdLine("java","-Djline.terminal=jline.UnsupportedTerminal","-Xmx1024M","-Xincgc","-jar","craftbukkit-0.0.1-SNAPSHOT.jar","nogui","-d","\"yyyy-MM-dd HH:mm:ss\"");
             if (!Server.start()) {
                 consoleOutput.setText("[GUI] Error launching server.");
             }
@@ -505,14 +505,7 @@ public class MCServerGUIView extends FrameView implements Observer {
     // My methods
     public void update(Observable o, Object arg) {
         if (arg.equals("newOutput")) {
-            String newLine = Server.getReceived();
-            if ((newLine != null) && (!newLine.equals("null\n"))) {
-                try {
-                    consoleOutput.getDocument().insertString(consoleOutput.getDocument().getLength(), newLine, null);
-                } catch (javax.swing.text.BadLocationException e) {
-                    System.out.println("BadLocationException");
-                }
-            }
+            
         }
         
         if (arg.equals("serverStatus")) {
@@ -521,6 +514,20 @@ public class MCServerGUIView extends FrameView implements Observer {
                 controlSwitcher("ON");
             } else {
                 controlSwitcher("OFF");
+            }
+        }
+    }
+
+    public void propertyChange(java.beans.PropertyChangeEvent evt) {
+        if (evt.getPropertyName().toString().equals("serverReceiveString")) {
+            //System.out.println(evt.getNewValue().toString());
+            String newLine = evt.getNewValue().toString();
+            if ((newLine != null) && (!newLine.equals("null\n"))) {
+                try {
+                    consoleOutput.getDocument().insertString(consoleOutput.getDocument().getLength(), newLine, null);
+                } catch (javax.swing.text.BadLocationException e) {
+                    System.out.println("BadLocationException");
+                }
             }
         }
     }
