@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * MCServerGUIServerModel.java
  */
 
 package mcservergui;
@@ -98,7 +97,6 @@ public class MCServerGUIServerModel extends Observable implements Observer, java
 
     // Method for stopping server
     public void stop() {
-        System.out.println("Request to stop received");
         send("stop");
         MCServerGUIServerStopper serverStopper = new MCServerGUIServerStopper(ps, br, osw);
         serverStopper.addPropertyChangeListener(this);

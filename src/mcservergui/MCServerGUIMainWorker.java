@@ -9,7 +9,7 @@ import java.util.TimerTask;
 
 /**
  *
- * @author Roton
+ * @author dumptruckman
  */
 public class MCServerGUIMainWorker {
 

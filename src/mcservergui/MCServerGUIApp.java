@@ -6,26 +6,31 @@ package mcservergui;
 
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
+import java.util.Observer;
+import java.util.Observable;
+import java.util.EventObject;
 
 
 /**
  * The main class of the application.
  */
-public class MCServerGUIApp extends SingleFrameApplication {
+public class MCServerGUIApp extends SingleFrameApplication implements Application.ExitListener, Observer {
 
     public MCServerGUIApp() {
-        Server = new MCServerGUIServerModel();
-        
+        server = new MCServerGUIServerModel();
+        wantsToQuit = false;
     }
 
     /**
      * At startup create and show the main frame of the application.
      */
     @Override protected void startup() {
-        GUI = new MCServerGUIView(this, Server);
-        show(GUI);
-        Server.addObserver(GUI);
-        MainWorker = new MCServerGUIMainWorker(Server);
+        addExitListener(this);
+        gui = new MCServerGUIView(this, server);
+        show(gui);
+        server.addObserver(gui);
+        server.addObserver(this);
+        mainWorker = new MCServerGUIMainWorker(server);
     }
 
     /**
@@ -34,7 +39,6 @@ public class MCServerGUIApp extends SingleFrameApplication {
      * builder, so this additional configuration is not needed.
      */
     @Override protected void configureWindow(java.awt.Window root) {
-        root.addWindowListener(new MCServerGUIWindowListener(GUI));
     }
 
     /**
@@ -46,13 +50,46 @@ public class MCServerGUIApp extends SingleFrameApplication {
     }
 
     /**
+     * Informs the application that the server has stopped so that it may exit
+     * @param o
+     * @param arg
+     */
+    public void update(Observable o, Object arg) {
+        if ((arg.equals("serverStopped")) && (wantsToQuit)) {
+            System.exit(0);
+        }
+    }
+    /**
+     * Handles the exiting of the application
+     * @param e is the EventObject
+     * @return true if allowed to exit, false if not
+     */
+    @Override public boolean canExit(EventObject e) {
+        if (server.isRunning()) {
+            wantsToQuit = true;
+            gui.stopServer();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     *
+     * @param e is the EventObject
+     */
+    @Override public void willExit(java.util.EventObject e) {
+    }
+
+    /**
      * Main method launching the application.
      */
     public static void main(String[] args) {
         launch(MCServerGUIApp.class, args);
     }
 
-    private MCServerGUIView GUI;
-    private MCServerGUIServerModel Server;
-    private MCServerGUIMainWorker MainWorker;
+    private boolean wantsToQuit;
+    private MCServerGUIView gui;
+    private MCServerGUIServerModel server;
+    private MCServerGUIMainWorker mainWorker;
 }

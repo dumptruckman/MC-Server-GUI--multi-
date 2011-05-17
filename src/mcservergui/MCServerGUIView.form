@@ -39,48 +39,52 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jPanel5" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jPanel4" alignment="1" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="236" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="serverControlPanel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="consoleInputPanel" alignment="0" max="32767" attributes="1"/>
+                              <Component id="consoleOutputPanel" alignment="0" max="32767" attributes="2"/>
+                          </Group>
                           <EmptySpace max="-2" attributes="0"/>
+                          <Component id="playerListPanel" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jPanel4" max="32767" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="playerListPanel" alignment="0" max="32767" attributes="0"/>
+                              <Component id="consoleOutputPanel" alignment="1" max="32767" attributes="0"/>
+                          </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
+                          <Component id="consoleInputPanel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
+                          <Component id="serverControlPanel" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Container class="javax.swing.JPanel" name="jPanel4">
+                <Container class="javax.swing.JPanel" name="consoleOutputPanel">
                   <Properties>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                         <TitledBorder title="Console Output">
-                          <Property name="titleX" resourceKey="jPanel4.border.title"/>
+                          <Property name="titleX" resourceKey="consoleOutputPanel.border.title"/>
                         </TitledBorder>
                       </Border>
                     </Property>
-                    <Property name="name" type="java.lang.String" value="jPanel4" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="consoleOutputPanel" noResource="true"/>
                   </Properties>
 
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane1" alignment="0" pref="448" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" alignment="0" pref="496" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -102,6 +106,11 @@
                       <SubComponents>
                         <Component class="javax.swing.JTextPane" name="consoleOutput">
                           <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="toolTipText" type="java.lang.String" resourceKey="consoleOutput.toolTipText"/>
+                            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                              <Color id="Text Cursor"/>
+                            </Property>
                             <Property name="name" type="java.lang.String" value="consoleOutput" noResource="true"/>
                           </Properties>
                         </Component>
@@ -109,23 +118,25 @@
                     </Container>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JPanel" name="jPanel5">
+                <Container class="javax.swing.JPanel" name="consoleInputPanel">
                   <Properties>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                         <TitledBorder title="Console Input">
-                          <Property name="titleX" resourceKey="jPanel5.border.title"/>
+                          <Property name="titleX" resourceKey="consoleInputPanel.border.title"/>
                         </TitledBorder>
                       </Border>
                     </Property>
-                    <Property name="name" type="java.lang.String" value="jPanel5" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="consoleInputPanel" noResource="true"/>
                   </Properties>
 
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="consoleInput" pref="377" max="32767" attributes="0"/>
+                              <Component id="sayOn" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="consoleInput" pref="380" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="submitButton" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -136,6 +147,7 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="consoleInput" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="submitButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="sayOn" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -159,18 +171,24 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="submitButtonActionPerformed"/>
                       </Events>
                     </Component>
+                    <Component class="javax.swing.JCheckBox" name="sayOn">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="sayOn.text"/>
+                        <Property name="name" type="java.lang.String" value="sayOn" noResource="true"/>
+                      </Properties>
+                    </Component>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JPanel" name="jPanel6">
+                <Container class="javax.swing.JPanel" name="serverControlPanel">
                   <Properties>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                         <TitledBorder title="Server Control">
-                          <Property name="titleX" resourceKey="jPanel6.border.title"/>
+                          <Property name="titleX" resourceKey="serverControlPanel.border.title"/>
                         </TitledBorder>
                       </Border>
                     </Property>
-                    <Property name="name" type="java.lang.String" value="jPanel6" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="serverControlPanel" noResource="true"/>
                   </Properties>
 
                   <Layout>
@@ -195,12 +213,67 @@
                     <Component class="javax.swing.JButton" name="startstopButton">
                       <Properties>
                         <Property name="text" type="java.lang.String" resourceKey="startstopButton.text"/>
+                        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                          <Insets value="[2, 5, 2, 5]"/>
+                        </Property>
                         <Property name="name" type="java.lang.String" value="startstopButton" noResource="true"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="startstopButtonActionPerformed"/>
                       </Events>
                     </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="playerListPanel">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="Player List">
+                          <Property name="titleX" resourceKey="playerListPanel.border.title"/>
+                        </TitledBorder>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="playerListPanel" noResource="true"/>
+                  </Properties>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jScrollPane2" alignment="0" pref="170" max="32767" attributes="0"/>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jScrollPane2" alignment="0" pref="220" max="32767" attributes="0"/>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+                      <Properties>
+                        <Property name="name" type="java.lang.String" value="jScrollPane2" noResource="true"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                      </AuxValues>
+
+                      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                      <SubComponents>
+                        <Component class="javax.swing.JList" name="jList1">
+                          <Properties>
+                            <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
+                              <StringArray count="1">
+                                <StringItem index="0" value="Not yet implemented"/>
+                              </StringArray>
+                            </Property>
+                            <Property name="toolTipText" type="java.lang.String" resourceKey="playerList.toolTipText"/>
+                            <Property name="enabled" type="boolean" value="false"/>
+                            <Property name="focusable" type="boolean" value="false"/>
+                            <Property name="name" type="java.lang.String" value="playerList" noResource="true"/>
+                          </Properties>
+                        </Component>
+                      </SubComponents>
+                    </Container>
                   </SubComponents>
                 </Container>
               </SubComponents>
@@ -283,7 +356,6 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="org.jdesktop.application.Application" id="quit" methodName="quit"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="null"/>
                 <Property name="name" type="java.lang.String" value="exitMenuItem" noResource="true"/>
               </Properties>
               <AuxValues>
@@ -331,7 +403,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="statusMessageLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="681" max="32767" attributes="0"/>
+                  <EmptySpace pref="606" max="32767" attributes="0"/>
                   <Component id="statusAnimationLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -371,6 +443,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="statusMessageLabel">
           <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="statusMessageLabel.text"/>
             <Property name="name" type="java.lang.String" value="statusMessageLabel" noResource="true"/>
           </Properties>
           <AuxValues>

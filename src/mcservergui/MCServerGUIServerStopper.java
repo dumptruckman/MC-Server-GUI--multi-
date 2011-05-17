@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * MCServerGUIServerStopper.java
  */
 
 package mcservergui;
@@ -11,7 +10,7 @@ import java.util.concurrent.ExecutionException;
 
 /**
  *
- * @author Billing Manager
+ * @author dumptruckman
  */
 public class MCServerGUIServerStopper extends SwingWorker<Boolean, Boolean> {
     public MCServerGUIServerStopper (Process newPs, BufferedReader newBr, OutputStreamWriter newOsw) {

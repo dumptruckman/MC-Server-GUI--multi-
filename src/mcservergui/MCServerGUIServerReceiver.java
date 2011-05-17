@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * MCServerGUIServerReceiver.java
  */
 
 package mcservergui;
@@ -13,7 +12,7 @@ import java.io.*;
 
 /**
  *
- * @author Billing Manager
+ * @author dumptruckman
  */
 public class MCServerGUIServerReceiver extends Observable {
     public MCServerGUIServerReceiver(BufferedReader newBr) {
@@ -30,41 +29,23 @@ public class MCServerGUIServerReceiver extends Observable {
 
         public void run() {
             if (serverRunning) {
-                while (!hasChanged()) {
-                    receivedFromServer = "";
-                    try {
-                        while (br.ready()) {
-                            try {
-                                int newChar = br.read();
-                                if (newChar != -1) {
-                                    receivedFromServer += (char) newChar;
-                                }
-                            } catch (IOException e) {
-                                System.out.println("ServerReceiver reports BufferedReader IOException while trying to read().");
-                            }
+                receivedFromServer = "";
+                try {
+                    while ((br.ready()) && (!hasChanged())) {
+                        try {
+                            receivedFromServer = br.readLine();
+                        } catch (IOException e) {
+                            System.out.println("ServerReceiver reports BufferedReader IOException while trying to readLine().");
                         }
-                        receivedFromServer = receivedFromServer.replace("\n>", "");
-                        receivedFromServer = receivedFromServer.replace("\r>", "");
-                        receivedFromServer = receivedFromServer.replace("\n\r>", "");
-                        receivedFromServer = receivedFromServer.replace("\r\n>", "");
-                        receivedFromServer = receivedFromServer.replace(">\n", "");
-                        receivedFromServer = receivedFromServer.replace(">\r", "");
-                        receivedFromServer = receivedFromServer.replace(">\n\r", "");
-                        receivedFromServer = receivedFromServer.replace(">\r\n", "");
-                        receivedFromServer = receivedFromServer.replace("\n", "");
-                        receivedFromServer = receivedFromServer.replace("\r", "");
-                        receivedFromServer = receivedFromServer.replace("\n\r", "");
-                        receivedFromServer = receivedFromServer.replace("\r\n", "");
-                        if ((!receivedFromServer.equals("")) && (!receivedFromServer.equals(">"))) {
+                        if ((!receivedFromServer.equals("")) && (!receivedFromServer.equals(">")) && (!receivedFromServer.equals(">>")) && (!receivedFromServer.equals(">>>"))) {
                             receivedFromServer += "\n";
                             setChanged();
                             notifyObservers();
                         }
-                    } catch (IOException e) {
-                        System.out.println("ServerReceiver reports BufferedReader IOException while waiting for ready().  Assuming server ended.");
-                        serverRunning = false;
-                        break;
                     }
+                } catch (IOException e) {
+                    System.out.println("ServerReceiver reports BufferedReader IOException while waiting for ready().  Assuming server ended.");
+                    serverRunning = false;
                 }
             } else {
                 this.cancel();
