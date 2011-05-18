@@ -293,15 +293,204 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="696" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="349" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="399" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="237" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
+              <SubComponents>
+                <Container class="javax.swing.JPanel" name="jPanel5">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="Server CMD Line">
+                          <Property name="titleX" resourceKey="jPanel5.border.title"/>
+                        </TitledBorder>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="jPanel5" noResource="true"/>
+                  </Properties>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="javaExecLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="javaExecField" pref="193" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="javaExecBrowseButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="serverJarLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="serverJarField" pref="203" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="serverJarBrowseButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="1">
+                              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                              <Component id="xmxMemoryLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="xmxMemoryField" min="-2" pref="64" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                              <Component id="xincgcCheckBox" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Group type="102" alignment="0" attributes="1">
+                                  <Component id="extraArgsLabel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="extraArgsField" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="bukkitCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="javaExecLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="javaExecField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="javaExecBrowseButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="serverJarLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="serverJarBrowseButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="serverJarField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="bukkitCheckBox" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="xmxMemoryField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="xmxMemoryLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="xincgcCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="extraArgsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="extraArgsField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JLabel" name="javaExecLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="javaExecLabel.text"/>
+                        <Property name="name" type="java.lang.String" value="javaExecLabel" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="javaExecField">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="javaExecField.text"/>
+                        <Property name="toolTipText" type="java.lang.String" resourceKey="javaExecField.toolTipText"/>
+                        <Property name="name" type="java.lang.String" value="javaExecField" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="serverJarLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="serverJarLabel.text"/>
+                        <Property name="name" type="java.lang.String" value="serverJarLabel" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="serverJarField">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="serverJarField.text"/>
+                        <Property name="name" type="java.lang.String" value="serverJarField" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="bukkitCheckBox">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="bukkitCheckBox.text"/>
+                        <Property name="name" type="java.lang.String" value="bukkitCheckBox" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bukkitCheckBoxActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="javaExecBrowseButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="javaExecBrowseButton.text"/>
+                        <Property name="toolTipText" type="java.lang.String" resourceKey="javaExecBrowseButton.toolTipText"/>
+                        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                          <Insets value="[2, 5, 2, 5]"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" value="javaExecBrowseButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="javaExecBrowseButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="serverJarBrowseButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="serverJarBrowseButton.text"/>
+                        <Property name="toolTipText" type="java.lang.String" resourceKey="serverJarBrowseButton.toolTipText"/>
+                        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                          <Insets value="[2, 5, 2, 5]"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" value="serverJarBrowseButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="serverJarBrowseButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="xmxMemoryLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="xmxMemoryLabel.text"/>
+                        <Property name="name" type="java.lang.String" value="xmxMemoryLabel" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="xmxMemoryField">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="xmxMemoryField.text"/>
+                        <Property name="name" type="java.lang.String" value="xmxMemoryField" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="xmxMemoryFieldActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="xincgcCheckBox">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="xincgcCheckBox.text"/>
+                        <Property name="name" type="java.lang.String" value="xincgcCheckBox" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="xincgcCheckBoxActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="extraArgsLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="extraArgsLabel.text"/>
+                        <Property name="name" type="java.lang.String" value="extraArgsLabel" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="extraArgsField">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="extraArgsField.text"/>
+                        <Property name="name" type="java.lang.String" value="extraArgsField" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="extraArgsFieldActionPerformed"/>
+                      </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
+              </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="jPanel3">
               <Properties>
@@ -318,15 +507,72 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="696" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="469" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="399" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="352" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
+              <SubComponents>
+                <Container class="javax.swing.JPanel" name="jPanel4">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="GUI Options">
+                          <Property name="titleX" resourceKey="jPanel4.border.title"/>
+                        </TitledBorder>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="jPanel4" noResource="true"/>
+                  </Properties>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="windowTitleLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="windowTitleField" pref="146" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="windowTitleLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="windowTitleField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JLabel" name="windowTitleLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="windowTitleLabel.text"/>
+                        <Property name="name" type="java.lang.String" value="windowTitleLabel" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="windowTitleField">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="windowTitleField.text"/>
+                        <Property name="name" type="java.lang.String" value="windowTitleField" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="windowTitleFieldActionPerformed"/>
+                      </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
+              </SubComponents>
             </Container>
           </SubComponents>
         </Container>

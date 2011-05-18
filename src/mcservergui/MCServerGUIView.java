@@ -17,13 +17,16 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import java.util.Observer;
 import java.util.Observable;
+import javax.swing.JFileChooser;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * The application's main frame.
  */
 public class MCServerGUIView extends FrameView implements Observer {
 
-    public MCServerGUIView(SingleFrameApplication app, MCServerGUIServerModel newServer) {
+    public MCServerGUIView(SingleFrameApplication app, MCServerGUIServerModel newServer, MCServerGUIConfig newConfig) {
         super(app);
 
         initComponents();
@@ -81,9 +84,9 @@ public class MCServerGUIView extends FrameView implements Observer {
                 }
             }
         });
-        server = newServer;
-        initConfig();
+        config = newConfig;
         getFrame().setTitle(config.getWindowTitle());
+        server = newServer;
     }
 
     @Action
@@ -121,7 +124,23 @@ public class MCServerGUIView extends FrameView implements Observer {
         jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
         jPanel2 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        javaExecLabel = new javax.swing.JLabel();
+        javaExecField = new javax.swing.JTextField();
+        serverJarLabel = new javax.swing.JLabel();
+        serverJarField = new javax.swing.JTextField();
+        bukkitCheckBox = new javax.swing.JCheckBox();
+        javaExecBrowseButton = new javax.swing.JButton();
+        serverJarBrowseButton = new javax.swing.JButton();
+        xmxMemoryLabel = new javax.swing.JLabel();
+        xmxMemoryField = new javax.swing.JTextField();
+        xincgcCheckBox = new javax.swing.JCheckBox();
+        extraArgsLabel = new javax.swing.JLabel();
+        extraArgsField = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        windowTitleLabel = new javax.swing.JLabel();
+        windowTitleField = new javax.swing.JTextField();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
@@ -285,30 +304,198 @@ public class MCServerGUIView extends FrameView implements Observer {
 
         jPanel2.setName("jPanel2"); // NOI18N
 
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel5.border.title"))); // NOI18N
+        jPanel5.setName("jPanel5"); // NOI18N
+
+        javaExecLabel.setText(resourceMap.getString("javaExecLabel.text")); // NOI18N
+        javaExecLabel.setName("javaExecLabel"); // NOI18N
+
+        javaExecField.setText(resourceMap.getString("javaExecField.text")); // NOI18N
+        javaExecField.setToolTipText(resourceMap.getString("javaExecField.toolTipText")); // NOI18N
+        javaExecField.setName("javaExecField"); // NOI18N
+
+        serverJarLabel.setText(resourceMap.getString("serverJarLabel.text")); // NOI18N
+        serverJarLabel.setName("serverJarLabel"); // NOI18N
+
+        serverJarField.setText(resourceMap.getString("serverJarField.text")); // NOI18N
+        serverJarField.setName("serverJarField"); // NOI18N
+
+        bukkitCheckBox.setText(resourceMap.getString("bukkitCheckBox.text")); // NOI18N
+        bukkitCheckBox.setName("bukkitCheckBox"); // NOI18N
+        bukkitCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bukkitCheckBoxActionPerformed(evt);
+            }
+        });
+
+        javaExecBrowseButton.setText(resourceMap.getString("javaExecBrowseButton.text")); // NOI18N
+        javaExecBrowseButton.setToolTipText(resourceMap.getString("javaExecBrowseButton.toolTipText")); // NOI18N
+        javaExecBrowseButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        javaExecBrowseButton.setName("javaExecBrowseButton"); // NOI18N
+        javaExecBrowseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                javaExecBrowseButtonActionPerformed(evt);
+            }
+        });
+
+        serverJarBrowseButton.setText(resourceMap.getString("serverJarBrowseButton.text")); // NOI18N
+        serverJarBrowseButton.setToolTipText(resourceMap.getString("serverJarBrowseButton.toolTipText")); // NOI18N
+        serverJarBrowseButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        serverJarBrowseButton.setName("serverJarBrowseButton"); // NOI18N
+        serverJarBrowseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                serverJarBrowseButtonActionPerformed(evt);
+            }
+        });
+
+        xmxMemoryLabel.setText(resourceMap.getString("xmxMemoryLabel.text")); // NOI18N
+        xmxMemoryLabel.setName("xmxMemoryLabel"); // NOI18N
+
+        xmxMemoryField.setText(resourceMap.getString("xmxMemoryField.text")); // NOI18N
+        xmxMemoryField.setName("xmxMemoryField"); // NOI18N
+        xmxMemoryField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                xmxMemoryFieldActionPerformed(evt);
+            }
+        });
+
+        xincgcCheckBox.setText(resourceMap.getString("xincgcCheckBox.text")); // NOI18N
+        xincgcCheckBox.setName("xincgcCheckBox"); // NOI18N
+        xincgcCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                xincgcCheckBoxActionPerformed(evt);
+            }
+        });
+
+        extraArgsLabel.setText(resourceMap.getString("extraArgsLabel.text")); // NOI18N
+        extraArgsLabel.setName("extraArgsLabel"); // NOI18N
+
+        extraArgsField.setText(resourceMap.getString("extraArgsField.text")); // NOI18N
+        extraArgsField.setName("extraArgsField"); // NOI18N
+        extraArgsField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                extraArgsFieldActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(javaExecLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(javaExecField, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(javaExecBrowseButton))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(serverJarLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(serverJarField, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(serverJarBrowseButton))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addComponent(xmxMemoryLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(xmxMemoryField, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(xincgcCheckBox)
+                .addGap(74, 74, 74))
+            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                    .addComponent(extraArgsLabel)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(extraArgsField))
+                .addComponent(bukkitCheckBox, javax.swing.GroupLayout.Alignment.LEADING))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(javaExecLabel)
+                    .addComponent(javaExecField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(javaExecBrowseButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(serverJarLabel)
+                    .addComponent(serverJarBrowseButton)
+                    .addComponent(serverJarField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bukkitCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(xmxMemoryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(xmxMemoryLabel)
+                    .addComponent(xincgcCheckBox))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(extraArgsLabel)
+                    .addComponent(extraArgsField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 696, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(349, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 399, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(237, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab(resourceMap.getString("jPanel2.TabConstraints.tabTitle"), jPanel2); // NOI18N
 
         jPanel3.setName("jPanel3"); // NOI18N
 
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel4.border.title"))); // NOI18N
+        jPanel4.setName("jPanel4"); // NOI18N
+
+        windowTitleLabel.setText(resourceMap.getString("windowTitleLabel.text")); // NOI18N
+        windowTitleLabel.setName("windowTitleLabel"); // NOI18N
+
+        windowTitleField.setText(resourceMap.getString("windowTitleField.text")); // NOI18N
+        windowTitleField.setName("windowTitleField"); // NOI18N
+        windowTitleField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                windowTitleFieldActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(windowTitleLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(windowTitleField, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(windowTitleLabel)
+                .addComponent(windowTitleField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 696, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(469, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 399, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(352, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab(resourceMap.getString("jPanel3.TabConstraints.tabTitle"), jPanel3); // NOI18N
@@ -394,11 +581,12 @@ public class MCServerGUIView extends FrameView implements Observer {
     private void startstopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startstopButtonActionPerformed
         if (startstopButton.getText().equals("Start")) {
             consoleOutput.setText("");
-
-            server.setCmdLine("java","-Djline.terminal=jline.UnsupportedTerminal","-Xmx256M","-Xincgc","-jar","craftbukkit-0.0.1-SNAPSHOT.jar","nogui","-d","\"yyyy-MM-dd HH:mm:ss\"");
-            if (!server.start()) {
-                consoleOutput.setText("[GUI] Error launching server.");
-            } else {
+            server.setCmdLine(config.cmdLine.getCmdLine());
+            if (server.start().equals("SUCCESS")) {
+            } else if (server.start().equals("ERROR")) {
+                consoleOutput.setText("[GUI] Unknown error occured while launching the server.");
+            } else if (server.start().equals("INVALIDJAR")) {
+                
             }
         } else {
             stopServer();
@@ -417,40 +605,110 @@ public class MCServerGUIView extends FrameView implements Observer {
         consoleInput.setText("");
     }//GEN-LAST:event_consoleInputActionPerformed
 
+    private void windowTitleFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_windowTitleFieldActionPerformed
+        config.setWindowTitle(windowTitleField.getText());
+        getFrame().setTitle(windowTitleField.getText());
+    }//GEN-LAST:event_windowTitleFieldActionPerformed
+
+    private void javaExecBrowseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_javaExecBrowseButtonActionPerformed
+        final JFileChooser fc = new JFileChooser();
+        int returnVal = fc.showOpenDialog(getFrame());
+    }//GEN-LAST:event_javaExecBrowseButtonActionPerformed
+
+    private void serverJarBrowseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serverJarBrowseButtonActionPerformed
+        try {
+            final JFileChooser fc = new JFileChooser(new File(".").getCanonicalPath());
+            int returnVal = fc.showOpenDialog(getFrame());
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                serverJarField.setText(fc.getSelectedFile().getName());
+                config.cmdLine.setServerJar(fc.getSelectedFile().getName());
+            }
+        } catch (IOException e) {
+            System.out.println("Error retrieving path");
+        }
+    }//GEN-LAST:event_serverJarBrowseButtonActionPerformed
+
+    private void bukkitCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bukkitCheckBoxActionPerformed
+        config.cmdLine.setBukkit(bukkitCheckBox.isSelected());
+    }//GEN-LAST:event_bukkitCheckBoxActionPerformed
+
+    private void xmxMemoryFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xmxMemoryFieldActionPerformed
+        config.cmdLine.setXmx(xmxMemoryField.getText());
+    }//GEN-LAST:event_xmxMemoryFieldActionPerformed
+
+    private void xincgcCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xincgcCheckBoxActionPerformed
+        config.cmdLine.setXincgc(xincgcCheckBox.isSelected());
+    }//GEN-LAST:event_xincgcCheckBoxActionPerformed
+
+    private void extraArgsFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extraArgsFieldActionPerformed
+        config.cmdLine.setExtraArgs(extraArgsField.getText());
+    }//GEN-LAST:event_extraArgsFieldActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JCheckBox bukkitCheckBox;
     public javax.swing.JTextField consoleInput;
     public javax.swing.JPanel consoleInputPanel;
     public javax.swing.JTextPane consoleOutput;
     public javax.swing.JPanel consoleOutputPanel;
+    public javax.swing.JTextField extraArgsField;
+    public javax.swing.JLabel extraArgsLabel;
     public javax.swing.JList jList1;
     public javax.swing.JPanel jPanel1;
     public javax.swing.JPanel jPanel2;
     public javax.swing.JPanel jPanel3;
+    public javax.swing.JPanel jPanel4;
+    public javax.swing.JPanel jPanel5;
     public javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JTabbedPane jTabbedPane1;
+    public javax.swing.JButton javaExecBrowseButton;
+    public javax.swing.JTextField javaExecField;
+    public javax.swing.JLabel javaExecLabel;
     public javax.swing.JPanel mainPanel;
     public javax.swing.JMenuBar menuBar;
     public javax.swing.JPanel playerListPanel;
     private javax.swing.JProgressBar progressBar;
     public javax.swing.JCheckBox sayOn;
     public javax.swing.JPanel serverControlPanel;
+    public javax.swing.JButton serverJarBrowseButton;
+    public javax.swing.JTextField serverJarField;
+    public javax.swing.JLabel serverJarLabel;
     public javax.swing.JButton startstopButton;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     public javax.swing.JPanel statusPanel;
     public javax.swing.JButton submitButton;
+    public javax.swing.JTextField windowTitleField;
+    public javax.swing.JLabel windowTitleLabel;
+    public javax.swing.JCheckBox xincgcCheckBox;
+    public javax.swing.JTextField xmxMemoryField;
+    public javax.swing.JLabel xmxMemoryLabel;
     // End of variables declaration//GEN-END:variables
 
     // My methods
-    private void initConfig() {
-        config = new MCServerGUIConfig();
-        config.load();
+    public void initConfig() {
+        if (config.load()) {
+            consoleOutput.setText("Configuration file loaded succesfully!");
+        } else {
+            consoleOutput.setText("Configuration file not found or invalid!  Loading defaults.");
+        }
+        windowTitleField.setText(config.getWindowTitle());
+        javaExecField.setText(config.cmdLine.getJavaExec());
+        serverJarField.setText(config.cmdLine.getServerJar());
+        bukkitCheckBox.setSelected(config.cmdLine.getBukkit());
+        xmxMemoryField.setText(config.cmdLine.getXmx());
+        xincgcCheckBox.setSelected(config.cmdLine.getXincgc());
+        extraArgsField.setText(config.cmdLine.getExtraArgs());
+    }
+
+    public void saveConfig() {
+        statusMessageLabel.setText("Saving configuration...");
+        config.save();
     }
 
     public void stopServer() {
-        server.stop();
         statusMessageLabel.setText("Stopping server...");
+        server.stop();
     }
 
     public void update(Observable o, Object arg) {
@@ -500,7 +758,7 @@ public class MCServerGUIView extends FrameView implements Observer {
     private final Icon idleIcon;
     private final Icon[] busyIcons = new Icon[15];
     private int busyIconIndex = 0;
-    public MCServerGUIConfig config;
+    private MCServerGUIConfig config;
     private boolean badConfig;
 
     private JDialog aboutBox;

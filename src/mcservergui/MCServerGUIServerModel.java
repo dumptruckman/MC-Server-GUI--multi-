@@ -8,6 +8,7 @@ import java.io.*;
 import javax.swing.SwingUtilities;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.List;
 
 /**
  *
@@ -15,20 +16,23 @@ import java.util.Observer;
  */
 public class MCServerGUIServerModel extends Observable implements Observer, java.beans.PropertyChangeListener {
     
-    public MCServerGUIServerModel()
+    public MCServerGUIServerModel(MCServerGUIConfig newConfig)
     {
+        config = newConfig;
         serverRunning = false;
     }
 
     // Method for building the cmdLine
-    public void setCmdLine(String...args) {
+    public void setCmdLine(List<String> args) {
         cmdLine = args;
     }
 
     // Method for starting the server
-    public boolean start() {
+    public String start() {
+        File jar = new File(config.cmdLine.getServerJar());
         try {
             // Run the server
+
             ProcessBuilder pb = new ProcessBuilder(cmdLine);
             pb.redirectErrorStream(true);
             ps = pb.start();
@@ -48,10 +52,10 @@ public class MCServerGUIServerModel extends Observable implements Observer, java
             serverReceiver.addObserver(this);
             addObserver(serverReceiver.backgroundWork);
            
-            return true;
+            return "SUCCESS";
         } catch (Exception e) {
             System.out.println("Problem launching server");
-            return false;
+            return "ERROR";
         }
     }
 
@@ -84,9 +88,6 @@ public class MCServerGUIServerModel extends Observable implements Observer, java
                 try {
                     osw.write(string + "\n");
                     osw.flush();
-                    //Following is for testing purposes
-                    //DataInputStream dis = new DataInputStream(ps.getInputStream());
-                    //System.out.println("from subtask: " + dis.readLine());
                 } catch (IOException e) {
                     System.out.println("[GUI] Error sending server data.");
                 }
@@ -104,10 +105,11 @@ public class MCServerGUIServerModel extends Observable implements Observer, java
     }
 
     private Process ps;
-    private String[] cmdLine;
+    private List<String> cmdLine;
     private String receivedFromServer;
     private BufferedReader br;
     private OutputStreamWriter osw;
     private MCServerGUIServerReceiver serverReceiver;
+    private MCServerGUIConfig config;
     private boolean serverRunning;
 }

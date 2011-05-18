@@ -17,7 +17,8 @@ import java.util.EventObject;
 public class MCServerGUIApp extends SingleFrameApplication implements Application.ExitListener, Observer {
 
     public MCServerGUIApp() {
-        server = new MCServerGUIServerModel();
+        config = new MCServerGUIConfig();
+        server = new MCServerGUIServerModel(config);
         wantsToQuit = false;
     }
 
@@ -26,8 +27,8 @@ public class MCServerGUIApp extends SingleFrameApplication implements Applicatio
      */
     @Override protected void startup() {
         addExitListener(this);
-        gui = new MCServerGUIView(this, server);
-        show(gui);
+        show(gui = new MCServerGUIView(this, server, config));
+        gui.initConfig();
         server.addObserver(gui);
         server.addObserver(this);
         mainWorker = new MCServerGUIMainWorker(server);
@@ -65,7 +66,7 @@ public class MCServerGUIApp extends SingleFrameApplication implements Applicatio
      * @return true if allowed to exit, false if not
      */
     @Override public boolean canExit(EventObject e) {
-        gui.config.save();
+        gui.saveConfig();
         if (server.isRunning()) {
             wantsToQuit = true;
             gui.stopServer();
@@ -92,5 +93,6 @@ public class MCServerGUIApp extends SingleFrameApplication implements Applicatio
     private boolean wantsToQuit;
     private MCServerGUIView gui;
     private MCServerGUIServerModel server;
+    private MCServerGUIConfig config;
     private MCServerGUIMainWorker mainWorker;
 }
