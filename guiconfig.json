@@ -1,11 +1,11 @@
 {
   "Window Title" : "MC Server",
   "CMD Line" : {
-    "Java Executable" : "Java",
-    "Server Jar File" : "craftbukkit-1.jar",
-    "Bukkit" : true,
+    "Java Executable" : "java",
+    "Server Jar File" : "craftbukkit.jar",
+    "Bukkit" : false,
     "Xmx Memory" : "1024M",
     "Xincgc" : true,
-    "Extra Arguments" : "null"
+    "Extra Arguments" : ""
   }
 }

@@ -144,6 +144,7 @@ public class MCServerGUIConfig {
             _xmx = "1024M";
             _xincgc = true;
             _serverJar = "craftbukkit.jar";
+            _extraArgs = "";
         }
 
         private String _javaExec, _xmx, _serverJar, _extraArgs;
@@ -183,6 +184,18 @@ public class MCServerGUIConfig {
             }
 
             return cmdLine;
+        }
+
+        public String parseCmdLine() {
+            List<String> cmdLine = getCmdLine();
+            StringBuilder parsedCmdLine = new StringBuilder();
+            int i = 0;
+            while (i < cmdLine.size()) {
+                parsedCmdLine.append(cmdLine.get(i));
+                parsedCmdLine.append(" ");
+                i++;
+            }
+            return parsedCmdLine.toString();
         }
     }
 
