@@ -82,16 +82,8 @@ public class MCServerGUIView extends FrameView implements Observer {
             }
         });
         server = newServer;
-        config = new MCServerGUIConfig("guiconfig.json", "UTF-8");
-        if (!config.load()) {
-            consoleOutput.setText("Your guiconfig.json file is improperly formatted!"
-                    + "  Try deleting it and restarting the GUI.");
-            controlSwitcher("BADCONFIG");
-            getFrame().setTitle("MC Server GUI");
-        } else {
-            initConfig();
-            getFrame().setTitle(config.windowTitle);
-        }
+        initConfig();
+        getFrame().setTitle(config.getWindowTitle());
     }
 
     @Action
@@ -403,7 +395,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         if (startstopButton.getText().equals("Start")) {
             consoleOutput.setText("");
 
-            server.setCmdLine(config.javaExec,"-Djline.terminal=jline.UnsupportedTerminal","-Xmx256M","-Xincgc","-jar","craftbukkit-0.0.1-SNAPSHOT.jar","nogui","-d","\"yyyy-MM-dd HH:mm:ss\"");
+            server.setCmdLine("java","-Djline.terminal=jline.UnsupportedTerminal","-Xmx256M","-Xincgc","-jar","craftbukkit-0.0.1-SNAPSHOT.jar","nogui","-d","\"yyyy-MM-dd HH:mm:ss\"");
             if (!server.start()) {
                 consoleOutput.setText("[GUI] Error launching server.");
             } else {
@@ -452,7 +444,8 @@ public class MCServerGUIView extends FrameView implements Observer {
 
     // My methods
     private void initConfig() {
-
+        config = new MCServerGUIConfig();
+        config.load();
     }
 
     public void stopServer() {
@@ -507,7 +500,7 @@ public class MCServerGUIView extends FrameView implements Observer {
     private final Icon idleIcon;
     private final Icon[] busyIcons = new Icon[15];
     private int busyIconIndex = 0;
-    private MCServerGUIConfig config;
+    public MCServerGUIConfig config;
     private boolean badConfig;
 
     private JDialog aboutBox;

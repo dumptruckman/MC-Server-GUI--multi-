@@ -65,6 +65,7 @@ public class MCServerGUIApp extends SingleFrameApplication implements Applicatio
      * @return true if allowed to exit, false if not
      */
     @Override public boolean canExit(EventObject e) {
+        gui.config.save();
         if (server.isRunning()) {
             wantsToQuit = true;
             gui.stopServer();

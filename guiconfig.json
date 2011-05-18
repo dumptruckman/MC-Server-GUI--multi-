@@ -1,1 +1,9 @@
-{}
+{
+  "Window Title" : "MC Server",
+  "CMD Line" : {
+    "Java Executable" : "Java",
+    "Bukkit" : true,
+    "Xmx Memory" : "1024M",
+    "Xincgc" : true
+  }
+}
