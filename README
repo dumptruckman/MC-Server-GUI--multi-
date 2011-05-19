@@ -1,1 +1,4 @@
-asdf
+1. Unzip mcservergui.jar into your Minecraft Server directory
+2. Run mcservergui.jar.
+3. Go to the Server Config tab and make sure the settings are how you would like them.
+4. Press enter if you type in a setting for it to save (will add more ways to save in future releases)
