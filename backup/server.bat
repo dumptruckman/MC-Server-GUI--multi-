@@ -1,1 +1,0 @@
-java -Xms1G -Xmx1G -jar craftbukkit-0.0.1-SNAPSHOT.jar
