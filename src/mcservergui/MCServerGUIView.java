@@ -88,6 +88,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         server = newServer;
         getFrame().setTitle(config.getWindowTitle());
         controlSwitcher("OFF");
+        System.out.println(mainWindowTab.isFocusable());
     }
 
     @Action
@@ -161,6 +162,11 @@ public class MCServerGUIView extends FrameView implements Observer {
         progressBar = new javax.swing.JProgressBar();
 
         tabber.setName("tabber"); // NOI18N
+        tabber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tabberKeyTyped(evt);
+            }
+        });
 
         mainWindowTab.setName("mainWindowTab"); // NOI18N
 
@@ -190,6 +196,11 @@ public class MCServerGUIView extends FrameView implements Observer {
                 consoleOutputFocusLost(evt);
             }
         });
+        consoleOutput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                consoleOutputKeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(consoleOutput);
 
         javax.swing.GroupLayout consoleOutputPanelLayout = new javax.swing.GroupLayout(consoleOutputPanel);
@@ -207,6 +218,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         consoleInputPanel.setName("consoleInputPanel"); // NOI18N
 
         consoleInput.setText(resourceMap.getString("consoleInput.text")); // NOI18N
+        consoleInput.setToolTipText(resourceMap.getString("consoleInput.toolTipText")); // NOI18N
         consoleInput.setName("consoleInput"); // NOI18N
         consoleInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -221,9 +233,20 @@ public class MCServerGUIView extends FrameView implements Observer {
                 submitButtonActionPerformed(evt);
             }
         });
+        submitButton.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                submitButtonKeyTyped(evt);
+            }
+        });
 
         sayCheckBox.setText(resourceMap.getString("sayCheckBox.text")); // NOI18N
+        sayCheckBox.setToolTipText(resourceMap.getString("sayCheckBox.toolTipText")); // NOI18N
         sayCheckBox.setName("sayCheckBox"); // NOI18N
+        sayCheckBox.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                sayCheckBoxKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout consoleInputPanelLayout = new javax.swing.GroupLayout(consoleInputPanel);
         consoleInputPanel.setLayout(consoleInputPanelLayout);
@@ -285,6 +308,11 @@ public class MCServerGUIView extends FrameView implements Observer {
         jList1.setEnabled(false);
         jList1.setFocusable(false);
         jList1.setName("playerList"); // NOI18N
+        jList1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jList1KeyTyped(evt);
+            }
+        });
         jScrollPane2.setViewportView(jList1);
 
         javax.swing.GroupLayout playerListPanelLayout = new javax.swing.GroupLayout(playerListPanel);
@@ -813,12 +841,8 @@ public class MCServerGUIView extends FrameView implements Observer {
     private void consoleOutputMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consoleOutputMouseExited
         int selMin = consoleOutput.getSelectionStart();
         int selMax = consoleOutput.getSelectionEnd();
-        System.out.println(!consoleOutput.isFocusOwner());
-        System.out.println(server.isRunning());
-        System.out.println(selMax - selMin == 0);
         if ((!consoleOutput.isFocusOwner()) && (server.isRunning()) && (selMax - selMin == 0)) {
             textScrolling = true;
-            System.out.println("scrolling text");
         }
     }//GEN-LAST:event_consoleOutputMouseExited
 
@@ -829,16 +853,34 @@ public class MCServerGUIView extends FrameView implements Observer {
     }//GEN-LAST:event_consoleOutputFocusGained
 
     private void consoleOutputFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_consoleOutputFocusLost
-        System.out.println("focus lost");
         int selMin = consoleOutput.getSelectionStart();
         int selMax = consoleOutput.getSelectionEnd();
-        System.out.println(server.isRunning());
-        System.out.println(selMax - selMin == 0);
         if ((selMax - selMin == 0) && (server.isRunning())) {
             textScrolling = true;
-            System.out.println("scrolling text");
         }
     }//GEN-LAST:event_consoleOutputFocusLost
+
+    private void tabberKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabberKeyTyped
+        if(tabber.getSelectedIndex() == 0) {
+            giveInputFocus(evt);
+        }
+    }//GEN-LAST:event_tabberKeyTyped
+
+    private void jList1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jList1KeyTyped
+        giveInputFocus(evt);
+    }//GEN-LAST:event_jList1KeyTyped
+
+    private void sayCheckBoxKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_sayCheckBoxKeyTyped
+        giveInputFocus(evt);
+    }//GEN-LAST:event_sayCheckBoxKeyTyped
+
+    private void submitButtonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_submitButtonKeyTyped
+        giveInputFocus(evt);
+    }//GEN-LAST:event_submitButtonKeyTyped
+
+    private void consoleOutputKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_consoleOutputKeyTyped
+        giveInputFocus(evt);
+    }//GEN-LAST:event_consoleOutputKeyTyped
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JCheckBox bukkitCheckBox;
@@ -889,6 +931,22 @@ public class MCServerGUIView extends FrameView implements Observer {
     // End of variables declaration//GEN-END:variables
 
     // My methods
+    public void giveInputFocus(java.awt.event.KeyEvent evt) {
+        char temp = evt.getKeyChar();
+        try {
+            
+            System.out.println("\"" + temp + "\"");
+            if ((temp != java.awt.event.KeyEvent.CHAR_UNDEFINED) && (consoleInput.isEnabled()) && (evt.getKeyChar() != " ".charAt(0)) && (evt.getKeyChar() != "".charAt(0))) {
+                if (consoleInput.requestFocusInWindow()) {
+                    
+                    consoleInput.setText(consoleInput.getText() + evt.getKeyChar());
+                }
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("poop");
+        }
+    }
+
     public void setMainWorker(MCServerGUIMainWorker newMainWorker) {
         mainWorker = newMainWorker;
     }
