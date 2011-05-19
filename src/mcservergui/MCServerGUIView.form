@@ -126,6 +126,12 @@
                             </Property>
                             <Property name="name" type="java.lang.String" value="consoleOutput" noResource="true"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="consoleOutputMouseEntered"/>
+                            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="consoleOutputMouseExited"/>
+                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="consoleOutputFocusGained"/>
+                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="consoleOutputFocusLost"/>
+                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -147,7 +153,7 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="sayOn" min="-2" max="-2" attributes="0"/>
+                              <Component id="sayCheckBox" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="consoleInput" pref="339" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -160,7 +166,7 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="consoleInput" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="submitButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="sayOn" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="sayCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -184,10 +190,10 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="submitButtonActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JCheckBox" name="sayOn">
+                    <Component class="javax.swing.JCheckBox" name="sayCheckBox">
                       <Properties>
-                        <Property name="text" type="java.lang.String" resourceKey="sayOn.text"/>
-                        <Property name="name" type="java.lang.String" value="sayOn" noResource="true"/>
+                        <Property name="text" type="java.lang.String" resourceKey="sayCheckBox.text"/>
+                        <Property name="name" type="java.lang.String" value="sayCheckBox" noResource="true"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -370,8 +376,14 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="serverCmdLinePanel" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="serverCmdLinePanel" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="saveServerConfigButton" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                           <EmptySpace pref="318" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -380,7 +392,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="serverCmdLinePanel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="197" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="saveServerConfigButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="168" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -601,6 +615,18 @@
                     </Component>
                   </SubComponents>
                 </Container>
+                <Component class="javax.swing.JButton" name="saveServerConfigButton">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="saveServerConfigButton.text"/>
+                    <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                      <Insets value="[2, 5, 2, 5]"/>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="saveServerConfigButton" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveServerConfigButtonActionPerformed"/>
+                  </Events>
+                </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="guiConfigTab">
@@ -618,8 +644,14 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jPanel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="saveGuiConfigButton" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                           <EmptySpace pref="448" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -628,7 +660,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="368" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="saveGuiConfigButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="339" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -683,6 +717,18 @@
                     </Component>
                   </SubComponents>
                 </Container>
+                <Component class="javax.swing.JButton" name="saveGuiConfigButton">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="saveGuiConfigButton.text"/>
+                    <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                      <Insets value="[2, 5, 2, 5]"/>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="saveGuiConfigButton" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveGuiConfigButtonActionPerformed"/>
+                  </Events>
+                </Component>
               </SubComponents>
             </Container>
           </SubComponents>

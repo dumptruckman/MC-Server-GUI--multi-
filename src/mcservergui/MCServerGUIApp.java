@@ -19,6 +19,7 @@ public class MCServerGUIApp extends SingleFrameApplication implements Applicatio
     public MCServerGUIApp() {
         config = new MCServerGUIConfig();
         server = new MCServerGUIServerModel(config);
+        
         wantsToQuit = false;
     }
 
@@ -31,7 +32,9 @@ public class MCServerGUIApp extends SingleFrameApplication implements Applicatio
         gui.initConfig();
         server.addObserver(gui);
         server.addObserver(this);
-        mainWorker = new MCServerGUIMainWorker(server);
+        mainWorker = new MCServerGUIMainWorker(server, gui);
+        gui.setMainWorker(mainWorker);
+        mainWorker.startMainWorker();
     }
 
     /**

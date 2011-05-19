@@ -38,7 +38,7 @@ public class MCServerGUIServerReceiver extends Observable {
                             System.out.println("ServerReceiver reports BufferedReader IOException while trying to readLine().");
                         }
                         if ((!receivedFromServer.equals("")) && (!receivedFromServer.equals(">")) && (!receivedFromServer.equals(">>")) && (!receivedFromServer.equals(">>>"))) {
-                            receivedFromServer += "\n";
+                            receivedFromServer += System.getProperty("line.separator");
                             setChanged();
                             notifyObservers();
                         }

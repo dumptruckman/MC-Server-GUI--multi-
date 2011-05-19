@@ -139,7 +139,7 @@ public class MCServerGUIConfig {
 
     public class CMDLine {
         public CMDLine () {
-            _javaExec = "Java";
+            _javaExec = "java";
             _bukkit = true;
             _xmx = "1024M";
             _xincgc = true;

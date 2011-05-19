@@ -1,2 +1,8 @@
+Version .1.1
+  There is now a save button the config page to immediately save your settings.
+  Text now scrolls to the end under the following conditions: If the text box has focus or if the mouse is over it.  It will also NOT scroll if you have anything selected within it.
+  Console Input and Submit box are now properly disabled on GUI start.
+  Fixed potential issue with new lines not displaying properly on non-windows systems.
+  
 Version .1.0
   Initial release!
