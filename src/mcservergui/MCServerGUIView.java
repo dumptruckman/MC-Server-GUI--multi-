@@ -84,6 +84,10 @@ public class MCServerGUIView extends FrameView implements Observer {
                 }
             }
         });
+
+        sayCheckBox.getInputMap().put(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK),"sayOn");
+        sayCheckBox.getActionMap().put("sayOn", sayToggle);
+
         config = newConfig;
         server = newServer;
         getFrame().setTitle(config.getWindowTitle());
@@ -734,6 +738,16 @@ public class MCServerGUIView extends FrameView implements Observer {
         setStatusBar(statusPanel);
     }// </editor-fold>//GEN-END:initComponents
 
+    javax.swing.Action sayToggle = new javax.swing.AbstractAction() {
+        public void actionPerformed(ActionEvent e) {
+            if (sayCheckBox.isSelected()) {
+                sayCheckBox.setSelected(false);
+            } else {
+                sayCheckBox.setSelected(true);
+            }
+        }
+    };
+
     private void startstopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startstopButtonActionPerformed
         if (startstopButton.getText().equals("Start")) {
             consoleOutput.setText("");
@@ -835,7 +849,9 @@ public class MCServerGUIView extends FrameView implements Observer {
     private void consoleOutputMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consoleOutputMouseEntered
         if ((server.isRunning()) && (!consoleOutput.isFocusOwner())) {
             textScrolling = false;
+
         }
+        mouseInConsoleOutput = true;
     }//GEN-LAST:event_consoleOutputMouseEntered
 
     private void consoleOutputMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consoleOutputMouseExited
@@ -844,6 +860,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         if ((!consoleOutput.isFocusOwner()) && (server.isRunning()) && (selMax - selMin == 0)) {
             textScrolling = true;
         }
+        mouseInConsoleOutput = false;
     }//GEN-LAST:event_consoleOutputMouseExited
 
     private void consoleOutputFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_consoleOutputFocusGained
@@ -855,7 +872,7 @@ public class MCServerGUIView extends FrameView implements Observer {
     private void consoleOutputFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_consoleOutputFocusLost
         int selMin = consoleOutput.getSelectionStart();
         int selMax = consoleOutput.getSelectionEnd();
-        if ((selMax - selMin == 0) && (server.isRunning())) {
+        if ((selMax - selMin == 0) && (server.isRunning()) && (!mouseInConsoleOutput)) {
             textScrolling = true;
         }
     }//GEN-LAST:event_consoleOutputFocusLost
@@ -932,18 +949,10 @@ public class MCServerGUIView extends FrameView implements Observer {
 
     // My methods
     public void giveInputFocus(java.awt.event.KeyEvent evt) {
-        char temp = evt.getKeyChar();
-        try {
-            
-            System.out.println("\"" + temp + "\"");
-            if ((temp != java.awt.event.KeyEvent.CHAR_UNDEFINED) && (consoleInput.isEnabled()) && (evt.getKeyChar() != " ".charAt(0)) && (evt.getKeyChar() != "".charAt(0))) {
-                if (consoleInput.requestFocusInWindow()) {
-                    
-                    consoleInput.setText(consoleInput.getText() + evt.getKeyChar());
-                }
+        if ((evt.getKeyChar() != java.awt.event.KeyEvent.CHAR_UNDEFINED) && (consoleInput.isEnabled()) && ((int)evt.getKeyChar() > 32)) {
+            if (consoleInput.requestFocusInWindow()) {
+                consoleInput.setText(consoleInput.getText() + evt.getKeyChar());
             }
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("poop");
         }
     }
 
@@ -955,7 +964,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         if (config.load()) {
             consoleOutput.setText("Configuration file loaded succesfully!");
         } else {
-            consoleOutput.setText("Configuration file not found or invalid!  Loading defaults.");
+            consoleOutput.setText("Configuration file not found or invalid!  Creating new config file with default values.");
         }
         windowTitleField.setText(config.getWindowTitle());
         javaExecField.setText(config.cmdLine.getJavaExec());
@@ -965,6 +974,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         xincgcCheckBox.setSelected(config.cmdLine.getXincgc());
         extraArgsField.setText(config.cmdLine.getExtraArgs());
         cmdLineLabel.setText(config.cmdLine.parseCmdLine());
+        saveConfig();
     }
 
     public void saveConfig() {
@@ -1026,6 +1036,7 @@ public class MCServerGUIView extends FrameView implements Observer {
             submitButton.setEnabled(false);
             statusMessageLabel.setText("Server Stopped");
             textScrolling = false;
+            mouseInConsoleOutput = false;
         } else if (serverState.equals("BADCONFIG")) {
             startstopButton.setEnabled(false);
         }
@@ -1035,6 +1046,7 @@ public class MCServerGUIView extends FrameView implements Observer {
     private MCServerGUIServerReceiver serverReceiver;
     private MCServerGUIMainWorker mainWorker;
     private boolean textScrolling;
+    private boolean mouseInConsoleOutput;
 
     //Auto created
     private final Timer messageTimer;

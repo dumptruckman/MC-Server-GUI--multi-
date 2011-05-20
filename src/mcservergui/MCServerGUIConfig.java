@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class MCServerGUIConfig {
 
     MCServerGUIConfig() {
-        _windowTitle = "MC Server GUI";
+        windowTitle = "MC Server GUI";
         cmdLine = new CMDLine();
     }
 
@@ -130,12 +130,12 @@ public class MCServerGUIConfig {
     }
 
     
-    private String _windowTitle;
+    private String windowTitle;
     public CMDLine cmdLine;
 
-    public String getWindowTitle() { return _windowTitle; }
+    public String getWindowTitle() { return windowTitle; }
     
-    public void setWindowTitle(String s) { _windowTitle = s; }
+    public void setWindowTitle(String s) { windowTitle = s; }
 
     public class CMDLine {
         public CMDLine () {
