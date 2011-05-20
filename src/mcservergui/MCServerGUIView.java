@@ -20,6 +20,8 @@ import java.util.Observable;
 import javax.swing.JFileChooser;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * The application's main frame.
@@ -85,14 +87,19 @@ public class MCServerGUIView extends FrameView implements Observer {
             }
         });
 
-        sayCheckBox.getInputMap().put(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK),"sayOn");
+        sayCheckBox.getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW).put(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK),"sayOn");
         sayCheckBox.getActionMap().put("sayOn", sayToggle);
+        consoleInput.getInputMap().put(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ENTER, java.awt.event.InputEvent.SHIFT_MASK),"sayOn");
+        consoleInput.getActionMap().put("sayOn", saySend);
 
         config = newConfig;
         server = newServer;
         getFrame().setTitle(config.getWindowTitle());
         controlSwitcher("OFF");
         System.out.println(mainWindowTab.isFocusable());
+
+        inputHistory = new ArrayList<String>();
+        inputHistoryIndex = -1;
     }
 
     @Action
@@ -147,12 +154,15 @@ public class MCServerGUIView extends FrameView implements Observer {
         extraArgsLabel = new javax.swing.JLabel();
         extraArgsField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        cmdLineLabel = new javax.swing.JLabel();
+        cmdLineField = new javax.swing.JTextField();
+        customLaunchCheckBox = new javax.swing.JCheckBox();
         saveServerConfigButton = new javax.swing.JButton();
         guiConfigTab = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         windowTitleLabel = new javax.swing.JLabel();
         windowTitleField = new javax.swing.JTextField();
+        inputHistoryMaxSizeLabel = new javax.swing.JLabel();
+        inputHistoryMaxSizeField = new javax.swing.JTextField();
         saveGuiConfigButton = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
@@ -227,6 +237,11 @@ public class MCServerGUIView extends FrameView implements Observer {
         consoleInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 consoleInputActionPerformed(evt);
+            }
+        });
+        consoleInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                consoleInputKeyPressed(evt);
             }
         });
 
@@ -495,9 +510,29 @@ public class MCServerGUIView extends FrameView implements Observer {
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
-        cmdLineLabel.setText(resourceMap.getString("cmdLineLabel.text")); // NOI18N
-        cmdLineLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        cmdLineLabel.setName("cmdLineLabel"); // NOI18N
+        cmdLineField.setEditable(false);
+        cmdLineField.setText(resourceMap.getString("cmdLineField.text")); // NOI18N
+        cmdLineField.setToolTipText(resourceMap.getString("cmdLineField.toolTipText")); // NOI18N
+        cmdLineField.setName("cmdLineField"); // NOI18N
+        cmdLineField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdLineFieldActionPerformed(evt);
+            }
+        });
+
+        customLaunchCheckBox.setText(resourceMap.getString("customLaunchCheckBox.text")); // NOI18N
+        customLaunchCheckBox.setToolTipText(resourceMap.getString("customLaunchCheckBox.toolTipText")); // NOI18N
+        customLaunchCheckBox.setName("customLaunchCheckBox"); // NOI18N
+        customLaunchCheckBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                customLaunchCheckBoxMouseEntered(evt);
+            }
+        });
+        customLaunchCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                customLaunchCheckBoxActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout serverCmdLinePanelLayout = new javax.swing.GroupLayout(serverCmdLinePanel);
         serverCmdLinePanel.setLayout(serverCmdLinePanelLayout);
@@ -506,13 +541,13 @@ public class MCServerGUIView extends FrameView implements Observer {
             .addGroup(serverCmdLinePanelLayout.createSequentialGroup()
                 .addComponent(javaExecLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(javaExecField, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                .addComponent(javaExecField, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(javaExecBrowseButton))
             .addGroup(serverCmdLinePanelLayout.createSequentialGroup()
                 .addComponent(serverJarLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(serverJarField, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                .addComponent(serverJarField, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(serverJarBrowseButton))
             .addGroup(serverCmdLinePanelLayout.createSequentialGroup()
@@ -524,15 +559,20 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addComponent(xincgcCheckBox)
                 .addGap(74, 74, 74))
             .addGroup(serverCmdLinePanelLayout.createSequentialGroup()
+                .addComponent(extraArgsLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(extraArgsField, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE))
+            .addComponent(bukkitCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+            .addGroup(serverCmdLinePanelLayout.createSequentialGroup()
+                .addComponent(customLaunchCheckBox)
+                .addContainerGap())
+            .addGroup(serverCmdLinePanelLayout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addContainerGap())
-            .addGroup(serverCmdLinePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, serverCmdLinePanelLayout.createSequentialGroup()
-                    .addComponent(extraArgsLabel)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(extraArgsField))
-                .addComponent(bukkitCheckBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(cmdLineLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, serverCmdLinePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cmdLineField, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+                .addContainerGap())
         );
         serverCmdLinePanelLayout.setVerticalGroup(
             serverCmdLinePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -557,11 +597,12 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addGroup(serverCmdLinePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(extraArgsLabel)
                     .addComponent(extraArgsField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(customLaunchCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmdLineLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(cmdLineField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         saveServerConfigButton.setText(resourceMap.getString("saveServerConfigButton.text")); // NOI18N
@@ -583,7 +624,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                     .addGroup(serverConfigTabLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(saveServerConfigButton)))
-                .addContainerGap(318, Short.MAX_VALUE))
+                .addContainerGap(328, Short.MAX_VALUE))
         );
         serverConfigTabLayout.setVerticalGroup(
             serverConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -591,7 +632,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addComponent(serverCmdLinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveServerConfigButton)
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("serverConfigTab.TabConstraints.tabTitle"), serverConfigTab); // NOI18N
@@ -612,6 +653,14 @@ public class MCServerGUIView extends FrameView implements Observer {
             }
         });
 
+        inputHistoryMaxSizeLabel.setText(resourceMap.getString("inputHistoryMaxSizeLabel.text")); // NOI18N
+        inputHistoryMaxSizeLabel.setName("inputHistoryMaxSizeLabel"); // NOI18N
+
+        inputHistoryMaxSizeField.setText(resourceMap.getString("inputHistoryMaxSizeField.text")); // NOI18N
+        inputHistoryMaxSizeField.setToolTipText(resourceMap.getString("inputHistoryMaxSizeField.toolTipText")); // NOI18N
+        inputHistoryMaxSizeField.setInputVerifier(new numberVerifier());
+        inputHistoryMaxSizeField.setName("inputHistoryMaxSizeField"); // NOI18N
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -619,13 +668,22 @@ public class MCServerGUIView extends FrameView implements Observer {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(windowTitleLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(windowTitleField, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE))
+                .addComponent(windowTitleField, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(inputHistoryMaxSizeLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(inputHistoryMaxSizeField, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(windowTitleLabel)
-                .addComponent(windowTitleField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(windowTitleLabel)
+                    .addComponent(windowTitleField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(inputHistoryMaxSizeLabel)
+                    .addComponent(inputHistoryMaxSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         saveGuiConfigButton.setText(resourceMap.getString("saveGuiConfigButton.text")); // NOI18N
@@ -647,7 +705,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                     .addGroup(guiConfigTabLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(saveGuiConfigButton)))
-                .addContainerGap(448, Short.MAX_VALUE))
+                .addContainerGap(425, Short.MAX_VALUE))
         );
         guiConfigTabLayout.setVerticalGroup(
             guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -655,7 +713,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveGuiConfigButton)
-                .addContainerGap(339, Short.MAX_VALUE))
+                .addContainerGap(313, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("guiConfigTab.TabConstraints.tabTitle"), guiConfigTab); // NOI18N
@@ -747,6 +805,11 @@ public class MCServerGUIView extends FrameView implements Observer {
             }
         }
     };
+    javax.swing.Action saySend = new javax.swing.AbstractAction() {
+        public void actionPerformed(ActionEvent e) {
+            sendInput(true);
+        }
+    };
 
     private void startstopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startstopButtonActionPerformed
         if (startstopButton.getText().equals("Start")) {
@@ -764,23 +827,11 @@ public class MCServerGUIView extends FrameView implements Observer {
     }//GEN-LAST:event_startstopButtonActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        String stringToSend = consoleInput.getText();
-        if (sayCheckBox.isSelected()) {
-            server.send("say " + stringToSend);
-        } else {
-            server.send(stringToSend);
-        }
-        consoleInput.setText("");
+        sendInput();
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void consoleInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consoleInputActionPerformed
-        String stringToSend = consoleInput.getText();
-        if (sayCheckBox.isSelected()) {
-            server.send("say " + stringToSend);
-        } else {
-            server.send(stringToSend);
-        }
-        consoleInput.setText("");
+        sendInput();
     }//GEN-LAST:event_consoleInputActionPerformed
 
     private void windowTitleFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_windowTitleFieldActionPerformed
@@ -791,7 +842,7 @@ public class MCServerGUIView extends FrameView implements Observer {
     private void javaExecBrowseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_javaExecBrowseButtonActionPerformed
         final JFileChooser fc = new JFileChooser();
         int returnVal = fc.showOpenDialog(getFrame());
-        cmdLineLabel.setText(config.cmdLine.parseCmdLine());
+        cmdLineField.setText(config.cmdLine.parseCmdLine());
     }//GEN-LAST:event_javaExecBrowseButtonActionPerformed
 
     private void serverJarBrowseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serverJarBrowseButtonActionPerformed
@@ -801,7 +852,7 @@ public class MCServerGUIView extends FrameView implements Observer {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 serverJarField.setText(fc.getSelectedFile().getName());
                 config.cmdLine.setServerJar(fc.getSelectedFile().getName());
-                cmdLineLabel.setText(config.cmdLine.parseCmdLine());
+                cmdLineField.setText(config.cmdLine.parseCmdLine());
             }
         } catch (IOException e) {
             System.out.println("Error retrieving path");
@@ -810,32 +861,32 @@ public class MCServerGUIView extends FrameView implements Observer {
 
     private void bukkitCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bukkitCheckBoxActionPerformed
         config.cmdLine.setBukkit(bukkitCheckBox.isSelected());
-        cmdLineLabel.setText(config.cmdLine.parseCmdLine());
+        cmdLineField.setText(config.cmdLine.parseCmdLine());
     }//GEN-LAST:event_bukkitCheckBoxActionPerformed
 
     private void xmxMemoryFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xmxMemoryFieldActionPerformed
         config.cmdLine.setXmx(xmxMemoryField.getText());
-        cmdLineLabel.setText(config.cmdLine.parseCmdLine());
+        cmdLineField.setText(config.cmdLine.parseCmdLine());
     }//GEN-LAST:event_xmxMemoryFieldActionPerformed
 
     private void xincgcCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xincgcCheckBoxActionPerformed
         config.cmdLine.setXincgc(xincgcCheckBox.isSelected());
-        cmdLineLabel.setText(config.cmdLine.parseCmdLine());
+        cmdLineField.setText(config.cmdLine.parseCmdLine());
     }//GEN-LAST:event_xincgcCheckBoxActionPerformed
 
     private void extraArgsFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extraArgsFieldActionPerformed
         config.cmdLine.setExtraArgs(extraArgsField.getText());
-        cmdLineLabel.setText(config.cmdLine.parseCmdLine());
+        cmdLineField.setText(config.cmdLine.parseCmdLine());
     }//GEN-LAST:event_extraArgsFieldActionPerformed
 
     private void serverJarFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serverJarFieldActionPerformed
         config.cmdLine.setServerJar(serverJarField.getText());
-        cmdLineLabel.setText(config.cmdLine.parseCmdLine());
+        cmdLineField.setText(config.cmdLine.parseCmdLine());
     }//GEN-LAST:event_serverJarFieldActionPerformed
 
     private void javaExecFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_javaExecFieldActionPerformed
         config.cmdLine.setJavaExec(javaExecField.getText());
-        cmdLineLabel.setText(config.cmdLine.parseCmdLine());
+        cmdLineField.setText(config.cmdLine.parseCmdLine());
     }//GEN-LAST:event_javaExecFieldActionPerformed
 
     private void saveGuiConfigButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveGuiConfigButtonActionPerformed
@@ -899,16 +950,94 @@ public class MCServerGUIView extends FrameView implements Observer {
         giveInputFocus(evt);
     }//GEN-LAST:event_consoleOutputKeyTyped
 
+    private void consoleInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_consoleInputKeyPressed
+        if (!inputHistory.isEmpty()) {
+            if (evt.getKeyCode() == 38) {
+                inputHistoryIndex++;
+                if (inputHistoryIndex > inputHistory.size()) {
+                    inputHistoryIndex = 0;
+                }
+                if (inputHistoryIndex == inputHistory.size()) {
+                    consoleInput.setText("");
+                } else {
+                    consoleInput.setText(inputHistory.get(inputHistoryIndex));
+                }
+            } else if (evt.getKeyCode() == 40) {
+                inputHistoryIndex--;
+                if (inputHistoryIndex < 0) {
+                    inputHistoryIndex = inputHistory.size();
+                }
+                if (inputHistoryIndex == inputHistory.size()) {
+                    consoleInput.setText("");
+                } else {
+                    consoleInput.setText(inputHistory.get(inputHistoryIndex));
+                }
+            }
+        }
+    }//GEN-LAST:event_consoleInputKeyPressed
+
+    private void customLaunchCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customLaunchCheckBoxActionPerformed
+        config.cmdLine.setUseCustomLaunch(customLaunchCheckBox.isSelected());
+        cmdLineField.setText(config.cmdLine.parseCmdLine());
+        if (customLaunchCheckBox.isSelected()) {
+            if (java.util.regex.Pattern.matches("^\\s*$", config.cmdLine.getCustomLaunch())) {
+                config.cmdLine.setUseCustomLaunch(false);
+                config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
+                config.cmdLine.setUseCustomLaunch(true);
+                cmdLineField.setText(config.cmdLine.getCustomLaunch());
+            }
+            cmdLineField.setEditable(true);
+            javaExecField.setEditable(false);
+            javaExecBrowseButton.setEnabled(false);
+            serverJarField.setEditable(false);
+            serverJarBrowseButton.setEnabled(false);
+            bukkitCheckBox.setEnabled(false);
+            xmxMemoryField.setEditable(false);
+            xincgcCheckBox.setEnabled(false);
+            extraArgsField.setEditable(false);
+        } else {
+            if (java.util.regex.Pattern.matches("^\\s*$", config.cmdLine.getCustomLaunch())) {
+                config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
+            }
+            cmdLineField.setEditable(false);
+            javaExecField.setEditable(true);
+            javaExecBrowseButton.setEnabled(true);
+            serverJarField.setEditable(true);
+            serverJarBrowseButton.setEnabled(true);
+            bukkitCheckBox.setEnabled(true);
+            xmxMemoryField.setEditable(true);
+            xincgcCheckBox.setEnabled(true);
+            extraArgsField.setEditable(true);
+        }
+    }//GEN-LAST:event_customLaunchCheckBoxActionPerformed
+
+    private void cmdLineFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLineFieldActionPerformed
+        config.cmdLine.setCustomLaunch(cmdLineField.getText());
+        if (java.util.regex.Pattern.matches("^\\s*$", config.cmdLine.getCustomLaunch())) {
+            config.cmdLine.setUseCustomLaunch(false);
+            config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
+            config.cmdLine.setUseCustomLaunch(true);
+            cmdLineField.setText(config.cmdLine.getCustomLaunch());
+        }
+    }//GEN-LAST:event_cmdLineFieldActionPerformed
+
+    private void customLaunchCheckBoxMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customLaunchCheckBoxMouseEntered
+        customLaunchCheckBox.getActionMap().get("postTip").actionPerformed(new ActionEvent(customLaunchCheckBox, ActionEvent.ACTION_PERFORMED, "postTip"));
+    }//GEN-LAST:event_customLaunchCheckBoxMouseEntered
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JCheckBox bukkitCheckBox;
-    public javax.swing.JLabel cmdLineLabel;
+    public javax.swing.JTextField cmdLineField;
     public javax.swing.JTextField consoleInput;
     public javax.swing.JPanel consoleInputPanel;
     public javax.swing.JTextPane consoleOutput;
     public javax.swing.JPanel consoleOutputPanel;
+    public javax.swing.JCheckBox customLaunchCheckBox;
     public javax.swing.JTextField extraArgsField;
     public javax.swing.JLabel extraArgsLabel;
     public javax.swing.JPanel guiConfigTab;
+    public javax.swing.JTextField inputHistoryMaxSizeField;
+    public javax.swing.JLabel inputHistoryMaxSizeLabel;
     public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel2;
     public javax.swing.JList jList1;
@@ -948,6 +1077,39 @@ public class MCServerGUIView extends FrameView implements Observer {
     // End of variables declaration//GEN-END:variables
 
     // My methods
+    class numberVerifier extends javax.swing.InputVerifier {
+         public boolean verify(javax.swing.JComponent input) {
+ 	       javax.swing.JTextField tf = (javax.swing.JTextField) input;
+               if (java.util.regex.Pattern.matches("^\\d{1,4}$", tf.getText())){
+                   return true;
+               } else {
+                   tf.getActionMap().get("postTip").actionPerformed(new ActionEvent(tf, ActionEvent.ACTION_PERFORMED, "postTip"));
+                   return false;
+               }
+         }
+     }
+
+    public void sendInput(boolean shouldSay) {
+        String stringToSend = consoleInput.getText();
+        if (inputHistory.size() >= config.getInputHistoryMaxSize()) {
+            inputHistory.remove(inputHistory.size() - 1);
+        }
+        inputHistory.add(0, stringToSend);
+        if ((sayCheckBox.isSelected()) && (!shouldSay)) {
+            server.send("say " + stringToSend);
+        } else if ((!sayCheckBox.isSelected()) && (shouldSay)) {
+            server.send("say " + stringToSend);
+        } else {
+            server.send(stringToSend);
+        }
+        consoleInput.setText("");
+        inputHistoryIndex = -1;
+    }
+
+    public void sendInput() {
+        sendInput(false);
+    }
+
     public void giveInputFocus(java.awt.event.KeyEvent evt) {
         if ((evt.getKeyChar() != java.awt.event.KeyEvent.CHAR_UNDEFINED) && (consoleInput.isEnabled()) && ((int)evt.getKeyChar() > 32)) {
             if (consoleInput.requestFocusInWindow()) {
@@ -973,7 +1135,29 @@ public class MCServerGUIView extends FrameView implements Observer {
         xmxMemoryField.setText(config.cmdLine.getXmx());
         xincgcCheckBox.setSelected(config.cmdLine.getXincgc());
         extraArgsField.setText(config.cmdLine.getExtraArgs());
-        cmdLineLabel.setText(config.cmdLine.parseCmdLine());
+        customLaunchCheckBox.setSelected(config.cmdLine.getUseCustomLaunch());
+        inputHistoryMaxSizeField.setText(Integer.toString(config.getInputHistoryMaxSize()));
+        if (!config.cmdLine.getUseCustomLaunch()) {
+            if (java.util.regex.Pattern.matches("^\\s*$", config.cmdLine.getCustomLaunch())) {
+                config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
+            }
+        } else {
+            if (java.util.regex.Pattern.matches("^\\s*$", config.cmdLine.getCustomLaunch())) {
+                config.cmdLine.setUseCustomLaunch(false);
+                config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
+                config.cmdLine.setUseCustomLaunch(true);
+            }
+            cmdLineField.setEditable(true);
+            javaExecField.setEditable(false);
+            javaExecBrowseButton.setEnabled(false);
+            serverJarField.setEditable(false);
+            serverJarBrowseButton.setEnabled(false);
+            bukkitCheckBox.setEnabled(false);
+            xmxMemoryField.setEditable(false);
+            xincgcCheckBox.setEnabled(false);
+            extraArgsField.setEditable(false);
+        }
+        cmdLineField.setText(config.cmdLine.parseCmdLine());
         saveConfig();
     }
 
@@ -981,11 +1165,26 @@ public class MCServerGUIView extends FrameView implements Observer {
         String temp = statusMessageLabel.getText();
         statusMessageLabel.setText("Saving configuration...");
         config.setWindowTitle(windowTitleField.getText());
+        config.setInputHistoryMaxSize(Integer.parseInt(inputHistoryMaxSizeField.getText()));
         config.cmdLine.setXmx(xmxMemoryField.getText());
         config.cmdLine.setExtraArgs(extraArgsField.getText());
         config.cmdLine.setServerJar(serverJarField.getText());
         config.cmdLine.setJavaExec(javaExecField.getText());
-        cmdLineLabel.setText(config.cmdLine.parseCmdLine());
+        if (config.cmdLine.getUseCustomLaunch()) {
+            if (java.util.regex.Pattern.matches("^\\s*$", cmdLineField.getText())) {
+                config.cmdLine.setUseCustomLaunch(false);
+                config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
+                config.cmdLine.setUseCustomLaunch(true);
+            } else {
+                config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
+            }
+            cmdLineField.setText(config.cmdLine.parseCmdLine());
+        } else {
+            cmdLineField.setText(config.cmdLine.parseCmdLine());
+            if (java.util.regex.Pattern.matches("^\\s*$", config.cmdLine.getCustomLaunch())) {
+                config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
+            }
+        }
         config.save();
         statusMessageLabel.setText(temp);
     }
@@ -1047,6 +1246,8 @@ public class MCServerGUIView extends FrameView implements Observer {
     private MCServerGUIMainWorker mainWorker;
     private boolean textScrolling;
     private boolean mouseInConsoleOutput;
+    private List<String> inputHistory;
+    private int inputHistoryIndex;
 
     //Auto created
     private final Timer messageTimer;

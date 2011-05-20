@@ -1,3 +1,11 @@
+Version .1.2
+  Typing anywhere on the Main Window tab will now automatically grant focus to the console input box while the server is running.
+  Pressing CONTROL+S will toggle the Say checkbox.
+  If Say is not checked, pressing SHIFT+ENTER will prepend "say " to your text when sending.  If Say IS checked, pressing SHIFT+ENTER will send text WITHOUT prepending "say ".
+  Added input history! Press up and down arrows while focused on the console input box and it will cycle through previously sent messages
+  Added option to specify how many lines should be saved into the history.
+  Added experimental option to completely customize the command line.  This is mostly in here to allow certain mod compatability.  Please let me know how it works!
+
 Version .1.1
   There is now a save button the config page to immediately save your settings.
   Text now scrolls to the end under the following conditions: If the text box has focus or if the mouse is over it.  It will also NOT scroll if you have anything selected within it.

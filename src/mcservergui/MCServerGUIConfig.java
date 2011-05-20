@@ -16,8 +16,89 @@ import java.util.ArrayList;
 public class MCServerGUIConfig {
 
     MCServerGUIConfig() {
-        windowTitle = "MC Server GUI";
+        _windowTitle = "MC Server GUI";
+        _inputHistoryMaxSize = 30;
         cmdLine = new CMDLine();
+    }
+    
+    private String _windowTitle;
+    private int _inputHistoryMaxSize;
+    public CMDLine cmdLine;
+
+    public String getWindowTitle() { return _windowTitle; }
+    public int getInputHistoryMaxSize() { return _inputHistoryMaxSize; }
+    
+    public void setWindowTitle(String s) { _windowTitle = s; }
+    public void setInputHistoryMaxSize(int i) { _inputHistoryMaxSize = i; }
+
+    public class CMDLine {
+        public CMDLine () {
+            _javaExec = "java";
+            _bukkit = true;
+            _xmx = "1024M";
+            _xincgc = true;
+            _serverJar = "craftbukkit.jar";
+            _extraArgs = "";
+            _useCustomLaunch = false;
+            _customLaunch = "";
+        }
+
+        private String _javaExec, _xmx, _serverJar, _extraArgs, _customLaunch;
+        private boolean _bukkit, _xincgc, _useCustomLaunch;
+
+        public String getJavaExec() { return _javaExec; }
+        public String getXmx() { return _xmx; }
+        public String getServerJar() { return _serverJar; }
+        public String getExtraArgs() { return _extraArgs; }
+        public String getCustomLaunch() { return _customLaunch; }
+        public boolean getBukkit() { return _bukkit; }
+        public boolean getXincgc() { return _xincgc; }
+        public boolean getUseCustomLaunch() { return _useCustomLaunch; }
+
+        public void setJavaExec(String s) { _javaExec = s; }
+        public void setXmx(String s) { _xmx = s; }
+        public void setServerJar(String s) { _serverJar = s; }
+        public void setExtraArgs(String s) { _extraArgs = s; }
+        public void setCustomLaunch(String s) { _customLaunch = s; }
+        public void setBukkit(boolean b) { _bukkit = b; }
+        public void setXincgc(boolean b) { _xincgc = b; }
+        public void setUseCustomLaunch(boolean b) { _useCustomLaunch = b; }
+
+        public List<String> getCmdLine() {
+            List<String> cmdLine = new ArrayList<String>();
+            if (!getUseCustomLaunch()) {
+                cmdLine.add(getJavaExec());
+                if (getBukkit()) {
+                    cmdLine.add("-Djline.terminal=jline.UnsupportedTerminal");
+                }
+                cmdLine.add("-Xmx" + getXmx());
+                if (getXincgc()) {
+                    cmdLine.add("-Xincgc");
+                }
+                cmdLine.add("-jar");
+                cmdLine.add(getServerJar());
+                cmdLine.add("nogui");
+                if (getBukkit()) {
+                    cmdLine.add("-d");
+                    cmdLine.add("\"yyyy-MM-dd HH:mm:ss\"");
+                }
+            } else {
+                cmdLine = java.util.Arrays.asList(getCustomLaunch().split(" "));
+            }
+            return cmdLine;
+        }
+
+        public String parseCmdLine() {
+            List<String> cmdLine = getCmdLine();
+            StringBuilder parsedCmdLine = new StringBuilder();
+            int i = 0;
+            while (i < cmdLine.size()) {
+                parsedCmdLine.append(cmdLine.get(i));
+                parsedCmdLine.append(" ");
+                i++;
+            }
+            return parsedCmdLine.toString();
+        }
     }
 
     public boolean load() {
@@ -72,6 +153,8 @@ public class MCServerGUIConfig {
                     // General Config options
                     if ("Window Title".equals(fieldname)) {
                         setWindowTitle(jp.getText());
+                    } else if ("Input History Max Size".equals(fieldname)) {
+                        setInputHistoryMaxSize(jp.getIntValue());
                     } else if ("CMD Line".equals(fieldname)) {
                         // CMD Line config options
                         while (jp.nextToken() != JsonToken.END_OBJECT) {
@@ -89,6 +172,10 @@ public class MCServerGUIConfig {
                                 cmdLine.setXincgc(jp.getBooleanValue());
                             } else if ("Extra Arguments".equals(cmdlinefield)) {
                                 cmdLine.setExtraArgs(jp.getText());
+                            } else if ("Use Custom Launch".equals(cmdlinefield)) {
+                                cmdLine.setUseCustomLaunch(jp.getBooleanValue());
+                            } else if ("Custom Launch Line".equals(cmdlinefield)) {
+                                cmdLine.setCustomLaunch(jp.getText());
                             }
                         }
                     }
@@ -103,7 +190,7 @@ public class MCServerGUIConfig {
             return false;
         }
     }
-    
+
     public void save() {
         JsonFactory jf = new JsonFactory();
         try {
@@ -112,6 +199,7 @@ public class MCServerGUIConfig {
             jg.writeStartObject();
             //General Config Options
             jg.writeStringField("Window Title", getWindowTitle());
+            jg.writeNumberField("Input History Max Size", getInputHistoryMaxSize());
             jg.writeObjectFieldStart("CMD Line");
             // CMD Line Config Options
             jg.writeStringField("Java Executable", cmdLine.getJavaExec());
@@ -120,6 +208,8 @@ public class MCServerGUIConfig {
             jg.writeStringField("Xmx Memory", cmdLine.getXmx());
             jg.writeBooleanField("Xincgc", cmdLine.getXincgc());
             jg.writeStringField("Extra Arguments", cmdLine.getExtraArgs());
+            jg.writeBooleanField("Use Custom Launch", cmdLine.getUseCustomLaunch());
+            jg.writeStringField("Custom Launch Line", cmdLine.getCustomLaunch());
             jg.writeEndObject();
             jg.writeEndObject();
             jg.close();
@@ -128,75 +218,4 @@ public class MCServerGUIConfig {
             return;
         }
     }
-
-    
-    private String windowTitle;
-    public CMDLine cmdLine;
-
-    public String getWindowTitle() { return windowTitle; }
-    
-    public void setWindowTitle(String s) { windowTitle = s; }
-
-    public class CMDLine {
-        public CMDLine () {
-            _javaExec = "java";
-            _bukkit = true;
-            _xmx = "1024M";
-            _xincgc = true;
-            _serverJar = "craftbukkit.jar";
-            _extraArgs = "";
-        }
-
-        private String _javaExec, _xmx, _serverJar, _extraArgs;
-        private boolean _bukkit, _xincgc;
-
-        public String getJavaExec() { return _javaExec; }
-        public String getXmx() { return _xmx; }
-        public String getServerJar() { return _serverJar; }
-        public String getExtraArgs() { return _extraArgs; }
-        public boolean getBukkit() { return _bukkit; }
-        public boolean getXincgc() { return _xincgc; }
-
-        public void setJavaExec(String s) { _javaExec = s; }
-        public void setXmx(String s) { _xmx = s; }
-        public void setServerJar(String s) { _serverJar = s; }
-        public void setExtraArgs(String s) { _extraArgs = s; }
-        public void setBukkit(boolean b) { _bukkit = b; }
-        public void setXincgc(boolean b) { _xincgc = b; }
-
-        public List<String> getCmdLine() {
-            List<String> cmdLine = new ArrayList<String>();
-            
-            cmdLine.add(getJavaExec());
-            if (getBukkit()) {
-                cmdLine.add("-Djline.terminal=jline.UnsupportedTerminal");
-            }
-            cmdLine.add("-Xmx" + getXmx());
-            if (getXincgc()) {
-                cmdLine.add("-Xincgc");
-            }
-            cmdLine.add("-jar");
-            cmdLine.add(getServerJar());
-            cmdLine.add("nogui");
-            if (getBukkit()) {
-                cmdLine.add("-d");
-                cmdLine.add("\"yyyy-MM-dd HH:mm:ss\"");
-            }
-
-            return cmdLine;
-        }
-
-        public String parseCmdLine() {
-            List<String> cmdLine = getCmdLine();
-            StringBuilder parsedCmdLine = new StringBuilder();
-            int i = 0;
-            while (i < cmdLine.size()) {
-                parsedCmdLine.append(cmdLine.get(i));
-                parsedCmdLine.append(" ");
-                i++;
-            }
-            return parsedCmdLine.toString();
-        }
-    }
-
 }
