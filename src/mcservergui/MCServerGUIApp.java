@@ -22,7 +22,7 @@ public class MCServerGUIApp extends SingleFrameApplication implements Applicatio
         
         wantsToQuit = false;
     }
-
+    
     /**
      * At startup create and show the main frame of the application.
      */
@@ -32,9 +32,11 @@ public class MCServerGUIApp extends SingleFrameApplication implements Applicatio
         gui.initConfig();
         server.addObserver(gui);
         server.addObserver(this);
-        mainWorker = new MCServerGUIMainWorker(server, gui);
+        mainWorker = new MCServerGUIMainWorker(gui);
         gui.setMainWorker(mainWorker);
         mainWorker.startMainWorker();
+        phpInterface = new MCServerGUIPHPInterface(gui);
+        phpInterface.startPHPInterface();
     }
 
     /**
@@ -98,4 +100,5 @@ public class MCServerGUIApp extends SingleFrameApplication implements Applicatio
     private MCServerGUIServerModel server;
     private MCServerGUIConfig config;
     private MCServerGUIMainWorker mainWorker;
+    private MCServerGUIPHPInterface phpInterface;
 }

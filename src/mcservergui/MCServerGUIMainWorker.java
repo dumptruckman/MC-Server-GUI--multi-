@@ -4,6 +4,7 @@
  */
 
 package mcservergui;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -13,9 +14,8 @@ import java.util.TimerTask;
  */
 public class MCServerGUIMainWorker {
 
-    public MCServerGUIMainWorker(MCServerGUIServerModel newServer, MCServerGUIView newGui) {
+    public MCServerGUIMainWorker(MCServerGUIView newGui) {
         gui = newGui;
-        server = newServer; 
         timer = new java.util.Timer();
     }
 
@@ -29,7 +29,6 @@ public class MCServerGUIMainWorker {
         }
     }
 
-    private MCServerGUIServerModel server;
     private MCServerGUIView gui;
     Timer timer;
 }

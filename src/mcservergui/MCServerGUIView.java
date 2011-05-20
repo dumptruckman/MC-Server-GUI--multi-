@@ -813,14 +813,7 @@ public class MCServerGUIView extends FrameView implements Observer {
 
     private void startstopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startstopButtonActionPerformed
         if (startstopButton.getText().equals("Start")) {
-            consoleOutput.setText("");
-            server.setCmdLine(config.cmdLine.getCmdLine());
-            if (server.start().equals("SUCCESS")) {
-            } else if (server.start().equals("ERROR")) {
-                consoleOutput.setText("[GUI] Unknown error occured while launching the server.");
-            } else if (server.start().equals("INVALIDJAR")) {
-                
-            }
+            startServer();
         } else {
             stopServer();
         }
@@ -1192,6 +1185,17 @@ public class MCServerGUIView extends FrameView implements Observer {
     public void scrollText() {
         if (textScrolling) {
             consoleOutput.setCaretPosition(consoleOutput.getDocument().getLength());
+        }
+    }
+
+    public void startServer() {
+        consoleOutput.setText("");
+        server.setCmdLine(config.cmdLine.getCmdLine());
+        if (server.start().equals("SUCCESS")) {
+        } else if (server.start().equals("ERROR")) {
+            consoleOutput.setText("[GUI] Unknown error occured while launching the server.");
+        } else if (server.start().equals("INVALIDJAR")) {
+
         }
     }
 
