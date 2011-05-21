@@ -35,8 +35,6 @@ public class MCServerGUIApp extends SingleFrameApplication implements Applicatio
         mainWorker = new MCServerGUIMainWorker(gui);
         gui.setMainWorker(mainWorker);
         mainWorker.startMainWorker();
-        phpInterface = new MCServerGUIPHPInterface(gui);
-        phpInterface.startPHPInterface();
     }
 
     /**
@@ -100,5 +98,4 @@ public class MCServerGUIApp extends SingleFrameApplication implements Applicatio
     private MCServerGUIServerModel server;
     private MCServerGUIConfig config;
     private MCServerGUIMainWorker mainWorker;
-    private MCServerGUIPHPInterface phpInterface;
 }
