@@ -32,6 +32,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         super(app);
 
         initComponents();
+        fixComponents();
 
         // status bar initialization - message timeout, idle icon and busy animation, etc
         ResourceMap resourceMap = getResourceMap();
@@ -127,17 +128,19 @@ public class MCServerGUIView extends FrameView implements Observer {
         consoleOutputPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         consoleOutput = new javax.swing.JTextPane();
+        playerListPanel = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList();
         consoleInputPanel = new javax.swing.JPanel();
         consoleInput = new javax.swing.JTextField();
         submitButton = new javax.swing.JButton();
         sayCheckBox = new javax.swing.JCheckBox();
         serverControlPanel = new javax.swing.JPanel();
         startstopButton = new javax.swing.JButton();
-        playerListPanel = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
-        jPanel6 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
+        saveWorldsButton = new javax.swing.JButton();
+        backupButton_MainWindow = new javax.swing.JButton();
+        serverInfoPanel = new javax.swing.JPanel();
+        guiInfoPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         serverConfigTab = new javax.swing.JPanel();
         serverCmdLinePanel = new javax.swing.JPanel();
@@ -164,6 +167,15 @@ public class MCServerGUIView extends FrameView implements Observer {
         inputHistoryMaxSizeLabel = new javax.swing.JLabel();
         inputHistoryMaxSizeField = new javax.swing.JTextField();
         saveGuiConfigButton = new javax.swing.JButton();
+        backupControlTab = new javax.swing.JPanel();
+        backupButton_BackupControl = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        backupWorldsCheckBox = new javax.swing.JCheckBox();
+        backupLogCheckBox = new javax.swing.JCheckBox();
+        backupPluginsCheckBox = new javax.swing.JCheckBox();
+        backupEverythingCheckBox = new javax.swing.JCheckBox();
+        zipBackupCheckBox = new javax.swing.JCheckBox();
+        saveBackupControlButton = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
@@ -187,6 +199,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(mcservergui.MCServerGUIApp.class).getContext().getResourceMap(MCServerGUIView.class);
         consoleOutputPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("consoleOutputPanel.border.title"))); // NOI18N
         consoleOutputPanel.setName("consoleOutputPanel"); // NOI18N
+        consoleOutputPanel.setPreferredSize(new java.awt.Dimension(220, 204));
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
@@ -221,15 +234,49 @@ public class MCServerGUIView extends FrameView implements Observer {
         consoleOutputPanel.setLayout(consoleOutputPanelLayout);
         consoleOutputPanelLayout.setHorizontalGroup(
             consoleOutputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
         );
         consoleOutputPanelLayout.setVerticalGroup(
             consoleOutputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+        );
+
+        playerListPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("playerListPanel.border.title"))); // NOI18N
+        playerListPanel.setName("playerListPanel"); // NOI18N
+        playerListPanel.setPreferredSize(new java.awt.Dimension(125, 204));
+
+        jScrollPane2.setName("jScrollPane2"); // NOI18N
+
+        jList1.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Not yet implemented" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jList1.setToolTipText(resourceMap.getString("playerList.toolTipText")); // NOI18N
+        jList1.setEnabled(false);
+        jList1.setFocusable(false);
+        jList1.setName("playerList"); // NOI18N
+        jList1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jList1KeyTyped(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jList1);
+
+        javax.swing.GroupLayout playerListPanelLayout = new javax.swing.GroupLayout(playerListPanel);
+        playerListPanel.setLayout(playerListPanelLayout);
+        playerListPanelLayout.setHorizontalGroup(
+            playerListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+        );
+        playerListPanelLayout.setVerticalGroup(
+            playerListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
         );
 
         consoleInputPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("consoleInputPanel.border.title"))); // NOI18N
         consoleInputPanel.setName("consoleInputPanel"); // NOI18N
+        consoleInputPanel.setPreferredSize(new java.awt.Dimension(300, 50));
 
         consoleInput.setText(resourceMap.getString("consoleInput.text")); // NOI18N
         consoleInput.setToolTipText(resourceMap.getString("consoleInput.toolTipText")); // NOI18N
@@ -274,7 +321,7 @@ public class MCServerGUIView extends FrameView implements Observer {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, consoleInputPanelLayout.createSequentialGroup()
                 .addComponent(sayCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(consoleInput, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)
+                .addComponent(consoleInput, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(submitButton))
         );
@@ -298,86 +345,76 @@ public class MCServerGUIView extends FrameView implements Observer {
             }
         });
 
+        saveWorldsButton.setText(resourceMap.getString("saveWorldsButton.text")); // NOI18N
+        saveWorldsButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        saveWorldsButton.setName("saveWorldsButton"); // NOI18N
+        saveWorldsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveWorldsButtonActionPerformed(evt);
+            }
+        });
+
+        backupButton_MainWindow.setText(resourceMap.getString("backupButton_MainWindow.text")); // NOI18N
+        backupButton_MainWindow.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        backupButton_MainWindow.setName("backupButton_MainWindow"); // NOI18N
+
         javax.swing.GroupLayout serverControlPanelLayout = new javax.swing.GroupLayout(serverControlPanel);
         serverControlPanel.setLayout(serverControlPanelLayout);
         serverControlPanelLayout.setHorizontalGroup(
             serverControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(serverControlPanelLayout.createSequentialGroup()
-                .addComponent(startstopButton)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addGroup(serverControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(serverControlPanelLayout.createSequentialGroup()
+                        .addComponent(startstopButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(saveWorldsButton))
+                    .addComponent(backupButton_MainWindow))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         serverControlPanelLayout.setVerticalGroup(
             serverControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(serverControlPanelLayout.createSequentialGroup()
-                .addComponent(startstopButton)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addGroup(serverControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(startstopButton)
+                    .addComponent(saveWorldsButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(backupButton_MainWindow)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
-        playerListPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("playerListPanel.border.title"))); // NOI18N
-        playerListPanel.setName("playerListPanel"); // NOI18N
+        serverInfoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Server Information"));
+        serverInfoPanel.setName("serverInfoPanel"); // NOI18N
 
-        jScrollPane2.setName("jScrollPane2"); // NOI18N
-
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Not yet implemented" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jList1.setToolTipText(resourceMap.getString("playerList.toolTipText")); // NOI18N
-        jList1.setEnabled(false);
-        jList1.setFocusable(false);
-        jList1.setName("playerList"); // NOI18N
-        jList1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jList1KeyTyped(evt);
-            }
-        });
-        jScrollPane2.setViewportView(jList1);
-
-        javax.swing.GroupLayout playerListPanelLayout = new javax.swing.GroupLayout(playerListPanel);
-        playerListPanel.setLayout(playerListPanelLayout);
-        playerListPanelLayout.setHorizontalGroup(
-            playerListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+        javax.swing.GroupLayout serverInfoPanelLayout = new javax.swing.GroupLayout(serverInfoPanel);
+        serverInfoPanel.setLayout(serverInfoPanelLayout);
+        serverInfoPanelLayout.setHorizontalGroup(
+            serverInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 122, Short.MAX_VALUE)
         );
-        playerListPanelLayout.setVerticalGroup(
-            playerListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+        serverInfoPanelLayout.setVerticalGroup(
+            serverInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 81, Short.MAX_VALUE)
         );
 
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel6.border.title"))); // NOI18N
-        jPanel6.setName("jPanel6"); // NOI18N
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 53, Short.MAX_VALUE)
-        );
-
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel7.border.title"))); // NOI18N
-        jPanel7.setName("jPanel7"); // NOI18N
+        guiInfoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("GUI Information"));
+        guiInfoPanel.setName("guiInfoPanel"); // NOI18N
 
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        javax.swing.GroupLayout guiInfoPanelLayout = new javax.swing.GroupLayout(guiInfoPanel);
+        guiInfoPanel.setLayout(guiInfoPanelLayout);
+        guiInfoPanelLayout.setHorizontalGroup(
+            guiInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(guiInfoPanelLayout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        guiInfoPanelLayout.setVerticalGroup(
+            guiInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(guiInfoPanelLayout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout mainWindowTabLayout = new javax.swing.GroupLayout(mainWindowTab);
@@ -385,34 +422,35 @@ public class MCServerGUIView extends FrameView implements Observer {
         mainWindowTabLayout.setHorizontalGroup(
             mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainWindowTabLayout.createSequentialGroup()
-                .addGroup(mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(mainWindowTabLayout.createSequentialGroup()
                         .addComponent(serverControlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(serverInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(guiInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(mainWindowTabLayout.createSequentialGroup()
-                        .addComponent(consoleOutputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(consoleOutputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(playerListPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(consoleInputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(playerListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
+                    .addComponent(consoleInputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         mainWindowTabLayout.setVerticalGroup(
             mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainWindowTabLayout.createSequentialGroup()
                 .addGroup(mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(playerListPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(playerListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(consoleOutputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(consoleInputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(serverControlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(serverInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(guiInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("mainWindowTab.TabConstraints.tabTitle"), mainWindowTab); // NOI18N
@@ -538,40 +576,41 @@ public class MCServerGUIView extends FrameView implements Observer {
         serverCmdLinePanelLayout.setHorizontalGroup(
             serverCmdLinePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(serverCmdLinePanelLayout.createSequentialGroup()
-                .addComponent(javaExecLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(javaExecField, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(javaExecBrowseButton))
-            .addGroup(serverCmdLinePanelLayout.createSequentialGroup()
-                .addComponent(serverJarLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(serverJarField, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(serverJarBrowseButton))
-            .addGroup(serverCmdLinePanelLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(xmxMemoryLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(xmxMemoryField, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(xincgcCheckBox)
-                .addGap(74, 74, 74))
-            .addGroup(serverCmdLinePanelLayout.createSequentialGroup()
-                .addComponent(extraArgsLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(extraArgsField, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE))
-            .addComponent(bukkitCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
-            .addGroup(serverCmdLinePanelLayout.createSequentialGroup()
                 .addComponent(customLaunchCheckBox)
                 .addContainerGap())
             .addGroup(serverCmdLinePanelLayout.createSequentialGroup()
-                .addComponent(jLabel2)
-                .addContainerGap())
+                .addGroup(serverCmdLinePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, serverCmdLinePanelLayout.createSequentialGroup()
+                        .addComponent(serverJarLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(serverJarField))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, serverCmdLinePanelLayout.createSequentialGroup()
+                        .addComponent(javaExecLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(javaExecField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(serverCmdLinePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(serverJarBrowseButton)
+                    .addComponent(javaExecBrowseButton))
+                .addGap(119, 119, 119))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, serverCmdLinePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(cmdLineField, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(serverCmdLinePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(bukkitCheckBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, serverCmdLinePanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(cmdLineField, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, serverCmdLinePanelLayout.createSequentialGroup()
+                        .addComponent(extraArgsLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(extraArgsField, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, serverCmdLinePanelLayout.createSequentialGroup()
+                        .addComponent(xmxMemoryLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(xmxMemoryField, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(xincgcCheckBox)))
+                .addGap(125, 125, 125))
         );
         serverCmdLinePanelLayout.setVerticalGroup(
             serverCmdLinePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -583,14 +622,14 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(serverCmdLinePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(serverJarLabel)
-                    .addComponent(serverJarBrowseButton)
-                    .addComponent(serverJarField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(serverJarField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(serverJarBrowseButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bukkitCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(serverCmdLinePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(xmxMemoryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(xmxMemoryLabel)
+                    .addComponent(xmxMemoryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(xincgcCheckBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(serverCmdLinePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -601,7 +640,8 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmdLineField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(cmdLineField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         saveServerConfigButton.setText(resourceMap.getString("saveServerConfigButton.text")); // NOI18N
@@ -619,19 +659,19 @@ public class MCServerGUIView extends FrameView implements Observer {
             serverConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(serverConfigTabLayout.createSequentialGroup()
                 .addGroup(serverConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(serverCmdLinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(serverCmdLinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(serverConfigTabLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(saveServerConfigButton)))
-                .addContainerGap(328, Short.MAX_VALUE))
+                .addContainerGap(305, Short.MAX_VALUE))
         );
         serverConfigTabLayout.setVerticalGroup(
             serverConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(serverConfigTabLayout.createSequentialGroup()
-                .addComponent(serverCmdLinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(serverCmdLinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveServerConfigButton)
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addContainerGap(138, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("serverConfigTab.TabConstraints.tabTitle"), serverConfigTab); // NOI18N
@@ -704,7 +744,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                     .addGroup(guiConfigTabLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(saveGuiConfigButton)))
-                .addContainerGap(425, Short.MAX_VALUE))
+                .addContainerGap(307, Short.MAX_VALUE))
         );
         guiConfigTabLayout.setVerticalGroup(
             guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -712,20 +752,138 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveGuiConfigButton)
-                .addContainerGap(313, Short.MAX_VALUE))
+                .addContainerGap(303, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("guiConfigTab.TabConstraints.tabTitle"), guiConfigTab); // NOI18N
+
+        backupControlTab.setName("backupControlTab"); // NOI18N
+
+        backupButton_BackupControl.setText(resourceMap.getString("backupButton_BackupControl.text")); // NOI18N
+        backupButton_BackupControl.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        backupButton_BackupControl.setName("backupButton_BackupControl"); // NOI18N
+        backupButton_BackupControl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backupButton_BackupControlActionPerformed(evt);
+            }
+        });
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel1.border.title"))); // NOI18N
+        jPanel1.setName("jPanel1"); // NOI18N
+
+        backupWorldsCheckBox.setText(resourceMap.getString("backupWorldsCheckBox.text")); // NOI18N
+        backupWorldsCheckBox.setName("backupWorldsCheckBox"); // NOI18N
+        backupWorldsCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backupWorldsCheckBoxActionPerformed(evt);
+            }
+        });
+
+        backupLogCheckBox.setText(resourceMap.getString("backupLogCheckBox.text")); // NOI18N
+        backupLogCheckBox.setName("backupLogCheckBox"); // NOI18N
+        backupLogCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backupLogCheckBoxActionPerformed(evt);
+            }
+        });
+
+        backupPluginsCheckBox.setText(resourceMap.getString("backupPluginsCheckBox.text")); // NOI18N
+        backupPluginsCheckBox.setName("backupPluginsCheckBox"); // NOI18N
+        backupPluginsCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backupPluginsCheckBoxActionPerformed(evt);
+            }
+        });
+
+        backupEverythingCheckBox.setText(resourceMap.getString("backupEverythingCheckBox.text")); // NOI18N
+        backupEverythingCheckBox.setName("backupEverythingCheckBox"); // NOI18N
+        backupEverythingCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backupEverythingCheckBoxActionPerformed(evt);
+            }
+        });
+
+        zipBackupCheckBox.setText(resourceMap.getString("zipBackupCheckBox.text")); // NOI18N
+        zipBackupCheckBox.setName("zipBackupCheckBox"); // NOI18N
+        zipBackupCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zipBackupCheckBoxActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(backupWorldsCheckBox)
+                .addGap(18, 18, 18)
+                .addComponent(backupLogCheckBox))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(backupPluginsCheckBox)
+                .addGap(18, 18, 18)
+                .addComponent(backupEverythingCheckBox))
+            .addComponent(zipBackupCheckBox)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(backupWorldsCheckBox)
+                    .addComponent(backupLogCheckBox))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(backupPluginsCheckBox)
+                    .addComponent(backupEverythingCheckBox))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(zipBackupCheckBox))
+        );
+
+        saveBackupControlButton.setText(resourceMap.getString("saveBackupControlButton.text")); // NOI18N
+        saveBackupControlButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        saveBackupControlButton.setName("saveBackupControlButton"); // NOI18N
+        saveBackupControlButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBackupControlButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout backupControlTabLayout = new javax.swing.GroupLayout(backupControlTab);
+        backupControlTab.setLayout(backupControlTabLayout);
+        backupControlTabLayout.setHorizontalGroup(
+            backupControlTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(backupControlTabLayout.createSequentialGroup()
+                .addGroup(backupControlTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(backupControlTabLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(saveBackupControlButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(backupButton_BackupControl)))
+                .addContainerGap(391, Short.MAX_VALUE))
+        );
+        backupControlTabLayout.setVerticalGroup(
+            backupControlTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(backupControlTabLayout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(backupControlTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(saveBackupControlButton)
+                    .addComponent(backupButton_BackupControl))
+                .addContainerGap(277, Short.MAX_VALUE))
+        );
+
+        tabber.addTab(resourceMap.getString("backupControlTab.TabConstraints.tabTitle"), backupControlTab); // NOI18N
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabber, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
+            .addComponent(tabber, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabber, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
+            .addComponent(tabber, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
         );
 
         menuBar.setName("menuBar"); // NOI18N
@@ -765,15 +923,15 @@ public class MCServerGUIView extends FrameView implements Observer {
         statusPanel.setLayout(statusPanelLayout);
         statusPanelLayout.setHorizontalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
+            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(statusMessageLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 585, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 467, Short.MAX_VALUE)
                 .addComponent(statusAnimationLabel)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusPanelLayout.createSequentialGroup()
-                .addContainerGap(524, Short.MAX_VALUE)
+                .addContainerGap(406, Short.MAX_VALUE)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -795,6 +953,52 @@ public class MCServerGUIView extends FrameView implements Observer {
         setStatusBar(statusPanel);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Fixes the oddities of the component placing that netbeans does.
+     */
+    public final void fixComponents() {
+        javax.swing.GroupLayout mainWindowTabLayout = new javax.swing.GroupLayout(mainWindowTab);
+        mainWindowTab.setLayout(mainWindowTabLayout);
+        mainWindowTabLayout.setHorizontalGroup(
+            mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainWindowTabLayout.createSequentialGroup()
+                .addGroup(mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainWindowTabLayout.createSequentialGroup()
+                        .addComponent(serverControlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(serverInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(guiInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                        //.addComponent(backupControlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE))
+                    .addGroup(mainWindowTabLayout.createSequentialGroup()
+                        .addGroup(mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, true)
+                            .addComponent(consoleInputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mainWindowTabLayout.createSequentialGroup()
+                                .addComponent(consoleOutputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(playerListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+        );
+        mainWindowTabLayout.setVerticalGroup(
+            mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainWindowTabLayout.createSequentialGroup()
+                .addGroup(mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, true)
+                    .addComponent(consoleOutputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(playerListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(consoleInputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(guiInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(serverInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(serverControlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    //.addComponent(backupControlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+    }
+
+    /**
+     * Action object for the toggling of the sayCheckBox
+     */
     javax.swing.Action sayToggle = new javax.swing.AbstractAction() {
         public void actionPerformed(ActionEvent e) {
             if (sayCheckBox.isSelected()) {
@@ -804,6 +1008,10 @@ public class MCServerGUIView extends FrameView implements Observer {
             }
         }
     };
+
+    /**
+     * Action object for the sending of input with prepended "Say " (caused by shift+enter)
+     */
     javax.swing.Action saySend = new javax.swing.AbstractAction() {
         public void actionPerformed(ActionEvent e) {
             sendInput(true);
@@ -1017,7 +1225,55 @@ public class MCServerGUIView extends FrameView implements Observer {
         customLaunchCheckBox.getActionMap().get("postTip").actionPerformed(new ActionEvent(customLaunchCheckBox, ActionEvent.ACTION_PERFORMED, "postTip"));
     }//GEN-LAST:event_customLaunchCheckBoxMouseEntered
 
+    private void saveWorldsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveWorldsButtonActionPerformed
+        this.sendInput("save-all");
+    }//GEN-LAST:event_saveWorldsButtonActionPerformed
+
+    private void backupWorldsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupWorldsCheckBoxActionPerformed
+        config.backups.setWorlds(backupWorldsCheckBox.isSelected());
+    }//GEN-LAST:event_backupWorldsCheckBoxActionPerformed
+
+    private void backupLogCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupLogCheckBoxActionPerformed
+        config.backups.setLog(backupLogCheckBox.isSelected());
+    }//GEN-LAST:event_backupLogCheckBoxActionPerformed
+
+    private void backupPluginsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupPluginsCheckBoxActionPerformed
+        config.backups.setPlugins(backupPluginsCheckBox.isSelected());
+    }//GEN-LAST:event_backupPluginsCheckBoxActionPerformed
+
+    private void backupEverythingCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupEverythingCheckBoxActionPerformed
+        config.backups.setEverything(backupEverythingCheckBox.isSelected());
+        if (backupEverythingCheckBox.isSelected()) {
+            backupPluginsCheckBox.setEnabled(false);
+            backupLogCheckBox.setEnabled(false);
+            backupWorldsCheckBox.setEnabled(false);
+        } else {
+            backupPluginsCheckBox.setEnabled(true);
+            backupLogCheckBox.setEnabled(true);
+            backupWorldsCheckBox.setEnabled(true);
+        }
+    }//GEN-LAST:event_backupEverythingCheckBoxActionPerformed
+
+    private void zipBackupCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zipBackupCheckBoxActionPerformed
+        config.backups.setZip(zipBackupCheckBox.isSelected());
+    }//GEN-LAST:event_zipBackupCheckBoxActionPerformed
+
+    private void saveBackupControlButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBackupControlButtonActionPerformed
+        saveConfig();
+    }//GEN-LAST:event_saveBackupControlButtonActionPerformed
+
+    private void backupButton_BackupControlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupButton_BackupControlActionPerformed
+        backup();
+    }//GEN-LAST:event_backupButton_BackupControlActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton backupButton_BackupControl;
+    public javax.swing.JButton backupButton_MainWindow;
+    public javax.swing.JPanel backupControlTab;
+    public javax.swing.JCheckBox backupEverythingCheckBox;
+    public javax.swing.JCheckBox backupLogCheckBox;
+    public javax.swing.JCheckBox backupPluginsCheckBox;
+    public javax.swing.JCheckBox backupWorldsCheckBox;
     public javax.swing.JCheckBox bukkitCheckBox;
     public javax.swing.JTextField cmdLineField;
     public javax.swing.JTextField consoleInput;
@@ -1028,14 +1284,14 @@ public class MCServerGUIView extends FrameView implements Observer {
     public javax.swing.JTextField extraArgsField;
     public javax.swing.JLabel extraArgsLabel;
     public javax.swing.JPanel guiConfigTab;
+    public javax.swing.JPanel guiInfoPanel;
     public javax.swing.JTextField inputHistoryMaxSizeField;
     public javax.swing.JLabel inputHistoryMaxSizeLabel;
     public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel2;
     public javax.swing.JList jList1;
+    public javax.swing.JPanel jPanel1;
     public javax.swing.JPanel jPanel4;
-    public javax.swing.JPanel jPanel6;
-    public javax.swing.JPanel jPanel7;
     public javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JButton javaExecBrowseButton;
@@ -1046,12 +1302,15 @@ public class MCServerGUIView extends FrameView implements Observer {
     public javax.swing.JMenuBar menuBar;
     public javax.swing.JPanel playerListPanel;
     private javax.swing.JProgressBar progressBar;
+    public javax.swing.JButton saveBackupControlButton;
     public javax.swing.JButton saveGuiConfigButton;
     public javax.swing.JButton saveServerConfigButton;
+    public javax.swing.JButton saveWorldsButton;
     public javax.swing.JCheckBox sayCheckBox;
     public javax.swing.JPanel serverCmdLinePanel;
     public javax.swing.JPanel serverConfigTab;
     public javax.swing.JPanel serverControlPanel;
+    public javax.swing.JPanel serverInfoPanel;
     public javax.swing.JButton serverJarBrowseButton;
     public javax.swing.JTextField serverJarField;
     public javax.swing.JLabel serverJarLabel;
@@ -1066,21 +1325,51 @@ public class MCServerGUIView extends FrameView implements Observer {
     public javax.swing.JCheckBox xincgcCheckBox;
     public javax.swing.JTextField xmxMemoryField;
     public javax.swing.JLabel xmxMemoryLabel;
+    public javax.swing.JCheckBox zipBackupCheckBox;
     // End of variables declaration//GEN-END:variables
 
     // My methods
-    class numberVerifier extends javax.swing.InputVerifier {
-         public boolean verify(javax.swing.JComponent input) {
- 	       javax.swing.JTextField tf = (javax.swing.JTextField) input;
-               if (java.util.regex.Pattern.matches("^\\d{1,4}$", tf.getText())){
-                   return true;
-               } else {
-                   tf.getActionMap().get("postTip").actionPerformed(new ActionEvent(tf, ActionEvent.ACTION_PERFORMED, "postTip"));
-                   return false;
-               }
-         }
-     }
+    public void backup() {
+        stateBeforeBackup = controlState;
+        controlSwitcher("BACKUP");
+        if (server.isRunning()) {
+            sendInput("save-off");
+        }
+        MCServerGUIBackup backup = new MCServerGUIBackup(config);
+        if (backup.startBackup()) {
+            backup.addObserver(this);
+        } else {
+            addTextToConsoleOutput("[GUI] Backup failed.  Perhaps a bad server jar?");
+            controlSwitcher("!BACKUP");
+        }
+    }
 
+    /**
+     * Verifies that the text entered is a number before focus is released.  If not, it shows the tooltip.
+     */
+    class numberVerifier extends javax.swing.InputVerifier {
+        public boolean verify(javax.swing.JComponent input) {
+            javax.swing.JTextField tf = (javax.swing.JTextField) input;
+            if (java.util.regex.Pattern.matches("^\\d{1,4}$", tf.getText())){
+                return true;
+            } else {
+                tf.getActionMap().get("postTip").actionPerformed(new ActionEvent(tf, ActionEvent.ACTION_PERFORMED, "postTip"));
+                return false;
+            }
+        }
+    }
+
+    /**
+     * Sends whatever is in the console box to the server as is.
+     */
+    public void sendInput() {
+        sendInput(false);
+    }
+
+    /**
+     * Sends whatever is in the console box to the server.
+     * @param shouldSay determines if "say " should be prepended to the text.
+     */
     public void sendInput(boolean shouldSay) {
         String stringToSend = consoleInput.getText();
         if (inputHistory.size() >= config.getInputHistoryMaxSize()) {
@@ -1098,10 +1387,19 @@ public class MCServerGUIView extends FrameView implements Observer {
         inputHistoryIndex = -1;
     }
 
-    public void sendInput() {
-        sendInput(false);
+    /**
+     * Sends a String to the server.
+     * @param s String to send to the server
+     */
+    public void sendInput(String s) {
+        server.send(s);
     }
 
+    /**
+     * Determines if keyboard focus should be given to the console input field based on the passed KeyEvent.
+     * Basically any alpha-numeric keys will cause focus to be granted.
+     * @param evt KeyEvent to be passed in.
+     */
     public void giveInputFocus(java.awt.event.KeyEvent evt) {
         if ((evt.getKeyChar() != java.awt.event.KeyEvent.CHAR_UNDEFINED) && (consoleInput.isEnabled()) && ((int)evt.getKeyChar() > 32)) {
             if (consoleInput.requestFocusInWindow()) {
@@ -1110,15 +1408,37 @@ public class MCServerGUIView extends FrameView implements Observer {
         }
     }
 
+    /**
+     * Defines the MainWorker so the view can have access.
+     * @param newMainWorker
+     */
     public void setMainWorker(MCServerGUIMainWorker newMainWorker) {
         mainWorker = newMainWorker;
     }
 
+    /**
+     * Initializes the config file if necessary and sets all the gui elements to their config'd values
+     * Usually this is only called once during the constructor.
+     */
     public void initConfig() {
         if (config.load()) {
             consoleOutput.setText("Configuration file loaded succesfully!");
         } else {
             consoleOutput.setText("Configuration file not found or invalid!  Creating new config file with default values.");
+        }
+        backupWorldsCheckBox.setSelected(config.backups.getWorlds());
+        backupLogCheckBox.setSelected(config.backups.getLog());
+        backupPluginsCheckBox.setSelected(config.backups.getPlugins());
+        backupEverythingCheckBox.setSelected(config.backups.getEverything());
+        zipBackupCheckBox.setSelected(config.backups.getZip());
+        if (backupEverythingCheckBox.isSelected()) {
+            backupPluginsCheckBox.setEnabled(false);
+            backupLogCheckBox.setEnabled(false);
+            backupWorldsCheckBox.setEnabled(false);
+        } else {
+            backupPluginsCheckBox.setEnabled(true);
+            backupLogCheckBox.setEnabled(true);
+            backupWorldsCheckBox.setEnabled(true);
         }
         windowTitleField.setText(config.getWindowTitle());
         javaExecField.setText(config.cmdLine.getJavaExec());
@@ -1153,6 +1473,9 @@ public class MCServerGUIView extends FrameView implements Observer {
         saveConfig();
     }
 
+    /**
+     * Saves the config file with any changes made by the user through the gui.
+     */
     public void saveConfig() {
         String temp = statusMessageLabel.getText();
         statusMessageLabel.setText("Saving configuration...");
@@ -1181,12 +1504,18 @@ public class MCServerGUIView extends FrameView implements Observer {
         statusMessageLabel.setText(temp);
     }
 
+    /**
+     * As long as textScrolling is true, this will cause the consoleOutput to be scrolled to the bottom.
+     */
     public void scrollText() {
         if (textScrolling) {
             consoleOutput.setCaretPosition(consoleOutput.getDocument().getLength());
         }
     }
 
+    /**
+     * Starts the Minecraft server and verifies that it started properly.
+     */
     public void startServer() {
         consoleOutput.setText("");
         server.setCmdLine(config.cmdLine.getCmdLine());
@@ -1194,24 +1523,41 @@ public class MCServerGUIView extends FrameView implements Observer {
         } else if (server.start().equals("ERROR")) {
             consoleOutput.setText("[GUI] Unknown error occured while launching the server.");
         } else if (server.start().equals("INVALIDJAR")) {
-
+            consoleOutput.setText("[GUI] The jar file you specified is not a valid file."
+                    + "  Please make corrections on the Server Config tab.");
         }
     }
 
+    /**
+     * Tells the Minecraft server to stop.
+     */
     public void stopServer() {
         statusMessageLabel.setText("Stopping server...");
         server.stop();
     }
 
+    /**
+     * Adds text to the end of the Console Output box.
+     * @param textToAdd String of text to add.
+     */
+    public void addTextToConsoleOutput(String textToAdd) {
+        try {
+            consoleOutput.getDocument().insertString(consoleOutput.getDocument().getLength(), textToAdd, null);
+        } catch (javax.swing.text.BadLocationException e) {
+            System.out.println("BadLocationException");
+        }
+    }
+
+    /**
+     * Observer update() method.  Called when the ServerModel has messages for the View
+     * @param o
+     * @param arg Message
+     */
     public void update(Observable o, Object arg) {
         if (arg.equals("newOutput")) {
             String newOutput = server.getReceived();
             if ((newOutput != null) && (!newOutput.equals("null\n"))) {
-                try {
-                    consoleOutput.getDocument().insertString(consoleOutput.getDocument().getLength(), newOutput, null);
-                } catch (javax.swing.text.BadLocationException e) {
-                    System.out.println("BadLocationException");
-                }
+                addTextToConsoleOutput(newOutput);
             }
         }
 
@@ -1221,17 +1567,31 @@ public class MCServerGUIView extends FrameView implements Observer {
         if (arg.equals("serverStarted")) {
             controlSwitcher("ON");
         }
+
+        if (arg.equals("finishedBackup")) {
+            if (server.isRunning()) {
+                sendInput("save-on");
+            }
+            controlSwitcher("!BACKUP");
+        }
     }
 
+    /**
+     * Switches GUI components into specific states based on param passed.
+     * @param serverState Typically the state of the server. "ON" or "OFF"
+     */
     private void controlSwitcher(String serverState) {
         if (serverState.equals("ON")) {
+            controlState =  "ON";
             // Switch GUI control to "ON" status
             startstopButton.setText("Stop");
             consoleInput.setEnabled(true);
             submitButton.setEnabled(true);
             statusMessageLabel.setText("Server Running");
             textScrolling = true;
+            saveWorldsButton.setEnabled(true);
         } else if (serverState.equals("OFF")) {
+            controlState =  "OFF";
             // Switch GUI controls to "OFF" status
             startstopButton.setText("Start");
             consoleInput.setEnabled(false);
@@ -1239,18 +1599,32 @@ public class MCServerGUIView extends FrameView implements Observer {
             statusMessageLabel.setText("Server Stopped");
             textScrolling = false;
             mouseInConsoleOutput = false;
+            saveWorldsButton.setEnabled(false);
         } else if (serverState.equals("BADCONFIG")) {
+            controlState =  "BADCONFIG";
             startstopButton.setEnabled(false);
+        } else if (serverState.equals("BACKUP")) {
+            controlState =  "BACKUP";
+            startstopButton.setEnabled(false);
+            saveWorldsButton.setEnabled(false);
+
+        } else if (serverState.equals("!BACKUP")) {
+            controlState = "!BACKUP";
+            startstopButton.setEnabled(true);
+            saveWorldsButton.setEnabled(true);
+            controlSwitcher(stateBeforeBackup);
         }
     }
 
-    public MCServerGUIServerModel server;
+    private MCServerGUIServerModel server;
     private MCServerGUIServerReceiver serverReceiver;
     private MCServerGUIMainWorker mainWorker;
     private boolean textScrolling;
     private boolean mouseInConsoleOutput;
     private List<String> inputHistory;
     private int inputHistoryIndex;
+    private String controlState;
+    private String stateBeforeBackup;
 
     //Auto created
     private final Timer messageTimer;

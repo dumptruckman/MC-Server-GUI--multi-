@@ -1,3 +1,7 @@
+Version .2.0
+  Rearranged the GUI a little
+  Added a save button. (Sends "save-all" to the server)
+
 Version .1.2
   Typing anywhere on the Main Window tab will now automatically grant focus to the console input box while the server is running.
   Pressing CONTROL+S will toggle the Say checkbox.
