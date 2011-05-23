@@ -22,7 +22,9 @@ public class MCServerGUIBackup extends Observable {
     }
 
     public boolean startBackup() {
+        System.out.println(config.cmdLine.getServerJar());
         String serverPath = new File(".\\" + config.cmdLine.getServerJar()).getParent();
+        System.out.println(serverPath);
         if (serverPath != null) {
             backupWorker.execute();
             return true;
@@ -41,7 +43,9 @@ public class MCServerGUIBackup extends Observable {
         @Override
         public void done() {
             try {
-                this.get();
+                backupSuccess = this.get();
+                setChanged();
+                notifyObservers("finishedBackup");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (java.util.concurrent.ExecutionException e) {
@@ -51,4 +55,5 @@ public class MCServerGUIBackup extends Observable {
     };
 
     private MCServerGUIConfig config;
+    private boolean backupSuccess;
 }

@@ -105,10 +105,6 @@ public class MCServerGUIConfig {
 
     public class Backups {
         public Backups() {
-            _everything = false;
-            _worlds = true;
-            _log = true;
-            _plugins = false;
             _zip = true;
             try {
                 _path = new File(".").getCanonicalPath() + System.getProperty("file.separator") + "backups";
@@ -116,24 +112,20 @@ public class MCServerGUIConfig {
                 _path = "";
                 System.out.println("WARNING: Could not set a default backup path.");
             }
+            _pathsToBackup = new ArrayList<String>();
         }
 
         private String _path;
-        private boolean _everything, _worlds, _log, _plugins, _zip;
+        private boolean _zip;
+        private List<String> _pathsToBackup;
 
         public String getPath() { return _path; }
-        public boolean getEverything() { return _everything; }
-        public boolean getWorlds() { return _worlds; }
-        public boolean getLog() { return _log; }
-        public boolean getPlugins() { return _plugins; }
         public boolean getZip() { return _zip; }
+        public List<String> getPathsToBackup() { return _pathsToBackup; }
 
         public void setPath(String s) { _path = s; }
-        public void setEverything(boolean b) { _everything = b; }
-        public void setWorlds(boolean b) { _worlds = b; }
-        public void setLog(boolean b) { _log = b; }
-        public void setPlugins(boolean b) { _plugins = b; }
         public void setZip(boolean b) { _zip = b; }
+        public void setPathsToBackup(List<String> l) { _pathsToBackup = l; }
     }
 
     public boolean load() {
@@ -219,16 +211,15 @@ public class MCServerGUIConfig {
                             jp.nextToken();
                             if ("Path".equals(backupfield)) {
                                 backups.setPath(jp.getText());
-                            } else if ("Everything".equals(backupfield)) {
-                                backups.setEverything(jp.getBooleanValue());
-                            } else if ("Worlds".equals(backupfield)) {
-                                backups.setWorlds(jp.getBooleanValue());
-                            } else if ("Log".equals(backupfield)) {
-                                backups.setLog(jp.getBooleanValue());
-                            } else if ("Plugins".equals(backupfield)) {
-                                backups.setPlugins(jp.getBooleanValue());
                             } else if ("Zip Backup".equals(backupfield)) {
                                 backups.setZip(jp.getBooleanValue());
+                            } else if ("Paths to Backup".equals(backupfield)) {
+                                List<String> pathlist = new ArrayList<String>();
+                                while (jp.nextToken() != JsonToken.END_ARRAY) {
+                                    String pathlistfield = jp.getCurrentName();
+                                    pathlist.add(pathlistfield);
+                                    jp.nextToken();
+                                }
                             }
                         }
                     }
@@ -267,11 +258,15 @@ public class MCServerGUIConfig {
             jg.writeObjectFieldStart("Backups");
             // Backups Config Options
             jg.writeStringField("Path", backups.getPath());
-            jg.writeBooleanField("Everything", backups.getEverything());
-            jg.writeBooleanField("Worlds", backups.getWorlds());
-            jg.writeBooleanField("Log", backups.getLog());
-            jg.writeBooleanField("Plugins", backups.getPlugins());
             jg.writeBooleanField("Zip Backup", backups.getZip());
+            // Paths to Backup list
+            jg.writeArrayFieldStart("Paths to Backup");
+            int i = 0;
+            while (i < backups.getPathsToBackup().size()) {
+                jg.writeString(backups.getPathsToBackup().get(i));
+                i++;
+            }
+            jg.writeEndArray(); //End of Paths to Backup list
             jg.writeEndObject();  // End of Backups Config Options
             jg.writeEndObject();
             jg.close();

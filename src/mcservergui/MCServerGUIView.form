@@ -7,12 +7,12 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="tabber" alignment="0" pref="562" max="32767" attributes="0"/>
+              <Component id="tabber" alignment="0" pref="550" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="tabber" alignment="1" pref="433" max="32767" attributes="0"/>
+              <Component id="tabber" alignment="1" pref="413" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -22,6 +22,7 @@
             <Property name="name" type="java.lang.String" value="tabber" noResource="true"/>
           </Properties>
           <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="tabberStateChanged"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tabberKeyTyped"/>
           </Events>
 
@@ -58,7 +59,7 @@
                               </Group>
                               <Component id="consoleInputPanel" alignment="0" pref="535" max="32767" attributes="1"/>
                           </Group>
-                          <EmptySpace pref="22" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -79,7 +80,7 @@
                                   <Component id="guiInfoPanel" alignment="0" max="32767" attributes="1"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="31" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -289,14 +290,9 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="startstopButton" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="saveWorldsButton" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="backupButton_MainWindow" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="startstopButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="saveWorldsButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace pref="21" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -308,9 +304,7 @@
                                   <Component id="startstopButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="saveWorldsButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="backupButton_MainWindow" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="29" max="32767" attributes="0"/>
+                              <EmptySpace pref="58" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -339,15 +333,6 @@
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveWorldsButtonActionPerformed"/>
                       </Events>
-                    </Component>
-                    <Component class="javax.swing.JButton" name="backupButton_MainWindow">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" resourceKey="backupButton_MainWindow.text"/>
-                        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[2, 5, 2, 5]"/>
-                        </Property>
-                        <Property name="name" type="java.lang.String" value="backupButton_MainWindow" noResource="true"/>
-                      </Properties>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -436,7 +421,7 @@
                                   <Component id="saveServerConfigButton" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="305" max="32767" attributes="0"/>
+                          <EmptySpace pref="293" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -446,7 +431,7 @@
                           <Component id="serverCmdLinePanel" min="-2" pref="238" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="saveServerConfigButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="138" max="32767" attributes="0"/>
+                          <EmptySpace pref="118" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -730,7 +715,7 @@
                                   <Component id="saveGuiConfigButton" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="307" max="32767" attributes="0"/>
+                          <EmptySpace pref="295" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -740,7 +725,7 @@
                           <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="saveGuiConfigButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="303" max="32767" attributes="0"/>
+                          <EmptySpace pref="283" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -854,43 +839,63 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="saveBackupControlButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="backupButton_BackupControl" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="saveBackupControlButton" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="backupButton" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="backupControlRefreshButton" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jPanel2" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                                  <Component id="backupStatusPanel" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="391" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="jPanel1" min="-2" max="-2" attributes="1"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="saveBackupControlButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="backupButton_BackupControl" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="backupStatusPanel" alignment="0" max="32767" attributes="1"/>
+                              <Component id="jPanel2" alignment="0" max="32767" attributes="2"/>
                           </Group>
-                          <EmptySpace pref="277" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="saveBackupControlButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="backupButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="backupControlRefreshButton" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="jPanel1" alignment="0" min="-2" max="-2" attributes="1"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JButton" name="backupButton_BackupControl">
+                <Component class="javax.swing.JButton" name="backupButton">
                   <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="backupButton_BackupControl.text"/>
+                    <Property name="text" type="java.lang.String" resourceKey="backupButton.text"/>
                     <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
                       <Insets value="[2, 5, 2, 5]"/>
                     </Property>
-                    <Property name="name" type="java.lang.String" value="backupButton_BackupControl" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="backupButton" noResource="true"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backupButton_BackupControlActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backupButtonActionPerformed"/>
                   </Events>
                 </Component>
                 <Container class="javax.swing.JPanel" name="jPanel1">
@@ -908,84 +913,15 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="backupWorldsCheckBox" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="backupLogCheckBox" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="backupPluginsCheckBox" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="backupEverythingCheckBox" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="zipBackupCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="159" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="backupWorldsCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="backupLogCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="backupPluginsCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="backupEverythingCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="zipBackupCheckBox" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <EmptySpace min="0" pref="44" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
-                  <SubComponents>
-                    <Component class="javax.swing.JCheckBox" name="backupWorldsCheckBox">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" resourceKey="backupWorldsCheckBox.text"/>
-                        <Property name="name" type="java.lang.String" value="backupWorldsCheckBox" noResource="true"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backupWorldsCheckBoxActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JCheckBox" name="backupLogCheckBox">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" resourceKey="backupLogCheckBox.text"/>
-                        <Property name="name" type="java.lang.String" value="backupLogCheckBox" noResource="true"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backupLogCheckBoxActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JCheckBox" name="backupPluginsCheckBox">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" resourceKey="backupPluginsCheckBox.text"/>
-                        <Property name="name" type="java.lang.String" value="backupPluginsCheckBox" noResource="true"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backupPluginsCheckBoxActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JCheckBox" name="backupEverythingCheckBox">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" resourceKey="backupEverythingCheckBox.text"/>
-                        <Property name="name" type="java.lang.String" value="backupEverythingCheckBox" noResource="true"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backupEverythingCheckBoxActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JCheckBox" name="zipBackupCheckBox">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" resourceKey="zipBackupCheckBox.text"/>
-                        <Property name="name" type="java.lang.String" value="zipBackupCheckBox" noResource="true"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="zipBackupCheckBoxActionPerformed"/>
-                      </Events>
-                    </Component>
-                  </SubComponents>
                 </Container>
                 <Component class="javax.swing.JButton" name="saveBackupControlButton">
                   <Properties>
@@ -997,6 +933,111 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveBackupControlButtonActionPerformed"/>
+                  </Events>
+                </Component>
+                <Container class="javax.swing.JPanel" name="jPanel2">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="Backup File Chooser">
+                          <Property name="titleX" resourceKey="jPanel2.border.title"/>
+                        </TitledBorder>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="jPanel2" noResource="true"/>
+                  </Properties>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jScrollPane3" alignment="0" pref="313" max="32767" attributes="0"/>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jScrollPane3" alignment="0" pref="192" max="32767" attributes="0"/>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Container class="javax.swing.JScrollPane" name="jScrollPane3">
+                      <Properties>
+                        <Property name="name" type="java.lang.String" value="jScrollPane3" noResource="true"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                      </AuxValues>
+
+                      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                      <SubComponents>
+                        <Component class="it.cnr.imaa.essi.lablib.gui.checkboxtree.CheckboxTree" name="backupFileChooser">
+                          <Properties>
+                            <Property name="model" type="javax.swing.tree.TreeModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                              <Connection code="backupFileSystem" type="code"/>
+                            </Property>
+                            <Property name="toolTipText" type="java.lang.String" resourceKey="backupFileChooser.toolTipText"/>
+                            <Property name="name" type="java.lang.String" value="backupFileChooser" noResource="true"/>
+                          </Properties>
+                        </Component>
+                      </SubComponents>
+                    </Container>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="backupStatusPanel">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="Backup Status">
+                          <Property name="titleX" resourceKey="backupStatusPanel.border.title"/>
+                        </TitledBorder>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="backupStatusPanel" noResource="true"/>
+                  </Properties>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jScrollPane4" alignment="0" pref="192" max="32767" attributes="0"/>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jScrollPane4" alignment="0" pref="192" max="32767" attributes="0"/>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Container class="javax.swing.JScrollPane" name="jScrollPane4">
+                      <Properties>
+                        <Property name="name" type="java.lang.String" value="jScrollPane4" noResource="true"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                      </AuxValues>
+
+                      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                      <SubComponents>
+                        <Component class="javax.swing.JTextPane" name="backupStatusLog">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="name" type="java.lang.String" value="backupStatusLog" noResource="true"/>
+                          </Properties>
+                        </Component>
+                      </SubComponents>
+                    </Container>
+                  </SubComponents>
+                </Container>
+                <Component class="javax.swing.JButton" name="backupControlRefreshButton">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="backupControlRefreshButton.text"/>
+                    <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                      <Insets value="[2, 5, 2, 5]"/>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="backupControlRefreshButton" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backupControlRefreshButtonActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
@@ -1072,16 +1113,16 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="statusPanelSeparator" alignment="0" pref="562" max="32767" attributes="0"/>
+              <Component id="statusPanelSeparator" alignment="0" pref="550" max="32767" attributes="0"/>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="statusMessageLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="467" max="32767" attributes="0"/>
+                  <EmptySpace pref="455" max="32767" attributes="0"/>
                   <Component id="statusAnimationLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="406" max="32767" attributes="0"/>
+                  <EmptySpace pref="394" max="32767" attributes="0"/>
                   <Component id="progressBar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -1167,6 +1208,6 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="1"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,1,-33,0,0,2,50"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,1,-65,0,0,2,38"/>
   </AuxValues>
 </Form>
