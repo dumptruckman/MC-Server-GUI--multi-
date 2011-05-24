@@ -215,11 +215,12 @@ public class MCServerGUIConfig {
                                 backups.setZip(jp.getBooleanValue());
                             } else if ("Paths to Backup".equals(backupfield)) {
                                 List<String> pathlist = new ArrayList<String>();
-                                while (jp.nextToken() != JsonToken.END_ARRAY) {
-                                    String pathlistfield = jp.getCurrentName();
-                                    pathlist.add(pathlistfield);
+                                jp.nextToken();
+                                while (jp.getCurrentToken() != JsonToken.END_ARRAY) {
+                                    pathlist.add(jp.getText());
                                     jp.nextToken();
                                 }
+                                backups.setPathsToBackup(pathlist);
                             }
                         }
                     }
