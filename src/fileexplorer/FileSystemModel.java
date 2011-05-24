@@ -3,7 +3,7 @@ package fileexplorer;
 import java.io.*;
 import javax.swing.event.TreeModelListener;
 
-public class FileSystemModel /*extends AbstractTreeModel*/ implements Serializable, javax.swing.tree.TreeModel {
+public class FileSystemModel implements Serializable, javax.swing.tree.TreeModel {
 
     String root;
 

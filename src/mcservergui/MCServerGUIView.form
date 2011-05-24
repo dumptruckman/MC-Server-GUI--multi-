@@ -849,10 +849,7 @@
                                   <EmptySpace min="-2" pref="155" max="-2" attributes="0"/>
                               </Group>
                               <Component id="backupStatusPanel" alignment="1" max="32767" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="saveBackupControlButton" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="saveBackupControlButton" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -921,6 +918,10 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="backupPathBrowseButton" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="zipBackupCheckBox" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -931,7 +932,9 @@
                                   <Component id="backupPathField" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="backupPathBrowseButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="41" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="zipBackupCheckBox" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="16" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -962,6 +965,15 @@
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backupPathBrowseButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="zipBackupCheckBox">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="zipBackupCheckBox.text"/>
+                        <Property name="name" type="java.lang.String" value="zipBackupCheckBox" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="zipBackupCheckBoxActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -998,7 +1010,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane3" alignment="0" pref="180" max="32767" attributes="0"/>
+                          <Component id="jScrollPane3" alignment="0" pref="171" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -1020,6 +1032,7 @@
                             </Property>
                             <Property name="toolTipText" type="java.lang.String" resourceKey="backupFileChooser.toolTipText"/>
                             <Property name="name" type="java.lang.String" value="backupFileChooser" noResource="true"/>
+                            <Property name="toggleClickCount" type="int" value="3"/>
                           </Properties>
                         </Component>
                       </SubComponents>
@@ -1046,7 +1059,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane4" alignment="0" pref="180" max="32767" attributes="0"/>
+                          <Component id="jScrollPane4" alignment="0" pref="171" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>

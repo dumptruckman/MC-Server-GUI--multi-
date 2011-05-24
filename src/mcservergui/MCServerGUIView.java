@@ -175,6 +175,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         backupPathLabel = new javax.swing.JLabel();
         backupPathField = new javax.swing.JTextField();
         backupPathBrowseButton = new javax.swing.JButton();
+        zipBackupCheckBox = new javax.swing.JCheckBox();
         saveBackupControlButton = new javax.swing.JButton();
         backupFileChooserPanel = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -794,6 +795,14 @@ public class MCServerGUIView extends FrameView implements Observer {
             }
         });
 
+        zipBackupCheckBox.setText(resourceMap.getString("zipBackupCheckBox.text")); // NOI18N
+        zipBackupCheckBox.setName("zipBackupCheckBox"); // NOI18N
+        zipBackupCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zipBackupCheckBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout backupSettingsPanelLayout = new javax.swing.GroupLayout(backupSettingsPanel);
         backupSettingsPanel.setLayout(backupSettingsPanelLayout);
         backupSettingsPanelLayout.setHorizontalGroup(
@@ -804,6 +813,9 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addComponent(backupPathField, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(backupPathBrowseButton))
+            .addGroup(backupSettingsPanelLayout.createSequentialGroup()
+                .addComponent(zipBackupCheckBox)
+                .addContainerGap())
         );
         backupSettingsPanelLayout.setVerticalGroup(
             backupSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -812,7 +824,9 @@ public class MCServerGUIView extends FrameView implements Observer {
                     .addComponent(backupPathLabel)
                     .addComponent(backupPathField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(backupPathBrowseButton))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(zipBackupCheckBox)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         saveBackupControlButton.setText(resourceMap.getString("saveBackupControlButton.text")); // NOI18N
@@ -832,6 +846,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         backupFileChooser.setModel(backupFileSystem);
         backupFileChooser.setToolTipText(resourceMap.getString("backupFileChooser.toolTipText")); // NOI18N
         backupFileChooser.setName("backupFileChooser"); // NOI18N
+        backupFileChooser.setToggleClickCount(3);
         jScrollPane3.setViewportView(backupFileChooser);
 
         javax.swing.GroupLayout backupFileChooserPanelLayout = new javax.swing.GroupLayout(backupFileChooserPanel);
@@ -842,7 +857,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         backupFileChooserPanelLayout.setVerticalGroup(
             backupFileChooserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
         );
 
         backupStatusPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("backupStatusPanel.border.title"))); // NOI18N
@@ -862,7 +877,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         backupStatusPanelLayout.setVerticalGroup(
             backupStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
         );
 
         backupControlRefreshButton.setText(resourceMap.getString("backupControlRefreshButton.text")); // NOI18N
@@ -888,9 +903,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                         .addComponent(backupButton)
                         .addGap(155, 155, 155))
                     .addComponent(backupStatusPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(backupControlTabLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(saveBackupControlButton)))
+                    .addComponent(saveBackupControlButton))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backupControlTabLayout.createSequentialGroup()
                 .addContainerGap(377, Short.MAX_VALUE)
@@ -1036,15 +1049,25 @@ public class MCServerGUIView extends FrameView implements Observer {
                     .addComponent(serverControlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     //.addComponent(backupControlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
-        backupFileChooser.getCheckingModel().setCheckingMode(CheckingMode.PROPAGATE_PRESERVING_UNCHECK);
+        backupFileChooser.getCheckingModel().setCheckingMode(CheckingMode.PROPAGATE);
     }
 
     class BackupFileChooserCheckingListener implements TreeCheckingListener {
         @Override
         public void valueChanged(TreeCheckingEvent e) {
             if(e.isCheckedPath()) {
+                for (int childrenindex = 0; childrenindex < backupFileSystem.getChildCount(e.getPath().getLastPathComponent()); childrenindex++) {
+                    backupFileChooser.addCheckingPath(
+                        new javax.swing.tree.TreePath(
+                            backupFileSystem.getChild(e.getPath().getLastPathComponent(), childrenindex)));
+                }
                 addPathToBackup(e.getPath().getLastPathComponent().toString());
             } else {
+                for (int childrenindex = 0; childrenindex < backupFileSystem.getChildCount(e.getPath().getLastPathComponent()); childrenindex++) {
+                    backupFileChooser.removeCheckingPath(
+                        new javax.swing.tree.TreePath(
+                            backupFileSystem.getChild(e.getPath().getLastPathComponent(), childrenindex)));
+                }
                 removePathFromBackup(e.getPath().getLastPathComponent().toString());
             }
         }
@@ -1290,8 +1313,6 @@ public class MCServerGUIView extends FrameView implements Observer {
 
     private void saveBackupControlButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBackupControlButtonActionPerformed
         saveConfig();
-        System.out.println(backupFileChooser.getSelectionCount());
-
     }//GEN-LAST:event_saveBackupControlButtonActionPerformed
 
     private void backupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupButtonActionPerformed
@@ -1310,7 +1331,7 @@ public class MCServerGUIView extends FrameView implements Observer {
 
     private void backupPathBrowseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupPathBrowseButtonActionPerformed
         try {
-            final JFileChooser fc = new JFileChooser(new File(".").getCanonicalPath());
+            final JFileChooser fc = new JFileChooser(new File(backupPathField.getText()).getCanonicalPath());
             int returnVal = fc.showOpenDialog(getFrame());
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 backupPathField.setText(fc.getSelectedFile().getName());
@@ -1324,6 +1345,10 @@ public class MCServerGUIView extends FrameView implements Observer {
     private void backupPathFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupPathFieldActionPerformed
         config.backups.setPath(backupPathField.getText());
     }//GEN-LAST:event_backupPathFieldActionPerformed
+
+    private void zipBackupCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zipBackupCheckBoxActionPerformed
+        config.backups.setZip(zipBackupCheckBox.isSelected());
+    }//GEN-LAST:event_zipBackupCheckBoxActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton backupButton;
@@ -1389,22 +1414,24 @@ public class MCServerGUIView extends FrameView implements Observer {
     public javax.swing.JCheckBox xincgcCheckBox;
     public javax.swing.JTextField xmxMemoryField;
     public javax.swing.JLabel xmxMemoryLabel;
+    public javax.swing.JCheckBox zipBackupCheckBox;
     // End of variables declaration//GEN-END:variables
 
     // My methods
     private void addPathToBackup(String addPath) {
         pathsToBackup.add(addPath);
+        config.backups.setPathsToBackup(pathsToBackup);
     }
 
     private void removePathFromBackup(String remPath) {
         pathsToBackup.remove(remPath);
+        config.backups.setPathsToBackup(pathsToBackup);
     }
 
     public static javax.swing.tree.TreePath createTreePath(File f) {
         List path = new ArrayList();
         path.add(f);
         while((f = f.getParentFile()) != null) {
-            //System.out.println(path.toString());
             path.add(0,f);
         }
         return new javax.swing.tree.TreePath(path.toArray());
@@ -1432,11 +1459,12 @@ public class MCServerGUIView extends FrameView implements Observer {
         if (server.isRunning()) {
             sendInput("save-off");
         }
-        MCServerGUIBackup backup = new MCServerGUIBackup(config);
+        new File(config.backups.getPath()).mkdir(); // Creates backup directory if it doesn't exist
+        MCServerGUIBackup backup = new MCServerGUIBackup(config, backupStatusLog);
+        backupStatusLog.setText("");
         if (backup.startBackup()) {
             backup.addObserver(this);
         } else {
-            addTextToConsoleOutput("[GUI] Backup failed.  Perhaps a bad server jar?");
             controlSwitcher("!BACKUP");
         }
     }
@@ -1523,8 +1551,9 @@ public class MCServerGUIView extends FrameView implements Observer {
         } else {
             consoleOutput.setText("Configuration file not found or invalid!  Creating new config file with default values.");
         }
-        //zipBackupCheckBox.setSelected(config.backups.getZip());
+        zipBackupCheckBox.setSelected(config.backups.getZip());
         pathsToBackup = config.backups.getPathsToBackup();
+        backupPathField.setText(config.backups.getPath());
         backupFileChooser.setCheckingPaths(createTreePathArray(pathsToBackup));
         windowTitleField.setText(config.getWindowTitle());
         javaExecField.setText(config.cmdLine.getJavaExec());
@@ -1588,7 +1617,7 @@ public class MCServerGUIView extends FrameView implements Observer {
             }
         }
         config.backups.setPathsToBackup(pathsToBackup);
-        System.out.println(config.backups.getPathsToBackup());
+        config.backups.setPath(backupPathField.getText());
         config.save();
         statusMessageLabel.setText(temp);
     }

@@ -107,7 +107,7 @@ public class MCServerGUIConfig {
         public Backups() {
             _zip = true;
             try {
-                _path = new File(".").getCanonicalPath() + System.getProperty("file.separator") + "backups";
+                _path = new File(".").getCanonicalPath() + System.getProperty("file.separator") + "mcservergui-backups";
             } catch (IOException e) {
                 _path = "";
                 System.out.println("WARNING: Could not set a default backup path.");
@@ -148,7 +148,6 @@ public class MCServerGUIConfig {
                 try {
                     int Char = is.read();
                     if (Char != -1) {
-                        //System.out.println(Char);
                         temp.append((char)Char);
                     } else {
                         eof = true;
@@ -237,6 +236,7 @@ public class MCServerGUIConfig {
     }
 
     public void save() {
+        new File(backups.getPath()).mkdir();
         JsonFactory jf = new JsonFactory();
         try {
             JsonGenerator jg = jf.createJsonGenerator(new File("guiconfig.json"), JsonEncoding.UTF8);

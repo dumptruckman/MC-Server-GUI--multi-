@@ -1,9 +1,12 @@
 Version .2.0
   Rearranged the GUI a little.
   Added a save button. (Sends "save-all" to the server.)
+  Added MC Server GUI picture to about box.
+  Corrected version information in about box.
   Added manual backup feature! (restore backups and automatic backups to come.)
   This is a much improved version of the original design.
   You may now select exactly which files you would like to back up.
+  Added ability to zip your backups.
 
 Version .1.2
   Typing anywhere on the Main Window tab will now automatically grant focus to the console input box while the server is running.
