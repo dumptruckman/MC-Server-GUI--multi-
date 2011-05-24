@@ -60,7 +60,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         idleIcon = resourceMap.getIcon("StatusBar.idleIcon");
         statusAnimationLabel.setIcon(idleIcon);
         progressBar.setVisible(false);
-
+        
         // connecting action tasks to status bar via TaskMonitor
         TaskMonitor taskMonitor = new TaskMonitor(getApplication().getContext());
         taskMonitor.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
@@ -169,7 +169,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         inputHistoryMaxSizeLabel = new javax.swing.JLabel();
         inputHistoryMaxSizeField = new javax.swing.JTextField();
         saveGuiConfigButton = new javax.swing.JButton();
-        backupControlTab = new javax.swing.JPanel();
+        backupTab = new javax.swing.JPanel();
         backupButton = new javax.swing.JButton();
         backupSettingsPanel = new javax.swing.JPanel();
         backupPathLabel = new javax.swing.JLabel();
@@ -251,7 +251,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         consoleOutputPanelLayout.setVerticalGroup(
             consoleOutputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
         );
 
         playerListPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("playerListPanel.border.title"))); // NOI18N
@@ -284,7 +284,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         playerListPanelLayout.setVerticalGroup(
             playerListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
         );
 
         consoleInputPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("consoleInputPanel.border.title"))); // NOI18N
@@ -374,8 +374,7 @@ public class MCServerGUIView extends FrameView implements Observer {
             .addGroup(serverControlPanelLayout.createSequentialGroup()
                 .addComponent(startstopButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(saveWorldsButton)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addComponent(saveWorldsButton))
         );
         serverControlPanelLayout.setVerticalGroup(
             serverControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -426,7 +425,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         mainWindowTabLayout.setHorizontalGroup(
             mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainWindowTabLayout.createSequentialGroup()
-                .addGroup(mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainWindowTabLayout.createSequentialGroup()
                         .addComponent(serverControlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -438,23 +437,22 @@ public class MCServerGUIView extends FrameView implements Observer {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(playerListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
                     .addComponent(consoleInputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addGap(13, 13, 13))
         );
         mainWindowTabLayout.setVerticalGroup(
             mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainWindowTabLayout.createSequentialGroup()
                 .addGroup(mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(playerListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-                    .addComponent(consoleOutputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))
+                    .addComponent(playerListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                    .addComponent(consoleOutputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(consoleInputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(serverControlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(serverInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(guiInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(serverInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(guiInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         tabber.addTab(resourceMap.getString("mainWindowTab.TabConstraints.tabTitle"), mainWindowTab); // NOI18N
@@ -675,7 +673,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addComponent(serverCmdLinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveServerConfigButton)
-                .addContainerGap(106, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("serverConfigTab.TabConstraints.tabTitle"), serverConfigTab); // NOI18N
@@ -756,12 +754,12 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveGuiConfigButton)
-                .addContainerGap(271, Short.MAX_VALUE))
+                .addContainerGap(221, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("guiConfigTab.TabConstraints.tabTitle"), guiConfigTab); // NOI18N
 
-        backupControlTab.setName("backupControlTab"); // NOI18N
+        backupTab.setName("backupTab"); // NOI18N
 
         backupButton.setText(resourceMap.getString("backupButton.text")); // NOI18N
         backupButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
@@ -810,7 +808,7 @@ public class MCServerGUIView extends FrameView implements Observer {
             .addGroup(backupSettingsPanelLayout.createSequentialGroup()
                 .addComponent(backupPathLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(backupPathField, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                .addComponent(backupPathField, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(backupPathBrowseButton))
             .addGroup(backupSettingsPanelLayout.createSequentialGroup()
@@ -825,8 +823,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                     .addComponent(backupPathField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(backupPathBrowseButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(zipBackupCheckBox)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addComponent(zipBackupCheckBox))
         );
 
         saveBackupControlButton.setText(resourceMap.getString("saveBackupControlButton.text")); // NOI18N
@@ -853,11 +850,11 @@ public class MCServerGUIView extends FrameView implements Observer {
         backupFileChooserPanel.setLayout(backupFileChooserPanelLayout);
         backupFileChooserPanelLayout.setHorizontalGroup(
             backupFileChooserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
         );
         backupFileChooserPanelLayout.setVerticalGroup(
             backupFileChooserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
         );
 
         backupStatusPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("backupStatusPanel.border.title"))); // NOI18N
@@ -873,11 +870,11 @@ public class MCServerGUIView extends FrameView implements Observer {
         backupStatusPanel.setLayout(backupStatusPanelLayout);
         backupStatusPanelLayout.setHorizontalGroup(
             backupStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
         );
         backupStatusPanelLayout.setVerticalGroup(
             backupStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
         );
 
         backupControlRefreshButton.setText(resourceMap.getString("backupControlRefreshButton.text")); // NOI18N
@@ -889,56 +886,54 @@ public class MCServerGUIView extends FrameView implements Observer {
             }
         });
 
-        javax.swing.GroupLayout backupControlTabLayout = new javax.swing.GroupLayout(backupControlTab);
-        backupControlTab.setLayout(backupControlTabLayout);
-        backupControlTabLayout.setHorizontalGroup(
-            backupControlTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backupControlTabLayout.createSequentialGroup()
-                .addGroup(backupControlTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(backupSettingsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(backupFileChooserPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        javax.swing.GroupLayout backupTabLayout = new javax.swing.GroupLayout(backupTab);
+        backupTab.setLayout(backupTabLayout);
+        backupTabLayout.setHorizontalGroup(
+            backupTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(backupTabLayout.createSequentialGroup()
+                .addGroup(backupTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(backupTabLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(backupControlRefreshButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(saveBackupControlButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 155, Short.MAX_VALUE)
+                        .addComponent(backupButton))
+                    .addGroup(backupTabLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(backupSettingsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(backupFileChooserPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(backupControlTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(backupControlTabLayout.createSequentialGroup()
-                        .addComponent(backupButton)
-                        .addGap(155, 155, 155))
-                    .addComponent(backupStatusPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(saveBackupControlButton))
+                .addComponent(backupStatusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backupControlTabLayout.createSequentialGroup()
-                .addContainerGap(377, Short.MAX_VALUE)
-                .addComponent(backupControlRefreshButton)
-                .addGap(118, 118, 118))
         );
-        backupControlTabLayout.setVerticalGroup(
-            backupControlTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backupControlTabLayout.createSequentialGroup()
-                .addGroup(backupControlTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(backupStatusPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(backupFileChooserPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(6, 6, 6)
-                .addGroup(backupControlTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(backupControlTabLayout.createSequentialGroup()
-                        .addComponent(backupButton)
-                        .addGap(36, 36, 36)
-                        .addComponent(saveBackupControlButton))
-                    .addComponent(backupSettingsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(24, 24, 24)
-                .addComponent(backupControlRefreshButton)
-                .addGap(31, 31, 31))
+        backupTabLayout.setVerticalGroup(
+            backupTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(backupTabLayout.createSequentialGroup()
+                .addGroup(backupTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(backupStatusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(backupFileChooserPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(backupTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(backupControlRefreshButton)
+                    .addComponent(saveBackupControlButton)
+                    .addComponent(backupButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(backupSettingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
 
-        tabber.addTab(resourceMap.getString("backupControlTab.TabConstraints.tabTitle"), backupControlTab); // NOI18N
+        tabber.addTab(resourceMap.getString("backupTab.TabConstraints.tabTitle"), backupTab); // NOI18N
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabber)
+            .addComponent(tabber, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabber, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
+            .addComponent(tabber, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
         );
 
         menuBar.setName("menuBar"); // NOI18N
@@ -1056,16 +1051,18 @@ public class MCServerGUIView extends FrameView implements Observer {
         @Override
         public void valueChanged(TreeCheckingEvent e) {
             if(e.isCheckedPath()) {
-                for (int childrenindex = 0; childrenindex < backupFileSystem.getChildCount(e.getPath().getLastPathComponent()); childrenindex++) {
+                for (int childrenindex = 0; childrenindex < backupFileSystem.getChildCount(
+                        e.getPath().getLastPathComponent()); childrenindex++) {
                     backupFileChooser.addCheckingPath(
-                        new javax.swing.tree.TreePath(
+                            new javax.swing.tree.TreePath(
                             backupFileSystem.getChild(e.getPath().getLastPathComponent(), childrenindex)));
                 }
                 addPathToBackup(e.getPath().getLastPathComponent().toString());
             } else {
-                for (int childrenindex = 0; childrenindex < backupFileSystem.getChildCount(e.getPath().getLastPathComponent()); childrenindex++) {
+                for (int childrenindex = 0; childrenindex < backupFileSystem.getChildCount(
+                        e.getPath().getLastPathComponent()); childrenindex++) {
                     backupFileChooser.removeCheckingPath(
-                        new javax.swing.tree.TreePath(
+                            new javax.swing.tree.TreePath(
                             backupFileSystem.getChild(e.getPath().getLastPathComponent(), childrenindex)));
                 }
                 removePathFromBackup(e.getPath().getLastPathComponent().toString());
@@ -1353,7 +1350,6 @@ public class MCServerGUIView extends FrameView implements Observer {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton backupButton;
     public javax.swing.JButton backupControlRefreshButton;
-    public javax.swing.JPanel backupControlTab;
     public it.cnr.imaa.essi.lablib.gui.checkboxtree.CheckboxTree backupFileChooser;
     public javax.swing.JPanel backupFileChooserPanel;
     public javax.swing.JButton backupPathBrowseButton;
@@ -1362,6 +1358,7 @@ public class MCServerGUIView extends FrameView implements Observer {
     public javax.swing.JPanel backupSettingsPanel;
     public javax.swing.JTextPane backupStatusLog;
     public javax.swing.JPanel backupStatusPanel;
+    public javax.swing.JPanel backupTab;
     public javax.swing.JCheckBox bukkitCheckBox;
     public javax.swing.JTextField cmdLineField;
     public javax.swing.JTextField consoleInput;
@@ -1419,13 +1416,17 @@ public class MCServerGUIView extends FrameView implements Observer {
 
     // My methods
     private void addPathToBackup(String addPath) {
-        pathsToBackup.add(addPath);
-        config.backups.setPathsToBackup(pathsToBackup);
+        if (!pathsToBackup.contains(addPath)) {
+            pathsToBackup.add(addPath);
+            config.backups.setPathsToBackup(pathsToBackup);
+        }
     }
 
     private void removePathFromBackup(String remPath) {
-        pathsToBackup.remove(remPath);
-        config.backups.setPathsToBackup(pathsToBackup);
+        if (pathsToBackup.contains(remPath)) {
+            pathsToBackup.remove(remPath);
+            config.backups.setPathsToBackup(pathsToBackup);
+        }
     }
 
     public static javax.swing.tree.TreePath createTreePath(File f) {
@@ -1456,8 +1457,11 @@ public class MCServerGUIView extends FrameView implements Observer {
     public void backup() {
         stateBeforeBackup = controlState;
         controlSwitcher("BACKUP");
+        statusBeforeBackup = statusMessageLabel.getText();
+        statusMessageLabel.setText("Backing up...");
         if (server.isRunning()) {
             sendInput("save-off");
+            sendInput("say Backing up server...");
         }
         new File(config.backups.getPath()).mkdir(); // Creates backup directory if it doesn't exist
         MCServerGUIBackup backup = new MCServerGUIBackup(config, backupStatusLog);
@@ -1688,8 +1692,10 @@ public class MCServerGUIView extends FrameView implements Observer {
 
         if (arg.equals("finishedBackup")) {
             if (server.isRunning()) {
+                sendInput("say Server backup complete!");
                 sendInput("save-on");
             }
+            statusMessageLabel.setText(statusBeforeBackup);
             controlSwitcher("!BACKUP");
         }
     }
@@ -1724,11 +1730,23 @@ public class MCServerGUIView extends FrameView implements Observer {
             saveWorldsButton.setEnabled(false);
             backupControlRefreshButton.setEnabled(false);
             backupButton.setEnabled(false);
+            saveGuiConfigButton.setEnabled(false);
+            saveServerConfigButton.setEnabled(false);
+            saveBackupControlButton.setEnabled(false);
+            backupPathField.setEnabled(false);
+            backupPathBrowseButton.setEnabled(false);
+            backupFileChooser.setEnabled(false);
         } else if (serverState.equals("!BACKUP")) {
             startstopButton.setEnabled(true);
             saveWorldsButton.setEnabled(true);
             backupControlRefreshButton.setEnabled(true);
             backupButton.setEnabled(true);
+            saveGuiConfigButton.setEnabled(true);
+            saveServerConfigButton.setEnabled(true);
+            saveBackupControlButton.setEnabled(true);
+            backupPathField.setEnabled(true);
+            backupPathBrowseButton.setEnabled(true);
+            backupFileChooser.setEnabled(true);
             controlSwitcher(stateBeforeBackup);
         }
     }
@@ -1743,7 +1761,10 @@ public class MCServerGUIView extends FrameView implements Observer {
     private int inputHistoryIndex;
     private String controlState;
     private String stateBeforeBackup;
+    private String statusBeforeBackup;
     private fileexplorer.FileSystemModel backupFileSystem;
+    private MCServerGUIConfig config;
+    private boolean badConfig;
 
     //Auto created
     private final Timer messageTimer;
@@ -1751,8 +1772,6 @@ public class MCServerGUIView extends FrameView implements Observer {
     private final Icon idleIcon;
     private final Icon[] busyIcons = new Icon[15];
     private int busyIconIndex = 0;
-    private MCServerGUIConfig config;
-    private boolean badConfig;
 
     private JDialog aboutBox;
 }

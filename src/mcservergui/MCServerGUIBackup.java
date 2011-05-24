@@ -16,22 +16,22 @@ import java.util.zip.*;
  */
 public class MCServerGUIBackup extends Observable {
 
-    public MCServerGUIBackup(MCServerGUIConfig newConfig, javax.swing.JTextPane newLog) {
-        config = newConfig;
-        backupLog = newLog;
+    public MCServerGUIBackup(MCServerGUIConfig config, javax.swing.JTextPane backupLog) {
+        this.config = config;
+        this.backupLog = backupLog;
         nl = System.getProperty("line.separator");
         fs = System.getProperty("file.separator");
     }
 
     public boolean startBackup() {
-        String serverPath = new File(".\\" + config.cmdLine.getServerJar()).getParent();
-        if (serverPath != null) {
+        //String serverPath = new File(".\\" + config.cmdLine.getServerJar()).getParent();
+        //if (serverPath != null) {
             backupWorker.execute();
             return true;
-        } else {
-            addTextToBackupLog("Backup failed.  Perhaps a bad server jar?" + nl);
-            return false;
-        }
+        //} else {
+        //    addTextToBackupLog("Backup failed.  Perhaps a bad server jar?" + nl);
+        //    return false;
+        //}
     }
 
     public void addTextToBackupLog(String textToAdd) {
@@ -137,10 +137,13 @@ public class MCServerGUIBackup extends Observable {
                         ZipOutputStream zipout = new ZipOutputStream(
                                 new BufferedOutputStream(
                                 new FileOutputStream(
-                                config.backups.getPath() + fs + backupfolder.getName() + ".zip")));
+                                config.backups.getPath() + fs + backupfolder.getName() + ".7z")));
+                        depth = 0;
                         addDirToZip(backupfolder, zipout);
+                        addTextToBackupLog(nl + "Finished compiling " + backupfolder.getName() + ".7z" + nl);
                         try {
                             zipout.close();
+                            deleteDir(backupfolder);
                         } catch (IOException e) {
                             addTextToBackupLog(nl + "Successfully created " + backupfolder.getName() + ".zip!" + nl);
                         }
@@ -163,9 +166,9 @@ public class MCServerGUIBackup extends Observable {
             try {
                 backupSuccess = this.get();
                 if (backupSuccess) {
-                    addTextToBackupLog("Backup operation completed succesfully!");
+                    addTextToBackupLog(nl + "Backup operation completed succesfully!");
                 } else {
-                    addTextToBackupLog("Backup operation encountered an error.  Aborting.");
+                    addTextToBackupLog(nl + "Backup operation encountered an error.  Aborting.");
                 }
                 setChanged();
                 notifyObservers("finishedBackup");
@@ -177,21 +180,41 @@ public class MCServerGUIBackup extends Observable {
         }
     };
 
+    public boolean deleteDir(File dir) {
+        if (dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+        
+        return dir.delete();
+    }
+
     private void addDirToZip(File dirObj, ZipOutputStream out) {
-        //addTextToBackupLog(nl + "Adding directory " + dirObj.getCanonicalPath() + " to archive...");
         File[] files = dirObj.listFiles();
         byte[] tmpBuf = new byte[1024];
 
         for (int i = 0; i < files.length; i++) {
             if (files[i].isDirectory()) {
+                depth++;
                 addDirToZip(files[i], out);
                 continue;
             }
             try {
                 FileInputStream in = new FileInputStream(files[i].getAbsolutePath());
-                addTextToBackupLog(nl + "Adding " + files[i].getPath() + " to archive...");
+                addTextToBackupLog(nl + "Adding " + files[i].getParent() + fs + files[i].getName() + " to archive...");
+                String name = files[i].getName();
+                File parent = new File(files[i].getParentFile().getPath());
+                for (int j = 0; j < depth; j++) {
+                    name = parent.getName() + fs + name;
+                    parent = new File(parent.getParentFile().getPath());
+                }
                 try {
-                    out.putNextEntry(new ZipEntry(files[i].getAbsolutePath()));
+                    out.putNextEntry(new ZipEntry(name));
                     int len;
                     while ((len = in.read(tmpBuf)) > 0) {
                         out.write(tmpBuf, 0, len);
@@ -206,10 +229,12 @@ public class MCServerGUIBackup extends Observable {
                 addTextToBackupLog(nl + "Failed to add " + files[i].getPath() + " to archive. Skipping...");
             }
         }
+        depth--;
     }
 
     private String nl;
     private String fs;
+    private int depth;
     private MCServerGUIConfig config;
     private javax.swing.JTextPane backupLog;
     private boolean backupSuccess;
