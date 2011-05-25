@@ -562,11 +562,6 @@ public class MCServerGUIView extends FrameView implements Observer {
         customLaunchCheckBox.setText(resourceMap.getString("customLaunchCheckBox.text")); // NOI18N
         customLaunchCheckBox.setToolTipText(resourceMap.getString("customLaunchCheckBox.toolTipText")); // NOI18N
         customLaunchCheckBox.setName("customLaunchCheckBox"); // NOI18N
-        customLaunchCheckBox.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                customLaunchCheckBoxMouseEntered(evt);
-            }
-        });
         customLaunchCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 customLaunchCheckBoxActionPerformed(evt);
@@ -1298,11 +1293,7 @@ public class MCServerGUIView extends FrameView implements Observer {
             cmdLineField.setText(config.cmdLine.getCustomLaunch());
         }
     }//GEN-LAST:event_cmdLineFieldActionPerformed
-
-    private void customLaunchCheckBoxMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customLaunchCheckBoxMouseEntered
-        customLaunchCheckBox.getActionMap().get("postTip").actionPerformed(new ActionEvent(customLaunchCheckBox, ActionEvent.ACTION_PERFORMED, "postTip"));
-    }//GEN-LAST:event_customLaunchCheckBoxMouseEntered
-
+    
     private void saveWorldsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveWorldsButtonActionPerformed
         this.sendInput("save-all");
     }//GEN-LAST:event_saveWorldsButtonActionPerformed

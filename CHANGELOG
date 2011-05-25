@@ -1,3 +1,7 @@
+Version .2.2
+  Added splash screen.
+  The tooltip no longer displays immediately for the Custom Launch check box.  This resolves the issue of it being grayed out in some cases.
+
 Version .2.1
   Backup Path browse button now allows you to select a folder.
   Backup path text field saves the value when you press the Backup button, just in case.
