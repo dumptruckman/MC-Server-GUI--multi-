@@ -1,1 +1,15 @@
-Add more features available in the Windows version
+Add task scheduler (for automated restarts or backups)
+Add restoration of backups
+Add plugin manager
+Give the GUI colorization options
+Memory/CPU/Network monitors
+Ability to modify server properties
+Make player list work
+Ability to give players items by right clicking name in player list
+Compatibility with many bukkit plugins (mcMMO or iConomy for instance)
+Ability to restart based on memory limits
+Warnings when the server could be lagging
+Special GUI op only commands, such as restarting, restart + backup, and timed restarting (suggestions?)
+Possibly have cooperability with something like MccRestart
+Delete backups after x amount of time or x amount of backups
+Compatibility with MCSoD
