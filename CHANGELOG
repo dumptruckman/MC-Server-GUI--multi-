@@ -1,3 +1,6 @@
+Version .3.0
+  
+
 Version .2.2
   Added splash screen.
   The tooltip no longer displays immediately for the Custom Launch check box.  This resolves the issue of it being grayed out in some cases.

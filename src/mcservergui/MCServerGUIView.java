@@ -184,6 +184,8 @@ public class MCServerGUIView extends FrameView implements Observer {
         jScrollPane4 = new javax.swing.JScrollPane();
         backupStatusLog = new javax.swing.JTextPane();
         backupControlRefreshButton = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
@@ -920,6 +922,36 @@ public class MCServerGUIView extends FrameView implements Observer {
 
         tabber.addTab(resourceMap.getString("backupTab.TabConstraints.tabTitle"), backupTab); // NOI18N
 
+        jPanel1.setName("jPanel1"); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 548, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 323, Short.MAX_VALUE)
+        );
+
+        tabber.addTab(resourceMap.getString("jPanel1.TabConstraints.tabTitle"), jPanel1); // NOI18N
+
+        jPanel2.setName("jPanel2"); // NOI18N
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 548, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 323, Short.MAX_VALUE)
+        );
+
+        tabber.addTab(resourceMap.getString("jPanel2.TabConstraints.tabTitle"), jPanel2); // NOI18N
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -1367,6 +1399,8 @@ public class MCServerGUIView extends FrameView implements Observer {
     public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel2;
     public javax.swing.JList jList1;
+    public javax.swing.JPanel jPanel1;
+    public javax.swing.JPanel jPanel2;
     public javax.swing.JPanel jPanel4;
     public javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JScrollPane jScrollPane2;
