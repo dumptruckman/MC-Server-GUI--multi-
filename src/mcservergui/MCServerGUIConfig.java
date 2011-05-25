@@ -192,7 +192,7 @@ public class MCServerGUIConfig {
                                 cmdLine.setServerJar(jp.getText());
                             } else if ("Bukkit".equals(cmdlinefield)) {
                                 cmdLine.setBukkit(jp.getBooleanValue());
-                            } else if ("Xmx".equals(cmdlinefield)) {
+                            } else if ("Xmx Memory".equals(cmdlinefield)) {
                                 cmdLine.setXmx(jp.getText());
                             } else if ("Xincgc".equals(cmdlinefield)) {
                                 cmdLine.setXincgc(jp.getBooleanValue());

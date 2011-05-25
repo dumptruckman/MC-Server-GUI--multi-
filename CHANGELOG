@@ -1,3 +1,8 @@
+Version .2.1
+  Backup Path browse button now allows you to select a folder.
+  Backup path text field saves the value when you press the Backup button, just in case.
+  Fixed Xmx Memory setting not loading properly from the config file.
+
 Version .2.0
   Rearranged the GUI a little.
   Added a Save Worlds button. (Sends "save-all" to the server.)

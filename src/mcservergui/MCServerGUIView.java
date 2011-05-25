@@ -1313,6 +1313,7 @@ public class MCServerGUIView extends FrameView implements Observer {
     }//GEN-LAST:event_saveBackupControlButtonActionPerformed
 
     private void backupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupButtonActionPerformed
+        config.backups.setPath(backupPathField.getText());
         backup();
     }//GEN-LAST:event_backupButtonActionPerformed
 
@@ -1329,10 +1330,11 @@ public class MCServerGUIView extends FrameView implements Observer {
     private void backupPathBrowseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupPathBrowseButtonActionPerformed
         try {
             final JFileChooser fc = new JFileChooser(new File(backupPathField.getText()).getCanonicalPath());
+            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             int returnVal = fc.showOpenDialog(getFrame());
             if (returnVal == JFileChooser.APPROVE_OPTION) {
-                backupPathField.setText(fc.getSelectedFile().getName());
-                config.backups.setPath(fc.getSelectedFile().getName());
+                backupPathField.setText(fc.getSelectedFile().getPath());
+                config.backups.setPath(fc.getSelectedFile().getPath());
             }
         } catch (IOException e) {
             System.err.println("[GUI] Error retrieving program path.");

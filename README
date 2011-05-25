@@ -1,8 +1,7 @@
 Installation
-    1. Unzip mcservergui.jar into your Minecraft Server directory
-    2. Run mcservergui.jar.
+    1. Unzip mcservergui.jar into your Minecraft Server directory.
+    2. Double click mcservergui.jar or run from a command line with "java -jar mcservergui.jar".
     3. Go to the Server Config tab and make sure the settings are how you would like them.
-    4. Press enter if you type in a setting for it to save (will add more ways to save in future releases)
 
 Backups
     Just select the files and folders you want to backup and if you want to zip it all and then press backup!
