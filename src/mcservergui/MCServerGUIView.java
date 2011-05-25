@@ -42,7 +42,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         ResourceMap resourceMap = getResourceMap();
         int messageTimeout = resourceMap.getInteger("StatusBar.messageTimeout");
         messageTimer = new Timer(messageTimeout, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            @Override public void actionPerformed(ActionEvent e) {
                 statusMessageLabel.setText("");
             }
         });
@@ -52,7 +52,7 @@ public class MCServerGUIView extends FrameView implements Observer {
             busyIcons[i] = resourceMap.getIcon("StatusBar.busyIcons[" + i + "]");
         }
         busyIconTimer = new Timer(busyAnimationRate, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            @Override public void actionPerformed(ActionEvent e) {
                 busyIconIndex = (busyIconIndex + 1) % busyIcons.length;
                 statusAnimationLabel.setIcon(busyIcons[busyIconIndex]);
             }
@@ -64,7 +64,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         // connecting action tasks to status bar via TaskMonitor
         TaskMonitor taskMonitor = new TaskMonitor(getApplication().getContext());
         taskMonitor.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+            @Override public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 String propertyName = evt.getPropertyName();
                 if ("started".equals(propertyName)) {
                     if (!busyIconTimer.isRunning()) {
@@ -1048,8 +1048,7 @@ public class MCServerGUIView extends FrameView implements Observer {
     }
 
     class BackupFileChooserCheckingListener implements TreeCheckingListener {
-        @Override
-        public void valueChanged(TreeCheckingEvent e) {
+        @Override public void valueChanged(TreeCheckingEvent e) {
             if(e.isCheckedPath()) {
                 for (int childrenindex = 0; childrenindex < backupFileSystem.getChildCount(
                         e.getPath().getLastPathComponent()); childrenindex++) {
@@ -1074,7 +1073,7 @@ public class MCServerGUIView extends FrameView implements Observer {
      * Action object for the toggling of the sayCheckBox
      */
     javax.swing.Action sayToggle = new javax.swing.AbstractAction() {
-        public void actionPerformed(ActionEvent e) {
+        @Override public void actionPerformed(ActionEvent e) {
             if (sayCheckBox.isSelected()) {
                 sayCheckBox.setSelected(false);
             } else {
@@ -1087,7 +1086,7 @@ public class MCServerGUIView extends FrameView implements Observer {
      * Action object for the sending of input with prepended "Say " (caused by shift+enter)
      */
     javax.swing.Action saySend = new javax.swing.AbstractAction() {
-        public void actionPerformed(ActionEvent e) {
+        @Override public void actionPerformed(ActionEvent e) {
             sendInput(true);
         }
     };
@@ -1432,7 +1431,7 @@ public class MCServerGUIView extends FrameView implements Observer {
     }
 
     public static javax.swing.tree.TreePath createTreePath(File f) {
-        List path = new ArrayList();
+        List<File> path = new ArrayList<File>();
         path.add(f);
         while((f = f.getParentFile()) != null) {
             path.add(0,f);
@@ -1479,7 +1478,7 @@ public class MCServerGUIView extends FrameView implements Observer {
      * Verifies that the text entered is a number before focus is released.  If not, it shows the tooltip.
      */
     class numberVerifier extends javax.swing.InputVerifier {
-        public boolean verify(javax.swing.JComponent input) {
+        @Override public boolean verify(javax.swing.JComponent input) {
             javax.swing.JTextField tf = (javax.swing.JTextField) input;
             if (java.util.regex.Pattern.matches("^\\d{1,4}$", tf.getText())){
                 return true;
@@ -1677,7 +1676,7 @@ public class MCServerGUIView extends FrameView implements Observer {
      * @param o
      * @param arg Message
      */
-    public void update(Observable o, Object arg) {
+    @Override public void update(Observable o, Object arg) {
         if (arg.equals("newOutput")) {
             String newOutput = server.getReceived();
             if ((newOutput != null) && (!newOutput.equals("null\n"))) {
