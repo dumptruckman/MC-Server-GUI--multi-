@@ -24,16 +24,22 @@ import java.util.List;
 import java.util.ArrayList;
 import it.cnr.imaa.essi.lablib.gui.checkboxtree.*;
 import it.cnr.imaa.essi.lablib.gui.checkboxtree.TreeCheckingModel.CheckingMode;
+import org.quartz.*;
+import static org.quartz.TriggerBuilder.*;
+import static org.quartz.JobBuilder.*;
+import static org.quartz.DateBuilder.*;
+import static org.quartz.CronScheduleBuilder.*;
+import static mcservergui.MCServerGUITask.*;
 
 /**
  * The application's main frame.
  */
 public class MCServerGUIView extends FrameView implements Observer {
-
-    public MCServerGUIView(SingleFrameApplication app, MCServerGUIServerModel newServer, MCServerGUIConfig newConfig) {
+    
+    public MCServerGUIView(SingleFrameApplication app, MCServerGUIServerModel newServer, MCServerGUIConfig newConfig, Scheduler scheduler) {
         super(app);
 
-        backupFileSystem = new fileexplorer.FileSystemModel(".");
+        backupFileSystem = new mcservergui.fileexplorer.FileSystemModel(".");
         
         initComponents();
         fixComponents();
@@ -96,6 +102,34 @@ public class MCServerGUIView extends FrameView implements Observer {
         sayCheckBox.getActionMap().put("sayOn", sayToggle);
         consoleInput.getInputMap().put(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ENTER, java.awt.event.InputEvent.SHIFT_MASK),"sayOn");
         consoleInput.getActionMap().put("sayOn", saySend);
+
+        tasker = new MCServerGUITask(this);
+        this.scheduler = scheduler;
+        /*
+        JobDetail job = newJob(GuiTask.class)
+                .withIdentity("Stop Server")
+                .build();
+        try {
+            Trigger trigger = newTrigger()
+                    .withIdentity("myTrigger")
+                    .startAt(futureDate(5, IntervalUnit.SECOND))
+                    .withPriority(6)
+                    .forJob(job)
+                    .withSchedule(cronSchedule("0/5 * * ? * *"))
+                    .build();
+            try {
+                scheduler.getListenerManager().addJobListener(
+                        tasker, org.quartz.impl.matchers.KeyMatcher.keyEquals(
+                        new JobKey("Stop Server")));
+                scheduler.scheduleJob(job, trigger);
+                System.out.println(trigger.getNextFireTime());
+            } catch (SchedulerException se) {
+                System.out.println("daerror");
+            }
+        } catch (java.text.ParseException pe) {
+            System.out.println("error");
+        }*/
+        
 
         config = newConfig;
         server = newServer;
@@ -184,8 +218,8 @@ public class MCServerGUIView extends FrameView implements Observer {
         jScrollPane4 = new javax.swing.JScrollPane();
         backupStatusLog = new javax.swing.JTextPane();
         backupControlRefreshButton = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        restoreTab = new javax.swing.JPanel();
+        schedulerTab = new javax.swing.JPanel();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
@@ -805,7 +839,7 @@ public class MCServerGUIView extends FrameView implements Observer {
             .addGroup(backupSettingsPanelLayout.createSequentialGroup()
                 .addComponent(backupPathLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(backupPathField, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                .addComponent(backupPathField, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(backupPathBrowseButton))
             .addGroup(backupSettingsPanelLayout.createSequentialGroup()
@@ -888,18 +922,16 @@ public class MCServerGUIView extends FrameView implements Observer {
         backupTabLayout.setHorizontalGroup(
             backupTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backupTabLayout.createSequentialGroup()
-                .addGroup(backupTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(backupTabLayout.createSequentialGroup()
+                .addGroup(backupTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(backupSettingsPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backupTabLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(backupControlRefreshButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(saveBackupControlButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 155, Short.MAX_VALUE)
                         .addComponent(backupButton))
-                    .addGroup(backupTabLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(backupSettingsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(backupFileChooserPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(backupFileChooserPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(backupStatusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -922,35 +954,35 @@ public class MCServerGUIView extends FrameView implements Observer {
 
         tabber.addTab(resourceMap.getString("backupTab.TabConstraints.tabTitle"), backupTab); // NOI18N
 
-        jPanel1.setName("jPanel1"); // NOI18N
+        restoreTab.setName("restoreTab"); // NOI18N
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout restoreTabLayout = new javax.swing.GroupLayout(restoreTab);
+        restoreTab.setLayout(restoreTabLayout);
+        restoreTabLayout.setHorizontalGroup(
+            restoreTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 548, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        restoreTabLayout.setVerticalGroup(
+            restoreTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 323, Short.MAX_VALUE)
         );
 
-        tabber.addTab(resourceMap.getString("jPanel1.TabConstraints.tabTitle"), jPanel1); // NOI18N
+        tabber.addTab(resourceMap.getString("restoreTab.TabConstraints.tabTitle"), restoreTab); // NOI18N
 
-        jPanel2.setName("jPanel2"); // NOI18N
+        schedulerTab.setName("schedulerTab"); // NOI18N
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout schedulerTabLayout = new javax.swing.GroupLayout(schedulerTab);
+        schedulerTab.setLayout(schedulerTabLayout);
+        schedulerTabLayout.setHorizontalGroup(
+            schedulerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 548, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        schedulerTabLayout.setVerticalGroup(
+            schedulerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 323, Short.MAX_VALUE)
         );
 
-        tabber.addTab(resourceMap.getString("jPanel2.TabConstraints.tabTitle"), jPanel2); // NOI18N
+        tabber.addTab(resourceMap.getString("schedulerTab.TabConstraints.tabTitle"), schedulerTab); // NOI18N
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -1399,8 +1431,6 @@ public class MCServerGUIView extends FrameView implements Observer {
     public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel2;
     public javax.swing.JList jList1;
-    public javax.swing.JPanel jPanel1;
-    public javax.swing.JPanel jPanel2;
     public javax.swing.JPanel jPanel4;
     public javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JScrollPane jScrollPane2;
@@ -1414,11 +1444,13 @@ public class MCServerGUIView extends FrameView implements Observer {
     public javax.swing.JMenuBar menuBar;
     public javax.swing.JPanel playerListPanel;
     private javax.swing.JProgressBar progressBar;
+    public javax.swing.JPanel restoreTab;
     public javax.swing.JButton saveBackupControlButton;
     public javax.swing.JButton saveGuiConfigButton;
     public javax.swing.JButton saveServerConfigButton;
     public javax.swing.JButton saveWorldsButton;
     public javax.swing.JCheckBox sayCheckBox;
+    public javax.swing.JPanel schedulerTab;
     public javax.swing.JPanel serverCmdLinePanel;
     public javax.swing.JPanel serverConfigTab;
     public javax.swing.JPanel serverControlPanel;
@@ -1680,8 +1712,10 @@ public class MCServerGUIView extends FrameView implements Observer {
      * Tells the Minecraft server to stop.
      */
     public void stopServer() {
-        statusMessageLabel.setText("Stopping server...");
-        server.stop();
+        if (controlState.equals("ON")) {
+            statusMessageLabel.setText("Stopping server...");
+            server.stop();
+        }
     }
 
     /**
@@ -1788,9 +1822,11 @@ public class MCServerGUIView extends FrameView implements Observer {
     private String controlState;
     private String stateBeforeBackup;
     private String statusBeforeBackup;
-    private fileexplorer.FileSystemModel backupFileSystem;
+    private mcservergui.fileexplorer.FileSystemModel backupFileSystem;
     private MCServerGUIConfig config;
     private boolean badConfig;
+    private Scheduler scheduler;
+    private MCServerGUITask tasker;
 
     //Auto created
     private final Timer messageTimer;

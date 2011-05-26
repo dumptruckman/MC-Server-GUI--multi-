@@ -9,6 +9,8 @@ import org.jdesktop.application.SingleFrameApplication;
 import java.util.Observer;
 import java.util.Observable;
 import java.util.EventObject;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
 
 
 /**
@@ -27,8 +29,17 @@ public class MCServerGUIApp extends SingleFrameApplication implements Applicatio
      * At startup create and show the main frame of the application.
      */
     @Override protected void startup() {
+        try {
+            // Grab the Scheduler instance from the Factory
+            scheduler =  new org.quartz.impl.StdSchedulerFactory().getScheduler();
+
+            // and start it off
+            scheduler.start();
+        } catch (SchedulerException se) {
+            se.printStackTrace();
+        }
         addExitListener(this);
-        show(gui = new MCServerGUIView(this, server, config));
+        show(gui = new MCServerGUIView(this, server, config, scheduler));
         gui.initConfig();
         server.addObserver(gui);
         server.addObserver(this);
@@ -58,8 +69,13 @@ public class MCServerGUIApp extends SingleFrameApplication implements Applicatio
      * @param o
      * @param arg
      */
-    public void update(Observable o, Object arg) {
+    @Override public void update(Observable o, Object arg) {
         if ((arg.equals("serverStopped")) && (wantsToQuit)) {
+            try {
+                scheduler.shutdown();
+            } catch (SchedulerException se) {
+                se.printStackTrace();
+            }
             System.exit(0);
         }
     }
@@ -75,6 +91,11 @@ public class MCServerGUIApp extends SingleFrameApplication implements Applicatio
             gui.stopServer();
             return false;
         } else {
+            try {
+                scheduler.shutdown();
+            } catch (SchedulerException se) {
+                se.printStackTrace();
+            }
             return true;
         }
     }
@@ -98,4 +119,5 @@ public class MCServerGUIApp extends SingleFrameApplication implements Applicatio
     private MCServerGUIServerModel server;
     private MCServerGUIConfig config;
     private MCServerGUIMainWorker mainWorker;
+    private Scheduler scheduler;
 }

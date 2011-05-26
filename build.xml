@@ -78,6 +78,10 @@
             <zipfileset src="${file.reference.swing-worker-1.1.jar}" includes="**/*.class"/>
             <zipfileset src="${file.reference.appframework-1.0.3.jar}" includes="**/*.class"/>
             <zipfileset src="${file.reference.lablib-checkboxtree-3.2.jar}" includes="**/*.class"/>
+            <zipfileset src="${file.reference.log4j-1.2.14.jar}" includes="**/*.class"/>
+            <zipfileset src="${file.reference.quartz-2.0.1.jar}" includes="**/*.class"/>
+            <zipfileset src="${file.reference.slf4j-api-1.6.1.jar}" includes="**/*.class"/>
+            <zipfileset src="${file.reference.slf4j-log4j12-1.6.1.jar}" includes="**/*.class"/>
         </jar>
     </target>
 </project>
