@@ -25,6 +25,9 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         this.taskList = taskList;
         this.config = config;
         initComponents();
+        fixComponents();
+        initDaysOfWeekArray();
+        initMonthArray();
     }
 
     @Action public void closeTaskDialog() {
@@ -47,30 +50,45 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         secondsLabel = new javax.swing.JLabel();
         secondsField = new javax.swing.JTextField();
         scheduleLabel = new javax.swing.JLabel();
-        secondAgainCheckBox = new javax.swing.JCheckBox();
-        secondAgainField = new javax.swing.JTextField();
+        secondsAgainCheckBox = new javax.swing.JCheckBox();
+        secondsAgainField = new javax.swing.JTextField();
         secondsAllCheckBox = new javax.swing.JCheckBox();
         minutesLabel = new javax.swing.JLabel();
-        minutesAgainLabel = new javax.swing.JCheckBox();
+        minutesAgainCheckBox = new javax.swing.JCheckBox();
         minutesAgainField = new javax.swing.JTextField();
         minutesField = new javax.swing.JTextField();
         minutesAllCheckBox = new javax.swing.JCheckBox();
         hoursLabel = new javax.swing.JLabel();
         hoursField = new javax.swing.JTextField();
-        hoursAgainLabel = new javax.swing.JCheckBox();
+        hoursAgainCheckBox = new javax.swing.JCheckBox();
         hoursAgainField = new javax.swing.JTextField();
         hoursAllCheckBox = new javax.swing.JCheckBox();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        dowList = new javax.swing.JList();
         dowLabel = new javax.swing.JLabel();
         dowAllButton = new javax.swing.JToggleButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        monthList = new javax.swing.JList();
         monthLabel = new javax.swing.JLabel();
-        monthAllButton = new javax.swing.JToggleButton();
         domButton = new javax.swing.JToggleButton();
         domField = new javax.swing.JTextField();
         domAllCheckBox = new javax.swing.JCheckBox();
+        sunButton = new javax.swing.JToggleButton();
+        monButton = new javax.swing.JToggleButton();
+        tueButton = new javax.swing.JToggleButton();
+        wedButton = new javax.swing.JToggleButton();
+        thuButton = new javax.swing.JToggleButton();
+        friButton = new javax.swing.JToggleButton();
+        satButton = new javax.swing.JToggleButton();
+        janButton = new javax.swing.JToggleButton();
+        febButton = new javax.swing.JToggleButton();
+        marButton = new javax.swing.JToggleButton();
+        aprButton = new javax.swing.JToggleButton();
+        mayButton = new javax.swing.JToggleButton();
+        junButton = new javax.swing.JToggleButton();
+        julButton = new javax.swing.JToggleButton();
+        augButton = new javax.swing.JToggleButton();
+        sepButton = new javax.swing.JToggleButton();
+        octButton = new javax.swing.JToggleButton();
+        novButton = new javax.swing.JToggleButton();
+        decButton = new javax.swing.JToggleButton();
+        monthAllButton = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("Form"); // NOI18N
@@ -99,20 +117,25 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         scheduleLabel.setText(resourceMap.getString("scheduleLabel.text")); // NOI18N
         scheduleLabel.setName("scheduleLabel"); // NOI18N
 
-        secondAgainCheckBox.setText(resourceMap.getString("secondAgainCheckBox.text")); // NOI18N
-        secondAgainCheckBox.setName("secondAgainCheckBox"); // NOI18N
+        secondsAgainCheckBox.setText(resourceMap.getString("secondsAgainCheckBox.text")); // NOI18N
+        secondsAgainCheckBox.setName("secondsAgainCheckBox"); // NOI18N
 
-        secondAgainField.setText(resourceMap.getString("secondAgainField.text")); // NOI18N
-        secondAgainField.setName("secondAgainField"); // NOI18N
+        secondsAgainField.setText(resourceMap.getString("secondsAgainField.text")); // NOI18N
+        secondsAgainField.setName("secondsAgainField"); // NOI18N
 
         secondsAllCheckBox.setText(resourceMap.getString("secondsAllCheckBox.text")); // NOI18N
         secondsAllCheckBox.setName("secondsAllCheckBox"); // NOI18N
+        secondsAllCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                secondsAllCheckBoxActionPerformed(evt);
+            }
+        });
 
         minutesLabel.setText(resourceMap.getString("minutesLabel.text")); // NOI18N
         minutesLabel.setName("minutesLabel"); // NOI18N
 
-        minutesAgainLabel.setText(resourceMap.getString("minutesAgainLabel.text")); // NOI18N
-        minutesAgainLabel.setName("minutesAgainLabel"); // NOI18N
+        minutesAgainCheckBox.setText(resourceMap.getString("minutesAgainCheckBox.text")); // NOI18N
+        minutesAgainCheckBox.setName("minutesAgainCheckBox"); // NOI18N
 
         minutesAgainField.setName("minutesAgainField"); // NOI18N
 
@@ -123,67 +146,259 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
 
         minutesAllCheckBox.setText(resourceMap.getString("minutesAllCheckBox.text")); // NOI18N
         minutesAllCheckBox.setName("minutesAllCheckBox"); // NOI18N
+        minutesAllCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                minutesAllCheckBoxActionPerformed(evt);
+            }
+        });
 
         hoursLabel.setText(resourceMap.getString("hoursLabel.text")); // NOI18N
         hoursLabel.setName("hoursLabel"); // NOI18N
 
         hoursField.setText(resourceMap.getString("hoursField.text")); // NOI18N
         hoursField.setToolTipText(resourceMap.getString("hoursField.toolTipText")); // NOI18N
-        hoursField.setInputVerifier(new regexVerifier("^([0-5]?\\d(,\\s?[0-5]?\\d){0,59}|[0-5]?\\d-[0-5]?\\d)$"));
+        hoursField.setInputVerifier(new regexVerifier("^([0-2]?\\d(,\\s?[0-2]?\\d){0,23}|[0-2]?\\d-[0-2]?\\d)$"));
         hoursField.setName("hoursField"); // NOI18N
 
-        hoursAgainLabel.setText(resourceMap.getString("hoursAgainLabel.text")); // NOI18N
-        hoursAgainLabel.setName("hoursAgainLabel"); // NOI18N
+        hoursAgainCheckBox.setText(resourceMap.getString("hoursAgainCheckBox.text")); // NOI18N
+        hoursAgainCheckBox.setName("hoursAgainCheckBox"); // NOI18N
 
         hoursAgainField.setName("hoursAgainField"); // NOI18N
 
         hoursAllCheckBox.setText(resourceMap.getString("hoursAllCheckBox.text")); // NOI18N
         hoursAllCheckBox.setName("hoursAllCheckBox"); // NOI18N
-
-        jScrollPane1.setName("jScrollPane1"); // NOI18N
-
-        dowList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
+        hoursAllCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hoursAllCheckBoxActionPerformed(evt);
+            }
         });
-        dowList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        dowList.setName("dowList"); // NOI18N
-        jScrollPane1.setViewportView(dowList);
 
         dowLabel.setText(resourceMap.getString("dowLabel.text")); // NOI18N
         dowLabel.setName("dowLabel"); // NOI18N
 
         dowAllButton.setText(resourceMap.getString("dowAllButton.text")); // NOI18N
+        dowAllButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
         dowAllButton.setName("dowAllButton"); // NOI18N
-
-        jScrollPane2.setName("jScrollPane2"); // NOI18N
-
-        monthList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
+        dowAllButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dowAllButtonActionPerformed(evt);
+            }
         });
-        monthList.setName("monthList"); // NOI18N
-        jScrollPane2.setViewportView(monthList);
 
         monthLabel.setText(resourceMap.getString("monthLabel.text")); // NOI18N
         monthLabel.setName("monthLabel"); // NOI18N
 
-        monthAllButton.setText(resourceMap.getString("monthAllButton.text")); // NOI18N
-        monthAllButton.setName("monthAllButton"); // NOI18N
-
+        domButton.setSelected(true);
         domButton.setText(resourceMap.getString("domButton.text")); // NOI18N
         domButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
         domButton.setName("domButton"); // NOI18N
+        domButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                domButtonActionPerformed(evt);
+            }
+        });
 
         domField.setText(resourceMap.getString("domField.text")); // NOI18N
         domField.setToolTipText(resourceMap.getString("domField.toolTipText")); // NOI18N
-        domField.setInputVerifier(new regexVerifier("^([0-5]?\\d(,\\s?[0-5]?\\d){0,59}|[0-5]?\\d-[0-5]?\\d)$"));
+        domField.setEnabled(false);
+        domField.setInputVerifier(new regexVerifier("^([0-3]?\\d(,\\s?[0-3]?\\d){0,30}|[0-3]?\\d-[0-3]?\\d)$"));
         domField.setName("domField"); // NOI18N
 
+        domAllCheckBox.setSelected(true);
         domAllCheckBox.setText(resourceMap.getString("domAllCheckBox.text")); // NOI18N
         domAllCheckBox.setName("domAllCheckBox"); // NOI18N
+        domAllCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                domAllCheckBoxActionPerformed(evt);
+            }
+        });
+
+        sunButton.setBackground(resourceMap.getColor("sunButton.background")); // NOI18N
+        sunButton.setText(resourceMap.getString("sunButton.text")); // NOI18N
+        sunButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        sunButton.setName("sunButton"); // NOI18N
+        sunButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sunButtonActionPerformed(evt);
+            }
+        });
+
+        monButton.setBackground(resourceMap.getColor("monButton.background")); // NOI18N
+        monButton.setText(resourceMap.getString("monButton.text")); // NOI18N
+        monButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        monButton.setName("monButton"); // NOI18N
+        monButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                monButtonActionPerformed(evt);
+            }
+        });
+
+        tueButton.setBackground(resourceMap.getColor("tueButton.background")); // NOI18N
+        tueButton.setText(resourceMap.getString("tueButton.text")); // NOI18N
+        tueButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        tueButton.setName("tueButton"); // NOI18N
+        tueButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tueButtonActionPerformed(evt);
+            }
+        });
+
+        wedButton.setBackground(resourceMap.getColor("wedButton.background")); // NOI18N
+        wedButton.setText(resourceMap.getString("wedButton.text")); // NOI18N
+        wedButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        wedButton.setName("wedButton"); // NOI18N
+        wedButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wedButtonActionPerformed(evt);
+            }
+        });
+
+        thuButton.setBackground(resourceMap.getColor("thuButton.background")); // NOI18N
+        thuButton.setText(resourceMap.getString("thuButton.text")); // NOI18N
+        thuButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        thuButton.setName("thuButton"); // NOI18N
+        thuButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                thuButtonActionPerformed(evt);
+            }
+        });
+
+        friButton.setBackground(resourceMap.getColor("friButton.background")); // NOI18N
+        friButton.setText(resourceMap.getString("friButton.text")); // NOI18N
+        friButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        friButton.setName("friButton"); // NOI18N
+        friButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                friButtonActionPerformed(evt);
+            }
+        });
+
+        satButton.setBackground(resourceMap.getColor("satButton.background")); // NOI18N
+        satButton.setText(resourceMap.getString("satButton.text")); // NOI18N
+        satButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        satButton.setName("satButton"); // NOI18N
+        satButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                satButtonActionPerformed(evt);
+            }
+        });
+
+        janButton.setText(resourceMap.getString("janButton.text")); // NOI18N
+        janButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        janButton.setName("janButton"); // NOI18N
+        janButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                janButtonActionPerformed(evt);
+            }
+        });
+
+        febButton.setText(resourceMap.getString("febButton.text")); // NOI18N
+        febButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        febButton.setName("febButton"); // NOI18N
+        febButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                febButtonActionPerformed(evt);
+            }
+        });
+
+        marButton.setText(resourceMap.getString("marButton.text")); // NOI18N
+        marButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        marButton.setName("marButton"); // NOI18N
+        marButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                marButtonActionPerformed(evt);
+            }
+        });
+
+        aprButton.setText(resourceMap.getString("aprButton.text")); // NOI18N
+        aprButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        aprButton.setName("aprButton"); // NOI18N
+        aprButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aprButtonActionPerformed(evt);
+            }
+        });
+
+        mayButton.setText(resourceMap.getString("mayButton.text")); // NOI18N
+        mayButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        mayButton.setName("mayButton"); // NOI18N
+        mayButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mayButtonActionPerformed(evt);
+            }
+        });
+
+        junButton.setText(resourceMap.getString("junButton.text")); // NOI18N
+        junButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        junButton.setName("junButton"); // NOI18N
+        junButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                junButtonActionPerformed(evt);
+            }
+        });
+
+        julButton.setText(resourceMap.getString("julButton.text")); // NOI18N
+        julButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        julButton.setName("julButton"); // NOI18N
+        julButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                julButtonActionPerformed(evt);
+            }
+        });
+
+        augButton.setText(resourceMap.getString("augButton.text")); // NOI18N
+        augButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        augButton.setName("augButton"); // NOI18N
+        augButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                augButtonActionPerformed(evt);
+            }
+        });
+
+        sepButton.setText(resourceMap.getString("sepButton.text")); // NOI18N
+        sepButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        sepButton.setName("sepButton"); // NOI18N
+        sepButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sepButtonActionPerformed(evt);
+            }
+        });
+
+        octButton.setText(resourceMap.getString("octButton.text")); // NOI18N
+        octButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        octButton.setName("octButton"); // NOI18N
+        octButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                octButtonActionPerformed(evt);
+            }
+        });
+
+        novButton.setText(resourceMap.getString("novButton.text")); // NOI18N
+        novButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        novButton.setName("novButton"); // NOI18N
+        novButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                novButtonActionPerformed(evt);
+            }
+        });
+
+        decButton.setText(resourceMap.getString("decButton.text")); // NOI18N
+        decButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        decButton.setName("decButton"); // NOI18N
+        decButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                decButtonActionPerformed(evt);
+            }
+        });
+
+        monthAllButton.setText(resourceMap.getString("monthAllButton.text")); // NOI18N
+        monthAllButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        monthAllButton.setName("monthAllButton"); // NOI18N
+        monthAllButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                monthAllButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -202,15 +417,15 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(secondsField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(secondAgainCheckBox)
+                                .addComponent(secondsAgainCheckBox)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(secondAgainField, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(secondsAgainField, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(2, 2, 2)
                                 .addComponent(secondsAllCheckBox))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(minutesField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(minutesAgainLabel)
+                                .addComponent(minutesAgainCheckBox)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(minutesAgainField, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -218,7 +433,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(hoursField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(hoursAgainLabel)
+                                .addComponent(hoursAgainCheckBox)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(hoursAgainField, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -228,74 +443,140 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(taskNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(wedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(thuButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(friButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(satButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(julButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(augButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(sepButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(aprButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(mayButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(junButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(octButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(novButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(decButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(domButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(domField, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(225, 225, 225)
+                        .addComponent(domAllCheckBox))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(sunButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(monButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tueButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(dowLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(dowAllButton))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(dowAllButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(monthLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(monthAllButton))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(domAllCheckBox)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(domButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(domField, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(monthAllButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(janButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(febButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(marButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(3, 3, 3)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(237, Short.MAX_VALUE))
+                .addContainerGap(254, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(taskNameLabel)
-                    .addComponent(taskNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(scheduleLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(secondsLabel)
-                    .addComponent(secondsField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(secondAgainCheckBox)
-                    .addComponent(secondAgainField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(secondsAllCheckBox))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(minutesLabel)
-                    .addComponent(minutesAgainLabel)
-                    .addComponent(minutesAgainField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(minutesField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(minutesAllCheckBox))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(hoursLabel)
-                    .addComponent(hoursAgainLabel)
-                    .addComponent(hoursAgainField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(hoursAllCheckBox)
-                    .addComponent(hoursField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(dowLabel)
-                    .addComponent(dowAllButton)
-                    .addComponent(monthLabel)
-                    .addComponent(monthAllButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(domButton)
-                    .addComponent(domField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(domAllCheckBox)))
-            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(taskNameLabel)
+                            .addComponent(taskNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(scheduleLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(secondsLabel)
+                            .addComponent(secondsField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(secondsAgainCheckBox)
+                            .addComponent(secondsAgainField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(secondsAllCheckBox))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(minutesLabel)
+                            .addComponent(minutesAgainCheckBox)
+                            .addComponent(minutesAgainField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(minutesField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(minutesAllCheckBox))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(hoursLabel)
+                            .addComponent(hoursAgainCheckBox)
+                            .addComponent(hoursAgainField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(hoursAllCheckBox)
+                            .addComponent(hoursField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(dowLabel)
+                            .addComponent(dowAllButton)
+                            .addComponent(monthLabel)
+                            .addComponent(monthAllButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(sunButton)
+                            .addComponent(monButton)
+                            .addComponent(tueButton)
+                            .addComponent(janButton)
+                            .addComponent(febButton)
+                            .addComponent(marButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(wedButton)
+                            .addComponent(thuButton)
+                            .addComponent(friButton)
+                            .addComponent(aprButton)
+                            .addComponent(mayButton)
+                            .addComponent(junButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(satButton)
+                            .addComponent(julButton)
+                            .addComponent(augButton)
+                            .addComponent(sepButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(octButton)
+                            .addComponent(novButton)
+                            .addComponent(decButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(domButton)
+                            .addComponent(domField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(domAllCheckBox)))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -311,6 +592,211 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void fixComponents() {
+        
+    }
+
+    private void initDaysOfWeekArray() {
+        dayOfWeek = new java.util.ArrayList<javax.swing.JToggleButton>();
+        dayOfWeek.add(dowAllButton);
+        dayOfWeek.add(sunButton);
+        dayOfWeek.add(monButton);
+        dayOfWeek.add(tueButton);
+        dayOfWeek.add(wedButton);
+        dayOfWeek.add(thuButton);
+        dayOfWeek.add(friButton);
+        dayOfWeek.add(satButton);
+    }
+
+    private void initMonthArray() {
+        month = new java.util.ArrayList<javax.swing.JToggleButton>();
+        month.add(monthAllButton);
+        month.add(janButton);
+        month.add(febButton);
+        month.add(marButton);
+        month.add(aprButton);
+        month.add(mayButton);
+        month.add(junButton);
+        month.add(julButton);
+        month.add(augButton);
+        month.add(sepButton);
+        month.add(octButton);
+        month.add(novButton);
+        month.add(decButton);
+    }
+
+    private void dowAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dowAllButtonActionPerformed
+        if (dowAllButton.isSelected()) {
+            for (int i = 1; i < 8; i++) {
+                dayOfWeek.get(i).setSelected(true);
+            }
+            dowAllButton.setText("None");
+            domField.setEnabled(false);
+            domAllCheckBox.setEnabled(false);
+            domButton.setSelected(false);
+        } else {
+            for (int i = 1; i < 8; i++) {
+                dayOfWeek.get(i).setSelected(false);
+            }
+            dowAllButton.setText("All");
+            domField.setEnabled(true);
+            domAllCheckBox.setEnabled(true);
+            domButton.setSelected(true);
+        }
+    }//GEN-LAST:event_dowAllButtonActionPerformed
+
+    private void sunButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sunButtonActionPerformed
+        verifyAllSelected(dayOfWeek);
+    }//GEN-LAST:event_sunButtonActionPerformed
+
+    private void monButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monButtonActionPerformed
+        verifyAllSelected(dayOfWeek);
+    }//GEN-LAST:event_monButtonActionPerformed
+
+    private void tueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tueButtonActionPerformed
+        verifyAllSelected(dayOfWeek);
+    }//GEN-LAST:event_tueButtonActionPerformed
+
+    private void wedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wedButtonActionPerformed
+        verifyAllSelected(dayOfWeek);
+    }//GEN-LAST:event_wedButtonActionPerformed
+
+    private void thuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thuButtonActionPerformed
+        verifyAllSelected(dayOfWeek);
+    }//GEN-LAST:event_thuButtonActionPerformed
+
+    private void friButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friButtonActionPerformed
+        verifyAllSelected(dayOfWeek);
+    }//GEN-LAST:event_friButtonActionPerformed
+
+    private void satButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_satButtonActionPerformed
+        verifyAllSelected(dayOfWeek);
+    }//GEN-LAST:event_satButtonActionPerformed
+
+    private void monthAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthAllButtonActionPerformed
+        if (monthAllButton.isSelected()) {
+            for (int i = 1; i < 13; i++) {
+                month.get(i).setSelected(true);
+            }
+            monthAllButton.setText("None");
+        } else {
+            for (int i = 1; i < 13; i++) {
+                month.get(i).setSelected(false);
+            }
+            monthAllButton.setText("All");
+        }
+    }//GEN-LAST:event_monthAllButtonActionPerformed
+
+    private void janButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_janButtonActionPerformed
+        verifyAllSelected(month);
+    }//GEN-LAST:event_janButtonActionPerformed
+
+    private void febButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_febButtonActionPerformed
+        verifyAllSelected(month);
+    }//GEN-LAST:event_febButtonActionPerformed
+
+    private void marButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_marButtonActionPerformed
+        verifyAllSelected(month);
+    }//GEN-LAST:event_marButtonActionPerformed
+
+    private void aprButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aprButtonActionPerformed
+        verifyAllSelected(month);
+    }//GEN-LAST:event_aprButtonActionPerformed
+
+    private void mayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mayButtonActionPerformed
+        verifyAllSelected(month);
+    }//GEN-LAST:event_mayButtonActionPerformed
+
+    private void junButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_junButtonActionPerformed
+        verifyAllSelected(month);
+    }//GEN-LAST:event_junButtonActionPerformed
+
+    private void julButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_julButtonActionPerformed
+        verifyAllSelected(month);
+    }//GEN-LAST:event_julButtonActionPerformed
+
+    private void augButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_augButtonActionPerformed
+        verifyAllSelected(month);
+    }//GEN-LAST:event_augButtonActionPerformed
+
+    private void sepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sepButtonActionPerformed
+        verifyAllSelected(month);
+    }//GEN-LAST:event_sepButtonActionPerformed
+
+    private void octButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_octButtonActionPerformed
+        verifyAllSelected(month);
+    }//GEN-LAST:event_octButtonActionPerformed
+
+    private void novButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novButtonActionPerformed
+        verifyAllSelected(month);
+    }//GEN-LAST:event_novButtonActionPerformed
+
+    private void decButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decButtonActionPerformed
+        verifyAllSelected(month);
+    }//GEN-LAST:event_decButtonActionPerformed
+
+    private void domButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_domButtonActionPerformed
+        if (domButton.isSelected()) {
+            for (int i = 0; i < 8; i++) {
+                dayOfWeek.get(i).setSelected(false);
+            }
+            dayOfWeek.get(0).setText("All");
+            domAllCheckBox.setEnabled(true);
+            domField.setEnabled(!domAllCheckBox.isSelected());
+        } else {
+            domButton.setSelected(true);
+        }
+    }//GEN-LAST:event_domButtonActionPerformed
+
+    private void domAllCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_domAllCheckBoxActionPerformed
+        domField.setEnabled(!domAllCheckBox.isSelected());
+    }//GEN-LAST:event_domAllCheckBoxActionPerformed
+
+    private void secondsAllCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secondsAllCheckBoxActionPerformed
+        secondsField.setEnabled(!secondsAllCheckBox.isSelected());
+        secondsAgainCheckBox.setEnabled(!secondsAllCheckBox.isSelected());
+        secondsAgainField.setEnabled(!secondsAllCheckBox.isSelected());
+    }//GEN-LAST:event_secondsAllCheckBoxActionPerformed
+
+    private void minutesAllCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minutesAllCheckBoxActionPerformed
+        minutesField.setEnabled(!minutesAllCheckBox.isSelected());
+        minutesAgainCheckBox.setEnabled(!minutesAllCheckBox.isSelected());
+        minutesAgainField.setEnabled(!minutesAllCheckBox.isSelected());
+    }//GEN-LAST:event_minutesAllCheckBoxActionPerformed
+
+    private void hoursAllCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hoursAllCheckBoxActionPerformed
+        hoursField.setEnabled(!hoursAllCheckBox.isSelected());
+        hoursAgainCheckBox.setEnabled(!hoursAllCheckBox.isSelected());
+        hoursAgainField.setEnabled(!hoursAllCheckBox.isSelected());
+    }//GEN-LAST:event_hoursAllCheckBoxActionPerformed
+
+    private void verifyAllSelected(
+            java.util.List<javax.swing.JToggleButton> buttonList) {
+        int numSelected = 0;
+
+        for(int i = 1; i < buttonList.size(); i++) {
+            if (buttonList.get(i).isSelected()) {
+                numSelected++;
+            }
+        }
+        if (numSelected == buttonList.size() - 1) {
+            buttonList.get(0).setSelected(true);
+            buttonList.get(0).setText("None");
+        } else {
+            buttonList.get(0).setSelected(false);
+            buttonList.get(0).setText("All");
+        }
+        if (buttonList.get(1).getText().equals("Sun") && numSelected > 0) {
+            domField.setEnabled(false);
+            domAllCheckBox.setEnabled(false);
+            domButton.setSelected(false);
+        } else if (buttonList.get(1).getText().equals("Sun") && numSelected == 0) {
+            domField.setEnabled(true);
+            domAllCheckBox.setEnabled(true);
+            domButton.setSelected(true);
+        }
+    }
 
     class regexVerifier extends javax.swing.InputVerifier {
         public regexVerifier(String regex) {
@@ -334,39 +820,56 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
 
     private MCServerGUIListModel taskList;
     private MCServerGUIConfig config;
+    private java.util.List<javax.swing.JToggleButton> dayOfWeek;
+    private java.util.List<javax.swing.JToggleButton> month;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton aprButton;
+    private javax.swing.JToggleButton augButton;
+    private javax.swing.JToggleButton decButton;
     private javax.swing.JCheckBox domAllCheckBox;
     private javax.swing.JToggleButton domButton;
     private javax.swing.JTextField domField;
     private javax.swing.JToggleButton dowAllButton;
     private javax.swing.JLabel dowLabel;
-    private javax.swing.JList dowList;
+    private javax.swing.JToggleButton febButton;
+    private javax.swing.JToggleButton friButton;
+    private javax.swing.JCheckBox hoursAgainCheckBox;
     private javax.swing.JTextField hoursAgainField;
-    private javax.swing.JCheckBox hoursAgainLabel;
     private javax.swing.JCheckBox hoursAllCheckBox;
     private javax.swing.JTextField hoursField;
     private javax.swing.JLabel hoursLabel;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JToggleButton janButton;
+    private javax.swing.JToggleButton julButton;
+    private javax.swing.JToggleButton junButton;
+    private javax.swing.JToggleButton marButton;
+    private javax.swing.JToggleButton mayButton;
+    private javax.swing.JCheckBox minutesAgainCheckBox;
     private javax.swing.JTextField minutesAgainField;
-    private javax.swing.JCheckBox minutesAgainLabel;
     private javax.swing.JCheckBox minutesAllCheckBox;
     private javax.swing.JTextField minutesField;
     private javax.swing.JLabel minutesLabel;
+    private javax.swing.JToggleButton monButton;
     private javax.swing.JToggleButton monthAllButton;
     private javax.swing.JLabel monthLabel;
-    private javax.swing.JList monthList;
+    private javax.swing.JToggleButton novButton;
+    private javax.swing.JToggleButton octButton;
+    private javax.swing.JToggleButton satButton;
     private javax.swing.JLabel scheduleLabel;
-    private javax.swing.JCheckBox secondAgainCheckBox;
-    private javax.swing.JTextField secondAgainField;
+    private javax.swing.JCheckBox secondsAgainCheckBox;
+    private javax.swing.JTextField secondsAgainField;
     private javax.swing.JCheckBox secondsAllCheckBox;
     private javax.swing.JTextField secondsField;
     private javax.swing.JLabel secondsLabel;
+    private javax.swing.JToggleButton sepButton;
+    private javax.swing.JToggleButton sunButton;
     private javax.swing.JTextField taskNameField;
     private javax.swing.JLabel taskNameLabel;
+    private javax.swing.JToggleButton thuButton;
+    private javax.swing.JToggleButton tueButton;
+    private javax.swing.JToggleButton wedButton;
     // End of variables declaration//GEN-END:variables
 
 }

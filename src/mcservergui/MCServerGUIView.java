@@ -1177,7 +1177,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         backupFileChooser.getCheckingModel().setCheckingMode(CheckingMode.PROPAGATE);
         taskSchedulerList.setCellRenderer(new TaskSchedulerListCellRenderer());
-        consoleOutput.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
+        //consoleOutput.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
     }
 
     private class TaskSchedulerListCellRenderer extends javax.swing.JTextPane implements javax.swing.ListCellRenderer {
@@ -1727,6 +1727,11 @@ public class MCServerGUIView extends FrameView implements Observer {
         } else {
             consoleOutput.setText("Configuration file not found or invalid!  Creating new config file with default values.");
         }
+        updateGuiWithConfigValues();
+        saveConfig();
+    }
+
+    public void updateGuiWithConfigValues() {
         zipBackupCheckBox.setSelected(config.backups.getZip());
         pathsToBackup = config.backups.getPathsToBackup();
         backupPathField.setText(config.backups.getPath());
@@ -1762,7 +1767,6 @@ public class MCServerGUIView extends FrameView implements Observer {
         }
         backupFileChooser.addTreeCheckingListener(new BackupFileChooserCheckingListener());
         cmdLineField.setText(config.cmdLine.parseCmdLine());
-        saveConfig();
     }
 
     /**
