@@ -1,0 +1,427 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="name" type="java.lang.String" value="Form" noResource="true"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="2"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JPanel" name="jPanel1">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="New Task">
+              <Property name="titleX" resourceKey="jPanel1.border.title"/>
+            </TitledBorder>
+          </Border>
+        </Property>
+        <Property name="name" type="java.lang.String" value="jPanel1" noResource="true"/>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="scheduleLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="hoursLabel" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="secondsLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="minutesLabel" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="secondsField" min="-2" pref="39" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="secondAgainCheckBox" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="secondAgainField" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
+                                  <Component id="secondsAllCheckBox" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="minutesField" min="-2" pref="39" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="minutesAgainLabel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="minutesAgainField" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="minutesAllCheckBox" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="hoursField" min="-2" pref="39" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="hoursAgainLabel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="hoursAgainField" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="hoursAllCheckBox" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="taskNameLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="taskNameField" min="-2" pref="203" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="dowLabel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="dowAllButton" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="jScrollPane1" alignment="0" min="-2" pref="126" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="monthLabel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="monthAllButton" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                  <Component id="domAllCheckBox" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jScrollPane2" alignment="1" min="-2" pref="126" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="domButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="domField" min="-2" pref="131" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jSeparator1" min="-2" pref="11" max="-2" attributes="0"/>
+                  <EmptySpace pref="237" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="taskNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="taskNameField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="scheduleLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="secondsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="secondsField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="secondAgainCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="secondAgainField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="secondsAllCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="minutesLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="minutesAgainLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="minutesAgainField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="minutesField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="minutesAllCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="hoursLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="hoursAgainLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="hoursAgainField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="hoursAllCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="hoursField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="dowLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="dowAllButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="monthLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="monthAllButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="jScrollPane1" min="-2" pref="83" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" min="-2" pref="83" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="domButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="domField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="domAllCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <Component id="jSeparator1" alignment="0" min="-2" pref="275" max="-2" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="taskNameLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="taskNameLabel.text"/>
+            <Property name="name" type="java.lang.String" value="taskNameLabel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="taskNameField">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="taskNameField.text"/>
+            <Property name="name" type="java.lang.String" value="taskNameField" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSeparator" name="jSeparator1">
+          <Properties>
+            <Property name="orientation" type="int" value="1"/>
+            <Property name="name" type="java.lang.String" value="jSeparator1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="secondsLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="secondsLabel.text"/>
+            <Property name="name" type="java.lang.String" value="secondsLabel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="secondsField">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="secondsField.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="secondsField.toolTipText"/>
+            <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new regexVerifier(&quot;^([0-5]?\\d(,\\s?[0-5]?\\d){0,59}|[0-5]?\\d-[0-5]?\\d)$&quot;)" type="code"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="secondsField" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="scheduleLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="scheduleLabel.text"/>
+            <Property name="name" type="java.lang.String" value="scheduleLabel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="secondAgainCheckBox">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="secondAgainCheckBox.text"/>
+            <Property name="name" type="java.lang.String" value="secondAgainCheckBox" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="secondAgainField">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="secondAgainField.text"/>
+            <Property name="name" type="java.lang.String" value="secondAgainField" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="secondsAllCheckBox">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="secondsAllCheckBox.text"/>
+            <Property name="name" type="java.lang.String" value="secondsAllCheckBox" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="minutesLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="minutesLabel.text"/>
+            <Property name="name" type="java.lang.String" value="minutesLabel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="minutesAgainLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="minutesAgainLabel.text"/>
+            <Property name="name" type="java.lang.String" value="minutesAgainLabel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="minutesAgainField">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="minutesAgainField" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="minutesField">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="minutesField.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="minutesField.toolTipText"/>
+            <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new regexVerifier(&quot;^([0-5]?\\d(,\\s?[0-5]?\\d){0,59}|[0-5]?\\d-[0-5]?\\d)$&quot;)" type="code"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="minutesField" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="minutesAllCheckBox">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="minutesAllCheckBox.text"/>
+            <Property name="name" type="java.lang.String" value="minutesAllCheckBox" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="hoursLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="hoursLabel.text"/>
+            <Property name="name" type="java.lang.String" value="hoursLabel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="hoursField">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="hoursField.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="hoursField.toolTipText"/>
+            <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new regexVerifier(&quot;^([0-5]?\\d(,\\s?[0-5]?\\d){0,59}|[0-5]?\\d-[0-5]?\\d)$&quot;)" type="code"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="hoursField" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="hoursAgainLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="hoursAgainLabel.text"/>
+            <Property name="name" type="java.lang.String" value="hoursAgainLabel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="hoursAgainField">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="hoursAgainField" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="hoursAllCheckBox">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="hoursAllCheckBox.text"/>
+            <Property name="name" type="java.lang.String" value="hoursAllCheckBox" noResource="true"/>
+          </Properties>
+        </Component>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="jScrollPane1" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JList" name="dowList">
+              <Properties>
+                <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
+                  <StringArray count="7">
+                    <StringItem index="0" value="Sunday"/>
+                    <StringItem index="1" value="Monday"/>
+                    <StringItem index="2" value="Tuesday"/>
+                    <StringItem index="3" value="Wednesday"/>
+                    <StringItem index="4" value="Thursday"/>
+                    <StringItem index="5" value="Friday"/>
+                    <StringItem index="6" value="Saturday"/>
+                  </StringArray>
+                </Property>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Default Cursor"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="dowList" noResource="true"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Component class="javax.swing.JLabel" name="dowLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="dowLabel.text"/>
+            <Property name="name" type="java.lang.String" value="dowLabel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="dowAllButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="dowAllButton.text"/>
+            <Property name="name" type="java.lang.String" value="dowAllButton" noResource="true"/>
+          </Properties>
+        </Component>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="jScrollPane2" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JList" name="monthList">
+              <Properties>
+                <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
+                  <StringArray count="12">
+                    <StringItem index="0" value="January"/>
+                    <StringItem index="1" value="February"/>
+                    <StringItem index="2" value="March"/>
+                    <StringItem index="3" value="April"/>
+                    <StringItem index="4" value="May"/>
+                    <StringItem index="5" value="June"/>
+                    <StringItem index="6" value="July"/>
+                    <StringItem index="7" value="August"/>
+                    <StringItem index="8" value="September"/>
+                    <StringItem index="9" value="October"/>
+                    <StringItem index="10" value="November"/>
+                    <StringItem index="11" value="December"/>
+                  </StringArray>
+                </Property>
+                <Property name="name" type="java.lang.String" value="monthList" noResource="true"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Component class="javax.swing.JLabel" name="monthLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="monthLabel.text"/>
+            <Property name="name" type="java.lang.String" value="monthLabel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="monthAllButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="monthAllButton.text"/>
+            <Property name="name" type="java.lang.String" value="monthAllButton" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="domButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="domButton.text"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 2]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="domButton" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="domField">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="domField.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="domField.toolTipText"/>
+            <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new regexVerifier(&quot;^([0-5]?\\d(,\\s?[0-5]?\\d){0,59}|[0-5]?\\d-[0-5]?\\d)$&quot;)" type="code"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="domField" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="domAllCheckBox">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="domAllCheckBox.text"/>
+            <Property name="name" type="java.lang.String" value="domAllCheckBox" noResource="true"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>

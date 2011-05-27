@@ -129,7 +129,9 @@ public class MCServerGUIView extends FrameView implements Observer {
         } catch (java.text.ParseException pe) {
             System.out.println("error");
         }*/
-        
+
+        taskList = new MCServerGUIListModel();
+        taskSchedulerList.setModel(taskList);
 
         config = newConfig;
         server = newServer;
@@ -219,7 +221,14 @@ public class MCServerGUIView extends FrameView implements Observer {
         backupStatusLog = new javax.swing.JTextPane();
         backupControlRefreshButton = new javax.swing.JButton();
         restoreTab = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         schedulerTab = new javax.swing.JPanel();
+        taskSchedulerPanel = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        taskSchedulerList = new javax.swing.JList();
+        taskListAddButton = new javax.swing.JButton();
+        taskListEditButton = new javax.swing.JButton();
+        taskListRemoveButton = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
@@ -956,30 +965,93 @@ public class MCServerGUIView extends FrameView implements Observer {
 
         restoreTab.setName("restoreTab"); // NOI18N
 
+        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
+        jLabel3.setName("jLabel3"); // NOI18N
+
         javax.swing.GroupLayout restoreTabLayout = new javax.swing.GroupLayout(restoreTab);
         restoreTab.setLayout(restoreTabLayout);
         restoreTabLayout.setHorizontalGroup(
             restoreTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 548, Short.MAX_VALUE)
+            .addGroup(restoreTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addContainerGap(439, Short.MAX_VALUE))
         );
         restoreTabLayout.setVerticalGroup(
             restoreTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 323, Short.MAX_VALUE)
+            .addGroup(restoreTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addContainerGap(298, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("restoreTab.TabConstraints.tabTitle"), restoreTab); // NOI18N
 
         schedulerTab.setName("schedulerTab"); // NOI18N
 
+        taskSchedulerPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("taskSchedulerPanel.border.title"))); // NOI18N
+        taskSchedulerPanel.setName("taskSchedulerPanel"); // NOI18N
+
+        jScrollPane5.setName("jScrollPane5"); // NOI18N
+
+        taskSchedulerList.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        taskSchedulerList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        taskSchedulerList.setName("taskSchedulerList"); // NOI18N
+        jScrollPane5.setViewportView(taskSchedulerList);
+
+        javax.swing.GroupLayout taskSchedulerPanelLayout = new javax.swing.GroupLayout(taskSchedulerPanel);
+        taskSchedulerPanel.setLayout(taskSchedulerPanelLayout);
+        taskSchedulerPanelLayout.setHorizontalGroup(
+            taskSchedulerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
+        );
+        taskSchedulerPanelLayout.setVerticalGroup(
+            taskSchedulerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+        );
+
+        taskListAddButton.setText(resourceMap.getString("taskListAddButton.text")); // NOI18N
+        taskListAddButton.setName("taskListAddButton"); // NOI18N
+        taskListAddButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                taskListAddButtonActionPerformed(evt);
+            }
+        });
+
+        taskListEditButton.setText(resourceMap.getString("taskListEditButton.text")); // NOI18N
+        taskListEditButton.setName("taskListEditButton"); // NOI18N
+
+        taskListRemoveButton.setText(resourceMap.getString("taskListRemoveButton.text")); // NOI18N
+        taskListRemoveButton.setName("taskListRemoveButton"); // NOI18N
+
         javax.swing.GroupLayout schedulerTabLayout = new javax.swing.GroupLayout(schedulerTab);
         schedulerTab.setLayout(schedulerTabLayout);
         schedulerTabLayout.setHorizontalGroup(
             schedulerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 548, Short.MAX_VALUE)
+            .addComponent(taskSchedulerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(schedulerTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(taskListAddButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(taskListEditButton)
+                .addGap(18, 18, 18)
+                .addComponent(taskListRemoveButton)
+                .addContainerGap(337, Short.MAX_VALUE))
         );
         schedulerTabLayout.setVerticalGroup(
             schedulerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 323, Short.MAX_VALUE)
+            .addGroup(schedulerTabLayout.createSequentialGroup()
+                .addComponent(taskSchedulerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(schedulerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(taskListAddButton)
+                    .addComponent(taskListEditButton)
+                    .addComponent(taskListRemoveButton))
+                .addGap(51, 51, 51))
         );
 
         tabber.addTab(resourceMap.getString("schedulerTab.TabConstraints.tabTitle"), schedulerTab); // NOI18N
@@ -1104,9 +1176,31 @@ public class MCServerGUIView extends FrameView implements Observer {
                     //.addComponent(backupControlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         backupFileChooser.getCheckingModel().setCheckingMode(CheckingMode.PROPAGATE);
+        taskSchedulerList.setCellRenderer(new TaskSchedulerListCellRenderer());
+        consoleOutput.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
     }
 
-    class BackupFileChooserCheckingListener implements TreeCheckingListener {
+    private class TaskSchedulerListCellRenderer extends javax.swing.JTextPane implements javax.swing.ListCellRenderer {
+        public TaskSchedulerListCellRenderer() {
+            setOpaque(true);
+            this.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
+        }
+
+        @Override public java.awt.Component getListCellRendererComponent(
+                javax.swing.JList list,
+                Object value,
+                int index,
+                boolean isSelected,
+                boolean cellHasFocus)
+        {
+            setText(value.toString());
+            setBackground(isSelected ? java.awt.Color.lightGray : java.awt.Color.white);
+            setForeground(isSelected ? java.awt.Color.white : java.awt.Color.black);
+            return this;
+        }
+    }
+
+    private class BackupFileChooserCheckingListener implements TreeCheckingListener {
         @Override public void valueChanged(TreeCheckingEvent e) {
             if(e.isCheckedPath()) {
                 for (int childrenindex = 0; childrenindex < backupFileSystem.getChildCount(
@@ -1403,6 +1497,10 @@ public class MCServerGUIView extends FrameView implements Observer {
         config.backups.setZip(zipBackupCheckBox.isSelected());
     }//GEN-LAST:event_zipBackupCheckBoxActionPerformed
 
+    private void taskListAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taskListAddButtonActionPerformed
+        addTaskListEntry();
+    }//GEN-LAST:event_taskListAddButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton backupButton;
     public javax.swing.JButton backupControlRefreshButton;
@@ -1430,12 +1528,14 @@ public class MCServerGUIView extends FrameView implements Observer {
     public javax.swing.JLabel inputHistoryMaxSizeLabel;
     public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel2;
+    public javax.swing.JLabel jLabel3;
     public javax.swing.JList jList1;
     public javax.swing.JPanel jPanel4;
     public javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JScrollPane jScrollPane3;
     public javax.swing.JScrollPane jScrollPane4;
+    public javax.swing.JScrollPane jScrollPane5;
     public javax.swing.JButton javaExecBrowseButton;
     public javax.swing.JTextField javaExecField;
     public javax.swing.JLabel javaExecLabel;
@@ -1464,6 +1564,11 @@ public class MCServerGUIView extends FrameView implements Observer {
     public javax.swing.JPanel statusPanel;
     public javax.swing.JButton submitButton;
     public javax.swing.JTabbedPane tabber;
+    public javax.swing.JButton taskListAddButton;
+    public javax.swing.JButton taskListEditButton;
+    public javax.swing.JButton taskListRemoveButton;
+    public javax.swing.JList taskSchedulerList;
+    public javax.swing.JPanel taskSchedulerPanel;
     public javax.swing.JTextField windowTitleField;
     public javax.swing.JLabel windowTitleLabel;
     public javax.swing.JCheckBox xincgcCheckBox;
@@ -1473,6 +1578,15 @@ public class MCServerGUIView extends FrameView implements Observer {
     // End of variables declaration//GEN-END:variables
 
     // My methods
+    public void addTaskListEntry() {
+        if (taskDialog == null) {
+            JFrame mainFrame = MCServerGUIApp.getApplication().getMainFrame();
+            taskDialog = new MCServerGUITaskDialog(mainFrame, taskList, config);
+            taskDialog.setLocationRelativeTo(mainFrame);
+        }
+        MCServerGUIApp.getApplication().show(taskDialog);
+    }
+
     private void addPathToBackup(String addPath) {
         if (!pathsToBackup.contains(addPath)) {
             pathsToBackup.add(addPath);
@@ -1827,6 +1941,7 @@ public class MCServerGUIView extends FrameView implements Observer {
     private boolean badConfig;
     private Scheduler scheduler;
     private MCServerGUITask tasker;
+    private MCServerGUIListModel taskList;
 
     //Auto created
     private final Timer messageTimer;
@@ -1836,4 +1951,6 @@ public class MCServerGUIView extends FrameView implements Observer {
     private int busyIconIndex = 0;
 
     private JDialog aboutBox;
+
+    private MCServerGUITaskDialog taskDialog;
 }

@@ -1,5 +1,5 @@
 Version .3.0
-  
+  Switched console output to use html formatting for future colorization options.
 
 Version .2.2
   Added splash screen.
