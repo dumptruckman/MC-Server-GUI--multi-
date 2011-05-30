@@ -30,18 +30,47 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             java.awt.Frame parent,
             MCServerGUIListModel taskList,
             MCServerGUIConfig config,
-            Scheduler scheduler) {
+            Scheduler scheduler,
+            java.util.List<MCServerGUIEvent> scheduleEvents) {
         super(parent);
         this.taskList = taskList;
         this.config = config;
         this.scheduler = scheduler;
+        this.scheduleEvents = scheduleEvents;
         warningListModel = new MCServerGUIListModel();
+        warningListModel.clear();
         serverWarningList = new java.util.ArrayList<java.util.List>();
+        serverWarningList.clear();
         initComponents();
         fixComponents();
 
         initDaysOfWeekArray();
         initMonthArray();
+    }
+
+    public MCServerGUITaskDialog(
+            java.awt.Frame parent,
+            MCServerGUIListModel taskList,
+            MCServerGUIConfig config,
+            Scheduler scheduler,
+            java.util.List<MCServerGUIEvent> scheduleEvents,
+            MCServerGUIEvent editEvent) {
+        super(parent);
+        this.taskList = taskList;
+        this.config = config;
+        this.scheduler = scheduler;
+        this.scheduleEvents = scheduleEvents;
+        this.editEvent = editEvent;
+        warningListModel = new MCServerGUIListModel();
+        warningListModel.clear();
+        serverWarningList = new java.util.ArrayList<java.util.List>();
+        serverWarningList.clear();
+        initComponents();
+        fixComponents();
+
+        initDaysOfWeekArray();
+        initMonthArray();
+        parseEditEvent();
     }
 
     @Action public void closeTaskDialog() {
@@ -155,6 +184,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
 
         secondsAgainField.setText(resourceMap.getString("secondsAgainField.text")); // NOI18N
         secondsAgainField.setToolTipText(resourceMap.getString("secondsAgainField.toolTipText")); // NOI18N
+        secondsAgainField.setInputVerifier(new MCServerGUIRegexVerifier("^[0-5]?\\d$"));
         secondsAgainField.setName("secondsAgainField"); // NOI18N
 
         secondsAllCheckBox.setText(resourceMap.getString("secondsAllCheckBox.text")); // NOI18N
@@ -174,6 +204,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         minutesAgainCheckBox.setName("minutesAgainCheckBox"); // NOI18N
 
         minutesAgainField.setToolTipText(resourceMap.getString("minutesAgainField.toolTipText")); // NOI18N
+        minutesAgainField.setInputVerifier(new MCServerGUIRegexVerifier("^[0-5]?\\d$"));
         minutesAgainField.setName("minutesAgainField"); // NOI18N
 
         minutesField.setText(resourceMap.getString("minutesField.text")); // NOI18N
@@ -203,6 +234,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         hoursAgainCheckBox.setName("hoursAgainCheckBox"); // NOI18N
 
         hoursAgainField.setToolTipText(resourceMap.getString("hoursAgainField.toolTipText")); // NOI18N
+        hoursAgainField.setInputVerifier(new MCServerGUIRegexVerifier("^[0-2]?\\d$"));
         hoursAgainField.setName("hoursAgainField"); // NOI18N
 
         hoursAllCheckBox.setText(resourceMap.getString("hoursAllCheckBox.text")); // NOI18N
@@ -524,6 +556,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
 
         createButton.setText(resourceMap.getString("createButton.text")); // NOI18N
         createButton.setToolTipText(resourceMap.getString("createButton.toolTipText")); // NOI18N
+        createButton.setEnabled(false);
         createButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
         createButton.setName("createButton"); // NOI18N
         createButton.addActionListener(new java.awt.event.ActionListener() {
@@ -1028,6 +1061,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         warningList.setEnabled(false);
         warningAddButton.setEnabled(false);
         warningRemoveButton.setEnabled(false);
+        task = "Start Server";
     }//GEN-LAST:event_startServerRadioActionPerformed
 
     private void sendCommandRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendCommandRadioActionPerformed
@@ -1038,6 +1072,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         warningList.setEnabled(true);
         warningAddButton.setEnabled(true);
         warningRemoveButton.setEnabled(true);
+        task = "Send Command";
     }//GEN-LAST:event_sendCommandRadioActionPerformed
 
     private void stopServerRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopServerRadioActionPerformed
@@ -1048,6 +1083,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         warningList.setEnabled(true);
         warningAddButton.setEnabled(true);
         warningRemoveButton.setEnabled(true);
+        task = "Stop Server";
     }//GEN-LAST:event_stopServerRadioActionPerformed
 
     private void restartServerRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartServerRadioActionPerformed
@@ -1058,6 +1094,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         warningList.setEnabled(true);
         warningAddButton.setEnabled(true);
         warningRemoveButton.setEnabled(true);
+        task = "Restart Server";
     }//GEN-LAST:event_restartServerRadioActionPerformed
 
     private void backupRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupRadioActionPerformed
@@ -1068,23 +1105,21 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         warningList.setEnabled(true);
         warningAddButton.setEnabled(true);
         warningRemoveButton.setEnabled(true);
+        task = "Backup";
     }//GEN-LAST:event_backupRadioActionPerformed
 
     private void warningAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_warningAddButtonActionPerformed
-        if (warningDialog == null) {
-            javax.swing.JFrame mainFrame = MCServerGUIApp.getApplication().getMainFrame();
-            warningDialog = new MCServerGUIServerWarningDialog(
-                    mainFrame, warningListModel, serverWarningList);
-            warningDialog.setLocationRelativeTo(mainFrame);
-        }
+        javax.swing.JFrame mainFrame = MCServerGUIApp.getApplication().getMainFrame();
+        warningDialog = new MCServerGUIServerWarningDialog(
+                mainFrame, warningListModel, serverWarningList);
+        warningDialog.setLocationRelativeTo(mainFrame);
         MCServerGUIApp.getApplication().show(warningDialog);
     }//GEN-LAST:event_warningAddButtonActionPerformed
 
     private void warningRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_warningRemoveButtonActionPerformed
-        System.out.println(warningList.getSelectedIndex());
-        //if (warningList.getSelectedIndex() >= 0) {
         try {
             warningListModel.removeElement(warningListModel.getElementAt(warningList.getSelectedIndex()));
+            serverWarningList.remove(warningList.getSelectedIndex());
         } catch (ArrayIndexOutOfBoundsException e) {}
     }//GEN-LAST:event_warningRemoveButtonActionPerformed
 
@@ -1093,8 +1128,260 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
-        
+        if (taskNameField.getText().isEmpty()) {
+            taskNameField.requestFocus();
+            return;
+        }
+
+        // Check and build the cron expression
+        String second = "", minute = "", hour = "", dow = "", mon = "",
+                dom = "";
+        if (secondsAllCheckBox.isSelected()) {  // Cron seconds
+            second = "*";
+        } else {
+            second = secondsField.getText();
+            if (secondsAgainCheckBox.isSelected()) {
+                if (secondsAgainField.getText().isEmpty()) {
+                    secondsAgainField.requestFocus();
+                    return;
+                }
+                second = secondsField.getText() + "/" + secondsAgainField.getText();
+            }
+        }
+        if (minutesAllCheckBox.isSelected()) {  // Cron minutes
+            minute = "*";
+        } else {
+            minute = minutesField.getText();
+            if (minutesAgainCheckBox.isSelected()) {
+                if (minutesAgainField.getText().isEmpty()) {
+                    minutesAgainField.requestFocus();
+                    return;
+                }
+                minute = minutesField.getText() + "/" + minutesAgainField.getText();
+            }
+        }
+        if (hoursAllCheckBox.isSelected()) {  // Cron hours
+            hour = "*";
+        } else {
+            hour = hoursField.getText();
+            if (hoursAgainCheckBox.isSelected()) {
+                if (hoursAgainField.getText().isEmpty()) {
+                    hoursAgainField.requestFocus();
+                    return;
+                }
+                hour = hoursField.getText() + "/" + hoursAgainField.getText();
+            }
+        }
+        if (domButton.isSelected()) {  // Cron day of month
+            if (domAllCheckBox.isSelected()) {
+                dom = "*";
+            } else {
+                dom = domField.getText();
+            }
+        } else {
+            dom = "?";
+        }
+        if (monthAllButton.getText().equals("None")) {  // Cron month
+            mon = "*";
+        } else {
+            for (int i = 1; i < month.size(); i++) {
+                if (month.get(i).isSelected()) {
+                    if (!mon.isEmpty()) {
+                        mon += ",";
+                    }
+                    mon += Integer.toString(i);
+                }
+            }
+        }
+        if (domButton.isSelected()) {  // Cron day of week
+            dow = "?";
+        } else {
+            if (dowAllButton.getText().equals("None")) {
+                dow = "*";
+            } else {
+                for (int i = 1; i < dayOfWeek.size(); i++) {
+                    if (dayOfWeek.get(i).isSelected()) {
+                        if (!dow.isEmpty()) {
+                            dow += ",";
+                        }
+                        dow += Integer.toString(i);
+                    }
+                }
+            }
+        }
+        String cronex = second + " " + minute + " " + hour + " " + dom + " "
+                + mon + " " + dow;
+
+        MCServerGUIEvent event = new MCServerGUIEvent();
+        event.setCronEx(cronex);
+        event.setName(taskNameField.getText());
+        event.setTask(task);
+        java.util.List<String> params = new java.util.ArrayList<String>();
+        if (task.equals("Send Command")) {
+            params.add(sendCommandField.getText());
+        } else if (task.equals("Restart Server")) {
+            params.add(remainDownField.getText());
+        }
+        event.setParams(params);
+        event.setWarningList(serverWarningList);
+        if (editEvent != null) {
+            taskList.removeElement(editEvent.getName() + "<br><font size=2>" + editEvent.getTask());
+            scheduleEvents.remove(editEvent);
+        }
+        taskList.add(taskNameField.getText() + "<br><font size=2>" + task);
+        scheduleEvents.add(event);
+        config.schedule.setEvents(scheduleEvents);
+        config.save();
+        closeTaskDialog();
     }//GEN-LAST:event_createButtonActionPerformed
+
+    private void parseEditEvent() {
+        taskNameField.setText(editEvent.getName());
+        if (editEvent.getTask().equals("Start Server")) {
+            startServerRadio.setSelected(true);
+            task = "Start Server";
+        } else if (editEvent.getTask().equals("Send Command")) {
+            sendCommandField.setEnabled(true);
+            warningList.setEnabled(true);
+            warningAddButton.setEnabled(true);
+            warningRemoveButton.setEnabled(true);
+            task = "Send Command";
+            sendCommandRadio.setSelected(true);
+            sendCommandField.setText(editEvent.getParams().get(0));
+        } else if (editEvent.getTask().equals("Stop Server")) {
+            stopServerRadio.setSelected(true);
+            warningList.setEnabled(true);
+            warningAddButton.setEnabled(true);
+            warningRemoveButton.setEnabled(true);
+            task = "Stop Server";
+        } else if (editEvent.getTask().equals("Restart Server")) {
+            restartServerRadio.setSelected(true);
+            warningList.setEnabled(true);
+            warningAddButton.setEnabled(true);
+            warningRemoveButton.setEnabled(true);
+            remainDownField.setEnabled(true);
+            remainDownLabel.setEnabled(true);
+            task = "Restart Server";
+            remainDownField.setText(editEvent.getParams().get(0));
+        } else if (editEvent.getTask().equals("Backup")) {
+            backupRadio.setSelected(true);
+            warningList.setEnabled(true);
+            warningAddButton.setEnabled(true);
+            warningRemoveButton.setEnabled(true);
+            task = "Backup";
+        }
+        String cronex = editEvent.getCronEx();
+        String seconds = cronex.split("\\s")[0];
+        String minutes = cronex.split("\\s")[1];
+        String hours = cronex.split("\\s")[2];
+        String dom = cronex.split("\\s")[3];
+        String mon = cronex.split("\\s")[4];
+        String dow = cronex.split("\\s")[5];
+        if (seconds.equals("*")) {
+            secondsAllCheckBox.setSelected(true);
+        } else {
+            if (seconds.contains("/")) {
+                secondsField.setText(seconds.split("/")[0]);
+                secondsAgainCheckBox.setSelected(true);
+                secondsAgainField.setText(seconds.split("/")[1]);
+            } else {
+                secondsField.setText(seconds);
+            }
+        }
+        if (minutes.equals("*")) {
+            minutesAllCheckBox.setSelected(true);
+        } else {
+            if (minutes.contains("/")) {
+                minutesField.setText(minutes.split("/")[0]);
+                minutesAgainCheckBox.setSelected(true);
+                minutesAgainField.setText(minutes.split("/")[1]);
+            } else {
+                minutesField.setText(minutes);
+            }
+        }
+        if (hours.equals("*")) {
+            hoursAllCheckBox.setSelected(true);
+        } else {
+            if (hours.contains("/")) {
+                hoursField.setText(hours.split("/")[0]);
+                hoursAgainCheckBox.setSelected(true);
+                hoursAgainField.setText(hours.split("/")[1]);
+            } else {
+                hoursField.setText(hours);
+            }
+        }
+        domAllCheckBox.setSelected(false);
+        if (dom.equals("*")) {
+            domButton.setSelected(true);
+            domAllCheckBox.setSelected(true);
+        } else if (!dom.equals("?")) {
+            domButton.setSelected(true);
+            domField.setText(dom);
+        }
+        if (!mon.equals("*")) {
+            String[] montharray = mon.split(",");
+            int j = 0;
+            for (int i = 1; i < month.size(); i++) {
+                if (montharray[j].equals(Integer.toString(i))) {
+                    month.get(i).setSelected(true);
+                    j++;
+                } else {
+                    month.get(i).setSelected(false);
+                }
+            }
+            verifyAllSelected(month);
+        }
+        if (!dow.equals("?")) {
+            for (int i = 1; i < dayOfWeek.size(); i++) {
+                if (dow.contains(Integer.toString(i)) || dow.contains("*")) {
+                    dayOfWeek.get(i).setSelected(true);
+                }
+            }
+            verifyAllSelected(dayOfWeek);
+        }
+        for (int i = 0; i < editEvent.getWarningList().size(); i++) {
+            java.util.List warningEntry = new java.util.ArrayList();
+            warningEntry.add(editEvent.getWarningList().get(i).get(0));
+            warningEntry.add(editEvent.getWarningList().get(i).get(1));
+            serverWarningList.add(warningEntry);
+            int hour = 0, minute = 0,
+                    second = Integer.parseInt(
+                    editEvent.getWarningList().get(i).get(1).toString());
+            minute = second / 60;
+            second = second % 60;
+            hour = minute / 60;
+            minute = minute % 60;
+            String time = "";
+
+            if (hour != 0) {
+                time += hours;
+            }
+            if (hour == 1) {
+                time += " hour ";
+            } else if (hour > 1) {
+                time += " hours ";
+            }
+            if (minute != 0) {
+                time += minute;
+            }
+            if (minute == 1) {
+                time += " minute ";
+            } else if (minute > 1) {
+                time += " minutes ";
+            }
+            if (second!= 0) {
+                time += second;
+            }
+            if (second == 1) {
+                time += " second";
+            } else if (second > 1) {
+                time += " seconds";
+            }
+            warningListModel.add("Message: " + editEvent.getWarningList().get(i).get(0) + "<br><font size=2>Time: " + time);
+        }
+        createButton.setEnabled(true);
+        createButton.setText("Update");
+    }
 
     private void verifyAllSelected(
             java.util.List<javax.swing.JToggleButton> buttonList) {
@@ -1126,11 +1413,14 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
     private MCServerGUIListModel taskList;
     private MCServerGUIListModel warningListModel;
     private MCServerGUIConfig config;
+    private MCServerGUIEvent editEvent;
     private java.util.List<java.util.List> serverWarningList;
+    private java.util.List<MCServerGUIEvent> scheduleEvents;
     private MCServerGUIServerWarningDialog warningDialog;
     private java.util.List<javax.swing.JToggleButton> dayOfWeek;
     private java.util.List<javax.swing.JToggleButton> month;
     private Scheduler scheduler;
+    private String task;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton aprButton;

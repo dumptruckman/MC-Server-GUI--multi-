@@ -59,7 +59,7 @@ public class MCServerGUIServerWarningDialog extends javax.swing.JDialog {
 
         timeBeforeField.setText(resourceMap.getString("timeBeforeField.text")); // NOI18N
         timeBeforeField.setToolTipText(resourceMap.getString("timeBeforeField.toolTipText")); // NOI18N
-        timeBeforeField.setInputVerifier(new MCServerGUIRegexVerifier("^(((\\d{1,2})(h))?\\s?((\\d{1,2})(m))?\\s?((\\d{1,2})(s)))?$"));
+        timeBeforeField.setInputVerifier(new MCServerGUIRegexVerifier("^(\\d{1,2}h)?\\s?(\\d{1,2}m)?\\s?(\\d{1,2}s)?$"));
         timeBeforeField.setName("timeBeforeField"); // NOI18N
 
         messageLabel.setText(resourceMap.getString("messageLabel.text")); // NOI18N
@@ -68,6 +68,11 @@ public class MCServerGUIServerWarningDialog extends javax.swing.JDialog {
         messageField.setText(resourceMap.getString("messageField.text")); // NOI18N
         messageField.setToolTipText(resourceMap.getString("messageField.toolTipText")); // NOI18N
         messageField.setName("messageField"); // NOI18N
+        messageField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                messageFieldActionPerformed(evt);
+            }
+        });
 
         addButton.setText(resourceMap.getString("addButton.text")); // NOI18N
         addButton.setName("addButton"); // NOI18N
@@ -137,15 +142,27 @@ public class MCServerGUIServerWarningDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        closeAndAdd();
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    private void messageFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messageFieldActionPerformed
+        closeAndAdd();
+    }//GEN-LAST:event_messageFieldActionPerformed
+
+    private void closeAndAdd() {
         int seconds = 0, minutes = 0, hours = 0;
         String timebefore = timeBeforeField.getText();
         if (timebefore.contains("h")) {
             hours = Integer.parseInt(timebefore.split("h")[0].replaceAll(" ", ""));
-            timebefore = timebefore.split("h")[1];
+            if (timebefore.contains("m") || timebefore.contains("s")) {
+                timebefore = timebefore.split("h")[1];
+            }
         }
         if (timebefore.contains("m")) {
             minutes = Integer.parseInt(timebefore.split("m")[0].replaceAll(" ", ""));
-            timebefore = timebefore.split("m")[1];
+            if (timebefore.contains("s")) {
+                timebefore = timebefore.split("m")[1];
+            }
         }
         if (timebefore.contains("s")) {
             seconds = Integer.parseInt(timebefore.split("s")[0].replaceAll(" ", ""));
@@ -183,10 +200,9 @@ public class MCServerGUIServerWarningDialog extends javax.swing.JDialog {
         warningEntry.add((hours * 3600) + (minutes * 60) + seconds);
         serverWarningList.add(warningEntry);
         System.out.println(serverWarningList.get(serverWarningList.size()-1));
-        warningListModel.add("<font size=3>Message: " + messageField.getText() + "<br><font size=2>Time: " + time);
+        warningListModel.add("Message: " + messageField.getText() + "<br><font size=2>Time: " + time);
         closeTaskDialog();
-    }//GEN-LAST:event_addButtonActionPerformed
-
+    }
 
     private MCServerGUIListModel warningListModel;
     private java.util.List<java.util.List> serverWarningList;

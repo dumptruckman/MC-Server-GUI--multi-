@@ -384,6 +384,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="secondsAgainField.text"/>
             <Property name="toolTipText" type="java.lang.String" resourceKey="secondsAgainField.toolTipText"/>
+            <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new MCServerGUIRegexVerifier(&quot;^[0-5]?\\d$&quot;)" type="code"/>
+            </Property>
             <Property name="name" type="java.lang.String" value="secondsAgainField" noResource="true"/>
           </Properties>
         </Component>
@@ -413,6 +416,9 @@
         <Component class="javax.swing.JTextField" name="minutesAgainField">
           <Properties>
             <Property name="toolTipText" type="java.lang.String" resourceKey="minutesAgainField.toolTipText"/>
+            <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new MCServerGUIRegexVerifier(&quot;^[0-5]?\\d$&quot;)" type="code"/>
+            </Property>
             <Property name="name" type="java.lang.String" value="minutesAgainField" noResource="true"/>
           </Properties>
         </Component>
@@ -462,6 +468,9 @@
         <Component class="javax.swing.JTextField" name="hoursAgainField">
           <Properties>
             <Property name="toolTipText" type="java.lang.String" resourceKey="hoursAgainField.toolTipText"/>
+            <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new MCServerGUIRegexVerifier(&quot;^[0-2]?\\d$&quot;)" type="code"/>
+            </Property>
             <Property name="name" type="java.lang.String" value="hoursAgainField" noResource="true"/>
           </Properties>
         </Component>
@@ -891,6 +900,7 @@
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="createButton.text"/>
             <Property name="toolTipText" type="java.lang.String" resourceKey="createButton.toolTipText"/>
+            <Property name="enabled" type="boolean" value="false"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
               <Insets value="[2, 5, 2, 5]"/>
             </Property>

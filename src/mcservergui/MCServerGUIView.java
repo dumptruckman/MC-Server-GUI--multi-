@@ -1024,9 +1024,19 @@ public class MCServerGUIView extends FrameView implements Observer {
 
         taskListEditButton.setText(resourceMap.getString("taskListEditButton.text")); // NOI18N
         taskListEditButton.setName("taskListEditButton"); // NOI18N
+        taskListEditButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                taskListEditButtonActionPerformed(evt);
+            }
+        });
 
         taskListRemoveButton.setText(resourceMap.getString("taskListRemoveButton.text")); // NOI18N
         taskListRemoveButton.setName("taskListRemoveButton"); // NOI18N
+        taskListRemoveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                taskListRemoveButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout schedulerTabLayout = new javax.swing.GroupLayout(schedulerTab);
         schedulerTab.setLayout(schedulerTabLayout);
@@ -1501,6 +1511,21 @@ public class MCServerGUIView extends FrameView implements Observer {
         addTaskListEntry();
     }//GEN-LAST:event_taskListAddButtonActionPerformed
 
+    private void taskListEditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taskListEditButtonActionPerformed
+        if (getEventIndexFromSelected() != -1) {
+            editTaskListEntry(getEventIndexFromSelected());
+        }
+    }//GEN-LAST:event_taskListEditButtonActionPerformed
+
+    private void taskListRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taskListRemoveButtonActionPerformed
+        if (getEventIndexFromSelected() != -1) {
+            int index = getEventIndexFromSelected();
+            config.schedule.getEvents().remove(config.schedule.getEvents().get(index));
+            taskList.removeElement(taskList.getElementAt(index));
+            config.save();
+        }
+    }//GEN-LAST:event_taskListRemoveButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton backupButton;
     public javax.swing.JButton backupControlRefreshButton;
@@ -1577,14 +1602,37 @@ public class MCServerGUIView extends FrameView implements Observer {
     public javax.swing.JCheckBox zipBackupCheckBox;
     // End of variables declaration//GEN-END:variables
 
+    private int getEventIndexFromSelected() {
+        try {
+            String taskname = taskList.getElementAt(
+                    taskSchedulerList.getSelectedIndex()).toString()
+                    .split("<br>")[0];
+            for (int i = 0; i < config.schedule.getEvents().size(); i++) {
+                if (config.schedule.getEvents().get(i).getName().equals(taskname)) {
+                    return i;
+                }
+            }
+            return -1;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return -1;
+        }
+    }
+
     // My methods
     public void addTaskListEntry() {
-        if (taskDialog == null) {
-            JFrame mainFrame = MCServerGUIApp.getApplication().getMainFrame();
-            taskDialog = new MCServerGUITaskDialog(
-                    mainFrame, taskList, config, scheduler);
-            taskDialog.setLocationRelativeTo(mainFrame);
-        }
+        JFrame mainFrame = MCServerGUIApp.getApplication().getMainFrame();
+        taskDialog = new MCServerGUITaskDialog(
+                mainFrame, taskList, config, scheduler, config.schedule.getEvents());
+        taskDialog.setLocationRelativeTo(mainFrame);
+        MCServerGUIApp.getApplication().show(taskDialog);
+    }
+
+    public void editTaskListEntry(int i) {
+        JFrame mainFrame = MCServerGUIApp.getApplication().getMainFrame();
+        taskDialog = new MCServerGUITaskDialog(
+                mainFrame, taskList, config, scheduler, config.schedule.getEvents(),
+                config.schedule.getEvents().get(i));
+        taskDialog.setLocationRelativeTo(mainFrame);
         MCServerGUIApp.getApplication().show(taskDialog);
     }
 
@@ -1768,6 +1816,12 @@ public class MCServerGUIView extends FrameView implements Observer {
         }
         backupFileChooser.addTreeCheckingListener(new BackupFileChooserCheckingListener());
         cmdLineField.setText(config.cmdLine.parseCmdLine());
+        for (int i = 0; i < config.schedule.getEvents().size(); i++) {
+            System.out.println("looping");
+            taskList.add(config.schedule.getEvents().get(i).getName()
+                    + "<br><font size=2>"
+                    + config.schedule.getEvents().get(i).getTask());
+        }
     }
 
     /**

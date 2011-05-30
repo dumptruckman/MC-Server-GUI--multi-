@@ -6,7 +6,6 @@ package mcservergui;
 
 import org.codehaus.jackson.*;
 import java.io.*;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -237,19 +236,51 @@ public class MCServerGUIConfig {
                                 backups.setPathsToBackup(pathlist);
                             }
                         }
-                        //THIS NEXT PART MAY BE BROKEN!
                     } else if ("Schedule".equals(fieldname)) {
                         while (jp.nextToken() != JsonToken.END_OBJECT) {
                             String schedulefield = jp.getCurrentName();
                             jp.nextToken();
                             if ("Events".equals(schedulefield)) {
-                                List<MCServerGUIEvent> eventlist;
-                                String eventfield = jp.getCurrentName();
-                                jp.nextToken();
-                                while (jp.nextToken() != JsonToken.END_ARRAY) {
-                                    MCServerGUIEventasdfaevent = new MCServerGUIEvent();
-
+                                List<MCServerGUIEvent> eventlist =
+                                        new ArrayList<MCServerGUIEvent>();
+                                while (jp.nextToken() != JsonToken.END_OBJECT) {
+                                    MCServerGUIEvent event =
+                                            new MCServerGUIEvent();
+                                    event.setName(jp.getCurrentName());
+                                    while (jp.nextToken() != JsonToken.END_OBJECT) {
+                                        String eventfield = jp.getCurrentName();
+                                        //jp.nextToken();
+                                        if ("Cron Expression".equals(eventfield)) {
+                                            event.setCronEx(jp.getText());
+                                        } else if("Task".equals(eventfield)) {
+                                            event.setTask(jp.getText());
+                                        } else if ("Parameters".equals(eventfield)) {
+                                            List<String> params = new ArrayList<String>();
+                                            jp.nextToken();
+                                            jp.nextToken();
+                                            while (jp.getCurrentToken() != JsonToken.END_ARRAY) {
+                                                params.add(jp.getText());
+                                                jp.nextToken();
+                                            }
+                                            event.setParams(params);
+                                        } else if ("Warnings".equals(eventfield)) {
+                                            List<List> warninglist = new ArrayList<List>();
+                                            while (jp.nextToken() != JsonToken.END_OBJECT) {
+                                                List warning = new ArrayList();
+                                                if (jp.getCurrentToken().equals(JsonToken.START_ARRAY)) {
+                                                    jp.nextToken();
+                                                    warning.add(jp.getText());
+                                                    jp.nextToken();
+                                                    warning.add(jp.getNumberValue());
+                                                    warninglist.add(warning);
+                                                }
+                                            }
+                                            event.setWarningList(warninglist);
+                                        }
+                                    }
+                                    eventlist.add(event);
                                 }
+                                schedule.setEvents(eventlist);
                             }
                         }
                     }
@@ -300,26 +331,27 @@ public class MCServerGUIConfig {
             // Schedule Config Options
             jg.writeObjectFieldStart("Schedule");
             // Event list
-            jg.writeArrayFieldStart("Events");
+            jg.writeObjectFieldStart("Events");
             for (int i = 0; i < schedule.getEvents().size(); i++) {
                 jg.writeObjectFieldStart(schedule.getEvents().get(i).getName());
+                jg.writeStringField("Cron Expression", schedule.getEvents().get(i).getCronEx());
                 jg.writeStringField("Task", schedule.getEvents().get(i).getTask());
                 jg.writeArrayFieldStart("Parameters");
                 for (int j = 0; j < schedule.getEvents().get(i).getParams().size(); j++) {
                     jg.writeString(schedule.getEvents().get(i).getParams().get(j));
                 }
                 jg.writeEndArray();
-                jg.writeArrayFieldStart("Warnings");
+                jg.writeObjectFieldStart("Warnings");
                 for (int j = 0; j < schedule.getEvents().get(i).getWarningList().size(); j++) {
                     jg.writeArrayFieldStart(String.valueOf(j+1));
-                    jg.writeNumber((Integer)schedule.getEvents().get(i).getWarningList().get(j).get(0));
-                    jg.writeString(schedule.getEvents().get(i).getWarningList().get(j).get(1).toString());
+                    jg.writeString(schedule.getEvents().get(i).getWarningList().get(j).get(0).toString());
+                    jg.writeNumber(schedule.getEvents().get(i).getWarningList().get(j).get(1).toString());
                     jg.writeEndArray();
                 }
-                jg.writeEndArray();
+                jg.writeEndObject();
                 jg.writeEndObject();
             }
-            jg.writeEndArray();  // End of Event list
+            jg.writeEndObject();  // End of Event list;
             jg.writeEndObject();  // End of Schedule Config Options
             jg.writeEndObject();
             jg.close();

@@ -13,6 +13,7 @@ public class MCServerGUIEvent {
 
     public MCServerGUIEvent() {
         warningList = new java.util.ArrayList<java.util.List>();
+        params = new java.util.ArrayList<String>();
     }
 
     private String name, cronEx, task;
