@@ -29,7 +29,7 @@ import static org.quartz.TriggerBuilder.*;
 import static org.quartz.JobBuilder.*;
 import static org.quartz.DateBuilder.*;
 import static org.quartz.CronScheduleBuilder.*;
-import static mcservergui.MCServerGUITask.*;
+import static mcservergui.MCServerGUITasks.*;
 
 /**
  * The application's main frame.
@@ -103,7 +103,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         consoleInput.getInputMap().put(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ENTER, java.awt.event.InputEvent.SHIFT_MASK),"sayOn");
         consoleInput.getActionMap().put("sayOn", saySend);
 
-        tasker = new MCServerGUITask(this);
+        tasker = new MCServerGUITasks(this);
         this.scheduler = scheduler;
         /*
         JobDetail job = newJob(GuiTask.class)
@@ -1581,7 +1581,8 @@ public class MCServerGUIView extends FrameView implements Observer {
     public void addTaskListEntry() {
         if (taskDialog == null) {
             JFrame mainFrame = MCServerGUIApp.getApplication().getMainFrame();
-            taskDialog = new MCServerGUITaskDialog(mainFrame, taskList, config);
+            taskDialog = new MCServerGUITaskDialog(
+                    mainFrame, taskList, config, scheduler);
             taskDialog.setLocationRelativeTo(mainFrame);
         }
         MCServerGUIApp.getApplication().show(taskDialog);
@@ -1944,7 +1945,7 @@ public class MCServerGUIView extends FrameView implements Observer {
     private MCServerGUIConfig config;
     private boolean badConfig;
     private Scheduler scheduler;
-    private MCServerGUITask tasker;
+    private MCServerGUITasks tasker;
     private MCServerGUIListModel taskList;
 
     //Auto created

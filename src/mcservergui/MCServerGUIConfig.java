@@ -6,6 +6,7 @@ package mcservergui;
 
 import org.codehaus.jackson.*;
 import java.io.*;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -20,12 +21,14 @@ public class MCServerGUIConfig {
         _inputHistoryMaxSize = 30;
         cmdLine = new CMDLine();
         backups = new Backups();
+        schedule = new Schedule();
     }
     
     private String _windowTitle;
     private int _inputHistoryMaxSize;
     public CMDLine cmdLine;
     public Backups backups;
+    public Schedule schedule;
 
     public String getWindowTitle() { return _windowTitle; }
     public int getInputHistoryMaxSize() { return _inputHistoryMaxSize; }
@@ -128,6 +131,18 @@ public class MCServerGUIConfig {
         public void setPathsToBackup(List<String> l) { _pathsToBackup = l; }
     }
 
+    public class Schedule {
+        public Schedule() {
+            events = new java.util.ArrayList<MCServerGUIEvent>();
+        }
+
+        private java.util.List<MCServerGUIEvent> events;
+
+        public java.util.List<MCServerGUIEvent> getEvents() { return events; }
+
+        public void setEvents(java.util.List<MCServerGUIEvent> e) { events = e; }
+    }
+
     public boolean load() {
         File configFile = new File("guiconfig.json");
 
@@ -222,6 +237,21 @@ public class MCServerGUIConfig {
                                 backups.setPathsToBackup(pathlist);
                             }
                         }
+                        //THIS NEXT PART MAY BE BROKEN!
+                    } else if ("Schedule".equals(fieldname)) {
+                        while (jp.nextToken() != JsonToken.END_OBJECT) {
+                            String schedulefield = jp.getCurrentName();
+                            jp.nextToken();
+                            if ("Events".equals(schedulefield)) {
+                                List<MCServerGUIEvent> eventlist;
+                                String eventfield = jp.getCurrentName();
+                                jp.nextToken();
+                                while (jp.nextToken() != JsonToken.END_ARRAY) {
+                                    MCServerGUIEventasdfaevent = new MCServerGUIEvent();
+
+                                }
+                            }
+                        }
                     }
                 }
             } else {
@@ -262,13 +292,35 @@ public class MCServerGUIConfig {
             jg.writeBooleanField("Zip Backup", backups.getZip());
             // Paths to Backup list
             jg.writeArrayFieldStart("Paths to Backup");
-            int i = 0;
-            while (i < backups.getPathsToBackup().size()) {
+            for (int i = 0; i < backups.getPathsToBackup().size(); i++) {
                 jg.writeString(backups.getPathsToBackup().get(i));
-                i++;
             }
             jg.writeEndArray(); //End of Paths to Backup list
             jg.writeEndObject();  // End of Backups Config Options
+            // Schedule Config Options
+            jg.writeObjectFieldStart("Schedule");
+            // Event list
+            jg.writeArrayFieldStart("Events");
+            for (int i = 0; i < schedule.getEvents().size(); i++) {
+                jg.writeObjectFieldStart(schedule.getEvents().get(i).getName());
+                jg.writeStringField("Task", schedule.getEvents().get(i).getTask());
+                jg.writeArrayFieldStart("Parameters");
+                for (int j = 0; j < schedule.getEvents().get(i).getParams().size(); j++) {
+                    jg.writeString(schedule.getEvents().get(i).getParams().get(j));
+                }
+                jg.writeEndArray();
+                jg.writeArrayFieldStart("Warnings");
+                for (int j = 0; j < schedule.getEvents().get(i).getWarningList().size(); j++) {
+                    jg.writeArrayFieldStart(String.valueOf(j+1));
+                    jg.writeNumber((Integer)schedule.getEvents().get(i).getWarningList().get(j).get(0));
+                    jg.writeString(schedule.getEvents().get(i).getWarningList().get(j).get(1).toString());
+                    jg.writeEndArray();
+                }
+                jg.writeEndArray();
+                jg.writeEndObject();
+            }
+            jg.writeEndArray();  // End of Event list
+            jg.writeEndObject();  // End of Schedule Config Options
             jg.writeEndObject();
             jg.close();
         } catch (IOException e) {

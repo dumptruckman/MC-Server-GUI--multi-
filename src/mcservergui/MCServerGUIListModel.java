@@ -23,7 +23,7 @@ public class MCServerGUIListModel extends javax.swing.AbstractListModel {
     }
 
     @Override public Object getElementAt(int index) {
-    return model.toArray()[index];
+        return model.toArray()[index];
     }
 
     public void add(Object element) {

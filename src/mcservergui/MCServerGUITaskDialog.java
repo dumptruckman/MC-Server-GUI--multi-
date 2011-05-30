@@ -12,20 +12,34 @@
 package mcservergui;
 
 import org.jdesktop.application.Action;
+import org.quartz.*;
+import static org.quartz.TriggerBuilder.*;
+import static org.quartz.JobBuilder.*;
+import static org.quartz.DateBuilder.*;
+import static org.quartz.CronScheduleBuilder.*;
+import static mcservergui.MCServerGUITasks.*;
 
 /**
  *
- * @author Roton
+ * @author dumptruckman
  */
 public class MCServerGUITaskDialog extends javax.swing.JDialog {
 
     /** Creates new form MCServerGUITaskDialog */
-    public MCServerGUITaskDialog(java.awt.Frame parent, MCServerGUIListModel taskList, MCServerGUIConfig config) {
+    public MCServerGUITaskDialog(
+            java.awt.Frame parent,
+            MCServerGUIListModel taskList,
+            MCServerGUIConfig config,
+            Scheduler scheduler) {
         super(parent);
         this.taskList = taskList;
         this.config = config;
+        this.scheduler = scheduler;
+        warningListModel = new MCServerGUIListModel();
+        serverWarningList = new java.util.ArrayList<java.util.List>();
         initComponents();
         fixComponents();
+
         initDaysOfWeekArray();
         initMonthArray();
     }
@@ -43,6 +57,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        serverTaskGroup = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         taskNameLabel = new javax.swing.JLabel();
         taskNameField = new javax.swing.JTextField();
@@ -89,9 +104,25 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         novButton = new javax.swing.JToggleButton();
         decButton = new javax.swing.JToggleButton();
         monthAllButton = new javax.swing.JToggleButton();
+        startServerRadio = new javax.swing.JRadioButton();
+        sendCommandRadio = new javax.swing.JRadioButton();
+        sendCommandField = new javax.swing.JTextField();
+        stopServerRadio = new javax.swing.JRadioButton();
+        restartServerRadio = new javax.swing.JRadioButton();
+        backupRadio = new javax.swing.JRadioButton();
+        remainDownLabel = new javax.swing.JLabel();
+        remainDownField = new javax.swing.JTextField();
+        createButton = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
+        serverWarningLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        warningList = new javax.swing.JList();
+        warningAddButton = new javax.swing.JButton();
+        warningRemoveButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("Form"); // NOI18N
+        setResizable(false);
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(mcservergui.MCServerGUIApp.class).getContext().getResourceMap(MCServerGUITaskDialog.class);
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel1.border.title"))); // NOI18N
@@ -101,6 +132,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         taskNameLabel.setName("taskNameLabel"); // NOI18N
 
         taskNameField.setText(resourceMap.getString("taskNameField.text")); // NOI18N
+        taskNameField.setToolTipText(resourceMap.getString("taskNameField.toolTipText")); // NOI18N
         taskNameField.setName("taskNameField"); // NOI18N
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -111,19 +143,22 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
 
         secondsField.setText(resourceMap.getString("secondsField.text")); // NOI18N
         secondsField.setToolTipText(resourceMap.getString("secondsField.toolTipText")); // NOI18N
-        secondsField.setInputVerifier(new regexVerifier("^([0-5]?\\d(,\\s?[0-5]?\\d){0,59}|[0-5]?\\d-[0-5]?\\d)$"));
+        secondsField.setInputVerifier(new MCServerGUIRegexVerifier("^([0-5]?\\d(,\\s?[0-5]?\\d){0,59}|[0-5]?\\d-[0-5]?\\d)$"));
         secondsField.setName("secondsField"); // NOI18N
 
         scheduleLabel.setText(resourceMap.getString("scheduleLabel.text")); // NOI18N
         scheduleLabel.setName("scheduleLabel"); // NOI18N
 
         secondsAgainCheckBox.setText(resourceMap.getString("secondsAgainCheckBox.text")); // NOI18N
+        secondsAgainCheckBox.setToolTipText(resourceMap.getString("secondsAgainCheckBox.toolTipText")); // NOI18N
         secondsAgainCheckBox.setName("secondsAgainCheckBox"); // NOI18N
 
         secondsAgainField.setText(resourceMap.getString("secondsAgainField.text")); // NOI18N
+        secondsAgainField.setToolTipText(resourceMap.getString("secondsAgainField.toolTipText")); // NOI18N
         secondsAgainField.setName("secondsAgainField"); // NOI18N
 
         secondsAllCheckBox.setText(resourceMap.getString("secondsAllCheckBox.text")); // NOI18N
+        secondsAllCheckBox.setToolTipText(resourceMap.getString("secondsAllCheckBox.toolTipText")); // NOI18N
         secondsAllCheckBox.setName("secondsAllCheckBox"); // NOI18N
         secondsAllCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,16 +170,19 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         minutesLabel.setName("minutesLabel"); // NOI18N
 
         minutesAgainCheckBox.setText(resourceMap.getString("minutesAgainCheckBox.text")); // NOI18N
+        minutesAgainCheckBox.setToolTipText(resourceMap.getString("minutesAgainCheckBox.toolTipText")); // NOI18N
         minutesAgainCheckBox.setName("minutesAgainCheckBox"); // NOI18N
 
+        minutesAgainField.setToolTipText(resourceMap.getString("minutesAgainField.toolTipText")); // NOI18N
         minutesAgainField.setName("minutesAgainField"); // NOI18N
 
         minutesField.setText(resourceMap.getString("minutesField.text")); // NOI18N
         minutesField.setToolTipText(resourceMap.getString("minutesField.toolTipText")); // NOI18N
-        minutesField.setInputVerifier(new regexVerifier("^([0-5]?\\d(,\\s?[0-5]?\\d){0,59}|[0-5]?\\d-[0-5]?\\d)$"));
+        minutesField.setInputVerifier(new MCServerGUIRegexVerifier("^([0-5]?\\d(,\\s?[0-5]?\\d){0,59}|[0-5]?\\d-[0-5]?\\d)$"));
         minutesField.setName("minutesField"); // NOI18N
 
         minutesAllCheckBox.setText(resourceMap.getString("minutesAllCheckBox.text")); // NOI18N
+        minutesAllCheckBox.setToolTipText(resourceMap.getString("minutesAllCheckBox.toolTipText")); // NOI18N
         minutesAllCheckBox.setName("minutesAllCheckBox"); // NOI18N
         minutesAllCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -157,15 +195,18 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
 
         hoursField.setText(resourceMap.getString("hoursField.text")); // NOI18N
         hoursField.setToolTipText(resourceMap.getString("hoursField.toolTipText")); // NOI18N
-        hoursField.setInputVerifier(new regexVerifier("^([0-2]?\\d(,\\s?[0-2]?\\d){0,23}|[0-2]?\\d-[0-2]?\\d)$"));
+        hoursField.setInputVerifier(new MCServerGUIRegexVerifier("^([0-2]?\\d(,\\s?[0-2]?\\d){0,23}|[0-2]?\\d-[0-2]?\\d)$"));
         hoursField.setName("hoursField"); // NOI18N
 
         hoursAgainCheckBox.setText(resourceMap.getString("hoursAgainCheckBox.text")); // NOI18N
+        hoursAgainCheckBox.setToolTipText(resourceMap.getString("hoursAgainCheckBox.toolTipText")); // NOI18N
         hoursAgainCheckBox.setName("hoursAgainCheckBox"); // NOI18N
 
+        hoursAgainField.setToolTipText(resourceMap.getString("hoursAgainField.toolTipText")); // NOI18N
         hoursAgainField.setName("hoursAgainField"); // NOI18N
 
         hoursAllCheckBox.setText(resourceMap.getString("hoursAllCheckBox.text")); // NOI18N
+        hoursAllCheckBox.setToolTipText(resourceMap.getString("hoursAllCheckBox.toolTipText")); // NOI18N
         hoursAllCheckBox.setName("hoursAllCheckBox"); // NOI18N
         hoursAllCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -177,6 +218,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         dowLabel.setName("dowLabel"); // NOI18N
 
         dowAllButton.setText(resourceMap.getString("dowAllButton.text")); // NOI18N
+        dowAllButton.setToolTipText(resourceMap.getString("dowAllButton.toolTipText")); // NOI18N
         dowAllButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
         dowAllButton.setName("dowAllButton"); // NOI18N
         dowAllButton.addActionListener(new java.awt.event.ActionListener() {
@@ -190,6 +232,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
 
         domButton.setSelected(true);
         domButton.setText(resourceMap.getString("domButton.text")); // NOI18N
+        domButton.setToolTipText(resourceMap.getString("domButton.toolTipText")); // NOI18N
         domButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
         domButton.setName("domButton"); // NOI18N
         domButton.addActionListener(new java.awt.event.ActionListener() {
@@ -201,11 +244,12 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         domField.setText(resourceMap.getString("domField.text")); // NOI18N
         domField.setToolTipText(resourceMap.getString("domField.toolTipText")); // NOI18N
         domField.setEnabled(false);
-        domField.setInputVerifier(new regexVerifier("^([0-3]?\\d(,\\s?[0-3]?\\d){0,30}|[0-3]?\\d-[0-3]?\\d)$"));
+        domField.setInputVerifier(new MCServerGUIRegexVerifier("^([0-3]?\\d(,\\s?[0-3]?\\d){0,30}|[0-3]?\\d-[0-3]?\\d)$"));
         domField.setName("domField"); // NOI18N
 
         domAllCheckBox.setSelected(true);
         domAllCheckBox.setText(resourceMap.getString("domAllCheckBox.text")); // NOI18N
+        domAllCheckBox.setToolTipText(resourceMap.getString("domAllCheckBox.toolTipText")); // NOI18N
         domAllCheckBox.setName("domAllCheckBox"); // NOI18N
         domAllCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -283,6 +327,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        janButton.setSelected(true);
         janButton.setText(resourceMap.getString("janButton.text")); // NOI18N
         janButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
         janButton.setName("janButton"); // NOI18N
@@ -292,6 +337,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        febButton.setSelected(true);
         febButton.setText(resourceMap.getString("febButton.text")); // NOI18N
         febButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
         febButton.setName("febButton"); // NOI18N
@@ -301,6 +347,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        marButton.setSelected(true);
         marButton.setText(resourceMap.getString("marButton.text")); // NOI18N
         marButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
         marButton.setName("marButton"); // NOI18N
@@ -310,6 +357,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        aprButton.setSelected(true);
         aprButton.setText(resourceMap.getString("aprButton.text")); // NOI18N
         aprButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
         aprButton.setName("aprButton"); // NOI18N
@@ -319,6 +367,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        mayButton.setSelected(true);
         mayButton.setText(resourceMap.getString("mayButton.text")); // NOI18N
         mayButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
         mayButton.setName("mayButton"); // NOI18N
@@ -328,6 +377,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        junButton.setSelected(true);
         junButton.setText(resourceMap.getString("junButton.text")); // NOI18N
         junButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
         junButton.setName("junButton"); // NOI18N
@@ -337,6 +387,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        julButton.setSelected(true);
         julButton.setText(resourceMap.getString("julButton.text")); // NOI18N
         julButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
         julButton.setName("julButton"); // NOI18N
@@ -346,6 +397,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        augButton.setSelected(true);
         augButton.setText(resourceMap.getString("augButton.text")); // NOI18N
         augButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
         augButton.setName("augButton"); // NOI18N
@@ -355,6 +407,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        sepButton.setSelected(true);
         sepButton.setText(resourceMap.getString("sepButton.text")); // NOI18N
         sepButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
         sepButton.setName("sepButton"); // NOI18N
@@ -364,6 +417,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        octButton.setSelected(true);
         octButton.setText(resourceMap.getString("octButton.text")); // NOI18N
         octButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
         octButton.setName("octButton"); // NOI18N
@@ -373,6 +427,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        novButton.setSelected(true);
         novButton.setText(resourceMap.getString("novButton.text")); // NOI18N
         novButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
         novButton.setName("novButton"); // NOI18N
@@ -382,6 +437,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        decButton.setSelected(true);
         decButton.setText(resourceMap.getString("decButton.text")); // NOI18N
         decButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
         decButton.setName("decButton"); // NOI18N
@@ -391,12 +447,132 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        monthAllButton.setSelected(true);
         monthAllButton.setText(resourceMap.getString("monthAllButton.text")); // NOI18N
+        monthAllButton.setToolTipText(resourceMap.getString("monthAllButton.toolTipText")); // NOI18N
         monthAllButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
         monthAllButton.setName("monthAllButton"); // NOI18N
         monthAllButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 monthAllButtonActionPerformed(evt);
+            }
+        });
+
+        serverTaskGroup.add(startServerRadio);
+        startServerRadio.setText(resourceMap.getString("startServerRadio.text")); // NOI18N
+        startServerRadio.setToolTipText(resourceMap.getString("startServerRadio.toolTipText")); // NOI18N
+        startServerRadio.setName("startServerRadio"); // NOI18N
+        startServerRadio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startServerRadioActionPerformed(evt);
+            }
+        });
+
+        serverTaskGroup.add(sendCommandRadio);
+        sendCommandRadio.setText(resourceMap.getString("sendCommandRadio.text")); // NOI18N
+        sendCommandRadio.setToolTipText(resourceMap.getString("sendCommandRadio.toolTipText")); // NOI18N
+        sendCommandRadio.setName("sendCommandRadio"); // NOI18N
+        sendCommandRadio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendCommandRadioActionPerformed(evt);
+            }
+        });
+
+        sendCommandField.setText(resourceMap.getString("sendCommandField.text")); // NOI18N
+        sendCommandField.setEnabled(false);
+        sendCommandField.setName("sendCommandField"); // NOI18N
+
+        serverTaskGroup.add(stopServerRadio);
+        stopServerRadio.setText(resourceMap.getString("stopServerRadio.text")); // NOI18N
+        stopServerRadio.setToolTipText(resourceMap.getString("stopServerRadio.toolTipText")); // NOI18N
+        stopServerRadio.setName("stopServerRadio"); // NOI18N
+        stopServerRadio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stopServerRadioActionPerformed(evt);
+            }
+        });
+
+        serverTaskGroup.add(restartServerRadio);
+        restartServerRadio.setText(resourceMap.getString("restartServerRadio.text")); // NOI18N
+        restartServerRadio.setToolTipText(resourceMap.getString("restartServerRadio.toolTipText")); // NOI18N
+        restartServerRadio.setName("restartServerRadio"); // NOI18N
+        restartServerRadio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                restartServerRadioActionPerformed(evt);
+            }
+        });
+
+        serverTaskGroup.add(backupRadio);
+        backupRadio.setText(resourceMap.getString("backupRadio.text")); // NOI18N
+        backupRadio.setToolTipText(resourceMap.getString("backupRadio.toolTipText")); // NOI18N
+        backupRadio.setName("backupRadio"); // NOI18N
+        backupRadio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backupRadioActionPerformed(evt);
+            }
+        });
+
+        remainDownLabel.setText(resourceMap.getString("remainDownLabel.text")); // NOI18N
+        remainDownLabel.setEnabled(false);
+        remainDownLabel.setName("remainDownLabel"); // NOI18N
+
+        remainDownField.setText(resourceMap.getString("remainDownField.text")); // NOI18N
+        remainDownField.setToolTipText(resourceMap.getString("remainDownField.toolTipText")); // NOI18N
+        remainDownField.setEnabled(false);
+        remainDownField.setInputVerifier(new MCServerGUIRegexVerifier("^((\\d{1,2})\\s?(h))?\\s?((\\d{1,2})\\s?(m))?\\s?((\\d{1,2})\\s?(s))?$"));
+        remainDownField.setName("remainDownField"); // NOI18N
+
+        createButton.setText(resourceMap.getString("createButton.text")); // NOI18N
+        createButton.setToolTipText(resourceMap.getString("createButton.toolTipText")); // NOI18N
+        createButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        createButton.setName("createButton"); // NOI18N
+        createButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createButtonActionPerformed(evt);
+            }
+        });
+
+        cancelButton.setText(resourceMap.getString("cancelButton.text")); // NOI18N
+        cancelButton.setToolTipText(resourceMap.getString("cancelButton.toolTipText")); // NOI18N
+        cancelButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        cancelButton.setName("cancelButton"); // NOI18N
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
+
+        serverWarningLabel.setText(resourceMap.getString("serverWarningLabel.text")); // NOI18N
+        serverWarningLabel.setName("serverWarningLabel"); // NOI18N
+
+        jScrollPane1.setName("jScrollPane1"); // NOI18N
+
+        warningList.setModel(warningListModel);
+        warningList.setToolTipText(resourceMap.getString("warningList.toolTipText")); // NOI18N
+        warningList.setCellRenderer(new WarningListCellRenderer());
+        warningList.setEnabled(false);
+        warningList.setName("warningList"); // NOI18N
+        jScrollPane1.setViewportView(warningList);
+
+        warningAddButton.setText(resourceMap.getString("warningAddButton.text")); // NOI18N
+        warningAddButton.setToolTipText(resourceMap.getString("warningAddButton.toolTipText")); // NOI18N
+        warningAddButton.setEnabled(false);
+        warningAddButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        warningAddButton.setName("warningAddButton"); // NOI18N
+        warningAddButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                warningAddButtonActionPerformed(evt);
+            }
+        });
+
+        warningRemoveButton.setText(resourceMap.getString("warningRemoveButton.text")); // NOI18N
+        warningRemoveButton.setToolTipText(resourceMap.getString("warningRemoveButton.toolTipText")); // NOI18N
+        warningRemoveButton.setEnabled(false);
+        warningRemoveButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        warningRemoveButton.setName("warningRemoveButton"); // NOI18N
+        warningRemoveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                warningRemoveButtonActionPerformed(evt);
             }
         });
 
@@ -504,7 +680,34 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
                                 .addComponent(marButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(3, 3, 3)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(254, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(startServerRadio, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(sendCommandRadio)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(sendCommandField, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE))
+                    .addComponent(stopServerRadio, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(backupRadio, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(restartServerRadio)
+                        .addGap(18, 18, 18)
+                        .addComponent(remainDownLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(remainDownField, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(cancelButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
+                        .addComponent(createButton))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(serverWarningLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(warningAddButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(warningRemoveButton))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -575,7 +778,33 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
                             .addComponent(domButton)
                             .addComponent(domField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(domAllCheckBox)))
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(startServerRadio)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(sendCommandRadio)
+                            .addComponent(sendCommandField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(stopServerRadio)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(restartServerRadio)
+                            .addComponent(remainDownLabel)
+                            .addComponent(remainDownField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(backupRadio)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(serverWarningLabel)
+                            .addComponent(warningAddButton)
+                            .addComponent(warningRemoveButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(createButton)
+                            .addComponent(cancelButton))))
                 .addContainerGap())
         );
 
@@ -595,6 +824,26 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
 
     private void fixComponents() {
         
+    }
+
+    private class WarningListCellRenderer extends javax.swing.JTextPane implements javax.swing.ListCellRenderer {
+        public WarningListCellRenderer() {
+            //setOpaque(true);
+            this.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
+        }
+
+        @Override public java.awt.Component getListCellRendererComponent(
+                javax.swing.JList list,
+                Object value,
+                int index,
+                boolean isSelected,
+                boolean cellHasFocus)
+        {
+            setText(value.toString());
+            setBackground(isSelected ? java.awt.Color.lightGray : java.awt.Color.white);
+            setForeground(isSelected ? java.awt.Color.white : java.awt.Color.black);
+            return this;
+        }
     }
 
     private void initDaysOfWeekArray() {
@@ -771,6 +1020,82 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         hoursAgainField.setEnabled(!hoursAllCheckBox.isSelected());
     }//GEN-LAST:event_hoursAllCheckBoxActionPerformed
 
+    private void startServerRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startServerRadioActionPerformed
+        createButton.setEnabled(true);
+        sendCommandField.setEnabled(false);
+        remainDownLabel.setEnabled(false);
+        remainDownField.setEnabled(false);
+        warningList.setEnabled(false);
+        warningAddButton.setEnabled(false);
+        warningRemoveButton.setEnabled(false);
+    }//GEN-LAST:event_startServerRadioActionPerformed
+
+    private void sendCommandRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendCommandRadioActionPerformed
+        createButton.setEnabled(true);
+        sendCommandField.setEnabled(true);
+        remainDownLabel.setEnabled(false);
+        remainDownField.setEnabled(false);
+        warningList.setEnabled(true);
+        warningAddButton.setEnabled(true);
+        warningRemoveButton.setEnabled(true);
+    }//GEN-LAST:event_sendCommandRadioActionPerformed
+
+    private void stopServerRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopServerRadioActionPerformed
+        createButton.setEnabled(true);
+        sendCommandField.setEnabled(false);
+        remainDownLabel.setEnabled(false);
+        remainDownField.setEnabled(false);
+        warningList.setEnabled(true);
+        warningAddButton.setEnabled(true);
+        warningRemoveButton.setEnabled(true);
+    }//GEN-LAST:event_stopServerRadioActionPerformed
+
+    private void restartServerRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartServerRadioActionPerformed
+        createButton.setEnabled(true);
+        sendCommandField.setEnabled(false);
+        remainDownLabel.setEnabled(true);
+        remainDownField.setEnabled(true);
+        warningList.setEnabled(true);
+        warningAddButton.setEnabled(true);
+        warningRemoveButton.setEnabled(true);
+    }//GEN-LAST:event_restartServerRadioActionPerformed
+
+    private void backupRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupRadioActionPerformed
+        createButton.setEnabled(true);
+        sendCommandField.setEnabled(false);
+        remainDownLabel.setEnabled(false);
+        remainDownField.setEnabled(false);
+        warningList.setEnabled(true);
+        warningAddButton.setEnabled(true);
+        warningRemoveButton.setEnabled(true);
+    }//GEN-LAST:event_backupRadioActionPerformed
+
+    private void warningAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_warningAddButtonActionPerformed
+        if (warningDialog == null) {
+            javax.swing.JFrame mainFrame = MCServerGUIApp.getApplication().getMainFrame();
+            warningDialog = new MCServerGUIServerWarningDialog(
+                    mainFrame, warningListModel, serverWarningList);
+            warningDialog.setLocationRelativeTo(mainFrame);
+        }
+        MCServerGUIApp.getApplication().show(warningDialog);
+    }//GEN-LAST:event_warningAddButtonActionPerformed
+
+    private void warningRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_warningRemoveButtonActionPerformed
+        System.out.println(warningList.getSelectedIndex());
+        //if (warningList.getSelectedIndex() >= 0) {
+        try {
+            warningListModel.removeElement(warningListModel.getElementAt(warningList.getSelectedIndex()));
+        } catch (ArrayIndexOutOfBoundsException e) {}
+    }//GEN-LAST:event_warningRemoveButtonActionPerformed
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        closeTaskDialog();
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
+        
+    }//GEN-LAST:event_createButtonActionPerformed
+
     private void verifyAllSelected(
             java.util.List<javax.swing.JToggleButton> buttonList) {
         int numSelected = 0;
@@ -798,34 +1123,21 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         }
     }
 
-    class regexVerifier extends javax.swing.InputVerifier {
-        public regexVerifier(String regex) {
-            this.regex = regex;
-        }
-        
-        @Override public boolean verify(javax.swing.JComponent input) {
-            javax.swing.JTextField tf = (javax.swing.JTextField) input;
-            if (java.util.regex.Pattern.matches(regex, tf.getText())){
-                return true;
-            } else {
-                tf.getActionMap().get("postTip").actionPerformed(
-                        new java.awt.event.ActionEvent(
-                        tf, java.awt.event.ActionEvent.ACTION_PERFORMED, "postTip"));
-                return false;
-            }
-        }
-
-        String regex;
-    }
-
     private MCServerGUIListModel taskList;
+    private MCServerGUIListModel warningListModel;
     private MCServerGUIConfig config;
+    private java.util.List<java.util.List> serverWarningList;
+    private MCServerGUIServerWarningDialog warningDialog;
     private java.util.List<javax.swing.JToggleButton> dayOfWeek;
     private java.util.List<javax.swing.JToggleButton> month;
+    private Scheduler scheduler;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton aprButton;
     private javax.swing.JToggleButton augButton;
+    private javax.swing.JRadioButton backupRadio;
+    private javax.swing.JButton cancelButton;
+    private javax.swing.JButton createButton;
     private javax.swing.JToggleButton decButton;
     private javax.swing.JCheckBox domAllCheckBox;
     private javax.swing.JToggleButton domButton;
@@ -840,6 +1152,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
     private javax.swing.JTextField hoursField;
     private javax.swing.JLabel hoursLabel;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JToggleButton janButton;
     private javax.swing.JToggleButton julButton;
@@ -856,6 +1169,9 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
     private javax.swing.JLabel monthLabel;
     private javax.swing.JToggleButton novButton;
     private javax.swing.JToggleButton octButton;
+    private javax.swing.JTextField remainDownField;
+    private javax.swing.JLabel remainDownLabel;
+    private javax.swing.JRadioButton restartServerRadio;
     private javax.swing.JToggleButton satButton;
     private javax.swing.JLabel scheduleLabel;
     private javax.swing.JCheckBox secondsAgainCheckBox;
@@ -863,12 +1179,21 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
     private javax.swing.JCheckBox secondsAllCheckBox;
     private javax.swing.JTextField secondsField;
     private javax.swing.JLabel secondsLabel;
+    private javax.swing.JTextField sendCommandField;
+    private javax.swing.JRadioButton sendCommandRadio;
     private javax.swing.JToggleButton sepButton;
+    private javax.swing.ButtonGroup serverTaskGroup;
+    private javax.swing.JLabel serverWarningLabel;
+    private javax.swing.JRadioButton startServerRadio;
+    private javax.swing.JRadioButton stopServerRadio;
     private javax.swing.JToggleButton sunButton;
     private javax.swing.JTextField taskNameField;
     private javax.swing.JLabel taskNameLabel;
     private javax.swing.JToggleButton thuButton;
     private javax.swing.JToggleButton tueButton;
+    private javax.swing.JButton warningAddButton;
+    private javax.swing.JList warningList;
+    private javax.swing.JButton warningRemoveButton;
     private javax.swing.JToggleButton wedButton;
     // End of variables declaration//GEN-END:variables
 
