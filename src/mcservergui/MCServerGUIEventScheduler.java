@@ -24,6 +24,7 @@ public class MCServerGUIEventScheduler {
                 .build();
         job.getJobDataMap().put("Event", event);
         job.getJobDataMap().put("GUI", gui);
+        //job.getJobDataMap().put("Scheduler", scheduler);
 
         try {
             trigger = newTrigger()

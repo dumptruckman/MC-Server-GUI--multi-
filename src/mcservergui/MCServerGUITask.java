@@ -43,31 +43,44 @@ public class MCServerGUITask implements Job {
 
         System.out.println("Proceeding to task");
         if (event.getTask().equals("Start Server")) {
+            waitForBackupFinish(gui);
             gui.startServer();
         } else if (event.getTask().equals("Send Command")) {
             gui.sendInput(event.getParams().get(0));
         } else if (event.getTask().equals("Stop Server")) {
+            waitForBackupFinish(gui);
             gui.stopServer();
         } else if (event.getTask().equals("Restart Server")) {
-            gui.stopServer();
-            System.out.println("Sent stop");
+            waitForBackupFinish(gui);
             if (!event.getParams().isEmpty()) {
-                try {
-                    System.out.println("Sleeping for " + Integer.valueOf(event.getParams().get(0)));
-                    Thread.sleep(Integer.valueOf(event.getParams().get(0)) * 1000);
-                } catch (InterruptedException ie) {
-                    System.out.println("Interrupted while waiting to restart server.");
-                }
+                gui.restartServer(Integer.valueOf(event.getParams().get(0)));
+            } else {
+                gui.restartServer();
             }
+        } else if (event.getTask().equals("Backup")) {
+            waitWhileRestarting(gui);
+            gui.backup();
+        }
+    }
+
+    private void waitForBackupFinish(MCServerGUIView gui) {
+        while (gui.getControlState().equals("BACKUP") || gui.getControlState().equals("!BACKUP")) {
             try {
+                System.out.println("Waiting for server to finish backing up.");
                 Thread.sleep(1000);
             } catch (InterruptedException ie) {
-                System.out.println("Interrupted while waiting required amount to restart server.");
+                System.out.println("Interrupted while waiting for server to finish backing up.");
             }
-            gui.startServer();
-            System.out.println("Sent start");
-        } else if (event.getTask().equals("Backup")) {
-            gui.backup();
+        }
+    }
+    private void waitWhileRestarting(MCServerGUIView gui) {
+        while (gui.isRestarting()) {
+            try {
+                System.out.println("Waiting while server is restarting.");
+                Thread.sleep(1000);
+            } catch (InterruptedException ie) {
+                System.out.println("Interrupted while waiting for server to restart.");
+            }
         }
     }
 }

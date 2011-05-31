@@ -1,3 +1,9 @@
+Version .3.1
+  Fixed issue where the server config tab would display wrong when long filenames were used.
+  Scheduler should now wait to restart the server until it is actually finished shutting down, particularly when remain down delays are not being used.
+  Scheduled start/stop/restart events will now wait until the gui is done performing any backups.
+  Scheduled backups will now wait until the gui is done restarting the server.
+
 Version .3.0
   Added task scheduler!
   Schedule events to go off at certain times, and have them repeat as well. (Uses Cron based timing.)

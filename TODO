@@ -1,5 +1,10 @@
 Add tasks for scheduler:
   Launch with custom run line or change server properties
+Add scheduler pause button
+Allow for 12-hour hour format, like 3pm
+Add indicator show when/what next event will be
+Allow console output to be searched
+Add filtering to console output
 Add php web interface (maybe?)
 Add edit button to warning list for task entries
 Add restoration of backups

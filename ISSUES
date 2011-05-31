@@ -1,1 +1,4 @@
-No known issues.
+Editing an event with a remain down time will not reenter that down time in the correct format
+Trying to delete multiple entries in the task scheduler can make the last one impossible to delete without a restart
+Window title only changes if you press enter after editing the field.
+Window title also does not set properly from the config file.

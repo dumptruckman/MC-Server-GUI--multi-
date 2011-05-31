@@ -32,7 +32,7 @@ public class MCServerGUIApp extends SingleFrameApplication implements Applicatio
         try {
             // Grab the Scheduler instance from the Factory
             scheduler =  new org.quartz.impl.StdSchedulerFactory().getScheduler();
-
+            System.out.println(scheduler.getMetaData().toString());
             // and start it off
             scheduler.start();
         } catch (SchedulerException se) {
