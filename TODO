@@ -1,4 +1,7 @@
-Add task scheduler (for automated restarts or backups)
+Add tasks for scheduler:
+  Launch with custom run line or change server properties
+Add php web interface (maybe?)
+Add edit button to warning list for task entries
 Add restoration of backups
 Add plugin manager
 Give the GUI colorization options

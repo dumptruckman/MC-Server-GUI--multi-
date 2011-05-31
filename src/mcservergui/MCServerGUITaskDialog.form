@@ -187,6 +187,13 @@
                       </Group>
                       <Component id="stopServerRadio" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="backupRadio" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                          <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="197" max="32767" attributes="0"/>
+                          <Component id="createButton" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="jScrollPane1" alignment="1" pref="292" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="restartServerRadio" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -194,20 +201,13 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="remainDownField" pref="88" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                          <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="197" max="32767" attributes="0"/>
-                          <Component id="createButton" min="-2" max="-2" attributes="0"/>
-                      </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="serverWarningLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="warningAddButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="warningRemoveButton" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane1" alignment="1" pref="292" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -891,7 +891,7 @@
             <Property name="toolTipText" type="java.lang.String" resourceKey="remainDownField.toolTipText"/>
             <Property name="enabled" type="boolean" value="false"/>
             <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new MCServerGUIRegexVerifier(&quot;^((\\d{1,2})\\s?(h))?\\s?((\\d{1,2})\\s?(m))?\\s?((\\d{1,2})\\s?(s))?$&quot;)" type="code"/>
+              <Connection code="new MCServerGUIRegexVerifier(&quot;^(\\d{1,2}\\s?h)?\\s?(\\d{1,2}\\s?m)?\\s?(\\d{1,2}\\s?s)?$&quot;)" type="code"/>
             </Property>
             <Property name="name" type="java.lang.String" value="remainDownField" noResource="true"/>
           </Properties>

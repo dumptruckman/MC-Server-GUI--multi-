@@ -11,6 +11,8 @@
 
 package mcservergui;
 
+import mcservergui.tools.MCServerGUIRegexVerifier;
+
 /**
  *
  * @author dumptruckman
@@ -18,7 +20,9 @@ package mcservergui;
 public class MCServerGUIServerWarningDialog extends javax.swing.JDialog {
 
     /** Creates new form MCServerGUIServerWarningDialog */
-    public MCServerGUIServerWarningDialog(java.awt.Frame parent, MCServerGUIListModel warningListModel, java.util.List<java.util.List> serverWarningList) {
+    public MCServerGUIServerWarningDialog(java.awt.Frame parent,
+            MCServerGUIListModel warningListModel,
+            java.util.List<MCServerGUIServerWarning> serverWarningList) {
         super(parent);
         this.warningListModel = warningListModel;
         this.serverWarningList = serverWarningList;
@@ -167,7 +171,6 @@ public class MCServerGUIServerWarningDialog extends javax.swing.JDialog {
         if (timebefore.contains("s")) {
             seconds = Integer.parseInt(timebefore.split("s")[0].replaceAll(" ", ""));
         }
-        System.out.println(hours + " hours " + minutes + " minutes " + seconds + " seconds");
 
         String time = "";
 
@@ -195,17 +198,15 @@ public class MCServerGUIServerWarningDialog extends javax.swing.JDialog {
         } else if (seconds > 1) {
             time += " seconds";
         }
-        java.util.List warningEntry = new java.util.ArrayList();
-        warningEntry.add(messageField.getText());
-        warningEntry.add((hours * 3600) + (minutes * 60) + seconds);
-        serverWarningList.add(warningEntry);
+        serverWarningList.add(new MCServerGUIServerWarning(
+                messageField.getText(),(hours * 3600) + (minutes * 60) + seconds));
         System.out.println(serverWarningList.get(serverWarningList.size()-1));
         warningListModel.add("Message: " + messageField.getText() + "<br><font size=2>Time: " + time);
         closeTaskDialog();
     }
 
     private MCServerGUIListModel warningListModel;
-    private java.util.List<java.util.List> serverWarningList;
+    private java.util.List<MCServerGUIServerWarning> serverWarningList;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JButton cancelButton;

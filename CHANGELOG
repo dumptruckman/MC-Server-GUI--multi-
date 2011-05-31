@@ -1,5 +1,8 @@
 Version .3.0
-  
+  Added task scheduler!
+  Schedule events to go off at certain times, and have them repeat as well. (Uses Cron based timing.)
+  Add warnings to your events so that the server knows it is about to happen. (Such as warning before a restart.)
+  Added Restore tab as a placeholder for future features.
 
 Version .2.2
   Added splash screen.

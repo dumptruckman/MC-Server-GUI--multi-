@@ -12,23 +12,23 @@ package mcservergui;
 public class MCServerGUIEvent {
 
     public MCServerGUIEvent() {
-        warningList = new java.util.ArrayList<java.util.List>();
+        warningList = new java.util.ArrayList<MCServerGUIServerWarning>();
         params = new java.util.ArrayList<String>();
     }
 
     private String name, cronEx, task;
     private java.util.List<String> params;
-    private java.util.List<java.util.List> warningList;
+    private java.util.List<MCServerGUIServerWarning> warningList;
 
     public String getName() { return name; }
     public String getCronEx() { return cronEx; }
     public String getTask() { return task; }
     public java.util.List<String> getParams() { return params; }
-    public java.util.List<java.util.List> getWarningList() { return warningList; }
+    public java.util.List<MCServerGUIServerWarning> getWarningList() { return warningList; }
 
     public void setName(String s) { name = s; }
     public void setCronEx(String s) { cronEx = s; }
     public void setTask(String s) { task = s; }
     public void setParams(java.util.List<String> sl) { params = sl; }
-    public void setWarningList(java.util.List<java.util.List> l) { warningList = l; }
+    public void setWarningList(java.util.List<MCServerGUIServerWarning> l) { warningList = l; }
 }

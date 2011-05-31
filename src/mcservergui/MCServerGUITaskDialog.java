@@ -11,13 +11,10 @@
 
 package mcservergui;
 
+import mcservergui.tools.MCServerGUIRegexVerifier;
 import org.jdesktop.application.Action;
 import org.quartz.*;
-import static org.quartz.TriggerBuilder.*;
-import static org.quartz.JobBuilder.*;
-import static org.quartz.DateBuilder.*;
-import static org.quartz.CronScheduleBuilder.*;
-import static mcservergui.MCServerGUITasks.*;
+import static mcservergui.MCServerGUIEventScheduler.*;
 
 /**
  *
@@ -31,15 +28,17 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             MCServerGUIListModel taskList,
             MCServerGUIConfig config,
             Scheduler scheduler,
-            java.util.List<MCServerGUIEvent> scheduleEvents) {
+            java.util.List<MCServerGUIEvent> scheduleEvents,
+            MCServerGUIView gui) {
         super(parent);
         this.taskList = taskList;
         this.config = config;
         this.scheduler = scheduler;
         this.scheduleEvents = scheduleEvents;
+        this.gui = gui;
         warningListModel = new MCServerGUIListModel();
         warningListModel.clear();
-        serverWarningList = new java.util.ArrayList<java.util.List>();
+        serverWarningList = new java.util.ArrayList<MCServerGUIServerWarning>();
         serverWarningList.clear();
         initComponents();
         fixComponents();
@@ -54,16 +53,18 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             MCServerGUIConfig config,
             Scheduler scheduler,
             java.util.List<MCServerGUIEvent> scheduleEvents,
+            MCServerGUIView gui,
             MCServerGUIEvent editEvent) {
         super(parent);
         this.taskList = taskList;
         this.config = config;
         this.scheduler = scheduler;
         this.scheduleEvents = scheduleEvents;
+        this.gui = gui;
         this.editEvent = editEvent;
         warningListModel = new MCServerGUIListModel();
         warningListModel.clear();
-        serverWarningList = new java.util.ArrayList<java.util.List>();
+        serverWarningList = new java.util.ArrayList<MCServerGUIServerWarning>();
         serverWarningList.clear();
         initComponents();
         fixComponents();
@@ -551,7 +552,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         remainDownField.setText(resourceMap.getString("remainDownField.text")); // NOI18N
         remainDownField.setToolTipText(resourceMap.getString("remainDownField.toolTipText")); // NOI18N
         remainDownField.setEnabled(false);
-        remainDownField.setInputVerifier(new MCServerGUIRegexVerifier("^((\\d{1,2})\\s?(h))?\\s?((\\d{1,2})\\s?(m))?\\s?((\\d{1,2})\\s?(s))?$"));
+        remainDownField.setInputVerifier(new MCServerGUIRegexVerifier("^(\\d{1,2}\\s?h)?\\s?(\\d{1,2}\\s?m)?\\s?(\\d{1,2}\\s?s)?$"));
         remainDownField.setName("remainDownField"); // NOI18N
 
         createButton.setText(resourceMap.getString("createButton.text")); // NOI18N
@@ -722,24 +723,24 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
                         .addComponent(sendCommandField, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE))
                     .addComponent(stopServerRadio, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(backupRadio, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(cancelButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
+                        .addComponent(createButton))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(restartServerRadio)
                         .addGap(18, 18, 18)
                         .addComponent(remainDownLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(remainDownField, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(cancelButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
-                        .addComponent(createButton))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(serverWarningLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(warningAddButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(warningRemoveButton))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(warningRemoveButton)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -1060,6 +1061,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         remainDownField.setEnabled(false);
         warningList.setEnabled(false);
         warningAddButton.setEnabled(false);
+        //warningEditButton.setEnabled(false);
         warningRemoveButton.setEnabled(false);
         task = "Start Server";
     }//GEN-LAST:event_startServerRadioActionPerformed
@@ -1071,6 +1073,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         remainDownField.setEnabled(false);
         warningList.setEnabled(true);
         warningAddButton.setEnabled(true);
+        //warningEditButton.setEnabled(true);
         warningRemoveButton.setEnabled(true);
         task = "Send Command";
     }//GEN-LAST:event_sendCommandRadioActionPerformed
@@ -1082,6 +1085,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         remainDownField.setEnabled(false);
         warningList.setEnabled(true);
         warningAddButton.setEnabled(true);
+        //warningEditButton.setEnabled(true);
         warningRemoveButton.setEnabled(true);
         task = "Stop Server";
     }//GEN-LAST:event_stopServerRadioActionPerformed
@@ -1093,6 +1097,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         remainDownField.setEnabled(true);
         warningList.setEnabled(true);
         warningAddButton.setEnabled(true);
+        //warningEditButton.setEnabled(true);
         warningRemoveButton.setEnabled(true);
         task = "Restart Server";
     }//GEN-LAST:event_restartServerRadioActionPerformed
@@ -1104,6 +1109,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         remainDownField.setEnabled(false);
         warningList.setEnabled(true);
         warningAddButton.setEnabled(true);
+        //warningEditButton.setEnabled(true);
         warningRemoveButton.setEnabled(true);
         task = "Backup";
     }//GEN-LAST:event_backupRadioActionPerformed
@@ -1220,17 +1226,44 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         if (task.equals("Send Command")) {
             params.add(sendCommandField.getText());
         } else if (task.equals("Restart Server")) {
-            params.add(remainDownField.getText());
+            if (!remainDownField.getInputVerifier().verify(remainDownField)) {
+                remainDownField.requestFocus();
+                return;
+            }
+            int seconds = 0, minutes = 0, hours = 0;
+            String time = remainDownField.getText();
+            if (time.contains("h")) {
+                hours = Integer.parseInt(time.split("h")[0].replaceAll(" ", ""));
+                if (time.contains("m") || time.contains("s")) {
+                    time = time.split("h")[1];
+                }
+            }
+            if (time.contains("m")) {
+                minutes = Integer.parseInt(time.split("m")[0].replaceAll(" ", ""));
+                if (time.contains("s")) {
+                    time = time.split("m")[1];
+                }
+            }
+            if (time.contains("s")) {
+                seconds = Integer.parseInt(time.split("s")[0].replaceAll(" ", ""));
+            }
+            params.add(Integer.toString((hours * 3600) + (minutes * 60) + seconds));
         }
         event.setParams(params);
         event.setWarningList(serverWarningList);
         if (editEvent != null) {
             taskList.removeElement(editEvent.getName() + "<br><font size=2>" + editEvent.getTask());
             scheduleEvents.remove(editEvent);
+            try {
+                scheduler.deleteJob(JobKey.jobKey(editEvent.getName()));
+            } catch (SchedulerException se) {
+                System.out.println("Error removing old task");
+            }
         }
         taskList.add(taskNameField.getText() + "<br><font size=2>" + task);
         scheduleEvents.add(event);
         config.schedule.setEvents(scheduleEvents);
+        scheduleEvent(event, scheduler, gui);
         config.save();
         closeTaskDialog();
     }//GEN-LAST:event_createButtonActionPerformed
@@ -1244,6 +1277,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             sendCommandField.setEnabled(true);
             warningList.setEnabled(true);
             warningAddButton.setEnabled(true);
+            //warningEditButton.setEnabled(true);
             warningRemoveButton.setEnabled(true);
             task = "Send Command";
             sendCommandRadio.setSelected(true);
@@ -1252,12 +1286,14 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             stopServerRadio.setSelected(true);
             warningList.setEnabled(true);
             warningAddButton.setEnabled(true);
+            //warningEditButton.setEnabled(true);
             warningRemoveButton.setEnabled(true);
             task = "Stop Server";
         } else if (editEvent.getTask().equals("Restart Server")) {
             restartServerRadio.setSelected(true);
             warningList.setEnabled(true);
             warningAddButton.setEnabled(true);
+            //warningEditButton.setEnabled(true);
             warningRemoveButton.setEnabled(true);
             remainDownField.setEnabled(true);
             remainDownLabel.setEnabled(true);
@@ -1267,6 +1303,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             backupRadio.setSelected(true);
             warningList.setEnabled(true);
             warningAddButton.setEnabled(true);
+            //warningEditButton.setEnabled(true);
             warningRemoveButton.setEnabled(true);
             task = "Backup";
         }
@@ -1340,13 +1377,11 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             verifyAllSelected(dayOfWeek);
         }
         for (int i = 0; i < editEvent.getWarningList().size(); i++) {
-            java.util.List warningEntry = new java.util.ArrayList();
-            warningEntry.add(editEvent.getWarningList().get(i).get(0));
-            warningEntry.add(editEvent.getWarningList().get(i).get(1));
-            serverWarningList.add(warningEntry);
+            serverWarningList.add(new MCServerGUIServerWarning(
+                    editEvent.getWarningList().get(i).getMessage(),
+                    editEvent.getWarningList().get(i).getTime()));
             int hour = 0, minute = 0,
-                    second = Integer.parseInt(
-                    editEvent.getWarningList().get(i).get(1).toString());
+                    second = editEvent.getWarningList().get(i).getTime();
             minute = second / 60;
             second = second % 60;
             hour = minute / 60;
@@ -1377,7 +1412,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             } else if (second > 1) {
                 time += " seconds";
             }
-            warningListModel.add("Message: " + editEvent.getWarningList().get(i).get(0) + "<br><font size=2>Time: " + time);
+            warningListModel.add("Message: " + editEvent.getWarningList().get(i).getMessage() + "<br><font size=2>Time: " + time);
         }
         createButton.setEnabled(true);
         createButton.setText("Update");
@@ -1414,7 +1449,8 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
     private MCServerGUIListModel warningListModel;
     private MCServerGUIConfig config;
     private MCServerGUIEvent editEvent;
-    private java.util.List<java.util.List> serverWarningList;
+    private MCServerGUIView gui;
+    private java.util.List<MCServerGUIServerWarning> serverWarningList;
     private java.util.List<MCServerGUIEvent> scheduleEvents;
     private MCServerGUIServerWarningDialog warningDialog;
     private java.util.List<javax.swing.JToggleButton> dayOfWeek;

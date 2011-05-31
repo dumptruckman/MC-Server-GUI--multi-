@@ -264,14 +264,16 @@ public class MCServerGUIConfig {
                                             }
                                             event.setParams(params);
                                         } else if ("Warnings".equals(eventfield)) {
-                                            List<List> warninglist = new ArrayList<List>();
+                                            List<MCServerGUIServerWarning> warninglist =
+                                                    new ArrayList<MCServerGUIServerWarning>();
                                             while (jp.nextToken() != JsonToken.END_OBJECT) {
-                                                List warning = new ArrayList();
                                                 if (jp.getCurrentToken().equals(JsonToken.START_ARRAY)) {
+                                                    MCServerGUIServerWarning warning =
+                                                            new MCServerGUIServerWarning();
                                                     jp.nextToken();
-                                                    warning.add(jp.getText());
+                                                    warning.setMessage(jp.getText());
                                                     jp.nextToken();
-                                                    warning.add(jp.getNumberValue());
+                                                    warning.setTime(jp.getNumberValue().intValue());
                                                     warninglist.add(warning);
                                                 }
                                             }
@@ -344,8 +346,8 @@ public class MCServerGUIConfig {
                 jg.writeObjectFieldStart("Warnings");
                 for (int j = 0; j < schedule.getEvents().get(i).getWarningList().size(); j++) {
                     jg.writeArrayFieldStart(String.valueOf(j+1));
-                    jg.writeString(schedule.getEvents().get(i).getWarningList().get(j).get(0).toString());
-                    jg.writeNumber(schedule.getEvents().get(i).getWarningList().get(j).get(1).toString());
+                    jg.writeString(schedule.getEvents().get(i).getWarningList().get(j).getMessage());
+                    jg.writeNumber(schedule.getEvents().get(i).getWarningList().get(j).getTime());
                     jg.writeEndArray();
                 }
                 jg.writeEndObject();
