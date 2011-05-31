@@ -15,6 +15,7 @@ import mcservergui.tools.MCServerGUIRegexVerifier;
 import org.jdesktop.application.Action;
 import org.quartz.*;
 import static mcservergui.MCServerGUIEventScheduler.*;
+import static mcservergui.MCServerGUITime.*;
 
 /**
  *
@@ -1124,13 +1125,28 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
 
     private void warningRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_warningRemoveButtonActionPerformed
         try {
-            warningListModel.removeElement(warningListModel.getElementAt(warningList.getSelectedIndex()));
-            serverWarningList.remove(warningList.getSelectedIndex());
+            int index = warningList.getSelectedIndex();
+            Object element = warningListModel.getElementAt(index);
+            if (javax.swing.JOptionPane.showConfirmDialog(this,
+                    "Are you sure you wish to remove this warning?\n",
+                    "Remove warning message",
+                    javax.swing.JOptionPane.YES_NO_OPTION) ==
+                    javax.swing.JOptionPane.YES_OPTION) {
+                warningListModel.removeElement(element);
+                serverWarningList.remove(warningList.getSelectedIndex());
+            }
         } catch (ArrayIndexOutOfBoundsException e) {}
     }//GEN-LAST:event_warningRemoveButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        closeTaskDialog();
+        if (javax.swing.JOptionPane.showConfirmDialog(this,
+                    "Are you sure you wish to stop editing this event?\n"
+                    + "Any saved changes will be lost!",
+                    "Cancel task entry",
+                    javax.swing.JOptionPane.YES_NO_OPTION) ==
+                    javax.swing.JOptionPane.YES_OPTION) {
+            closeTaskDialog();
+        }
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
@@ -1298,7 +1314,8 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             remainDownField.setEnabled(true);
             remainDownLabel.setEnabled(true);
             task = "Restart Server";
-            remainDownField.setText(editEvent.getParams().get(0));
+            remainDownField.setText(hmsFromSeconds(Integer.valueOf(
+                    editEvent.getParams().get(0))));
         } else if (editEvent.getTask().equals("Backup")) {
             backupRadio.setSelected(true);
             warningList.setEnabled(true);
@@ -1380,38 +1397,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             serverWarningList.add(new MCServerGUIServerWarning(
                     editEvent.getWarningList().get(i).getMessage(),
                     editEvent.getWarningList().get(i).getTime()));
-            int hour = 0, minute = 0,
-                    second = editEvent.getWarningList().get(i).getTime();
-            minute = second / 60;
-            second = second % 60;
-            hour = minute / 60;
-            minute = minute % 60;
-            String time = "";
-
-            if (hour != 0) {
-                time += hours;
-            }
-            if (hour == 1) {
-                time += " hour ";
-            } else if (hour > 1) {
-                time += " hours ";
-            }
-            if (minute != 0) {
-                time += minute;
-            }
-            if (minute == 1) {
-                time += " minute ";
-            } else if (minute > 1) {
-                time += " minutes ";
-            }
-            if (second!= 0) {
-                time += second;
-            }
-            if (second == 1) {
-                time += " second";
-            } else if (second > 1) {
-                time += " seconds";
-            }
+            String time = hoursMinutesSecondsFromSeconds(editEvent.getWarningList().get(i).getTime());
             warningListModel.add("Message: " + editEvent.getWarningList().get(i).getMessage() + "<br><font size=2>Time: " + time);
         }
         createButton.setEnabled(true);

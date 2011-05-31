@@ -200,7 +200,6 @@ public class MCServerGUIView extends FrameView implements Observer {
         taskListAddButton = new javax.swing.JButton();
         taskListEditButton = new javax.swing.JButton();
         taskListRemoveButton = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
@@ -268,7 +267,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         consoleOutputPanelLayout.setVerticalGroup(
             consoleOutputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
         );
 
         playerListPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("playerListPanel.border.title"))); // NOI18N
@@ -297,11 +296,11 @@ public class MCServerGUIView extends FrameView implements Observer {
         playerListPanel.setLayout(playerListPanelLayout);
         playerListPanelLayout.setHorizontalGroup(
             playerListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
         );
         playerListPanelLayout.setVerticalGroup(
             playerListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
         );
 
         consoleInputPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("consoleInputPanel.border.title"))); // NOI18N
@@ -351,7 +350,7 @@ public class MCServerGUIView extends FrameView implements Observer {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, consoleInputPanelLayout.createSequentialGroup()
                 .addComponent(sayCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(consoleInput, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
+                .addComponent(consoleInput, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(submitButton))
         );
@@ -452,16 +451,16 @@ public class MCServerGUIView extends FrameView implements Observer {
                     .addGroup(mainWindowTabLayout.createSequentialGroup()
                         .addComponent(consoleOutputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(playerListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
-                    .addComponent(consoleInputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE))
+                        .addComponent(playerListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
+                    .addComponent(consoleInputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE))
                 .addGap(13, 13, 13))
         );
         mainWindowTabLayout.setVerticalGroup(
             mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainWindowTabLayout.createSequentialGroup()
                 .addGroup(mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(playerListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
-                    .addComponent(consoleOutputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))
+                    .addComponent(playerListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                    .addComponent(consoleOutputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(consoleInputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -685,7 +684,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addComponent(serverCmdLinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveServerConfigButton)
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("serverConfigTab.TabConstraints.tabTitle"), serverConfigTab); // NOI18N
@@ -766,7 +765,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveGuiConfigButton)
-                .addContainerGap(255, Short.MAX_VALUE))
+                .addContainerGap(249, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("guiConfigTab.TabConstraints.tabTitle"), guiConfigTab); // NOI18N
@@ -866,7 +865,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         backupFileChooserPanelLayout.setVerticalGroup(
             backupFileChooserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
         );
 
         backupStatusPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("backupStatusPanel.border.title"))); // NOI18N
@@ -886,7 +885,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         backupStatusPanelLayout.setVerticalGroup(
             backupStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
         );
 
         backupControlRefreshButton.setText(resourceMap.getString("backupControlRefreshButton.text")); // NOI18N
@@ -954,7 +953,7 @@ public class MCServerGUIView extends FrameView implements Observer {
             .addGroup(restoreTabLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addContainerGap(332, Short.MAX_VALUE))
+                .addContainerGap(326, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("restoreTab.TabConstraints.tabTitle"), restoreTab); // NOI18N
@@ -983,7 +982,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         taskSchedulerPanelLayout.setVerticalGroup(
             taskSchedulerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
         );
 
         taskListAddButton.setText(resourceMap.getString("taskListAddButton.text")); // NOI18N
@@ -1010,35 +1009,18 @@ public class MCServerGUIView extends FrameView implements Observer {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel1.border.title"))); // NOI18N
-        jPanel1.setName("jPanel1"); // NOI18N
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 387, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 82, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout schedulerTabLayout = new javax.swing.GroupLayout(schedulerTab);
         schedulerTab.setLayout(schedulerTabLayout);
         schedulerTabLayout.setHorizontalGroup(
             schedulerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(schedulerTabLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(schedulerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(schedulerTabLayout.createSequentialGroup()
-                        .addComponent(taskListAddButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(taskListEditButton))
-                    .addComponent(taskListRemoveButton))
+                .addComponent(taskListAddButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(taskListEditButton)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(taskListRemoveButton)
+                .addContainerGap(338, Short.MAX_VALUE))
             .addComponent(taskSchedulerPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         schedulerTabLayout.setVerticalGroup(
@@ -1046,15 +1028,11 @@ public class MCServerGUIView extends FrameView implements Observer {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, schedulerTabLayout.createSequentialGroup()
                 .addComponent(taskSchedulerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(schedulerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(schedulerTabLayout.createSequentialGroup()
-                        .addGroup(schedulerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(taskListAddButton)
-                            .addComponent(taskListEditButton))
-                        .addGap(18, 18, 18)
-                        .addComponent(taskListRemoveButton))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGroup(schedulerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(taskListAddButton)
+                    .addComponent(taskListEditButton)
+                    .addComponent(taskListRemoveButton))
+                .addGap(83, 83, 83))
         );
 
         tabber.addTab(resourceMap.getString("schedulerTab.TabConstraints.tabTitle"), schedulerTab); // NOI18N
@@ -1067,7 +1045,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabber, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
+            .addComponent(tabber, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
         );
 
         menuBar.setName("menuBar"); // NOI18N
@@ -1512,17 +1490,26 @@ public class MCServerGUIView extends FrameView implements Observer {
 
     private void taskListRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taskListRemoveButtonActionPerformed
         if (getEventIndexFromSelected() != -1) {
-            int index = getEventIndexFromSelected();
-            try {
-                scheduler.deleteJob(JobKey.jobKey(config.schedule.getEvents()
-                        .get(index).getName()));
-            } catch (SchedulerException se) {
-                System.out.println("Error removing old task");
+            if (javax.swing.JOptionPane.showConfirmDialog(this.getFrame(),
+                    "Are you sure you wish to remove this event?\n"
+                    + "If it is running it will be interrupted.\n",
+                    "Remove scheduled task",
+                    javax.swing.JOptionPane.YES_NO_OPTION) == 
+                    javax.swing.JOptionPane.YES_OPTION) {
+                int index = getEventIndexFromSelected();
+                try {
+                    scheduler.interrupt(JobKey.jobKey(config.schedule.getEvents()
+                            .get(index).getName()));
+                    scheduler.deleteJob(JobKey.jobKey(config.schedule.getEvents()
+                            .get(index).getName()));
+                } catch (SchedulerException se) {
+                    System.out.println("Error removing old task");
+                }
+                config.schedule.getEvents().remove(config.schedule.getEvents()
+                        .get(index));
+                taskList.removeElement(taskList.getElementAt(index));
+                config.save();
             }
-            config.schedule.getEvents().remove(config.schedule.getEvents()
-                    .get(index));
-            taskList.removeElement(taskList.getElementAt(index));
-            config.save();
         }
     }//GEN-LAST:event_taskListRemoveButtonActionPerformed
 
@@ -1555,7 +1542,6 @@ public class MCServerGUIView extends FrameView implements Observer {
     public javax.swing.JLabel jLabel2;
     public javax.swing.JLabel jLabel3;
     public javax.swing.JList jList1;
-    public javax.swing.JPanel jPanel1;
     public javax.swing.JPanel jPanel4;
     public javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JScrollPane jScrollPane2;
@@ -1798,6 +1784,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         backupPathField.setText(config.backups.getPath());
         backupFileChooser.setCheckingPaths(createTreePathArray(pathsToBackup));
         windowTitleField.setText(config.getWindowTitle());
+        getFrame().setTitle(windowTitleField.getText());
         javaExecField.setText(config.cmdLine.getJavaExec());
         serverJarField.setText(config.cmdLine.getServerJar());
         bukkitCheckBox.setSelected(config.cmdLine.getBukkit());
@@ -1842,6 +1829,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         String temp = statusMessageLabel.getText();
         statusMessageLabel.setText("Saving configuration...");
         config.setWindowTitle(windowTitleField.getText());
+        getFrame().setTitle(windowTitleField.getText());
         config.setInputHistoryMaxSize(Integer.parseInt(inputHistoryMaxSizeField.getText()));
         config.cmdLine.setXmx(xmxMemoryField.getText());
         config.cmdLine.setExtraArgs(extraArgsField.getText());

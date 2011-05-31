@@ -12,6 +12,7 @@
 package mcservergui;
 
 import mcservergui.tools.MCServerGUIRegexVerifier;
+import static mcservergui.MCServerGUITime.*;
 
 /**
  *
@@ -142,6 +143,14 @@ public class MCServerGUIServerWarningDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        /*if (javax.swing.JOptionPane.showConfirmDialog(this,
+                    "Are you sure you wish to remove this event?\n"
+                    + "If it is running it will be interrupted.\n",
+                    "Remove scheduled task",
+                    javax.swing.JOptionPane.YES_NO_OPTION) ==
+                    javax.swing.JOptionPane.YES_OPTION) {
+            closeTaskDialog();
+        }*/
         closeTaskDialog();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
@@ -154,54 +163,14 @@ public class MCServerGUIServerWarningDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_messageFieldActionPerformed
 
     private void closeAndAdd() {
-        int seconds = 0, minutes = 0, hours = 0;
-        String timebefore = timeBeforeField.getText();
-        if (timebefore.contains("h")) {
-            hours = Integer.parseInt(timebefore.split("h")[0].replaceAll(" ", ""));
-            if (timebefore.contains("m") || timebefore.contains("s")) {
-                timebefore = timebefore.split("h")[1];
-            }
-        }
-        if (timebefore.contains("m")) {
-            minutes = Integer.parseInt(timebefore.split("m")[0].replaceAll(" ", ""));
-            if (timebefore.contains("s")) {
-                timebefore = timebefore.split("m")[1];
-            }
-        }
-        if (timebefore.contains("s")) {
-            seconds = Integer.parseInt(timebefore.split("s")[0].replaceAll(" ", ""));
-        }
+        int seconds = secondsFromHms(timeBeforeField.getText());
 
-        String time = "";
-
-        if (hours != 0) {
-            time += hours;
-        }
-        if (hours == 1) {
-            time += " hour ";
-        } else if (hours > 1) {
-            time += " hours ";
-        }
-        if (minutes != 0) {
-            time += minutes;
-        }
-        if (minutes == 1) {
-            time += " minute ";
-        } else if (minutes > 1) {
-            time += " minutes ";
-        }
-        if (seconds!= 0) {
-            time += seconds;
-        }
-        if (seconds == 1) {
-            time += " second";
-        } else if (seconds > 1) {
-            time += " seconds";
-        }
         serverWarningList.add(new MCServerGUIServerWarning(
-                messageField.getText(),(hours * 3600) + (minutes * 60) + seconds));
+                messageField.getText(),seconds));
         System.out.println(serverWarningList.get(serverWarningList.size()-1));
-        warningListModel.add("Message: " + messageField.getText() + "<br><font size=2>Time: " + time);
+        warningListModel.add("Message: " + messageField.getText() 
+                + "<br><font size=2>Time: "
+                + hoursMinutesSecondsFromSeconds(seconds));
         closeTaskDialog();
     }
 

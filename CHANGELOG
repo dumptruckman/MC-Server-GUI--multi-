@@ -3,6 +3,9 @@ Version .3.1
   Scheduler should now wait to restart the server until it is actually finished shutting down, particularly when remain down delays are not being used.
   Scheduled start/stop/restart events will now wait until the gui is done performing any backups.
   Scheduled backups will now wait until the gui is done restarting the server.
+  Window title now updates properly.
+  When editing an event with a remain down time, it will now load the remain down time correctly.
+  Added confirmation dialogs in several places of the scheduler.
 
 Version .3.0
   Added task scheduler!

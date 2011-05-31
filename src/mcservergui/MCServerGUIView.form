@@ -12,7 +12,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="tabber" alignment="0" pref="385" max="32767" attributes="0"/>
+              <Component id="tabber" alignment="0" pref="379" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -55,9 +55,9 @@
                               <Group type="102" alignment="0" attributes="1">
                                   <Component id="consoleOutputPanel" min="-2" pref="397" max="-2" attributes="2"/>
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                                  <Component id="playerListPanel" pref="132" max="32767" attributes="0"/>
+                                  <Component id="playerListPanel" pref="129" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="consoleInputPanel" alignment="0" pref="535" max="32767" attributes="1"/>
+                              <Component id="consoleInputPanel" alignment="0" pref="532" max="32767" attributes="1"/>
                           </Group>
                           <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                       </Group>
@@ -67,8 +67,8 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="playerListPanel" pref="176" max="32767" attributes="0"/>
-                              <Component id="consoleOutputPanel" alignment="1" pref="176" max="32767" attributes="0"/>
+                              <Component id="playerListPanel" pref="170" max="32767" attributes="0"/>
+                              <Component id="consoleOutputPanel" alignment="1" pref="170" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="consoleInputPanel" min="-2" max="-2" attributes="0"/>
@@ -107,7 +107,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane1" alignment="0" pref="149" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" alignment="0" pref="143" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -161,12 +161,12 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane2" alignment="0" pref="120" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" alignment="0" pref="117" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane2" alignment="0" pref="149" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" alignment="0" pref="143" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -222,7 +222,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="sayCheckBox" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="consoleInput" pref="407" max="32767" attributes="0"/>
+                              <Component id="consoleInput" pref="404" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="submitButton" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -428,7 +428,7 @@
                           <Component id="serverCmdLinePanel" min="-2" pref="238" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="saveServerConfigButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="90" max="32767" attributes="0"/>
+                          <EmptySpace pref="84" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -721,7 +721,7 @@
                           <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="saveGuiConfigButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="255" max="32767" attributes="0"/>
+                          <EmptySpace pref="249" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -998,7 +998,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane3" alignment="0" pref="201" max="32767" attributes="0"/>
+                          <Component id="jScrollPane3" alignment="0" pref="195" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -1047,7 +1047,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane4" alignment="0" pref="201" max="32767" attributes="0"/>
+                          <Component id="jScrollPane4" alignment="0" pref="195" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -1113,7 +1113,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="332" max="32767" attributes="0"/>
+                          <EmptySpace pref="326" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1144,17 +1144,12 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="taskListAddButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="taskListEditButton" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="taskListRemoveButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jPanel1" max="32767" attributes="0"/>
+                          <Component id="taskListAddButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
+                          <Component id="taskListEditButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="taskListRemoveButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="338" max="32767" attributes="0"/>
                       </Group>
                       <Component id="taskSchedulerPanel" alignment="1" max="32767" attributes="0"/>
                   </Group>
@@ -1164,18 +1159,12 @@
                       <Group type="102" alignment="1" max="-2" attributes="0">
                           <Component id="taskSchedulerPanel" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="taskListAddButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="taskListEditButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="taskListRemoveButton" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="taskListAddButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="taskListEditButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="taskListRemoveButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1201,7 +1190,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane5" alignment="0" pref="204" max="32767" attributes="0"/>
+                          <Component id="jScrollPane5" alignment="0" pref="212" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -1262,31 +1251,6 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="taskListRemoveButtonActionPerformed"/>
                   </Events>
                 </Component>
-                <Container class="javax.swing.JPanel" name="jPanel1">
-                  <Properties>
-                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                        <TitledBorder title="Schedule Settings">
-                          <Property name="titleX" resourceKey="jPanel1.border.title"/>
-                        </TitledBorder>
-                      </Border>
-                    </Property>
-                    <Property name="name" type="java.lang.String" value="jPanel1" noResource="true"/>
-                  </Properties>
-
-                  <Layout>
-                    <DimensionLayout dim="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="387" max="32767" attributes="0"/>
-                      </Group>
-                    </DimensionLayout>
-                    <DimensionLayout dim="1">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="82" max="32767" attributes="0"/>
-                      </Group>
-                    </DimensionLayout>
-                  </Layout>
-                </Container>
               </SubComponents>
             </Container>
           </SubComponents>
