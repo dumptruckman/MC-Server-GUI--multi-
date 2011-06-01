@@ -4,6 +4,10 @@
 
 package mcservergui;
 
+import java.io.Reader;
+import javax.swing.text.html.HTMLEditorKit.ParserCallback;
+import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.text.html.HTMLDocument;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -111,6 +115,10 @@ public class MCServerGUIView extends FrameView implements Observer {
 
         inputHistory = new ArrayList<String>();
         inputHistoryIndex = -1;
+
+        enableSystemTrayIcon();
+
+        parser = new MCServerGUIConsoleParser(config.display);
     }
 
     @Action
@@ -232,6 +240,7 @@ public class MCServerGUIView extends FrameView implements Observer {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
+        consoleOutput.setContentType(resourceMap.getString("consoleOutput.contentType")); // NOI18N
         consoleOutput.setEditable(false);
         consoleOutput.setToolTipText(resourceMap.getString("consoleOutput.toolTipText")); // NOI18N
         consoleOutput.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
@@ -1158,7 +1167,19 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         backupFileChooser.getCheckingModel().setCheckingMode(CheckingMode.PROPAGATE);
         taskSchedulerList.setCellRenderer(new TaskSchedulerListCellRenderer());
+        consoleOutput.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
+        //consoleHtmlDocument = new javax.swing.text.html.HTMLDocument();
+        /*consoleHtmlDocument.setParser(new javax.swing.text.html.HTMLEditorKit.Parser() {
+
+            @Override
+            public void parse(Reader r, ParserCallback cb, boolean ignoreCharSet) throws IOException {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        });*/
+        consoleOutput.setStyledDocument(new javax.swing.text.html.HTMLDocument());
         //consoleOutput.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(mcservergui.MCServerGUIApp.class).getContext().getResourceMap(MCServerGUIView.class);
+        this.getFrame().setIconImage(resourceMap.getImageIcon("imageLabel.icon").getImage());
     }
 
     private class TaskSchedulerListCellRenderer extends javax.swing.JTextPane implements javax.swing.ListCellRenderer {
@@ -1589,6 +1610,47 @@ public class MCServerGUIView extends FrameView implements Observer {
     public javax.swing.JCheckBox zipBackupCheckBox;
     // End of variables declaration//GEN-END:variables
 
+    private void enableSystemTrayIcon() {
+        java.awt.TrayIcon trayIcon = null;
+        if (java.awt.SystemTray.isSupported()) {
+            // get the SystemTray instance
+            java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
+            // load an image
+            org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(mcservergui.MCServerGUIApp.class).getContext().getResourceMap(MCServerGUIView.class);
+            //resourceMap
+            // create a action listener to listen for default action executed on the tray icon
+            ActionListener listener = new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    // execute default action of the application
+                    // ...
+                }
+            };
+            // create a popup menu
+            java.awt.PopupMenu popup = new java.awt.PopupMenu();
+            // create menu item for the default action
+            java.awt.MenuItem defaultItem = new java.awt.MenuItem("Show");
+            defaultItem.addActionListener(listener);
+            popup.add(defaultItem);
+            /// ... add other items
+            // construct a TrayIcon
+            trayIcon = new java.awt.TrayIcon(resourceMap.getImageIcon("imageLabel.icon").getImage(),
+                    "Test", popup);
+            // set the TrayIcon properties
+            trayIcon.addActionListener(listener);
+            // ...
+            // add the tray image
+            try {
+                tray.add(trayIcon);
+            } catch (java.awt.AWTException e) {
+                System.err.println(e);
+            }
+            // ...
+        } else {
+            // disable tray option in your application or
+            // perform other actions
+        }
+    }
+
     private int getEventIndexFromSelected() {
         try {
             String taskname = taskList.getElementAt(
@@ -1729,11 +1791,11 @@ public class MCServerGUIView extends FrameView implements Observer {
      * @param s String to send to the server
      */
     public void sendInput(String s) {
-        if (getControlState().equals("ON")) {
-            server.send(s);
-        } else {
-            System.out.println("Server is not running, cannot send: " + s);
-        }
+        //if (getControlState().equals("ON")) {
+        server.send(s);
+        //} else {
+        //    System.out.println("Server is not running, cannot send: " + s);
+        //}
     }
 
     /**
@@ -1924,10 +1986,15 @@ public class MCServerGUIView extends FrameView implements Observer {
      * @param textToAdd String of text to add.
      */
     public void addTextToConsoleOutput(String textToAdd) {
-        try {
-            consoleOutput.getDocument().insertString(consoleOutput.getDocument().getLength(), textToAdd, null);
-        } catch (javax.swing.text.BadLocationException e) {
-            System.out.println("BadLocationException");
+        try
+        {
+            ((HTMLEditorKit)consoleOutput.getEditorKit())
+                    .insertHTML((HTMLDocument)consoleOutput.getDocument(),
+                    consoleOutput.getDocument().getEndPosition().getOffset()-1,
+                    parser.parseText(textToAdd),
+                    1, 0, null);
+        } catch ( Exception e ) {
+            System.out.println("Error appending text to console output");
         }
     }
 
@@ -2033,6 +2100,7 @@ public class MCServerGUIView extends FrameView implements Observer {
     private Scheduler scheduler;
     private MCServerGUIListModel taskList;
     private boolean restarting;
+    private MCServerGUIConsoleParser parser;
 
     //Auto created
     private final Timer messageTimer;

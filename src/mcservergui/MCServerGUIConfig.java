@@ -21,6 +21,7 @@ public class MCServerGUIConfig {
         cmdLine = new CMDLine();
         backups = new Backups();
         schedule = new Schedule();
+        display = new Display();
     }
     
     private String _windowTitle;
@@ -28,12 +29,17 @@ public class MCServerGUIConfig {
     public CMDLine cmdLine;
     public Backups backups;
     public Schedule schedule;
+    public Display display;
 
     public String getWindowTitle() { return _windowTitle; }
     public int getInputHistoryMaxSize() { return _inputHistoryMaxSize; }
     
     public void setWindowTitle(String s) { _windowTitle = s; }
     public void setInputHistoryMaxSize(int i) { _inputHistoryMaxSize = i; }
+
+    public class Display {
+        
+    }
 
     public class CMDLine {
         public CMDLine () {
