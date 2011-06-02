@@ -19,6 +19,8 @@ public class MCServerGUIConsoleParser {
         text = text.replaceAll("<", "&lt;");
         text = text.replaceAll(">", "&gt;");
 
+        //text = "<font size=2.5>" + text;
+
         return text;
     }
 

@@ -98,7 +98,6 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         scheduleLabel = new javax.swing.JLabel();
         secondsAgainCheckBox = new javax.swing.JCheckBox();
         secondsAgainField = new javax.swing.JTextField();
-        secondsAllCheckBox = new javax.swing.JCheckBox();
         minutesLabel = new javax.swing.JLabel();
         minutesAgainCheckBox = new javax.swing.JCheckBox();
         minutesAgainField = new javax.swing.JTextField();
@@ -188,15 +187,6 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         secondsAgainField.setToolTipText(resourceMap.getString("secondsAgainField.toolTipText")); // NOI18N
         secondsAgainField.setInputVerifier(new MCServerGUIRegexVerifier("^[0-5]?\\d$"));
         secondsAgainField.setName("secondsAgainField"); // NOI18N
-
-        secondsAllCheckBox.setText(resourceMap.getString("secondsAllCheckBox.text")); // NOI18N
-        secondsAllCheckBox.setToolTipText(resourceMap.getString("secondsAllCheckBox.toolTipText")); // NOI18N
-        secondsAllCheckBox.setName("secondsAllCheckBox"); // NOI18N
-        secondsAllCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                secondsAllCheckBoxActionPerformed(evt);
-            }
-        });
 
         minutesLabel.setText(resourceMap.getString("minutesLabel.text")); // NOI18N
         minutesLabel.setName("minutesLabel"); // NOI18N
@@ -630,9 +620,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(secondsAgainCheckBox)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(secondsAgainField, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(2, 2, 2)
-                                .addComponent(secondsAllCheckBox))
+                                .addComponent(secondsAgainField, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(minutesField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -759,8 +747,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
                             .addComponent(secondsLabel)
                             .addComponent(secondsField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(secondsAgainCheckBox)
-                            .addComponent(secondsAgainField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(secondsAllCheckBox))
+                            .addComponent(secondsAgainField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(minutesLabel)
@@ -915,7 +902,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             for (int i = 1; i < 8; i++) {
                 dayOfWeek.get(i).setSelected(true);
             }
-            dowAllButton.setText("None");
+            //dowAllButton.setText("None");
             domField.setEnabled(false);
             domAllCheckBox.setEnabled(false);
             domButton.setSelected(false);
@@ -923,7 +910,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             for (int i = 1; i < 8; i++) {
                 dayOfWeek.get(i).setSelected(false);
             }
-            dowAllButton.setText("All");
+            //dowAllButton.setText("All");
             domField.setEnabled(true);
             domAllCheckBox.setEnabled(true);
             domButton.setSelected(true);
@@ -963,12 +950,12 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             for (int i = 1; i < 13; i++) {
                 month.get(i).setSelected(true);
             }
-            monthAllButton.setText("None");
+            //monthAllButton.setText("None");
         } else {
             for (int i = 1; i < 13; i++) {
                 month.get(i).setSelected(false);
             }
-            monthAllButton.setText("All");
+           //monthAllButton.setText("All");
         }
     }//GEN-LAST:event_monthAllButtonActionPerformed
 
@@ -1025,7 +1012,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             for (int i = 0; i < 8; i++) {
                 dayOfWeek.get(i).setSelected(false);
             }
-            dayOfWeek.get(0).setText("All");
+            //dayOfWeek.get(0).setText("All");
             domAllCheckBox.setEnabled(true);
             domField.setEnabled(!domAllCheckBox.isSelected());
         } else {
@@ -1037,13 +1024,18 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         domField.setEnabled(!domAllCheckBox.isSelected());
     }//GEN-LAST:event_domAllCheckBoxActionPerformed
 
-    private void secondsAllCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secondsAllCheckBoxActionPerformed
-        secondsField.setEnabled(!secondsAllCheckBox.isSelected());
-        secondsAgainCheckBox.setEnabled(!secondsAllCheckBox.isSelected());
-        secondsAgainField.setEnabled(!secondsAllCheckBox.isSelected());
-    }//GEN-LAST:event_secondsAllCheckBoxActionPerformed
-
     private void minutesAllCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minutesAllCheckBoxActionPerformed
+        if (minutesAllCheckBox.isSelected()) {
+            if (javax.swing.JOptionPane.showConfirmDialog(this,
+                        "This option is rather dangerous!\n"
+                        + "Please be aware that this means the event will occur EVERY minute of the specified hour(s).\n"
+                        + "Are you sure you wish to this event to occure EVERY minute of the specified hour(s)?",
+                        "Confirm select ALL minutes",
+                        javax.swing.JOptionPane.YES_NO_OPTION) ==
+                        javax.swing.JOptionPane.NO_OPTION) {
+                minutesAllCheckBox.setSelected(false);
+            }
+        }
         minutesField.setEnabled(!minutesAllCheckBox.isSelected());
         minutesAgainCheckBox.setEnabled(!minutesAllCheckBox.isSelected());
         minutesAgainField.setEnabled(!minutesAllCheckBox.isSelected());
@@ -1158,18 +1150,16 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         // Check and build the cron expression
         String second = "", minute = "", hour = "", dow = "", mon = "",
                 dom = "";
-        if (secondsAllCheckBox.isSelected()) {  // Cron seconds
-            second = "*";
-        } else {
-            second = secondsField.getText();
-            if (secondsAgainCheckBox.isSelected()) {
-                if (secondsAgainField.getText().isEmpty()) {
-                    secondsAgainField.requestFocus();
-                    return;
-                }
-                second = secondsField.getText() + "/" + secondsAgainField.getText();
+
+        second = secondsField.getText();
+        if (secondsAgainCheckBox.isSelected()) {
+            if (secondsAgainField.getText().isEmpty()) {
+                secondsAgainField.requestFocus();
+                return;
             }
+            second = secondsField.getText() + "/" + secondsAgainField.getText();
         }
+        
         if (minutesAllCheckBox.isSelected()) {  // Cron minutes
             minute = "*";
         } else {
@@ -1331,16 +1321,13 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         String dom = cronex.split("\\s")[3];
         String mon = cronex.split("\\s")[4];
         String dow = cronex.split("\\s")[5];
-        if (seconds.equals("*")) {
-            secondsAllCheckBox.setSelected(true);
+
+        if (seconds.contains("/")) {
+            secondsField.setText(seconds.split("/")[0]);
+            secondsAgainCheckBox.setSelected(true);
+            secondsAgainField.setText(seconds.split("/")[1]);
         } else {
-            if (seconds.contains("/")) {
-                secondsField.setText(seconds.split("/")[0]);
-                secondsAgainCheckBox.setSelected(true);
-                secondsAgainField.setText(seconds.split("/")[1]);
-            } else {
-                secondsField.setText(seconds);
-            }
+            secondsField.setText(seconds);
         }
         if (minutes.equals("*")) {
             minutesAllCheckBox.setSelected(true);
@@ -1415,10 +1402,10 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         }
         if (numSelected == buttonList.size() - 1) {
             buttonList.get(0).setSelected(true);
-            buttonList.get(0).setText("None");
+            //buttonList.get(0).setText("None");
         } else {
             buttonList.get(0).setSelected(false);
-            buttonList.get(0).setText("All");
+            //buttonList.get(0).setText("All");
         }
         if (buttonList.get(1).getText().equals("Sun") && numSelected > 0) {
             domField.setEnabled(false);
@@ -1488,7 +1475,6 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
     private javax.swing.JLabel scheduleLabel;
     private javax.swing.JCheckBox secondsAgainCheckBox;
     private javax.swing.JTextField secondsAgainField;
-    private javax.swing.JCheckBox secondsAllCheckBox;
     private javax.swing.JTextField secondsField;
     private javax.swing.JLabel secondsLabel;
     private javax.swing.JTextField sendCommandField;

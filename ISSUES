@@ -1,4 +1,6 @@
-Editing an event with a remain down time will not reenter that down time in the correct format (fixed in .3.1)
-Trying to delete multiple entries in the task scheduler can make the last one impossible to delete without a restart (possibly fixed in .3.1)
-Window title only changes if you press enter after editing the field. (fixed in .3.1)
-Window title also does not set properly from the config file. (fixed in .3.1)
+Long wait time for the console output to start showing anything in some cases. (possibly fixed in .3.2)
+Custom launch line may not be saving to the config properly. (fixed in .3.2)
+Selecting folders to backup with lots of files in them freezes up the gui while it picks up all the file names. (fixed in .3.2)
+Start/stop button sometimes becomes unavailable?
+All/None buttons a bit too confusing in the scheduler. (maybe less confusing in .3.2?)
+Files that were slated to be backed up but are removed/renamed remain in the config. (fixed in .3.2)

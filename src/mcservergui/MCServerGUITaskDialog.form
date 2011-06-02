@@ -70,8 +70,6 @@
                                   <Component id="secondsAgainCheckBox" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="secondsAgainField" min="-2" pref="24" max="-2" attributes="0"/>
-                                  <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
-                                  <Component id="secondsAllCheckBox" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="minutesField" min="-2" pref="39" max="-2" attributes="0"/>
@@ -230,7 +228,6 @@
                               <Component id="secondsField" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="secondsAgainCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="secondsAgainField" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="secondsAllCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -389,16 +386,6 @@
             </Property>
             <Property name="name" type="java.lang.String" value="secondsAgainField" noResource="true"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JCheckBox" name="secondsAllCheckBox">
-          <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="secondsAllCheckBox.text"/>
-            <Property name="toolTipText" type="java.lang.String" resourceKey="secondsAllCheckBox.toolTipText"/>
-            <Property name="name" type="java.lang.String" value="secondsAllCheckBox" noResource="true"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="secondsAllCheckBoxActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="minutesLabel">
           <Properties>

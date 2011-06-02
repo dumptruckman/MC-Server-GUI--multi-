@@ -1,8 +1,13 @@
-Version .3.2-dev
+Version .3.2
   Changed window icon.
-  Possibly fixed issue where backups would not disable level saving.
-  Changed console output to accept html formatting.
-  Trying to get a working system tray icon.
+  Fixed issue where backups would not disable level saving.
+  Changed console output to accept html formatting.  (There will be configuration options in future versions!)
+  Changed how often the server is polled for new output.  This MAY make initial output when starting the server appear faster.
+  Selecting large folders in the backup screen should no longer freeze the gui.
+  Backups will NOT backup the backup directory.
+  Added some colors to the backup log and hopefully made it a bit easier to read.
+  Removed the ALL seconds checkbox as it is simply too dangerous.
+  Added confirmation box to the All Minutes checkbox.
 
 Version .3.1
   Fixed issue where the server config tab would display wrong when long filenames were used.

@@ -19,7 +19,7 @@ public class MCServerGUIServerReceiver extends Observable {
         br = newBr;
         timer = new java.util.Timer();
         backgroundWork = new BackgroundWork();
-        timer.scheduleAtFixedRate(backgroundWork, 0, 1000);
+        timer.scheduleAtFixedRate(backgroundWork, 0, 50);
     }
 
     public class BackgroundWork extends TimerTask implements Observer {
@@ -27,7 +27,7 @@ public class MCServerGUIServerReceiver extends Observable {
             serverRunning = true;
         }
 
-        public void run() {
+        @Override public void run() {
             if (serverRunning) {
                 receivedFromServer = "";
                 try {

@@ -40,7 +40,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         super(app);
 
         backupFileSystem = new mcservergui.fileexplorer.FileSystemModel(".");
-        
+
         initComponents();
         fixComponents();
 
@@ -116,7 +116,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         inputHistory = new ArrayList<String>();
         inputHistoryIndex = -1;
 
-        enableSystemTrayIcon();
+        //enableSystemTrayIcon();
 
         parser = new MCServerGUIConsoleParser(config.display);
     }
@@ -1165,19 +1165,12 @@ public class MCServerGUIView extends FrameView implements Observer {
                     .addComponent(serverControlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     //.addComponent(backupControlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
-        backupFileChooser.getCheckingModel().setCheckingMode(CheckingMode.PROPAGATE);
+        backupFileChooser.getCheckingModel().setCheckingMode(CheckingMode.PROPAGATE_PRESERVING_CHECK);
         taskSchedulerList.setCellRenderer(new TaskSchedulerListCellRenderer());
         consoleOutput.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
-        //consoleHtmlDocument = new javax.swing.text.html.HTMLDocument();
-        /*consoleHtmlDocument.setParser(new javax.swing.text.html.HTMLEditorKit.Parser() {
-
-            @Override
-            public void parse(Reader r, ParserCallback cb, boolean ignoreCharSet) throws IOException {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-        });*/
+        backupStatusLog.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
         consoleOutput.setStyledDocument(new javax.swing.text.html.HTMLDocument());
-        //consoleOutput.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
+        backupStatusLog.setStyledDocument(new javax.swing.text.html.HTMLDocument());
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(mcservergui.MCServerGUIApp.class).getContext().getResourceMap(MCServerGUIView.class);
         this.getFrame().setIconImage(resourceMap.getImageIcon("imageLabel.icon").getImage());
     }
@@ -1204,7 +1197,8 @@ public class MCServerGUIView extends FrameView implements Observer {
 
     private class BackupFileChooserCheckingListener implements TreeCheckingListener {
         @Override public void valueChanged(TreeCheckingEvent e) {
-            if(e.isCheckedPath()) {
+            //Changing how it saves what is checked.
+            /*if(e.isCheckedPath()) {
                 for (int childrenindex = 0; childrenindex < backupFileSystem.getChildCount(
                         e.getPath().getLastPathComponent()); childrenindex++) {
                     backupFileChooser.addCheckingPath(
@@ -1220,7 +1214,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                             backupFileSystem.getChild(e.getPath().getLastPathComponent(), childrenindex)));
                 }
                 removePathFromBackup(e.getPath().getLastPathComponent().toString());
-            }
+            }*/
         }
     }
 
@@ -1459,6 +1453,16 @@ public class MCServerGUIView extends FrameView implements Observer {
     }//GEN-LAST:event_saveWorldsButtonActionPerformed
 
     private void saveBackupControlButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBackupControlButtonActionPerformed
+        pathsToBackup.clear();
+        try {
+            int i = 0;
+            while(true) {
+                pathsToBackup.add(backupFileChooser.getCheckingRoots()[i].getLastPathComponent().toString());
+                i++;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            config.backups.setPathsToBackup(pathsToBackup);
+        }
         saveConfig();
     }//GEN-LAST:event_saveBackupControlButtonActionPerformed
 
@@ -1617,7 +1621,6 @@ public class MCServerGUIView extends FrameView implements Observer {
             java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
             // load an image
             org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(mcservergui.MCServerGUIApp.class).getContext().getResourceMap(MCServerGUIView.class);
-            //resourceMap
             // create a action listener to listen for default action executed on the tray icon
             ActionListener listener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -1633,8 +1636,9 @@ public class MCServerGUIView extends FrameView implements Observer {
             popup.add(defaultItem);
             /// ... add other items
             // construct a TrayIcon
-            trayIcon = new java.awt.TrayIcon(resourceMap.getImageIcon("imageLabel.icon").getImage(),
-                    "Test", popup);
+            
+            trayIcon = new java.awt.TrayIcon(resourceMap.getImageIcon("imageLabel.icon").getImage(), "Test", popup);
+            trayIcon.setImageAutoSize(true);
             // set the TrayIcon properties
             trayIcon.addActionListener(listener);
             // ...
@@ -1644,6 +1648,7 @@ public class MCServerGUIView extends FrameView implements Observer {
             } catch (java.awt.AWTException e) {
                 System.err.println(e);
             }
+            
             // ...
         } else {
             // disable tray option in your application or
@@ -1685,7 +1690,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         MCServerGUIApp.getApplication().show(taskDialog);
     }
 
-    private void addPathToBackup(String addPath) {
+    /*private void addPathToBackup(String addPath) {
         if (!pathsToBackup.contains(addPath)) {
             pathsToBackup.add(addPath);
             config.backups.setPathsToBackup(pathsToBackup);
@@ -1697,7 +1702,7 @@ public class MCServerGUIView extends FrameView implements Observer {
             pathsToBackup.remove(remPath);
             config.backups.setPathsToBackup(pathsToBackup);
         }
-    }
+    }*/
 
     public static javax.swing.tree.TreePath createTreePath(File f) {
         List<File> path = new ArrayList<File>();
@@ -1898,6 +1903,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         config.cmdLine.setServerJar(serverJarField.getText());
         config.cmdLine.setJavaExec(javaExecField.getText());
         if (config.cmdLine.getUseCustomLaunch()) {
+            config.cmdLine.setCustomLaunch(cmdLineField.getText());
             if (java.util.regex.Pattern.matches("^\\s*$", cmdLineField.getText())) {
                 config.cmdLine.setUseCustomLaunch(false);
                 config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());

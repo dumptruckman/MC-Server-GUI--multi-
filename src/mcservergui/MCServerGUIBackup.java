@@ -9,6 +9,8 @@ import java.util.Observable;
 import java.io.*;
 import javax.swing.SwingWorker;
 import java.util.zip.*;
+import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.text.html.HTMLDocument;
 
 /**
  *
@@ -21,26 +23,30 @@ public class MCServerGUIBackup extends Observable {
         this.backupLog = backupLog;
         nl = System.getProperty("line.separator");
         fs = System.getProperty("file.separator");
+        try {
+            workingDir = new File(".").getCanonicalPath();
+        } catch (IOException ioe) {
+            System.out.println("Error retrieving working dir");
+        }
     }
 
     public boolean startBackup() {
-        //String serverPath = new File(".\\" + config.cmdLine.getServerJar()).getParent();
-        //if (serverPath != null) {
-            backupWorker.execute();
-            return true;
-        //} else {
-        //    addTextToBackupLog("Backup failed.  Perhaps a bad server jar?" + nl);
-        //    return false;
-        //}
+        backupWorker.execute();
+        return true;
     }
 
     public void addTextToBackupLog(String textToAdd) {
-        try {
-            backupLog.getDocument().insertString(backupLog.getDocument().getLength(), textToAdd, null);
-            backupLog.setCaretPosition(backupLog.getDocument().getLength());
-        } catch (javax.swing.text.BadLocationException e) {
-            System.out.println("BadLocationException");
+        try
+        {
+            ((HTMLEditorKit)backupLog.getEditorKit())
+                    .insertHTML((HTMLDocument)backupLog.getDocument(),
+                    backupLog.getDocument().getEndPosition().getOffset()-1,
+                    textToAdd,
+                    1, 0, null);
+        } catch ( Exception e ) {
+            System.out.println("Error appending text to console output");
         }
+        backupLog.setCaretPosition(backupLog.getDocument().getLength());
     }
 
     private SwingWorker backupWorker = new SwingWorker<Boolean, Integer>() {
@@ -53,86 +59,16 @@ public class MCServerGUIBackup extends Observable {
                 if (backupfolder.mkdir()) {
                     addTextToBackupLog("Created backup folder " + backupfolder.toString() + nl);
                 } else {
-                    addTextToBackupLog("Failed to create backup folder " + backupfolder.toString() + nl);
+                    addTextToBackupLog("<font color=red>Failed to create backup folder " + backupfolder.toString() + nl);
                     return false;
                 }
                 for (int i = 0 ; i < config.backups.getPathsToBackup().size(); i++) {
-                    File backupfrom = new File(config.backups.getPathsToBackup().get(i));
-                    if (backupfrom.exists()) {
-                        if (backupfrom.canRead()) {
-                            java.util.List<File> backupto = new java.util.ArrayList<File>();
-                            backupto.add(new File(backupfolder.getPath() + 
-                                    config.backups.getPathsToBackup().get(i).replaceFirst(".", "")));
-                            addTextToBackupLog(nl + "Copying \"" + backupfrom.getPath() + "\" to ");
-                            addTextToBackupLog("\"" + backupto.get(0).getParent() + "\"...");
-                            
-                            // The following segment ensures that all the proper parent files exist
-                            int j = 0;
-                            while (!backupto.get(j).getPath().equals(backupfolder.getPath())) {
-                                backupto.add(backupto.get(j).getParentFile());
-                                j++;
-                            }
-                            j = backupto.size() - 1;
-                            while (j != 0) {
-                                backupto.get(j).mkdir();
-                                j--;
-                            }
-
-                            if (backupfrom.isDirectory()) {
-                                if (backupto.get(0).mkdir()) {
-                                    addTextToBackupLog("success!" + nl);
-                                } else {
-                                    addTextToBackupLog("failure! Can not create directory! Skipping..." + nl);
-                                }
-                            } else {
-                                if (backupto.get(0).getParentFile().canWrite()) {
-                                    FileInputStream from = null;
-                                    FileOutputStream to = null;
-                                    try {
-                                        from = new FileInputStream(backupfrom);
-                                        to = new FileOutputStream(backupto.get(0));
-                                        byte[] buffer = new byte[4096];
-                                        int bytesRead;
-
-                                        while ((bytesRead = from.read(buffer)) != -1) {
-                                            to.write(buffer, 0, bytesRead); // write
-                                        }
-                                        addTextToBackupLog("success!" + nl);
-                                    } catch (FileNotFoundException e) {
-                                        addTextToBackupLog("failure! Could not find file! Skipping..." + nl);
-                                    } catch (IOException e) {
-                                        addTextToBackupLog("failure! Error copying file! Skipping..." + nl);
-                                    } finally {
-                                        if (from != null) {
-                                            try {
-                                                from.close();
-                                            } catch (IOException e) {
-                                                addTextToBackupLog("Error closing file stream! Continuing..." + nl);
-                                            }
-                                        }
-                                        if (to != null) {
-                                            try {
-                                                to.close();
-                                            } catch (IOException e) {
-                                                addTextToBackupLog("Error closing file stream! Continuing..." + nl);
-                                            }
-                                        }
-                                    }
-                                } else {
-                                    addTextToBackupLog("failure! Can not write to parent directory!" + nl);
-                                }
-                            }
-                        } else {
-                            addTextToBackupLog("Error copying \"" + backupfrom.getPath() + "\". File is unreadable! Skipping..." + nl);
-                        }
-                    } else {
-                        addTextToBackupLog("Error copying \"" + backupfrom.getPath() + "\". File does not exist! Skipping..." + nl);
-                    }
+                    backup(new File(config.backups.getPathsToBackup().get(i)), backupfolder);
                 }
 
                 // Compression
                 if (config.backups.getZip()) {
-                    addTextToBackupLog(nl + "Zipping backup folder to " + backupfolder.getName() + ".zip...");
+                    addTextToBackupLog(nl + "<br>Zipping backup folder to " + backupfolder.getName() + ".zip...");
                     try {
                         ZipOutputStream zipout = new ZipOutputStream(
                                 new BufferedOutputStream(
@@ -145,14 +81,14 @@ public class MCServerGUIBackup extends Observable {
                             zipout.close();
                             deleteDir(backupfolder);
                         } catch (IOException e) {
-                            addTextToBackupLog(nl + "Successfully created " + backupfolder.getName() + ".zip!" + nl);
+                            addTextToBackupLog(nl + "<font color=green>Successfully created " + backupfolder.getName() + ".zip!" + nl);
                         }
                     } catch (FileNotFoundException e) {
-                        addTextToBackupLog("failure! Could not find file to compress!" + nl);
+                        addTextToBackupLog("<font color=red>failure! Could not find file to compress!" + nl);
                         return true;
                     }
                 } else {
-                    addTextToBackupLog("Backup compression disabled...skipping." + nl);
+                    addTextToBackupLog(nl + "Backup compression disabled...skipping." + nl);
                 }
                 return true;
             } else {
@@ -166,9 +102,9 @@ public class MCServerGUIBackup extends Observable {
             try {
                 backupSuccess = this.get();
                 if (backupSuccess) {
-                    addTextToBackupLog(nl + "Backup operation completed succesfully!");
+                    addTextToBackupLog(nl + "<font color=green>Backup operation completed succesfully!");
                 } else {
-                    addTextToBackupLog(nl + "Backup operation encountered an error.  Aborting.");
+                    addTextToBackupLog(nl + "<font color=red>Backup operation encountered an error.  Aborting.");
                 }
                 setChanged();
                 notifyObservers("finishedBackup");
@@ -221,19 +157,108 @@ public class MCServerGUIBackup extends Observable {
                     }
                     out.closeEntry();
                     in.close();
-                    addTextToBackupLog("success!" + nl);
+                    addTextToBackupLog("<font color=green>success!" + nl);
                 } catch (IOException e) {
-                    addTextToBackupLog("failure! Skipping file." + nl);
+                    addTextToBackupLog("<font color=red>failure! Skipping file." + nl);
                 }
             } catch (FileNotFoundException e) {
-                addTextToBackupLog(nl + "Failed to add " + files[i].getPath() + " to archive. Skipping...");
+                addTextToBackupLog(nl + "<font color=red>Failed to add " + files[i].getPath() + " to archive. Skipping...");
             }
         }
         depth--;
     }
 
+    private void backup(File backupfrom, File backupfolder) {
+        try {
+            if (!backupfrom.getCanonicalPath().equals(backupfolder.getParentFile().getCanonicalPath())) {
+                if (backupfrom.exists()) {
+                    if (backupfrom.canRead()) {
+                        File[] files = backupfrom.listFiles();
+                        if (files == null || files.length == 0) {
+                            java.util.List<File> backupto = new java.util.ArrayList<File>();
+                            backupto.add(new File(backupfolder.getPath() +
+                                    backupfrom.getPath().replaceFirst(".", "")));
+                            addTextToBackupLog(nl + "Backing up \"" + backupfrom.getPath() + "\"...");
+
+                            // The following segment ensures that all the proper parent files exist
+                            int j = 0;
+                            while (!backupto.get(j).getPath().equals(backupfolder.getPath())) {
+                                backupto.add(backupto.get(j).getParentFile());
+                                j++;
+                            }
+                            j = backupto.size() - 1;
+                            while (j != 0) {
+                                backupto.get(j).mkdir();
+                                j--;
+                            }
+
+                            if (backupfrom.isDirectory()) {
+                                if (backupto.get(0).mkdir()) {
+                                    addTextToBackupLog("<font color=green>success!" + nl);
+                                } else {
+                                    addTextToBackupLog("<font color=red>failure! Can not create directory! Skipping..." + nl);
+                                }
+                            } else {
+                                if (backupto.get(0).getParentFile().canWrite()) {
+                                    FileInputStream from = null;
+                                    FileOutputStream to = null;
+                                    try {
+                                        from = new FileInputStream(backupfrom);
+                                        to = new FileOutputStream(backupto.get(0));
+                                        byte[] buffer = new byte[4096];
+                                        int bytesRead;
+
+                                        while ((bytesRead = from.read(buffer)) != -1) {
+                                            to.write(buffer, 0, bytesRead); // write
+                                        }
+                                        addTextToBackupLog("<font color=green>success!" + nl);
+                                    } catch (FileNotFoundException e) {
+                                        addTextToBackupLog("<font color=red>failure! Could not find file! Skipping..." + nl);
+                                    } catch (IOException e) {
+                                        addTextToBackupLog("<font color=red>failure! Error copying file! Skipping..." + nl);
+                                    } finally {
+                                        if (from != null) {
+                                            try {
+                                                from.close();
+                                            } catch (IOException e) {
+                                                addTextToBackupLog("<font color=red>Error closing file stream! Continuing..." + nl);
+                                            }
+                                        }
+                                        if (to != null) {
+                                            try {
+                                                to.close();
+                                            } catch (IOException e) {
+                                                addTextToBackupLog("<font color=red>Error closing file stream! Continuing..." + nl);
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    addTextToBackupLog("<font color=red>failure! Can not write to parent directory!" + nl);
+                                }
+                            }
+                        } else { // Path is directory (AND contains files), recurse through it to backup all files within.
+                            for (int i = 0; i < files.length; i++) {
+                                backup(files[i], backupfolder);
+                            }
+                        }
+                    } else {
+                        addTextToBackupLog("<font color=red>Error copying \"" + backupfrom.getPath() + "\". File is unreadable! Skipping..." + nl);
+                    }
+                } else {
+                    addTextToBackupLog("<font color=red>Error copying \"" + backupfrom.getPath() + "\". File does not exist! Skipping..." + nl);
+                }
+            } else {
+                addTextToBackupLog("<font color=red>You may not backup your backup folder! Skipping..." + nl);
+            }
+        }catch (IOException ioe) {
+            addTextToBackupLog("<font color=red>Error attempting backup!");
+            System.err.println("Cannot retrieve canonical backup path");
+        }
+    }
+
     private String nl;
     private String fs;
+    private String workingDir;
     private int depth;
     private MCServerGUIConfig config;
     private javax.swing.JTextPane backupLog;
