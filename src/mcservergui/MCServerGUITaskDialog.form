@@ -498,6 +498,7 @@
         </Component>
         <Component class="javax.swing.JToggleButton" name="domButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="domButton.font"/>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" resourceKey="domButton.text"/>
             <Property name="toolTipText" type="java.lang.String" resourceKey="domButton.toolTipText"/>
@@ -625,6 +626,7 @@
         </Component>
         <Component class="javax.swing.JToggleButton" name="janButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="janButton.font"/>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" resourceKey="janButton.text"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
@@ -638,6 +640,7 @@
         </Component>
         <Component class="javax.swing.JToggleButton" name="febButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="febButton.font"/>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" resourceKey="febButton.text"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
@@ -651,6 +654,7 @@
         </Component>
         <Component class="javax.swing.JToggleButton" name="marButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="marButton.font"/>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" resourceKey="marButton.text"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
@@ -664,6 +668,7 @@
         </Component>
         <Component class="javax.swing.JToggleButton" name="aprButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="aprButton.font"/>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" resourceKey="aprButton.text"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
@@ -677,6 +682,7 @@
         </Component>
         <Component class="javax.swing.JToggleButton" name="mayButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="mayButton.font"/>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" resourceKey="mayButton.text"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
@@ -690,6 +696,7 @@
         </Component>
         <Component class="javax.swing.JToggleButton" name="junButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="junButton.font"/>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" resourceKey="junButton.text"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
@@ -703,6 +710,7 @@
         </Component>
         <Component class="javax.swing.JToggleButton" name="julButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="julButton.font"/>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" resourceKey="julButton.text"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
@@ -716,6 +724,7 @@
         </Component>
         <Component class="javax.swing.JToggleButton" name="augButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="augButton.font"/>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" resourceKey="augButton.text"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
@@ -729,6 +738,7 @@
         </Component>
         <Component class="javax.swing.JToggleButton" name="sepButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="sepButton.font"/>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" resourceKey="sepButton.text"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
@@ -742,6 +752,7 @@
         </Component>
         <Component class="javax.swing.JToggleButton" name="octButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="octButton.font"/>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" resourceKey="octButton.text"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
@@ -755,6 +766,7 @@
         </Component>
         <Component class="javax.swing.JToggleButton" name="novButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="novButton.font"/>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" resourceKey="novButton.text"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
@@ -768,6 +780,7 @@
         </Component>
         <Component class="javax.swing.JToggleButton" name="decButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="decButton.font"/>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" resourceKey="decButton.text"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
@@ -781,6 +794,7 @@
         </Component>
         <Component class="javax.swing.JToggleButton" name="monthAllButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="monthAllButton.font"/>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" resourceKey="monthAllButton.text"/>
             <Property name="toolTipText" type="java.lang.String" resourceKey="monthAllButton.toolTipText"/>

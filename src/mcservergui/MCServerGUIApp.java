@@ -43,7 +43,8 @@ public class MCServerGUIApp extends SingleFrameApplication implements Applicatio
         gui.initConfig();
         server.addObserver(gui);
         server.addObserver(this);
-        mainWorker = new MCServerGUIMainWorker(gui);
+        mainWorker = new MCServerGUIMainWorker(gui, server);
+        server.addObserver(mainWorker);
         gui.setMainWorker(mainWorker);
         mainWorker.startMainWorker();
     }

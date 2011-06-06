@@ -157,8 +157,20 @@ public class MCServerGUIView extends FrameView implements Observer {
         startstopButton = new javax.swing.JButton();
         saveWorldsButton = new javax.swing.JButton();
         serverInfoPanel = new javax.swing.JPanel();
+        serverCpuUsageLabel = new javax.swing.JLabel();
+        serverCpuUsage = new javax.swing.JLabel();
+        serverMemoryUsageLabel = new javax.swing.JLabel();
+        serverMemoryUsage = new javax.swing.JLabel();
+        receivingBytesLabel = new javax.swing.JLabel();
+        transmittingBytesLabel = new javax.swing.JLabel();
+        receivingBytes = new javax.swing.JLabel();
+        transmittingBytes = new javax.swing.JLabel();
         guiInfoPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        versionLabel = new javax.swing.JLabel();
+        guiCpuUsageLabel = new javax.swing.JLabel();
+        guiCpuUsage = new javax.swing.JLabel();
+        guiMemoryUsageLabel = new javax.swing.JLabel();
+        guiMemoryUsage = new javax.swing.JLabel();
         serverConfigTab = new javax.swing.JPanel();
         serverCmdLinePanel = new javax.swing.JPanel();
         javaExecLabel = new javax.swing.JLabel();
@@ -407,42 +419,129 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addGroup(serverControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(startstopButton)
                     .addComponent(saveWorldsButton))
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         serverInfoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Server Information"));
         serverInfoPanel.setName("serverInfoPanel"); // NOI18N
 
+        serverCpuUsageLabel.setText(resourceMap.getString("serverCpuUsageLabel.text")); // NOI18N
+        serverCpuUsageLabel.setName("serverCpuUsageLabel"); // NOI18N
+
+        serverCpuUsage.setText(resourceMap.getString("serverCpuUsage.text")); // NOI18N
+        serverCpuUsage.setName("serverCpuUsage"); // NOI18N
+
+        serverMemoryUsageLabel.setText(resourceMap.getString("serverMemoryUsageLabel.text")); // NOI18N
+        serverMemoryUsageLabel.setName("serverMemoryUsageLabel"); // NOI18N
+
+        serverMemoryUsage.setText(resourceMap.getString("serverMemoryUsage.text")); // NOI18N
+        serverMemoryUsage.setName("serverMemoryUsage"); // NOI18N
+
+        receivingBytesLabel.setText(resourceMap.getString("receivingBytesLabel.text")); // NOI18N
+        receivingBytesLabel.setName("receivingBytesLabel"); // NOI18N
+
+        transmittingBytesLabel.setText(resourceMap.getString("transmittingBytesLabel.text")); // NOI18N
+        transmittingBytesLabel.setName("transmittingBytesLabel"); // NOI18N
+
+        receivingBytes.setText(resourceMap.getString("receivingBytes.text")); // NOI18N
+        receivingBytes.setName("receivingBytes"); // NOI18N
+
+        transmittingBytes.setText(resourceMap.getString("transmittingBytes.text")); // NOI18N
+        transmittingBytes.setName("transmittingBytes"); // NOI18N
+
         javax.swing.GroupLayout serverInfoPanelLayout = new javax.swing.GroupLayout(serverInfoPanel);
         serverInfoPanel.setLayout(serverInfoPanelLayout);
         serverInfoPanelLayout.setHorizontalGroup(
             serverInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 122, Short.MAX_VALUE)
+            .addGroup(serverInfoPanelLayout.createSequentialGroup()
+                .addGroup(serverInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(serverInfoPanelLayout.createSequentialGroup()
+                        .addComponent(serverCpuUsageLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(serverCpuUsage, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE))
+                    .addGroup(serverInfoPanelLayout.createSequentialGroup()
+                        .addComponent(serverMemoryUsageLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(serverMemoryUsage, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE))
+                    .addGroup(serverInfoPanelLayout.createSequentialGroup()
+                        .addComponent(receivingBytesLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(receivingBytes, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE))
+                    .addGroup(serverInfoPanelLayout.createSequentialGroup()
+                        .addComponent(transmittingBytesLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(transmittingBytes, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         serverInfoPanelLayout.setVerticalGroup(
             serverInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 81, Short.MAX_VALUE)
+            .addGroup(serverInfoPanelLayout.createSequentialGroup()
+                .addGroup(serverInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(serverCpuUsageLabel)
+                    .addComponent(serverCpuUsage))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(serverInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(serverMemoryUsageLabel)
+                    .addComponent(serverMemoryUsage))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(serverInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(receivingBytesLabel)
+                    .addComponent(receivingBytes))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(serverInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(transmittingBytesLabel)
+                    .addComponent(transmittingBytes))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         guiInfoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("GUI Information"));
         guiInfoPanel.setName("guiInfoPanel"); // NOI18N
 
-        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
-        jLabel1.setName("jLabel1"); // NOI18N
+        versionLabel.setText(resourceMap.getString("versionLabel.text")); // NOI18N
+        versionLabel.setName("versionLabel"); // NOI18N
+
+        guiCpuUsageLabel.setText(resourceMap.getString("guiCpuUsageLabel.text")); // NOI18N
+        guiCpuUsageLabel.setName("guiCpuUsageLabel"); // NOI18N
+
+        guiCpuUsage.setText(resourceMap.getString("guiCpuUsage.text")); // NOI18N
+        guiCpuUsage.setName("guiCpuUsage"); // NOI18N
+
+        guiMemoryUsageLabel.setText(resourceMap.getString("guiMemoryUsageLabel.text")); // NOI18N
+        guiMemoryUsageLabel.setName("guiMemoryUsageLabel"); // NOI18N
+
+        guiMemoryUsage.setText(resourceMap.getString("guiMemoryUsage.text")); // NOI18N
+        guiMemoryUsage.setName("guiMemoryUsage"); // NOI18N
 
         javax.swing.GroupLayout guiInfoPanelLayout = new javax.swing.GroupLayout(guiInfoPanel);
         guiInfoPanel.setLayout(guiInfoPanelLayout);
         guiInfoPanelLayout.setHorizontalGroup(
             guiInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(guiInfoPanelLayout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addGroup(guiInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(guiInfoPanelLayout.createSequentialGroup()
+                        .addComponent(guiCpuUsageLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(guiCpuUsage, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE))
+                    .addGroup(guiInfoPanelLayout.createSequentialGroup()
+                        .addComponent(guiMemoryUsageLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(guiMemoryUsage, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
+                    .addComponent(versionLabel))
+                .addContainerGap())
         );
         guiInfoPanelLayout.setVerticalGroup(
             guiInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(guiInfoPanelLayout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addGroup(guiInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(guiCpuUsageLabel)
+                    .addComponent(guiCpuUsage))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(guiInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(guiMemoryUsageLabel)
+                    .addComponent(guiMemoryUsage))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(versionLabel)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout mainWindowTabLayout = new javax.swing.GroupLayout(mainWindowTab);
@@ -473,10 +572,11 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(consoleInputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(serverControlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(serverInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(guiInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(serverControlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(guiInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(serverInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -693,7 +793,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addComponent(serverCmdLinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveServerConfigButton)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("serverConfigTab.TabConstraints.tabTitle"), serverConfigTab); // NOI18N
@@ -774,7 +874,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveGuiConfigButton)
-                .addContainerGap(249, Short.MAX_VALUE))
+                .addContainerGap(253, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("guiConfigTab.TabConstraints.tabTitle"), guiConfigTab); // NOI18N
@@ -938,7 +1038,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                     .addComponent(saveBackupControlButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(backupSettingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
+                .addGap(23, 23, 23))
         );
 
         tabber.addTab(resourceMap.getString("backupTab.TabConstraints.tabTitle"), backupTab); // NOI18N
@@ -962,7 +1062,7 @@ public class MCServerGUIView extends FrameView implements Observer {
             .addGroup(restoreTabLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addContainerGap(326, Short.MAX_VALUE))
+                .addContainerGap(330, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("restoreTab.TabConstraints.tabTitle"), restoreTab); // NOI18N
@@ -991,7 +1091,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         taskSchedulerPanelLayout.setVerticalGroup(
             taskSchedulerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
         );
 
         taskListAddButton.setText(resourceMap.getString("taskListAddButton.text")); // NOI18N
@@ -1054,7 +1154,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabber, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+            .addComponent(tabber)
         );
 
         menuBar.setName("menuBar"); // NOI18N
@@ -1560,10 +1660,13 @@ public class MCServerGUIView extends FrameView implements Observer {
     public javax.swing.JTextField extraArgsField;
     public javax.swing.JLabel extraArgsLabel;
     public javax.swing.JPanel guiConfigTab;
+    public javax.swing.JLabel guiCpuUsage;
+    public javax.swing.JLabel guiCpuUsageLabel;
     public javax.swing.JPanel guiInfoPanel;
+    public javax.swing.JLabel guiMemoryUsage;
+    public javax.swing.JLabel guiMemoryUsageLabel;
     public javax.swing.JTextField inputHistoryMaxSizeField;
     public javax.swing.JLabel inputHistoryMaxSizeLabel;
-    public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel2;
     public javax.swing.JLabel jLabel3;
     public javax.swing.JList jList1;
@@ -1581,6 +1684,8 @@ public class MCServerGUIView extends FrameView implements Observer {
     public javax.swing.JMenuBar menuBar;
     public javax.swing.JPanel playerListPanel;
     private javax.swing.JProgressBar progressBar;
+    public javax.swing.JLabel receivingBytes;
+    public javax.swing.JLabel receivingBytesLabel;
     public javax.swing.JPanel restoreTab;
     public javax.swing.JButton saveBackupControlButton;
     public javax.swing.JButton saveGuiConfigButton;
@@ -1591,10 +1696,14 @@ public class MCServerGUIView extends FrameView implements Observer {
     public javax.swing.JPanel serverCmdLinePanel;
     public javax.swing.JPanel serverConfigTab;
     public javax.swing.JPanel serverControlPanel;
+    public javax.swing.JLabel serverCpuUsage;
+    public javax.swing.JLabel serverCpuUsageLabel;
     public javax.swing.JPanel serverInfoPanel;
     public javax.swing.JButton serverJarBrowseButton;
     public javax.swing.JTextField serverJarField;
     public javax.swing.JLabel serverJarLabel;
+    public javax.swing.JLabel serverMemoryUsage;
+    public javax.swing.JLabel serverMemoryUsageLabel;
     public javax.swing.JButton startstopButton;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
@@ -1606,6 +1715,9 @@ public class MCServerGUIView extends FrameView implements Observer {
     public javax.swing.JButton taskListRemoveButton;
     public javax.swing.JList taskSchedulerList;
     public javax.swing.JPanel taskSchedulerPanel;
+    public javax.swing.JLabel transmittingBytes;
+    public javax.swing.JLabel transmittingBytesLabel;
+    public javax.swing.JLabel versionLabel;
     public javax.swing.JTextField windowTitleField;
     public javax.swing.JLabel windowTitleLabel;
     public javax.swing.JCheckBox xincgcCheckBox;

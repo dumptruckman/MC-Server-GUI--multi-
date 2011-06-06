@@ -41,6 +41,8 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         warningListModel.clear();
         serverWarningList = new java.util.ArrayList<MCServerGUIServerWarning>();
         serverWarningList.clear();
+        boldFont = new java.awt.Font("Tahoma", java.awt.Font.BOLD, 11);
+        normalFont = new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11);
         initComponents();
         fixComponents();
 
@@ -67,6 +69,8 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         warningListModel.clear();
         serverWarningList = new java.util.ArrayList<MCServerGUIServerWarning>();
         serverWarningList.clear();
+        boldFont = new java.awt.Font("Tahoma", java.awt.Font.BOLD, 11);
+        normalFont = new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11);
         initComponents();
         fixComponents();
 
@@ -254,6 +258,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         monthLabel.setText(resourceMap.getString("monthLabel.text")); // NOI18N
         monthLabel.setName("monthLabel"); // NOI18N
 
+        domButton.setFont(resourceMap.getFont("domButton.font")); // NOI18N
         domButton.setSelected(true);
         domButton.setText(resourceMap.getString("domButton.text")); // NOI18N
         domButton.setToolTipText(resourceMap.getString("domButton.toolTipText")); // NOI18N
@@ -351,6 +356,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        janButton.setFont(resourceMap.getFont("janButton.font")); // NOI18N
         janButton.setSelected(true);
         janButton.setText(resourceMap.getString("janButton.text")); // NOI18N
         janButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -361,6 +367,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        febButton.setFont(resourceMap.getFont("febButton.font")); // NOI18N
         febButton.setSelected(true);
         febButton.setText(resourceMap.getString("febButton.text")); // NOI18N
         febButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -371,6 +378,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        marButton.setFont(resourceMap.getFont("marButton.font")); // NOI18N
         marButton.setSelected(true);
         marButton.setText(resourceMap.getString("marButton.text")); // NOI18N
         marButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -381,6 +389,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        aprButton.setFont(resourceMap.getFont("aprButton.font")); // NOI18N
         aprButton.setSelected(true);
         aprButton.setText(resourceMap.getString("aprButton.text")); // NOI18N
         aprButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -391,6 +400,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        mayButton.setFont(resourceMap.getFont("mayButton.font")); // NOI18N
         mayButton.setSelected(true);
         mayButton.setText(resourceMap.getString("mayButton.text")); // NOI18N
         mayButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -401,6 +411,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        junButton.setFont(resourceMap.getFont("junButton.font")); // NOI18N
         junButton.setSelected(true);
         junButton.setText(resourceMap.getString("junButton.text")); // NOI18N
         junButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -411,6 +422,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        julButton.setFont(resourceMap.getFont("julButton.font")); // NOI18N
         julButton.setSelected(true);
         julButton.setText(resourceMap.getString("julButton.text")); // NOI18N
         julButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -421,6 +433,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        augButton.setFont(resourceMap.getFont("augButton.font")); // NOI18N
         augButton.setSelected(true);
         augButton.setText(resourceMap.getString("augButton.text")); // NOI18N
         augButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -431,6 +444,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        sepButton.setFont(resourceMap.getFont("sepButton.font")); // NOI18N
         sepButton.setSelected(true);
         sepButton.setText(resourceMap.getString("sepButton.text")); // NOI18N
         sepButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -441,6 +455,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        octButton.setFont(resourceMap.getFont("octButton.font")); // NOI18N
         octButton.setSelected(true);
         octButton.setText(resourceMap.getString("octButton.text")); // NOI18N
         octButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -451,6 +466,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        novButton.setFont(resourceMap.getFont("novButton.font")); // NOI18N
         novButton.setSelected(true);
         novButton.setText(resourceMap.getString("novButton.text")); // NOI18N
         novButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -461,6 +477,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        decButton.setFont(resourceMap.getFont("decButton.font")); // NOI18N
         decButton.setSelected(true);
         decButton.setText(resourceMap.getString("decButton.text")); // NOI18N
         decButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -471,6 +488,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        monthAllButton.setFont(resourceMap.getFont("monthAllButton.font")); // NOI18N
         monthAllButton.setSelected(true);
         monthAllButton.setText(resourceMap.getString("monthAllButton.text")); // NOI18N
         monthAllButton.setToolTipText(resourceMap.getString("monthAllButton.toolTipText")); // NOI18N
@@ -845,7 +863,6 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void fixComponents() {
-        
     }
 
     private class WarningListCellRenderer extends javax.swing.JTextPane implements javax.swing.ListCellRenderer {
@@ -901,6 +918,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         if (dowAllButton.isSelected()) {
             for (int i = 1; i < 8; i++) {
                 dayOfWeek.get(i).setSelected(true);
+                boldButton(dayOfWeek.get(i));
             }
             //dowAllButton.setText("None");
             domField.setEnabled(false);
@@ -909,12 +927,15 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         } else {
             for (int i = 1; i < 8; i++) {
                 dayOfWeek.get(i).setSelected(false);
+                boldButton(dayOfWeek.get(i));
             }
             //dowAllButton.setText("All");
             domField.setEnabled(true);
             domAllCheckBox.setEnabled(true);
             domButton.setSelected(true);
         }
+        boldButton(dowAllButton);
+        boldButton(domButton);
     }//GEN-LAST:event_dowAllButtonActionPerformed
 
     private void sunButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sunButtonActionPerformed
@@ -949,14 +970,17 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         if (monthAllButton.isSelected()) {
             for (int i = 1; i < 13; i++) {
                 month.get(i).setSelected(true);
+                boldButton(month.get(i));
             }
             //monthAllButton.setText("None");
         } else {
             for (int i = 1; i < 13; i++) {
                 month.get(i).setSelected(false);
+                boldButton(month.get(i));
             }
            //monthAllButton.setText("All");
         }
+        boldButton(monthAllButton);
     }//GEN-LAST:event_monthAllButtonActionPerformed
 
     private void janButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_janButtonActionPerformed
@@ -1011,6 +1035,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         if (domButton.isSelected()) {
             for (int i = 0; i < 8; i++) {
                 dayOfWeek.get(i).setSelected(false);
+                boldButton(dayOfWeek.get(i));
             }
             //dayOfWeek.get(0).setText("All");
             domAllCheckBox.setEnabled(true);
@@ -1018,6 +1043,8 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         } else {
             domButton.setSelected(true);
         }
+        boldButton(domButton);
+        boldButton(dowAllButton);
     }//GEN-LAST:event_domButtonActionPerformed
 
     private void domAllCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_domAllCheckBoxActionPerformed
@@ -1274,6 +1301,14 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         closeTaskDialog();
     }//GEN-LAST:event_createButtonActionPerformed
 
+    private void boldButton(javax.swing.JToggleButton button) {
+        if (button.isSelected()) {
+            button.setFont(boldFont);
+        } else {
+            button.setFont(normalFont);
+        }
+    }
+
     private void parseEditEvent() {
         taskNameField.setText(editEvent.getName());
         if (editEvent.getTask().equals("Start Server")) {
@@ -1399,6 +1434,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             if (buttonList.get(i).isSelected()) {
                 numSelected++;
             }
+            boldButton(buttonList.get(i));
         }
         if (numSelected == buttonList.size() - 1) {
             buttonList.get(0).setSelected(true);
@@ -1416,6 +1452,8 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             domAllCheckBox.setEnabled(true);
             domButton.setSelected(true);
         }
+        boldButton(buttonList.get(0));
+        boldButton(domButton);
     }
 
     private MCServerGUIListModel taskList;
@@ -1430,6 +1468,8 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
     private java.util.List<javax.swing.JToggleButton> month;
     private Scheduler scheduler;
     private String task;
+    private java.awt.Font boldFont;
+    private java.awt.Font normalFont;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton aprButton;

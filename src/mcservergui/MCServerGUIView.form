@@ -12,7 +12,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="tabber" alignment="0" pref="379" max="32767" attributes="0"/>
+              <Component id="tabber" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -73,10 +73,12 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="consoleInputPanel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="serverControlPanel" max="32767" attributes="1"/>
-                              <Component id="serverInfoPanel" alignment="0" max="32767" attributes="1"/>
-                              <Component id="guiInfoPanel" alignment="0" max="32767" attributes="1"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="serverControlPanel" max="32767" attributes="1"/>
+                                  <Component id="guiInfoPanel" alignment="0" max="32767" attributes="1"/>
+                              </Group>
+                              <Component id="serverInfoPanel" max="32767" attributes="1"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -302,7 +304,7 @@
                                   <Component id="startstopButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="saveWorldsButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="58" max="32767" attributes="0"/>
+                              <EmptySpace pref="62" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -347,15 +349,110 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="122" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="serverCpuUsageLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="serverCpuUsage" pref="92" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="serverMemoryUsageLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="serverMemoryUsage" pref="74" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="receivingBytesLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="receivingBytes" pref="66" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="transmittingBytesLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="transmittingBytes" pref="53" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="81" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="serverCpuUsageLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="serverCpuUsage" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="serverMemoryUsageLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="serverMemoryUsage" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="receivingBytesLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="receivingBytes" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="transmittingBytesLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="transmittingBytes" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="11" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                     </DimensionLayout>
                   </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JLabel" name="serverCpuUsageLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="serverCpuUsageLabel.text"/>
+                        <Property name="name" type="java.lang.String" value="serverCpuUsageLabel" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="serverCpuUsage">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="serverCpuUsage.text"/>
+                        <Property name="name" type="java.lang.String" value="serverCpuUsage" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="serverMemoryUsageLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="serverMemoryUsageLabel.text"/>
+                        <Property name="name" type="java.lang.String" value="serverMemoryUsageLabel" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="serverMemoryUsage">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="serverMemoryUsage.text"/>
+                        <Property name="name" type="java.lang.String" value="serverMemoryUsage" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="receivingBytesLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="receivingBytesLabel.text"/>
+                        <Property name="name" type="java.lang.String" value="receivingBytesLabel" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="transmittingBytesLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="transmittingBytesLabel.text"/>
+                        <Property name="name" type="java.lang.String" value="transmittingBytesLabel" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="receivingBytes">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="receivingBytes.text"/>
+                        <Property name="name" type="java.lang.String" value="receivingBytes" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="transmittingBytes">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="transmittingBytes.text"/>
+                        <Property name="name" type="java.lang.String" value="transmittingBytes" noResource="true"/>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="guiInfoPanel">
                   <Properties>
@@ -370,26 +467,72 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="56" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="guiCpuUsageLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="guiCpuUsage" pref="73" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="guiMemoryUsageLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="guiMemoryUsage" pref="55" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="versionLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="67" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="guiCpuUsageLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="guiCpuUsage" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="guiMemoryUsageLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="guiMemoryUsage" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="versionLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="31" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="jLabel1">
+                    <Component class="javax.swing.JLabel" name="versionLabel">
                       <Properties>
-                        <Property name="text" type="java.lang.String" resourceKey="jLabel1.text"/>
-                        <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
+                        <Property name="text" type="java.lang.String" resourceKey="versionLabel.text"/>
+                        <Property name="name" type="java.lang.String" value="versionLabel" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="guiCpuUsageLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="guiCpuUsageLabel.text"/>
+                        <Property name="name" type="java.lang.String" value="guiCpuUsageLabel" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="guiCpuUsage">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="guiCpuUsage.text"/>
+                        <Property name="name" type="java.lang.String" value="guiCpuUsage" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="guiMemoryUsageLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="guiMemoryUsageLabel.text"/>
+                        <Property name="name" type="java.lang.String" value="guiMemoryUsageLabel" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="guiMemoryUsage">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="guiMemoryUsage.text"/>
+                        <Property name="name" type="java.lang.String" value="guiMemoryUsage" noResource="true"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -429,7 +572,7 @@
                           <Component id="serverCmdLinePanel" min="-2" pref="238" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="saveServerConfigButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="84" max="32767" attributes="0"/>
+                          <EmptySpace pref="88" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -722,7 +865,7 @@
                           <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="saveGuiConfigButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="249" max="32767" attributes="0"/>
+                          <EmptySpace pref="253" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -868,7 +1011,7 @@
                           </Group>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="backupSettingsPanel" min="-2" max="-2" attributes="1"/>
-                          <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1114,7 +1257,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="326" max="32767" attributes="0"/>
+                          <EmptySpace pref="330" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1191,7 +1334,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane5" alignment="0" pref="212" max="32767" attributes="0"/>
+                          <Component id="jScrollPane5" alignment="0" pref="216" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>

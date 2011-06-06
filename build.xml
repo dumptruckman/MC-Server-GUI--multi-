@@ -82,6 +82,8 @@
             <zipfileset src="${file.reference.quartz-2.0.1.jar}" includes="**/*.class"/>
             <zipfileset src="${file.reference.slf4j-api-1.6.1.jar}" includes="**/*.class"/>
             <zipfileset src="${file.reference.slf4j-log4j12-1.6.1.jar}" includes="**/*.class"/>
+            <zipfileset src="${file.reference.sigar.jar}" includes="**/*.class"/>
+            <zipfileset dir="${file.reference.lib-sigarnatives}" prefix=""/>
         </jar>
     </target>
 </project>

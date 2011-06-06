@@ -9,6 +9,8 @@ import javax.swing.SwingUtilities;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.List;
+import org.hyperic.sigar.ptql.ProcessFinder;
+import org.hyperic.sigar.Sigar;
 
 /**
  *
@@ -32,11 +34,22 @@ public class MCServerGUIServerModel extends Observable implements Observer, java
         File jar = new File(config.cmdLine.getServerJar());
         try {
             // Run the server
-
+            ProcessFinder pf = new ProcessFinder(new Sigar());
             ProcessBuilder pb = new ProcessBuilder(cmdLine);
             pb.redirectErrorStream(true);
+            long[] pidlistbefore = pf.find("State.Name.sw=java");
             ps = pb.start();
-
+            long[] pidlistafter = pf.find("State.Name.sw=java");
+            if (pidlistafter.length - pidlistbefore.length == 1) {
+                pid = pidlistafter[pidlistafter.length-1];
+                setChanged();
+                notifyObservers("pid");
+            } else {
+                pid = 0;
+                setChanged();
+                notifyObservers("piderror");
+            }
+            
             // Flag this as started
             serverRunning = true;
             setChanged();
@@ -68,9 +81,16 @@ public class MCServerGUIServerModel extends Observable implements Observer, java
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (evt.getNewValue().equals(false)) {
             serverRunning = false;
+            pid = 0;
             setChanged();
             notifyObservers("serverStopped");
+            setChanged();
+            notifyObservers("pid");
         }
+    }
+
+    public long getPid() {
+        return pid;
     }
 
     public String getReceived() {
@@ -105,6 +125,7 @@ public class MCServerGUIServerModel extends Observable implements Observer, java
     }
 
     private Process ps;
+    private long pid;
     private List<String> cmdLine;
     private String receivedFromServer;
     private BufferedReader br;
