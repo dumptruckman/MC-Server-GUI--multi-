@@ -30,6 +30,18 @@ public class MCServerGUIServerWarningDialog extends javax.swing.JDialog {
         initComponents();
     }
 
+    public MCServerGUIServerWarningDialog(java.awt.Frame parent,
+            MCServerGUIListModel warningListModel,
+            java.util.List<MCServerGUIServerWarning> serverWarningList,
+            MCServerGUIServerWarning oldWarning) {
+        super(parent);
+        this.warningListModel = warningListModel;
+        this.serverWarningList = serverWarningList;
+        this.oldWarning = oldWarning;
+        initComponents();
+        addOldWarning();
+    }
+
     @org.jdesktop.application.Action public void closeTaskDialog() {
         dispose();
     }
@@ -162,8 +174,20 @@ public class MCServerGUIServerWarningDialog extends javax.swing.JDialog {
         closeAndAdd();
     }//GEN-LAST:event_messageFieldActionPerformed
 
+    private void addOldWarning() {
+        timeBeforeField.setText(hmsFromSeconds(oldWarning.getTime()));
+        messageField.setText(oldWarning.getMessage());
+    }
+
     private void closeAndAdd() {
         int seconds = secondsFromHms(timeBeforeField.getText());
+
+        if (oldWarning != null) {
+            warningListModel.removeElement("Message: " + oldWarning.getMessage()
+                + "<br><font size=2>Time: "
+                + hoursMinutesSecondsFromSeconds(oldWarning.getTime()));
+            serverWarningList.remove(oldWarning);
+        }
 
         serverWarningList.add(new MCServerGUIServerWarning(
                 messageField.getText(),seconds));
@@ -176,6 +200,7 @@ public class MCServerGUIServerWarningDialog extends javax.swing.JDialog {
 
     private MCServerGUIListModel warningListModel;
     private java.util.List<MCServerGUIServerWarning> serverWarningList;
+    private MCServerGUIServerWarning oldWarning;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JButton cancelButton;

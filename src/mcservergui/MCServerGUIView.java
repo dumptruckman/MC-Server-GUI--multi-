@@ -118,7 +118,7 @@ public class MCServerGUIView extends FrameView implements Observer {
 
         //enableSystemTrayIcon();
 
-        parser = new MCServerGUIConsoleParser(config.display);
+        parser = new MCServerGUIConsoleParser(config.display, this);
     }
 
     @Action
@@ -288,7 +288,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         consoleOutputPanelLayout.setVerticalGroup(
             consoleOutputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
         );
 
         playerListPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("playerListPanel.border.title"))); // NOI18N
@@ -321,7 +321,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         playerListPanelLayout.setVerticalGroup(
             playerListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
         );
 
         consoleInputPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("consoleInputPanel.border.title"))); // NOI18N
@@ -567,8 +567,8 @@ public class MCServerGUIView extends FrameView implements Observer {
             mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainWindowTabLayout.createSequentialGroup()
                 .addGroup(mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(playerListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-                    .addComponent(consoleOutputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
+                    .addComponent(playerListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                    .addComponent(consoleOutputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(consoleInputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -793,7 +793,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addComponent(serverCmdLinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveServerConfigButton)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("serverConfigTab.TabConstraints.tabTitle"), serverConfigTab); // NOI18N
@@ -874,7 +874,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveGuiConfigButton)
-                .addContainerGap(253, Short.MAX_VALUE))
+                .addContainerGap(249, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("guiConfigTab.TabConstraints.tabTitle"), guiConfigTab); // NOI18N
@@ -974,7 +974,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         backupFileChooserPanelLayout.setVerticalGroup(
             backupFileChooserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
         );
 
         backupStatusPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("backupStatusPanel.border.title"))); // NOI18N
@@ -994,7 +994,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         backupStatusPanelLayout.setVerticalGroup(
             backupStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
         );
 
         backupControlRefreshButton.setText(resourceMap.getString("backupControlRefreshButton.text")); // NOI18N
@@ -1062,7 +1062,7 @@ public class MCServerGUIView extends FrameView implements Observer {
             .addGroup(restoreTabLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addContainerGap(330, Short.MAX_VALUE))
+                .addContainerGap(326, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("restoreTab.TabConstraints.tabTitle"), restoreTab); // NOI18N
@@ -1091,7 +1091,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         taskSchedulerPanelLayout.setVerticalGroup(
             taskSchedulerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
         );
 
         taskListAddButton.setText(resourceMap.getString("taskListAddButton.text")); // NOI18N
@@ -1154,7 +1154,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabber)
+            .addComponent(tabber, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
         );
 
         menuBar.setName("menuBar"); // NOI18N
@@ -1915,6 +1915,14 @@ public class MCServerGUIView extends FrameView implements Observer {
         //}
     }
 
+    public void setSaving(boolean b) {
+        saving = b;
+    }
+
+    public boolean isSaving() {
+        return saving;
+    }
+
     /**
      * Determines if keyboard focus should be given to the console input field based on the passed KeyEvent.
      * Basically any alpha-numeric keys will cause focus to be granted.
@@ -2219,6 +2227,7 @@ public class MCServerGUIView extends FrameView implements Observer {
     private MCServerGUIListModel taskList;
     private boolean restarting;
     private MCServerGUIConsoleParser parser;
+    private boolean saving;
 
     //Auto created
     private final Timer messageTimer;

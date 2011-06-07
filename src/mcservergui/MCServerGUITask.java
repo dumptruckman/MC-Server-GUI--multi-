@@ -60,6 +60,10 @@ public class MCServerGUITask implements Job {
         } else if (event.getTask().equals("Backup")) {
             waitWhileRestarting(gui);
             gui.backup();
+        } else if (event.getTask().equals("Save Worlds")) {
+            waitWhileRestarting(gui);
+            waitForBackupFinish(gui);
+            gui.sendInput("save-all");
         }
     }
 

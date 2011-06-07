@@ -176,7 +176,7 @@
                   <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                   <Component id="jSeparator1" min="-2" pref="11" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="startServerRadio" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="sendCommandRadio" min="-2" max="-2" attributes="0"/>
@@ -184,14 +184,12 @@
                           <Component id="sendCommandField" pref="187" max="32767" attributes="0"/>
                       </Group>
                       <Component id="stopServerRadio" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="backupRadio" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                           <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="197" max="32767" attributes="0"/>
                           <Component id="createButton" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane1" alignment="1" pref="292" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="restartServerRadio" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -199,13 +197,18 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="remainDownField" pref="88" max="32767" attributes="0"/>
                       </Group>
+                      <Component id="jScrollPane1" alignment="1" pref="292" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="serverWarningLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="warningAddButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="warningEditButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="79" max="32767" attributes="0"/>
                           <Component id="warningRemoveButton" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="saveWorldsRadio" min="-2" max="-2" attributes="0"/>
+                      <Component id="backupRadio" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -283,14 +286,14 @@
                               <Component id="novButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="decButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="7" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="domButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="domField" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="domAllCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Component id="jSeparator1" alignment="0" pref="304" max="32767" attributes="0"/>
+                      <Component id="jSeparator1" alignment="0" pref="305" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="startServerRadio" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -302,21 +305,24 @@
                           <Component id="stopServerRadio" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="restartServerRadio" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="remainDownLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="remainDownField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="restartServerRadio" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
+                          <Component id="saveWorldsRadio" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="backupRadio" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace pref="24" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="serverWarningLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="warningAddButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="warningRemoveButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="warningEditButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jScrollPane1" min="-2" pref="83" max="-2" attributes="0"/>
-                          <EmptySpace pref="34" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="createButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -981,6 +987,31 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="warningRemoveButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="saveWorldsRadio">
+          <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="serverTaskGroup"/>
+            </Property>
+            <Property name="text" type="java.lang.String" resourceKey="saveWorldsRadio.text"/>
+            <Property name="name" type="java.lang.String" value="saveWorldsRadio" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveWorldsRadioActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="warningEditButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="warningEditButton.text"/>
+            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 5, 2, 5]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="warningEditButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="warningEditButtonActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

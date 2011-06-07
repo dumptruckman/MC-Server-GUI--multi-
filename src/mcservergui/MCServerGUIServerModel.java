@@ -37,17 +37,24 @@ public class MCServerGUIServerModel extends Observable implements Observer, java
             ProcessFinder pf = new ProcessFinder(new Sigar());
             ProcessBuilder pb = new ProcessBuilder(cmdLine);
             pb.redirectErrorStream(true);
-            long[] pidlistbefore = pf.find("State.Name.sw=java");
-            ps = pb.start();
-            long[] pidlistafter = pf.find("State.Name.sw=java");
-            if (pidlistafter.length - pidlistbefore.length == 1) {
-                pid = pidlistafter[pidlistafter.length-1];
-                setChanged();
-                notifyObservers("pid");
-            } else {
-                pid = 0;
-                setChanged();
-                notifyObservers("piderror");
+            ps = null;
+            try {
+                long[] pidlistbefore = pf.find("State.Name.sw=java");
+                ps = pb.start();
+                long[] pidlistafter = pf.find("State.Name.sw=java");
+                if (pidlistafter.length - pidlistbefore.length == 1) {
+                    pid = pidlistafter[pidlistafter.length-1];
+                    setChanged();
+                    notifyObservers("pid");
+                } else {
+                    pid = 0;
+                    setChanged();
+                    notifyObservers("piderror");
+                }
+            } catch (UnsatisfiedLinkError ule) { 
+                if (ps == null) {
+                    ps = pb.start();
+                }
             }
             
             // Flag this as started

@@ -1,7 +1,7 @@
 Add tasks for scheduler:
   Launch with custom run line or change server properties
 Add scheduler pause button
-Add save-all task
+Add simple task option
 Minimize to tray?
 Allow for 12-hour hour format, like 3pm
 Add indicator show when/what next event will be

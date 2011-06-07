@@ -81,4 +81,36 @@ public class MCServerGUITime {
         }
         return (hours * 3600) + (minutes * 60) + seconds;
     }
+
+    public static int secondsFromHoursMinutesSeconds(String hms) {
+        int seconds = 0, minutes = 0, hours = 0;
+        if (hms.contains("hours")) {
+            hours = Integer.parseInt(hms.split("hours")[0].replaceAll(" ", ""));
+            if (hms.contains("minutes") || hms.contains("seconds") || hms.contains("minute") || hms.contains("second")) {
+                hms = hms.split("hours")[1];
+            }
+        } else if (hms.contains("hour")) {
+            hours = Integer.parseInt(hms.split("hour")[0].replaceAll(" ", ""));
+            if (hms.contains("minutes") || hms.contains("seconds") || hms.contains("minute") || hms.contains("second")) {
+                hms = hms.split("hour")[1];
+            }
+        }
+        if (hms.contains("minutes")) {
+            minutes = Integer.parseInt(hms.split("minutes")[0].replaceAll(" ", ""));
+            if (hms.contains("seconds") || hms.contains("second")) {
+                hms = hms.split("minutes")[1];
+            }
+        } else if (hms.contains("minute")) {
+            minutes = Integer.parseInt(hms.split("minute")[0].replaceAll(" ", ""));
+            if (hms.contains("seconds") || hms.contains("second")) {
+                hms = hms.split("minute")[1];
+            }
+        }
+        if (hms.contains("seconds")) {
+            seconds = Integer.parseInt(hms.split("seconds")[0].replaceAll(" ", ""));
+        } else if (hms.contains("second")) {
+            seconds = Integer.parseInt(hms.split("second")[0].replaceAll(" ", ""));
+        }
+        return (hours * 3600) + (minutes * 60) + seconds;
+    }
 }

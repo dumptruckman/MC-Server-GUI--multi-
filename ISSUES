@@ -1,6 +1,0 @@
-Long wait time for the console output to start showing anything in some cases. (possibly fixed in .3.2)
-Custom launch line may not be saving to the config properly. (fixed in .3.2)
-Selecting folders to backup with lots of files in them freezes up the gui while it picks up all the file names. (fixed in .3.2)
-Start/stop button sometimes becomes unavailable?
-All/None buttons a bit too confusing in the scheduler. (maybe less confusing in .3.2?)
-Files that were slated to be backed up but are removed/renamed remain in the config. (fixed in .3.2)

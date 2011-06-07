@@ -1,8 +1,16 @@
 Installation
-    1. Unzip mcservergui.jar into your Minecraft Server directory.
-    2. Double click mcservergui.jar or run from a command line with "java -jar mcservergui.jar".
+    1. Unzip mcservergui.jar, nativelibs (and if running Windows, guilauncher.bat) into your Minecraft Server directory.
+    2. Window users may launch the GUI using guilauncher.bat.  Other users must run from a command line with "java -Djava.library.path=./nativelibs -jar mcservergui.jar".
+        (Please note, if you do not launch with the VM option of -Djava.library.path=./nativelibs then the cpu/memory/network features will not function)
     3. Go to the Server Config tab and make sure the settings are how you would like them.
 
 Backups
     Just select the files and folders you want to backup and if you want to zip it all and then press backup!
     This can be done while the server is running as well!
+
+Scheduler
+    The scheduler uses Cron based scheduling.  It doesn't offer all of the features of Cron simply because I believe that to be too many options.
+    The main thing to understand is that the seconds, minutes, hours boxes all refer to a specific time.  What comes up by default (0, 0, 0) indicates 12:00:00AM.
+    Also, the default settings include every month and every day of each month, thus, the default settings will create an event that occurs at 12:00:00AM every day.
+    A simple example of a repeating event would be to leave everything at default and check the "again every" box next to hours and enter 3 in the box next to that.  This will create an event that occurs at 12am, 3am, 6am, 9am, 12pm, 3pm, 6pm, 9pm every day.
+    It is possible to create very advanced event timings using this scheduler.  For instance, you can make events happen only on thursdays, at 3:30:05, 3:30:10, 3:30:15AM.

@@ -153,6 +153,8 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         warningList = new javax.swing.JList();
         warningAddButton = new javax.swing.JButton();
         warningRemoveButton = new javax.swing.JButton();
+        saveWorldsRadio = new javax.swing.JRadioButton();
+        warningEditButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("Form"); // NOI18N
@@ -619,6 +621,25 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             }
         });
 
+        serverTaskGroup.add(saveWorldsRadio);
+        saveWorldsRadio.setText(resourceMap.getString("saveWorldsRadio.text")); // NOI18N
+        saveWorldsRadio.setName("saveWorldsRadio"); // NOI18N
+        saveWorldsRadio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveWorldsRadioActionPerformed(evt);
+            }
+        });
+
+        warningEditButton.setText(resourceMap.getString("warningEditButton.text")); // NOI18N
+        warningEditButton.setEnabled(false);
+        warningEditButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        warningEditButton.setName("warningEditButton"); // NOI18N
+        warningEditButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                warningEditButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -722,32 +743,35 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
                 .addGap(3, 3, 3)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(startServerRadio, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(startServerRadio)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(sendCommandRadio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(sendCommandField, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE))
-                    .addComponent(stopServerRadio, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(backupRadio, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addComponent(stopServerRadio)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(cancelButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
                         .addComponent(createButton))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(restartServerRadio)
                         .addGap(18, 18, 18)
                         .addComponent(remainDownLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(remainDownField, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(serverWarningLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(warningAddButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(warningRemoveButton)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(warningEditButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                        .addComponent(warningRemoveButton))
+                    .addComponent(saveWorldsRadio)
+                    .addComponent(backupRadio))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -813,12 +837,12 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
                             .addComponent(octButton)
                             .addComponent(novButton)
                             .addComponent(decButton))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(domButton)
                             .addComponent(domField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(domAllCheckBox)))
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(startServerRadio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -829,19 +853,22 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
                         .addComponent(stopServerRadio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(restartServerRadio)
                             .addComponent(remainDownLabel)
-                            .addComponent(remainDownField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(remainDownField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(restartServerRadio))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(saveWorldsRadio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(backupRadio)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(serverWarningLabel)
                             .addComponent(warningAddButton)
-                            .addComponent(warningRemoveButton))
+                            .addComponent(warningRemoveButton)
+                            .addComponent(warningEditButton))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(createButton)
                             .addComponent(cancelButton))))
@@ -1081,7 +1108,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         remainDownField.setEnabled(false);
         warningList.setEnabled(false);
         warningAddButton.setEnabled(false);
-        //warningEditButton.setEnabled(false);
+        warningEditButton.setEnabled(false);
         warningRemoveButton.setEnabled(false);
         task = "Start Server";
     }//GEN-LAST:event_startServerRadioActionPerformed
@@ -1093,7 +1120,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         remainDownField.setEnabled(false);
         warningList.setEnabled(true);
         warningAddButton.setEnabled(true);
-        //warningEditButton.setEnabled(true);
+        warningEditButton.setEnabled(true);
         warningRemoveButton.setEnabled(true);
         task = "Send Command";
     }//GEN-LAST:event_sendCommandRadioActionPerformed
@@ -1105,7 +1132,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         remainDownField.setEnabled(false);
         warningList.setEnabled(true);
         warningAddButton.setEnabled(true);
-        //warningEditButton.setEnabled(true);
+        warningEditButton.setEnabled(true);
         warningRemoveButton.setEnabled(true);
         task = "Stop Server";
     }//GEN-LAST:event_stopServerRadioActionPerformed
@@ -1117,7 +1144,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         remainDownField.setEnabled(true);
         warningList.setEnabled(true);
         warningAddButton.setEnabled(true);
-        //warningEditButton.setEnabled(true);
+        warningEditButton.setEnabled(true);
         warningRemoveButton.setEnabled(true);
         task = "Restart Server";
     }//GEN-LAST:event_restartServerRadioActionPerformed
@@ -1129,7 +1156,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         remainDownField.setEnabled(false);
         warningList.setEnabled(true);
         warningAddButton.setEnabled(true);
-        //warningEditButton.setEnabled(true);
+        warningEditButton.setEnabled(true);
         warningRemoveButton.setEnabled(true);
         task = "Backup";
     }//GEN-LAST:event_backupRadioActionPerformed
@@ -1145,14 +1172,17 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
     private void warningRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_warningRemoveButtonActionPerformed
         try {
             int index = warningList.getSelectedIndex();
-            Object element = warningListModel.getElementAt(index);
-            if (javax.swing.JOptionPane.showConfirmDialog(this,
-                    "Are you sure you wish to remove this warning?\n",
-                    "Remove warning message",
-                    javax.swing.JOptionPane.YES_NO_OPTION) ==
-                    javax.swing.JOptionPane.YES_OPTION) {
-                warningListModel.removeElement(element);
-                serverWarningList.remove(warningList.getSelectedIndex());
+            MCServerGUIServerWarning warning = getWarningFromListIndex(index);
+            if (warning != null) {
+                Object element = warningListModel.getElementAt(index);
+                if (javax.swing.JOptionPane.showConfirmDialog(this,
+                        "Are you sure you wish to remove this warning?\n",
+                        "Remove warning message",
+                        javax.swing.JOptionPane.YES_NO_OPTION) ==
+                        javax.swing.JOptionPane.YES_OPTION) {
+                    warningListModel.removeElement(element);
+                    serverWarningList.remove(warning);
+                }
             }
         } catch (ArrayIndexOutOfBoundsException e) {}
     }//GEN-LAST:event_warningRemoveButtonActionPerformed
@@ -1301,12 +1331,54 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
         closeTaskDialog();
     }//GEN-LAST:event_createButtonActionPerformed
 
+    private void saveWorldsRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveWorldsRadioActionPerformed
+        createButton.setEnabled(true);
+        sendCommandField.setEnabled(false);
+        remainDownLabel.setEnabled(false);
+        remainDownField.setEnabled(false);
+        warningList.setEnabled(true);
+        warningAddButton.setEnabled(true);
+        warningEditButton.setEnabled(true);
+        warningRemoveButton.setEnabled(true);
+        task = "Save Worlds";
+    }//GEN-LAST:event_saveWorldsRadioActionPerformed
+
+    private void warningEditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_warningEditButtonActionPerformed
+        try {
+            int index = warningList.getSelectedIndex();
+            MCServerGUIServerWarning warning = getWarningFromListIndex(index);
+            if (warning != null) {
+                javax.swing.JFrame mainFrame = MCServerGUIApp.getApplication().getMainFrame();
+                warningDialog = new MCServerGUIServerWarningDialog(
+                        mainFrame, warningListModel, serverWarningList,
+                        warning);
+                warningDialog.setLocationRelativeTo(mainFrame);
+                MCServerGUIApp.getApplication().show(warningDialog);
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {}
+    }//GEN-LAST:event_warningEditButtonActionPerformed
+
     private void boldButton(javax.swing.JToggleButton button) {
         if (button.isSelected()) {
             button.setFont(boldFont);
         } else {
             button.setFont(normalFont);
         }
+    }
+
+    private MCServerGUIServerWarning getWarningFromListIndex(int index) {
+        String[] warningcontents = warningListModel.getElementAt(index).toString().split("<br><font size=2>Time: ");
+        String warningmessage = warningcontents[0];
+        warningmessage = warningmessage.replaceFirst("Message: ", "");
+        String warningtime = warningcontents[1];
+        int warningtimeseconds = secondsFromHoursMinutesSeconds(warningtime);
+        for (int i = 0; i < serverWarningList.size(); i++) {
+            if (serverWarningList.get(i).getMessage().equals(warningmessage)
+                    && serverWarningList.get(i).getTime() == warningtimeseconds) {
+                return serverWarningList.get(i);
+            }
+        }
+        return null;
     }
 
     private void parseEditEvent() {
@@ -1318,7 +1390,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             sendCommandField.setEnabled(true);
             warningList.setEnabled(true);
             warningAddButton.setEnabled(true);
-            //warningEditButton.setEnabled(true);
+            warningEditButton.setEnabled(true);
             warningRemoveButton.setEnabled(true);
             task = "Send Command";
             sendCommandRadio.setSelected(true);
@@ -1327,14 +1399,14 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             stopServerRadio.setSelected(true);
             warningList.setEnabled(true);
             warningAddButton.setEnabled(true);
-            //warningEditButton.setEnabled(true);
+            warningEditButton.setEnabled(true);
             warningRemoveButton.setEnabled(true);
             task = "Stop Server";
         } else if (editEvent.getTask().equals("Restart Server")) {
             restartServerRadio.setSelected(true);
             warningList.setEnabled(true);
             warningAddButton.setEnabled(true);
-            //warningEditButton.setEnabled(true);
+            warningEditButton.setEnabled(true);
             warningRemoveButton.setEnabled(true);
             remainDownField.setEnabled(true);
             remainDownLabel.setEnabled(true);
@@ -1345,7 +1417,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
             backupRadio.setSelected(true);
             warningList.setEnabled(true);
             warningAddButton.setEnabled(true);
-            //warningEditButton.setEnabled(true);
+            warningEditButton.setEnabled(true);
             warningRemoveButton.setEnabled(true);
             task = "Backup";
         }
@@ -1512,6 +1584,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
     private javax.swing.JLabel remainDownLabel;
     private javax.swing.JRadioButton restartServerRadio;
     private javax.swing.JToggleButton satButton;
+    private javax.swing.JRadioButton saveWorldsRadio;
     private javax.swing.JLabel scheduleLabel;
     private javax.swing.JCheckBox secondsAgainCheckBox;
     private javax.swing.JTextField secondsAgainField;
@@ -1530,6 +1603,7 @@ public class MCServerGUITaskDialog extends javax.swing.JDialog {
     private javax.swing.JToggleButton thuButton;
     private javax.swing.JToggleButton tueButton;
     private javax.swing.JButton warningAddButton;
+    private javax.swing.JButton warningEditButton;
     private javax.swing.JList warningList;
     private javax.swing.JButton warningRemoveButton;
     private javax.swing.JToggleButton wedButton;

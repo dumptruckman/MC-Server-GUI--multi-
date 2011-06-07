@@ -71,6 +71,11 @@
     nbproject/build-impl.xml file. 
 
     -->
+    <target name="-post-compile">
+        <copy todir="${dist.dir}/nativelibs">
+            <fileset dir="jni" />
+        </copy>
+    </target>
     <target name="-post-jar">
         <jar jarfile="${dist.jar}" update="true">
             <zipfileset src="${dist.jar}" includes="**/*.class" />
@@ -83,7 +88,6 @@
             <zipfileset src="${file.reference.slf4j-api-1.6.1.jar}" includes="**/*.class"/>
             <zipfileset src="${file.reference.slf4j-log4j12-1.6.1.jar}" includes="**/*.class"/>
             <zipfileset src="${file.reference.sigar.jar}" includes="**/*.class"/>
-            <zipfileset dir="${file.reference.lib-sigarnatives}" prefix=""/>
         </jar>
     </target>
 </project>

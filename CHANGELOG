@@ -1,7 +1,10 @@
-Version .3.3
-  Toggle buttons now have bolded text when selected just in case the coloring doesn't show up.
+Version .4.0
   Added CPU/Memory Usage displays for the GUI and Server.
   Added Network Usage statistics.
+  Added Save Worlds task
+  Toggle buttons now have bolded text when selected just in case the coloring doesn't show up.
+  Added task warning message edit button.
+  Fixed potential issue with removing warning messages.
 
 Version .3.2
   Changed window icon.

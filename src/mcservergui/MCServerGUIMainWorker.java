@@ -30,7 +30,9 @@ public class MCServerGUIMainWorker implements java.util.Observer {
                 rxBytes += sigarImpl.getNetInterfaceStat(sigarImpl.getNetInterfaceList()[i]).getRxBytes();
                 txBytes += sigarImpl.getNetInterfaceStat(sigarImpl.getNetInterfaceList()[i]).getTxBytes();
             }
-        } catch (SigarException e) {}
+        } catch (SigarException e) {
+        } catch (UnsatisfiedLinkError ule) { }
+
     }
 
     @Override public void update(java.util.Observable o, Object arg) {
@@ -54,7 +56,8 @@ public class MCServerGUIMainWorker implements java.util.Observer {
                         .length));
             } catch (SigarException e) {
                 gui.guiCpuUsage.setText("Error");
-            }
+            } catch (UnsatisfiedLinkError ule) { }
+
             try {
                 if (serverPid > 0) {
                     gui.serverCpuUsage.setText(CpuPerc.format(sigarImpl.getProcCpu(
@@ -66,14 +69,14 @@ public class MCServerGUIMainWorker implements java.util.Observer {
                 }
             } catch (SigarException e) {
                 gui.serverCpuUsage.setText("Error");
-            }
+            } catch (UnsatisfiedLinkError ule) { }
             try {
                 gui.guiMemoryUsage.setText(new java.text.DecimalFormat("##,###.##").format(
                         (double)(sigarImpl.getProcMem(sigarImpl.getPid()).getResident())/1024/1000)
                         + " M");
             } catch (SigarException e) {
                 gui.guiMemoryUsage.setText("Error");
-            }
+            } catch (UnsatisfiedLinkError ule) { }
             try {
                 if (serverPid > 0) {
                     gui.serverMemoryUsage.setText(new java.text.DecimalFormat("##,###.##").format(
@@ -88,7 +91,7 @@ public class MCServerGUIMainWorker implements java.util.Observer {
                 }
             } catch (SigarException e) {
                 gui.serverMemoryUsage.setText("Error");
-            }
+            } catch (UnsatisfiedLinkError ule) { }
             try {
                 long rxbytes = 0, txbytes = 0;
                 for (int i = 0; i < sigarImpl.getNetInterfaceList().length; i++) {
@@ -115,7 +118,7 @@ public class MCServerGUIMainWorker implements java.util.Observer {
                 }
             } catch (SigarException e) {
                 System.out.println("Error");
-            }
+            } catch (UnsatisfiedLinkError ule) { }
         }
     }
 
