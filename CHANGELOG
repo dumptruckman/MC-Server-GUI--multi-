@@ -1,3 +1,7 @@
+Version .4.2
+  Turning off network statistics monitoring will now replace the displayed data with a question mark.
+  Console output text scrolls more often now(again?) (assuming nothing is preventing scrolling such as select text in the output)
+
 Version .4.1
   Added a checkbox to enable/disable the network statistics feature as it is quite cpu intensive.
 

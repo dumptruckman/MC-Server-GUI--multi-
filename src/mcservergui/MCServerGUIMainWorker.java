@@ -120,6 +120,9 @@ public class MCServerGUIMainWorker implements java.util.Observer {
                 } catch (SigarException e) {
                     System.out.println("Error");
                 } catch (UnsatisfiedLinkError ule) { }
+            } else {
+                gui.receivingBytes.setText("?");
+                gui.transmittingBytes.setText("?");
             }
         }
     }

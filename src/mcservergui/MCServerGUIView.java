@@ -2129,8 +2129,9 @@ public class MCServerGUIView extends FrameView implements Observer {
                     parser.parseText(textToAdd),
                     1, 0, null);
         } catch ( Exception e ) {
-            System.out.println("Error appending text to console output");
+            System.err.println("Error appending text to console output");
         }
+        scrollText();
     }
 
     /**
