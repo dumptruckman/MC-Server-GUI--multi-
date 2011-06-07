@@ -171,6 +171,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         guiCpuUsage = new javax.swing.JLabel();
         guiMemoryUsageLabel = new javax.swing.JLabel();
         guiMemoryUsage = new javax.swing.JLabel();
+        useNetStat = new javax.swing.JCheckBox();
         serverConfigTab = new javax.swing.JPanel();
         serverCmdLinePanel = new javax.swing.JPanel();
         javaExecLabel = new javax.swing.JLabel();
@@ -419,7 +420,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addGroup(serverControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(startstopButton)
                     .addComponent(saveWorldsButton))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         serverInfoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Server Information"));
@@ -491,7 +492,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addGroup(serverInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(transmittingBytesLabel)
                     .addComponent(transmittingBytes))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         guiInfoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("GUI Information"));
@@ -512,6 +513,10 @@ public class MCServerGUIView extends FrameView implements Observer {
         guiMemoryUsage.setText(resourceMap.getString("guiMemoryUsage.text")); // NOI18N
         guiMemoryUsage.setName("guiMemoryUsage"); // NOI18N
 
+        useNetStat.setText(resourceMap.getString("useNetStat.text")); // NOI18N
+        useNetStat.setToolTipText(resourceMap.getString("useNetStat.toolTipText")); // NOI18N
+        useNetStat.setName("useNetStat"); // NOI18N
+
         javax.swing.GroupLayout guiInfoPanelLayout = new javax.swing.GroupLayout(guiInfoPanel);
         guiInfoPanel.setLayout(guiInfoPanelLayout);
         guiInfoPanelLayout.setHorizontalGroup(
@@ -526,7 +531,8 @@ public class MCServerGUIView extends FrameView implements Observer {
                         .addComponent(guiMemoryUsageLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(guiMemoryUsage, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
-                    .addComponent(versionLabel))
+                    .addComponent(versionLabel)
+                    .addComponent(useNetStat))
                 .addContainerGap())
         );
         guiInfoPanelLayout.setVerticalGroup(
@@ -541,7 +547,9 @@ public class MCServerGUIView extends FrameView implements Observer {
                     .addComponent(guiMemoryUsage))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(versionLabel)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(useNetStat)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout mainWindowTabLayout = new javax.swing.GroupLayout(mainWindowTab);
@@ -793,7 +801,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addComponent(serverCmdLinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveServerConfigButton)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("serverConfigTab.TabConstraints.tabTitle"), serverConfigTab); // NOI18N
@@ -874,7 +882,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveGuiConfigButton)
-                .addContainerGap(249, Short.MAX_VALUE))
+                .addContainerGap(250, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("guiConfigTab.TabConstraints.tabTitle"), guiConfigTab); // NOI18N
@@ -1038,7 +1046,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                     .addComponent(saveBackupControlButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(backupSettingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addGap(24, 24, 24))
         );
 
         tabber.addTab(resourceMap.getString("backupTab.TabConstraints.tabTitle"), backupTab); // NOI18N
@@ -1062,7 +1070,7 @@ public class MCServerGUIView extends FrameView implements Observer {
             .addGroup(restoreTabLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addContainerGap(326, Short.MAX_VALUE))
+                .addContainerGap(327, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("restoreTab.TabConstraints.tabTitle"), restoreTab); // NOI18N
@@ -1091,7 +1099,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         taskSchedulerPanelLayout.setVerticalGroup(
             taskSchedulerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
         );
 
         taskListAddButton.setText(resourceMap.getString("taskListAddButton.text")); // NOI18N
@@ -1154,7 +1162,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabber, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+            .addComponent(tabber)
         );
 
         menuBar.setName("menuBar"); // NOI18N
@@ -1717,6 +1725,7 @@ public class MCServerGUIView extends FrameView implements Observer {
     public javax.swing.JPanel taskSchedulerPanel;
     public javax.swing.JLabel transmittingBytes;
     public javax.swing.JLabel transmittingBytesLabel;
+    public javax.swing.JCheckBox useNetStat;
     public javax.swing.JLabel versionLabel;
     public javax.swing.JTextField windowTitleField;
     public javax.swing.JLabel windowTitleLabel;

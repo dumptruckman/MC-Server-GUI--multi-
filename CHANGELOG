@@ -1,3 +1,6 @@
+Version .4.1
+  Added a checkbox to enable/disable the network statistics feature as it is quite cpu intensive.
+
 Version .4.0
   Added CPU/Memory Usage displays for the GUI and Server.
   Added Network Usage statistics.

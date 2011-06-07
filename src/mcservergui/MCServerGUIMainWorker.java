@@ -92,33 +92,35 @@ public class MCServerGUIMainWorker implements java.util.Observer {
             } catch (SigarException e) {
                 gui.serverMemoryUsage.setText("Error");
             } catch (UnsatisfiedLinkError ule) { }
-            try {
-                long rxbytes = 0, txbytes = 0;
-                for (int i = 0; i < sigarImpl.getNetInterfaceList().length; i++) {
-                    rxbytes += sigarImpl.getNetInterfaceStat(sigarImpl.getNetInterfaceList()[i]).getRxBytes();
-                    txbytes += sigarImpl.getNetInterfaceStat(sigarImpl.getNetInterfaceList()[i]).getTxBytes();
-                }
-                long rxpersec = rxbytes - rxBytes;
-                long txpersec = txbytes - txBytes;
-                rxBytes = rxbytes;
-                txBytes = txbytes;
-                if (rxpersec < 1024) {
-                    gui.receivingBytes.setText(rxpersec + " B/s");
-                } else if ((rxpersec >= 1024) && (rxpersec < 1048576)) {
-                    gui.receivingBytes.setText((rxpersec / 1024) + " KB/s");
-                } else if (rxpersec >= 1048576) {
-                    gui.receivingBytes.setText((rxpersec / 1048576) + " MB/s");
-                }
-                if (txpersec < 1024) {
-                    gui.transmittingBytes.setText(txpersec + " B/s");
-                } else if ((txpersec >= 1024) && (txpersec < 1048576)) {
-                    gui.transmittingBytes.setText((txpersec / 1024) + " KB/s");
-                } else if (txpersec >= 1048576) {
-                    gui.transmittingBytes.setText((txpersec / 1048576) + " MB/s");
-                }
-            } catch (SigarException e) {
-                System.out.println("Error");
-            } catch (UnsatisfiedLinkError ule) { }
+            if (gui.useNetStat.isSelected()) {
+                try {
+                    long rxbytes = 0, txbytes = 0;
+                    for (int i = 0; i < sigarImpl.getNetInterfaceList().length; i++) {
+                        rxbytes += sigarImpl.getNetInterfaceStat(sigarImpl.getNetInterfaceList()[i]).getRxBytes();
+                        txbytes += sigarImpl.getNetInterfaceStat(sigarImpl.getNetInterfaceList()[i]).getTxBytes();
+                    }
+                    int rxpersec = (int)(rxbytes - rxBytes);
+                    int txpersec = (int)(txbytes - txBytes);
+                    rxBytes = rxbytes;
+                    txBytes = txbytes;
+                    if (rxpersec < 1024) {
+                        gui.receivingBytes.setText(rxpersec + " B/s");
+                    } else if ((rxpersec >= 1024) && (rxpersec < 1048576)) {
+                        gui.receivingBytes.setText((rxpersec / 1024) + " KB/s");
+                    } else if (rxpersec >= 1048576) {
+                        gui.receivingBytes.setText((rxpersec / 1048576) + " MB/s");
+                    }
+                    if (txpersec < 1024) {
+                        gui.transmittingBytes.setText(txpersec + " B/s");
+                    } else if ((txpersec >= 1024) && (txpersec < 1048576)) {
+                        gui.transmittingBytes.setText((txpersec / 1024) + " KB/s");
+                    } else if (txpersec >= 1048576) {
+                        gui.transmittingBytes.setText((txpersec / 1048576) + " MB/s");
+                    }
+                } catch (SigarException e) {
+                    System.out.println("Error");
+                } catch (UnsatisfiedLinkError ule) { }
+            }
         }
     }
 
