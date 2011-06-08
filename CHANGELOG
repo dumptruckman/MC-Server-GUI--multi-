@@ -1,3 +1,8 @@
+Version .5.0
+  Added colorization options for the console output.
+  You may now set text color, background color, and specific colors for the INFO, WARNING, and SEVERE tags.
+  You can additionally change the text size.
+
 Version .4.2
   Turning off network statistics monitoring will now replace the displayed data with a question mark.
   Console output text scrolls more often now(again?) (assuming nothing is preventing scrolling such as select text in the output)

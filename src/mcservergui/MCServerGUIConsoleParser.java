@@ -25,6 +25,12 @@ public class MCServerGUIConsoleParser {
         }*/
         text = text.replaceAll("<", "&lt;");
         text = text.replaceAll(">", "&gt;");
+        text = text.replaceAll(System.getProperty("line.separator"), "<br>");
+        text = text.replaceFirst("INFO", "<font color = " + display.getInfoColor() + ">INFO</font>");
+        text = text.replaceFirst("WARNING", "<font color = " + display.getWarningColor() + ">WARNING</font>");
+        text = text.replaceFirst("SEVERE", "<font color = " + display.getSevereColor() + ">SEVERE</font>");
+        text = "<font color = \"" + display.getTextColor() + "\" size = "
+                + display.getTextSize() + ">" + text + "</font>";
 
         return text;
     }

@@ -197,6 +197,29 @@ public class MCServerGUIView extends FrameView implements Observer {
         inputHistoryMaxSizeLabel = new javax.swing.JLabel();
         inputHistoryMaxSizeField = new javax.swing.JTextField();
         saveGuiConfigButton = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        textColorLabel = new javax.swing.JLabel();
+        bgColorLabel = new javax.swing.JLabel();
+        infoColorLabel = new javax.swing.JLabel();
+        warningColorLabel = new javax.swing.JLabel();
+        severeColorLabel = new javax.swing.JLabel();
+        warningColorField = new javax.swing.JTextField();
+        infoColorField = new javax.swing.JTextField();
+        textColorField = new javax.swing.JTextField();
+        bgColorField = new javax.swing.JTextField();
+        severeColorField = new javax.swing.JTextField();
+        textColorButton = new javax.swing.JButton();
+        bgColorButton = new javax.swing.JButton();
+        infoColorButton = new javax.swing.JButton();
+        warningColorButton = new javax.swing.JButton();
+        severeColorButton = new javax.swing.JButton();
+        textColorBox = new javax.swing.JTextField();
+        bgColorBox = new javax.swing.JTextField();
+        infoColorBox = new javax.swing.JTextField();
+        warningColorBox = new javax.swing.JTextField();
+        severeColorBox = new javax.swing.JTextField();
+        textSizeLabel = new javax.swing.JLabel();
+        textSizeField = new javax.swing.JSpinner();
         backupTab = new javax.swing.JPanel();
         backupButton = new javax.swing.JButton();
         backupSettingsPanel = new javax.swing.JPanel();
@@ -289,7 +312,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         consoleOutputPanelLayout.setVerticalGroup(
             consoleOutputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
         );
 
         playerListPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("playerListPanel.border.title"))); // NOI18N
@@ -322,7 +345,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         playerListPanelLayout.setVerticalGroup(
             playerListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
         );
 
         consoleInputPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("consoleInputPanel.border.title"))); // NOI18N
@@ -575,8 +598,8 @@ public class MCServerGUIView extends FrameView implements Observer {
             mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainWindowTabLayout.createSequentialGroup()
                 .addGroup(mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(playerListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                    .addComponent(consoleOutputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))
+                    .addComponent(playerListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                    .addComponent(consoleOutputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(consoleInputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -801,7 +824,7 @@ public class MCServerGUIView extends FrameView implements Observer {
                 .addComponent(serverCmdLinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveServerConfigButton)
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("serverConfigTab.TabConstraints.tabTitle"), serverConfigTab); // NOI18N
@@ -864,25 +887,284 @@ public class MCServerGUIView extends FrameView implements Observer {
             }
         });
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel1.border.title"))); // NOI18N
+        jPanel1.setName("jPanel1"); // NOI18N
+
+        textColorLabel.setText(resourceMap.getString("textColorLabel.text")); // NOI18N
+        textColorLabel.setName("textColorLabel"); // NOI18N
+
+        bgColorLabel.setText(resourceMap.getString("bgColorLabel.text")); // NOI18N
+        bgColorLabel.setName("bgColorLabel"); // NOI18N
+
+        infoColorLabel.setText(resourceMap.getString("infoColorLabel.text")); // NOI18N
+        infoColorLabel.setName("infoColorLabel"); // NOI18N
+
+        warningColorLabel.setText(resourceMap.getString("warningColorLabel.text")); // NOI18N
+        warningColorLabel.setName("warningColorLabel"); // NOI18N
+
+        severeColorLabel.setText(resourceMap.getString("severeColorLabel.text")); // NOI18N
+        severeColorLabel.setName("severeColorLabel"); // NOI18N
+
+        warningColorField.setText(resourceMap.getString("warningColorField.text")); // NOI18N
+        warningColorField.setToolTipText(resourceMap.getString("warningColorField.toolTipText")); // NOI18N
+        warningColorField.setInputVerifier(new MCServerGUIRegexVerifier("^([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}$"));
+        warningColorField.setName("warningColorField"); // NOI18N
+        warningColorField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                warningColorFieldFocusLost(evt);
+            }
+        });
+
+        infoColorField.setText(resourceMap.getString("infoColorField.text")); // NOI18N
+        infoColorField.setToolTipText(resourceMap.getString("infoColorField.toolTipText")); // NOI18N
+        infoColorField.setInputVerifier(new MCServerGUIRegexVerifier("^([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}$"));
+        infoColorField.setName("infoColorField"); // NOI18N
+        infoColorField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                infoColorFieldFocusLost(evt);
+            }
+        });
+
+        textColorField.setText(resourceMap.getString("textColorField.text")); // NOI18N
+        textColorField.setToolTipText(resourceMap.getString("textColorField.toolTipText")); // NOI18N
+        textColorField.setInputVerifier(new MCServerGUIRegexVerifier("^([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}$"));
+        textColorField.setName("textColorField"); // NOI18N
+        textColorField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textColorFieldFocusLost(evt);
+            }
+        });
+
+        bgColorField.setText(resourceMap.getString("bgColorField.text")); // NOI18N
+        bgColorField.setToolTipText(resourceMap.getString("bgColorField.toolTipText")); // NOI18N
+        bgColorField.setInputVerifier(new MCServerGUIRegexVerifier("^([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}$"));
+        bgColorField.setName("bgColorField"); // NOI18N
+        bgColorField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                bgColorFieldFocusLost(evt);
+            }
+        });
+
+        severeColorField.setText(resourceMap.getString("severeColorField.text")); // NOI18N
+        severeColorField.setToolTipText(resourceMap.getString("severeColorField.toolTipText")); // NOI18N
+        severeColorField.setInputVerifier(new MCServerGUIRegexVerifier("^([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}$"));
+        severeColorField.setName("severeColorField"); // NOI18N
+        severeColorField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                severeColorFieldFocusLost(evt);
+            }
+        });
+
+        textColorButton.setText(resourceMap.getString("textColorButton.text")); // NOI18N
+        textColorButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        textColorButton.setName("textColorButton"); // NOI18N
+        textColorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textColorButtonActionPerformed(evt);
+            }
+        });
+        textColorButton.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textColorButtonFocusLost(evt);
+            }
+        });
+
+        bgColorButton.setText(resourceMap.getString("bgColorButton.text")); // NOI18N
+        bgColorButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        bgColorButton.setName("bgColorButton"); // NOI18N
+        bgColorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bgColorButtonActionPerformed(evt);
+            }
+        });
+        bgColorButton.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                bgColorButtonFocusLost(evt);
+            }
+        });
+
+        infoColorButton.setText(resourceMap.getString("infoColorButton.text")); // NOI18N
+        infoColorButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        infoColorButton.setName("infoColorButton"); // NOI18N
+        infoColorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                infoColorButtonActionPerformed(evt);
+            }
+        });
+        infoColorButton.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                infoColorButtonFocusLost(evt);
+            }
+        });
+
+        warningColorButton.setText(resourceMap.getString("warningColorButton.text")); // NOI18N
+        warningColorButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        warningColorButton.setName("warningColorButton"); // NOI18N
+        warningColorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                warningColorButtonActionPerformed(evt);
+            }
+        });
+        warningColorButton.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                warningColorButtonFocusLost(evt);
+            }
+        });
+
+        severeColorButton.setText(resourceMap.getString("severeColorButton.text")); // NOI18N
+        severeColorButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        severeColorButton.setName("severeColorButton"); // NOI18N
+        severeColorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                severeColorButtonActionPerformed(evt);
+            }
+        });
+        severeColorButton.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                severeColorButtonFocusLost(evt);
+            }
+        });
+
+        textColorBox.setEditable(false);
+        textColorBox.setText(resourceMap.getString("textColorBox.text")); // NOI18N
+        textColorBox.setFocusable(false);
+        textColorBox.setName("textColorBox"); // NOI18N
+
+        bgColorBox.setEditable(false);
+        bgColorBox.setFocusable(false);
+        bgColorBox.setName("bgColorBox"); // NOI18N
+
+        infoColorBox.setEditable(false);
+        infoColorBox.setFocusable(false);
+        infoColorBox.setName("infoColorBox"); // NOI18N
+
+        warningColorBox.setEditable(false);
+        warningColorBox.setFocusable(false);
+        warningColorBox.setName("warningColorBox"); // NOI18N
+
+        severeColorBox.setEditable(false);
+        severeColorBox.setFocusable(false);
+        severeColorBox.setName("severeColorBox"); // NOI18N
+
+        textSizeLabel.setText(resourceMap.getString("textSizeLabel.text")); // NOI18N
+        textSizeLabel.setName("textSizeLabel"); // NOI18N
+
+        textSizeField.setModel(new javax.swing.SpinnerNumberModel(3, 1, 10, 1));
+        textSizeField.setName("textSizeField"); // NOI18N
+        textSizeField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                textSizeFieldPropertyChange(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(warningColorLabel)
+                    .addComponent(infoColorLabel)
+                    .addComponent(textColorLabel)
+                    .addComponent(bgColorLabel)
+                    .addComponent(severeColorLabel)
+                    .addComponent(textSizeLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(severeColorField, 0, 0, Short.MAX_VALUE)
+                            .addComponent(warningColorField, 0, 0, Short.MAX_VALUE)
+                            .addComponent(infoColorField, 0, 0, Short.MAX_VALUE)
+                            .addComponent(bgColorField, 0, 0, Short.MAX_VALUE)
+                            .addComponent(textColorField, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(textColorButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(textColorBox, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(bgColorButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(bgColorBox, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(infoColorButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(infoColorBox, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(warningColorButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(warningColorBox, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(severeColorButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(severeColorBox, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(textSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(textColorLabel)
+                    .addComponent(textColorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textColorButton)
+                    .addComponent(textColorBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bgColorLabel)
+                    .addComponent(bgColorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bgColorButton)
+                    .addComponent(bgColorBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(infoColorLabel)
+                    .addComponent(infoColorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(infoColorButton)
+                    .addComponent(infoColorBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(warningColorLabel)
+                    .addComponent(warningColorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(warningColorButton)
+                    .addComponent(warningColorBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(severeColorLabel)
+                    .addComponent(severeColorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(severeColorButton)
+                    .addComponent(severeColorBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(textSizeLabel)
+                    .addComponent(textSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+
         javax.swing.GroupLayout guiConfigTabLayout = new javax.swing.GroupLayout(guiConfigTab);
         guiConfigTab.setLayout(guiConfigTabLayout);
         guiConfigTabLayout.setHorizontalGroup(
             guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(guiConfigTabLayout.createSequentialGroup()
-                .addGroup(guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(guiConfigTabLayout.createSequentialGroup()
+                .addGroup(guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, guiConfigTabLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(saveGuiConfigButton)))
-                .addContainerGap(295, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         guiConfigTabLayout.setVerticalGroup(
             guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(guiConfigTabLayout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(saveGuiConfigButton)
-                .addContainerGap(250, Short.MAX_VALUE))
+                .addGroup(guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(guiConfigTabLayout.createSequentialGroup()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(saveGuiConfigButton))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(153, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("guiConfigTab.TabConstraints.tabTitle"), guiConfigTab); // NOI18N
@@ -982,7 +1264,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         backupFileChooserPanelLayout.setVerticalGroup(
             backupFileChooserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
         );
 
         backupStatusPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("backupStatusPanel.border.title"))); // NOI18N
@@ -1002,7 +1284,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         backupStatusPanelLayout.setVerticalGroup(
             backupStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
         );
 
         backupControlRefreshButton.setText(resourceMap.getString("backupControlRefreshButton.text")); // NOI18N
@@ -1070,7 +1352,7 @@ public class MCServerGUIView extends FrameView implements Observer {
             .addGroup(restoreTabLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addContainerGap(327, Short.MAX_VALUE))
+                .addContainerGap(326, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("restoreTab.TabConstraints.tabTitle"), restoreTab); // NOI18N
@@ -1099,7 +1381,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         taskSchedulerPanelLayout.setVerticalGroup(
             taskSchedulerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
         );
 
         taskListAddButton.setText(resourceMap.getString("taskListAddButton.text")); // NOI18N
@@ -1162,7 +1444,7 @@ public class MCServerGUIView extends FrameView implements Observer {
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabber)
+            .addComponent(tabber, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
         );
 
         menuBar.setName("menuBar"); // NOI18N
@@ -1646,6 +1928,132 @@ public class MCServerGUIView extends FrameView implements Observer {
         }
     }//GEN-LAST:event_taskListRemoveButtonActionPerformed
 
+    private void textColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textColorButtonActionPerformed
+        JFrame mainFrame = MCServerGUIApp.getApplication().getMainFrame();
+        MCServerGUIColorChooser colorchooser = new MCServerGUIColorChooser(
+                mainFrame, textColorField, textColorBox);
+        colorchooser.setLocationRelativeTo(mainFrame);
+        MCServerGUIApp.getApplication().show(colorchooser);
+    }//GEN-LAST:event_textColorButtonActionPerformed
+
+    private void bgColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bgColorButtonActionPerformed
+        JFrame mainFrame = MCServerGUIApp.getApplication().getMainFrame();
+        MCServerGUIColorChooser colorchooser = new MCServerGUIColorChooser(
+                mainFrame, bgColorField, bgColorBox);
+        colorchooser.setLocationRelativeTo(mainFrame);
+        MCServerGUIApp.getApplication().show(colorchooser);
+    }//GEN-LAST:event_bgColorButtonActionPerformed
+
+    private void infoColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoColorButtonActionPerformed
+        JFrame mainFrame = MCServerGUIApp.getApplication().getMainFrame();
+        MCServerGUIColorChooser colorchooser = new MCServerGUIColorChooser(
+                mainFrame, infoColorField, infoColorBox);
+        colorchooser.setLocationRelativeTo(mainFrame);
+        MCServerGUIApp.getApplication().show(colorchooser);
+    }//GEN-LAST:event_infoColorButtonActionPerformed
+
+    private void warningColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_warningColorButtonActionPerformed
+        JFrame mainFrame = MCServerGUIApp.getApplication().getMainFrame();
+        MCServerGUIColorChooser colorchooser = new MCServerGUIColorChooser(
+                mainFrame, warningColorField, warningColorBox);
+        colorchooser.setLocationRelativeTo(mainFrame);
+        MCServerGUIApp.getApplication().show(colorchooser);
+    }//GEN-LAST:event_warningColorButtonActionPerformed
+
+    private void severeColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_severeColorButtonActionPerformed
+        JFrame mainFrame = MCServerGUIApp.getApplication().getMainFrame();
+        MCServerGUIColorChooser colorchooser = new MCServerGUIColorChooser(
+                mainFrame, severeColorField, severeColorBox);
+        colorchooser.setLocationRelativeTo(mainFrame);
+        MCServerGUIApp.getApplication().show(colorchooser);
+    }//GEN-LAST:event_severeColorButtonActionPerformed
+
+    private void textColorFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textColorFieldFocusLost
+        if (textColorField.getInputVerifier().verify(textColorField)) {
+            config.display.setTextColor(textColorField.getText());
+            textColorBox.setBackground(java.awt.Color.decode("0x"
+                    + textColorField.getText()));
+        }
+    }//GEN-LAST:event_textColorFieldFocusLost
+
+    private void textColorButtonFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textColorButtonFocusLost
+        if (textColorField.getInputVerifier().verify(textColorField)) {
+            config.display.setTextColor(textColorField.getText());
+            textColorBox.setBackground(java.awt.Color.decode("0x"
+                    + textColorField.getText()));
+        }
+    }//GEN-LAST:event_textColorButtonFocusLost
+
+    private void bgColorFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bgColorFieldFocusLost
+        if (bgColorField.getInputVerifier().verify(bgColorField)) {
+            config.display.setBgColor(bgColorField.getText());
+            bgColorBox.setBackground(java.awt.Color.decode("0x"
+                    + bgColorField.getText()));
+            updateConsoleOutputBgColor();
+        }
+    }//GEN-LAST:event_bgColorFieldFocusLost
+
+    private void bgColorButtonFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bgColorButtonFocusLost
+        if (bgColorField.getInputVerifier().verify(bgColorField)) {
+            config.display.setBgColor(bgColorField.getText());
+            bgColorBox.setBackground(java.awt.Color.decode("0x"
+                    + bgColorField.getText()));
+            updateConsoleOutputBgColor();
+        }
+    }//GEN-LAST:event_bgColorButtonFocusLost
+
+    private void infoColorFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_infoColorFieldFocusLost
+        if (infoColorField.getInputVerifier().verify(infoColorField)) {
+            config.display.setInfoColor(infoColorField.getText());
+            infoColorBox.setBackground(java.awt.Color.decode("0x"
+                    + infoColorField.getText()));
+        }
+    }//GEN-LAST:event_infoColorFieldFocusLost
+
+    private void infoColorButtonFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_infoColorButtonFocusLost
+        if (infoColorField.getInputVerifier().verify(infoColorField)) {
+            config.display.setInfoColor(infoColorField.getText());
+            infoColorBox.setBackground(java.awt.Color.decode("0x"
+                    + infoColorField.getText()));
+        }
+    }//GEN-LAST:event_infoColorButtonFocusLost
+
+    private void warningColorFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_warningColorFieldFocusLost
+        if (warningColorField.getInputVerifier().verify(warningColorField)) {
+            config.display.setWarningColor(warningColorField.getText());
+            warningColorBox.setBackground(java.awt.Color.decode("0x"
+                    + warningColorField.getText()));
+        }
+    }//GEN-LAST:event_warningColorFieldFocusLost
+
+    private void warningColorButtonFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_warningColorButtonFocusLost
+        if (warningColorField.getInputVerifier().verify(warningColorField)) {
+            config.display.setWarningColor(warningColorField.getText());
+            warningColorBox.setBackground(java.awt.Color.decode("0x"
+                    + warningColorField.getText()));
+        }
+    }//GEN-LAST:event_warningColorButtonFocusLost
+
+    private void severeColorFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_severeColorFieldFocusLost
+        if (severeColorField.getInputVerifier().verify(severeColorField)) {
+            config.display.setSevereColor(severeColorField.getText());
+            severeColorBox.setBackground(java.awt.Color.decode("0x"
+                    + severeColorField.getText()));
+        }
+    }//GEN-LAST:event_severeColorFieldFocusLost
+
+    private void severeColorButtonFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_severeColorButtonFocusLost
+        if (severeColorField.getInputVerifier().verify(severeColorField)) {
+            config.display.setSevereColor(severeColorField.getText());
+            severeColorBox.setBackground(java.awt.Color.decode("0x"
+                    + severeColorField.getText()));
+        }
+    }//GEN-LAST:event_severeColorButtonFocusLost
+
+    private void textSizeFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_textSizeFieldPropertyChange
+        config.display.setTextSize(Integer.parseInt(textSizeField.getValue().toString()));
+    }//GEN-LAST:event_textSizeFieldPropertyChange
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton backupButton;
     public javax.swing.JButton backupControlRefreshButton;
@@ -1658,6 +2066,10 @@ public class MCServerGUIView extends FrameView implements Observer {
     public javax.swing.JTextPane backupStatusLog;
     public javax.swing.JPanel backupStatusPanel;
     public javax.swing.JPanel backupTab;
+    public javax.swing.JTextField bgColorBox;
+    public javax.swing.JButton bgColorButton;
+    public javax.swing.JTextField bgColorField;
+    public javax.swing.JLabel bgColorLabel;
     public javax.swing.JCheckBox bukkitCheckBox;
     public javax.swing.JTextField cmdLineField;
     public javax.swing.JTextField consoleInput;
@@ -1673,11 +2085,16 @@ public class MCServerGUIView extends FrameView implements Observer {
     public javax.swing.JPanel guiInfoPanel;
     public javax.swing.JLabel guiMemoryUsage;
     public javax.swing.JLabel guiMemoryUsageLabel;
+    public javax.swing.JTextField infoColorBox;
+    public javax.swing.JButton infoColorButton;
+    public javax.swing.JTextField infoColorField;
+    public javax.swing.JLabel infoColorLabel;
     public javax.swing.JTextField inputHistoryMaxSizeField;
     public javax.swing.JLabel inputHistoryMaxSizeLabel;
     public javax.swing.JLabel jLabel2;
     public javax.swing.JLabel jLabel3;
     public javax.swing.JList jList1;
+    public javax.swing.JPanel jPanel1;
     public javax.swing.JPanel jPanel4;
     public javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JScrollPane jScrollPane2;
@@ -1712,6 +2129,10 @@ public class MCServerGUIView extends FrameView implements Observer {
     public javax.swing.JLabel serverJarLabel;
     public javax.swing.JLabel serverMemoryUsage;
     public javax.swing.JLabel serverMemoryUsageLabel;
+    public javax.swing.JTextField severeColorBox;
+    public javax.swing.JButton severeColorButton;
+    public javax.swing.JTextField severeColorField;
+    public javax.swing.JLabel severeColorLabel;
     public javax.swing.JButton startstopButton;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
@@ -1723,10 +2144,20 @@ public class MCServerGUIView extends FrameView implements Observer {
     public javax.swing.JButton taskListRemoveButton;
     public javax.swing.JList taskSchedulerList;
     public javax.swing.JPanel taskSchedulerPanel;
+    public javax.swing.JTextField textColorBox;
+    public javax.swing.JButton textColorButton;
+    public javax.swing.JTextField textColorField;
+    public javax.swing.JLabel textColorLabel;
+    public javax.swing.JSpinner textSizeField;
+    public javax.swing.JLabel textSizeLabel;
     public javax.swing.JLabel transmittingBytes;
     public javax.swing.JLabel transmittingBytesLabel;
     public javax.swing.JCheckBox useNetStat;
     public javax.swing.JLabel versionLabel;
+    public javax.swing.JTextField warningColorBox;
+    public javax.swing.JButton warningColorButton;
+    public javax.swing.JTextField warningColorField;
+    public javax.swing.JLabel warningColorLabel;
     public javax.swing.JTextField windowTitleField;
     public javax.swing.JLabel windowTitleLabel;
     public javax.swing.JCheckBox xincgcCheckBox;
@@ -1810,20 +2241,6 @@ public class MCServerGUIView extends FrameView implements Observer {
         taskDialog.setLocationRelativeTo(mainFrame);
         MCServerGUIApp.getApplication().show(taskDialog);
     }
-
-    /*private void addPathToBackup(String addPath) {
-        if (!pathsToBackup.contains(addPath)) {
-            pathsToBackup.add(addPath);
-            config.backups.setPathsToBackup(pathsToBackup);
-        }
-    }
-
-    private void removePathFromBackup(String remPath) {
-        if (pathsToBackup.contains(remPath)) {
-            pathsToBackup.remove(remPath);
-            config.backups.setPathsToBackup(pathsToBackup);
-        }
-    }*/
 
     public static javax.swing.tree.TreePath createTreePath(File f) {
         List<File> path = new ArrayList<File>();
@@ -1959,9 +2376,9 @@ public class MCServerGUIView extends FrameView implements Observer {
      */
     public void initConfig() {
         if (config.load()) {
-            consoleOutput.setText("Configuration file loaded succesfully!");
+            setConsoleOutput("Configuration file loaded succesfully!");
         } else {
-            consoleOutput.setText("Configuration file not found or invalid!  Creating new config file with default values.");
+            setConsoleOutput("Configuration file not found or invalid!  Creating new config file with default values.");
         }
         updateGuiWithConfigValues();
         saveConfig();
@@ -1975,6 +2392,22 @@ public class MCServerGUIView extends FrameView implements Observer {
     }
 
     public void updateGuiWithConfigValues() {
+        textColorField.setText(config.display.getTextColor());
+        textColorBox.setBackground(java.awt.Color.decode("0x"
+                + textColorField.getText()));
+        bgColorField.setText(config.display.getBgColor());
+        bgColorBox.setBackground(java.awt.Color.decode("0x"
+                + bgColorField.getText()));
+        infoColorField.setText(config.display.getInfoColor());
+        infoColorBox.setBackground(java.awt.Color.decode("0x"
+                + infoColorField.getText()));
+        warningColorField.setText(config.display.getWarningColor());
+        warningColorBox.setBackground(java.awt.Color.decode("0x"
+                + warningColorField.getText()));
+        severeColorField.setText(config.display.getSevereColor());
+        severeColorBox.setBackground(java.awt.Color.decode("0x"
+                + severeColorField.getText()));
+        textSizeField.setValue(config.display.getTextSize());
         zipBackupCheckBox.setSelected(config.backups.getZip());
         pathsToBackup = config.backups.getPathsToBackup();
         backupPathField.setText(config.backups.getPath());
@@ -2094,13 +2527,13 @@ public class MCServerGUIView extends FrameView implements Observer {
      */
     public void startServer() {
         if (controlState.equals("OFF")) {
-            consoleOutput.setText("");
+            setConsoleOutput("");
             server.setCmdLine(config.cmdLine.getCmdLine());
             if (server.start().equals("SUCCESS")) {
             } else if (server.start().equals("ERROR")) {
-                consoleOutput.setText("[GUI] Unknown error occured while launching the server.");
+                setConsoleOutput("[GUI] Unknown error occured while launching the server.");
             } else if (server.start().equals("INVALIDJAR")) {
-                consoleOutput.setText("[GUI] The jar file you specified is not a valid file."
+                setConsoleOutput("[GUI] The jar file you specified is not a valid file."
                         + "  Please make corrections on the Server Config tab.");
             }
         }
@@ -2132,6 +2565,20 @@ public class MCServerGUIView extends FrameView implements Observer {
             System.err.println("Error appending text to console output");
         }
         scrollText();
+    }
+
+    public void setConsoleOutput(String text) {
+        consoleOutput.setText("<body bgcolor = " + config.display.getBgColor() 
+                + "><font color = \"" + config.display.getTextColor()
+                + "\" size = " + config.display.getTextSize() + ">" + text);
+    }
+
+    public void updateConsoleOutputBgColor() {
+        System.out.println(consoleOutput.getText());
+        consoleOutput.setText(consoleOutput.getText().replaceFirst(
+                "([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}",
+                config.display.getBgColor()));
+        System.out.println(consoleOutput.getText());
     }
 
     /**

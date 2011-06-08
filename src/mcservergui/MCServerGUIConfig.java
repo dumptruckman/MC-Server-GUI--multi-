@@ -6,6 +6,7 @@ package mcservergui;
 
 import org.codehaus.jackson.*;
 import java.io.*;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -38,7 +39,64 @@ public class MCServerGUIConfig {
     public void setInputHistoryMaxSize(int i) { _inputHistoryMaxSize = i; }
 
     public class Display {
-        
+        public Display() {
+            _textColor = "000000";
+            _bgColor = "FFFFFF";
+            _infoColor = "339900";
+            _warningColor = "CC6600";
+            _severeColor = "FF0000";
+            _textSize = 3;
+        }
+        private String _textColor, _bgColor, _infoColor, _warningColor, _severeColor;
+        private int _textSize;
+
+        public int getTextSize() {
+            return _textSize;
+        }
+
+        public String getBgColor() {
+            return _bgColor;
+        }
+
+        public String getInfoColor() {
+            return _infoColor;
+        }
+
+        public String getSevereColor() {
+            return _severeColor;
+        }
+
+        public String getTextColor() {
+            return _textColor;
+        }
+
+        public String getWarningColor() {
+            return _warningColor;
+        }
+
+        public void setTextSize(int _textSize) {
+            this._textSize = _textSize;
+        }
+
+        public void setBgColor(String _bgColor) {
+            this._bgColor = _bgColor;
+        }
+
+        public void setTextColor(String _textColor) {
+            this._textColor = _textColor;
+        }
+
+        public void setSevereColor(String _severeColor) {
+            this._severeColor = _severeColor;
+        }
+
+        public void setInfoColor(String _infoColor) {
+            this._infoColor = _infoColor;
+        }
+
+        public void setWarningColor(String _warningColor) {
+            this._warningColor = _warningColor;
+        }
     }
 
     public class CMDLine {
@@ -201,6 +259,24 @@ public class MCServerGUIConfig {
                         setWindowTitle(jp.getText());
                     } else if ("Input History Max Size".equals(fieldname)) {
                         setInputHistoryMaxSize(jp.getIntValue());
+                    } else if ("Display".equals(fieldname)) {
+                        while (jp.nextToken() != JsonToken.END_OBJECT) {
+                            String displayfield = jp.getCurrentName();
+                            jp.nextToken();
+                            if ("Text Color".equals(displayfield)) {
+                                display.setTextColor(jp.getText());
+                            } else if ("Background Color".equals(displayfield)) {
+                                display.setBgColor(jp.getText());
+                            } else if ("[INFO] Color".equals(displayfield)) {
+                                display.setInfoColor(jp.getText());
+                            } else if ("[WARNING] Color".equals(displayfield)) {
+                                display.setWarningColor(jp.getText());
+                            } else if ("[SEVERE] Color".equals(displayfield)) {
+                                display.setSevereColor(jp.getText());
+                            } else if ("Text Size".equals(displayfield)) {
+                                display.setTextSize(jp.getNumberValue().intValue());
+                            }
+                        }
                     } else if ("CMD Line".equals(fieldname)) {
                         // CMD Line config options
                         while (jp.nextToken() != JsonToken.END_OBJECT) {
@@ -314,6 +390,15 @@ public class MCServerGUIConfig {
             //General Config Options
             jg.writeStringField("Window Title", getWindowTitle());
             jg.writeNumberField("Input History Max Size", getInputHistoryMaxSize());
+            jg.writeObjectFieldStart("Display");
+            // Display Config Options
+            jg.writeStringField("Text Color", display.getTextColor());
+            jg.writeStringField("Background Color", display.getBgColor());
+            jg.writeStringField("[INFO] Color", display.getInfoColor());
+            jg.writeStringField("[WARNING] Color", display.getWarningColor());
+            jg.writeStringField("[SEVERE] Color", display.getSevereColor());
+            jg.writeNumberField("Text Size", display.getTextSize());
+            jg.writeEndObject(); // End of Display Config options
             jg.writeObjectFieldStart("CMD Line");
             // CMD Line Config Options
             jg.writeStringField("Java Executable", cmdLine.getJavaExec());

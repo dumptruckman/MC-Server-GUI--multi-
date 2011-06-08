@@ -3,6 +3,7 @@ Add tasks for scheduler:
 Add scheduler pause button
 Add simple task option
 Minimize to tray?
+Add custom command drop down (uses New Task interface without the timing section)
 Allow for 12-hour hour format, like 3pm
 Add indicator show when/what next event will be
 Allow console output to be searched
@@ -11,8 +12,6 @@ Add php web interface (maybe?)
 Add edit button to warning list for task entries
 Add restoration of backups
 Add plugin manager
-Give the GUI colorization options
-Memory/CPU/Network monitors
 Ability to modify server properties
 Make player list work
 Ability to give players items by right clicking name in player list

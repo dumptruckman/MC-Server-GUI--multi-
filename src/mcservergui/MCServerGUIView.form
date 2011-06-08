@@ -12,7 +12,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="tabber" alignment="0" max="32767" attributes="0"/>
+              <Component id="tabber" alignment="0" pref="379" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -67,8 +67,8 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="playerListPanel" pref="166" max="32767" attributes="0"/>
-                              <Component id="consoleOutputPanel" alignment="1" pref="166" max="32767" attributes="0"/>
+                              <Component id="playerListPanel" pref="165" max="32767" attributes="0"/>
+                              <Component id="consoleOutputPanel" alignment="1" pref="165" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="consoleInputPanel" min="-2" max="-2" attributes="0"/>
@@ -109,7 +109,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane1" alignment="0" pref="139" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" alignment="0" pref="138" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -169,7 +169,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane2" alignment="0" pref="139" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" alignment="0" pref="138" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -582,7 +582,7 @@
                           <Component id="serverCmdLinePanel" min="-2" pref="238" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="saveServerConfigButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="85" max="32767" attributes="0"/>
+                          <EmptySpace pref="84" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -858,24 +858,31 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="jPanel4" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="saveGuiConfigButton" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="295" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="40" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="saveGuiConfigButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="250" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="saveGuiConfigButton" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="jPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="153" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -970,6 +977,337 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveGuiConfigButtonActionPerformed"/>
                   </Events>
                 </Component>
+                <Container class="javax.swing.JPanel" name="jPanel1">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="Console Output">
+                          <Property name="titleX" resourceKey="jPanel1.border.title"/>
+                        </TitledBorder>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="jPanel1" noResource="true"/>
+                  </Properties>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="warningColorLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="infoColorLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="textColorLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="bgColorLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="severeColorLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="textSizeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="severeColorField" min="0" pref="0" max="32767" attributes="1"/>
+                                          <Component id="warningColorField" alignment="0" min="0" pref="0" max="32767" attributes="1"/>
+                                          <Component id="infoColorField" alignment="0" min="0" pref="0" max="32767" attributes="1"/>
+                                          <Component id="bgColorField" alignment="0" min="0" pref="0" max="32767" attributes="1"/>
+                                          <Component id="textColorField" alignment="0" pref="50" max="32767" attributes="1"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="textColorButton" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="textColorBox" min="-2" pref="21" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="bgColorButton" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="bgColorBox" min="-2" pref="21" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="infoColorButton" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="infoColorBox" min="-2" pref="21" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="warningColorButton" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="warningColorBox" min="-2" pref="21" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="severeColorButton" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="severeColorBox" min="-2" pref="21" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <Component id="textSizeField" min="-2" pref="40" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="textColorLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="textColorField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="textColorButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="textColorBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="bgColorLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="bgColorField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="bgColorButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="bgColorBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="infoColorLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="infoColorField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="infoColorButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="infoColorBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="warningColorLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="warningColorField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="warningColorButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="warningColorBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="severeColorLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="severeColorField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="severeColorButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="severeColorBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="textSizeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="textSizeField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JLabel" name="textColorLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="textColorLabel.text"/>
+                        <Property name="name" type="java.lang.String" value="textColorLabel" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="bgColorLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="bgColorLabel.text"/>
+                        <Property name="name" type="java.lang.String" value="bgColorLabel" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="infoColorLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="infoColorLabel.text"/>
+                        <Property name="name" type="java.lang.String" value="infoColorLabel" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="warningColorLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="warningColorLabel.text"/>
+                        <Property name="name" type="java.lang.String" value="warningColorLabel" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="severeColorLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="severeColorLabel.text"/>
+                        <Property name="name" type="java.lang.String" value="severeColorLabel" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="warningColorField">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="warningColorField.text"/>
+                        <Property name="toolTipText" type="java.lang.String" resourceKey="warningColorField.toolTipText"/>
+                        <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="new MCServerGUIRegexVerifier(&quot;^([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}$&quot;)" type="code"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" value="warningColorField" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="warningColorFieldFocusLost"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="infoColorField">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="infoColorField.text"/>
+                        <Property name="toolTipText" type="java.lang.String" resourceKey="infoColorField.toolTipText"/>
+                        <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="new MCServerGUIRegexVerifier(&quot;^([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}$&quot;)" type="code"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" value="infoColorField" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="infoColorFieldFocusLost"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="textColorField">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="textColorField.text"/>
+                        <Property name="toolTipText" type="java.lang.String" resourceKey="textColorField.toolTipText"/>
+                        <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="new MCServerGUIRegexVerifier(&quot;^([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}$&quot;)" type="code"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" value="textColorField" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="textColorFieldFocusLost"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="bgColorField">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="bgColorField.text"/>
+                        <Property name="toolTipText" type="java.lang.String" resourceKey="bgColorField.toolTipText"/>
+                        <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="new MCServerGUIRegexVerifier(&quot;^([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}$&quot;)" type="code"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" value="bgColorField" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="bgColorFieldFocusLost"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="severeColorField">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="severeColorField.text"/>
+                        <Property name="toolTipText" type="java.lang.String" resourceKey="severeColorField.toolTipText"/>
+                        <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="new MCServerGUIRegexVerifier(&quot;^([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}$&quot;)" type="code"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" value="severeColorField" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="severeColorFieldFocusLost"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="textColorButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="textColorButton.text"/>
+                        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                          <Insets value="[2, 5, 2, 5]"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" value="textColorButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textColorButtonActionPerformed"/>
+                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="textColorButtonFocusLost"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="bgColorButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="bgColorButton.text"/>
+                        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                          <Insets value="[2, 5, 2, 5]"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" value="bgColorButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bgColorButtonActionPerformed"/>
+                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="bgColorButtonFocusLost"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="infoColorButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="infoColorButton.text"/>
+                        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                          <Insets value="[2, 5, 2, 5]"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" value="infoColorButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="infoColorButtonActionPerformed"/>
+                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="infoColorButtonFocusLost"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="warningColorButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="warningColorButton.text"/>
+                        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                          <Insets value="[2, 5, 2, 5]"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" value="warningColorButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="warningColorButtonActionPerformed"/>
+                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="warningColorButtonFocusLost"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="severeColorButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="severeColorButton.text"/>
+                        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                          <Insets value="[2, 5, 2, 5]"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" value="severeColorButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="severeColorButtonActionPerformed"/>
+                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="severeColorButtonFocusLost"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="textColorBox">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="text" type="java.lang.String" resourceKey="textColorBox.text"/>
+                        <Property name="focusable" type="boolean" value="false"/>
+                        <Property name="name" type="java.lang.String" value="textColorBox" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="bgColorBox">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="focusable" type="boolean" value="false"/>
+                        <Property name="name" type="java.lang.String" value="bgColorBox" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="infoColorBox">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="focusable" type="boolean" value="false"/>
+                        <Property name="name" type="java.lang.String" value="infoColorBox" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="warningColorBox">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="focusable" type="boolean" value="false"/>
+                        <Property name="name" type="java.lang.String" value="warningColorBox" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="severeColorBox">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="focusable" type="boolean" value="false"/>
+                        <Property name="name" type="java.lang.String" value="severeColorBox" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="textSizeLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="textSizeLabel.text"/>
+                        <Property name="name" type="java.lang.String" value="textSizeLabel" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JSpinner" name="textSizeField">
+                      <Properties>
+                        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                          <SpinnerModel initial="3" maximum="10" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" value="textSizeField" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="textSizeFieldPropertyChange"/>
+                      </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="backupTab">
@@ -1152,7 +1490,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane3" alignment="0" pref="191" max="32767" attributes="0"/>
+                          <Component id="jScrollPane3" alignment="0" pref="190" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -1201,7 +1539,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane4" alignment="0" pref="191" max="32767" attributes="0"/>
+                          <Component id="jScrollPane4" alignment="0" pref="190" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -1267,7 +1605,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="327" max="32767" attributes="0"/>
+                          <EmptySpace pref="326" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1344,7 +1682,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane5" alignment="0" pref="213" max="32767" attributes="0"/>
+                          <Component id="jScrollPane5" alignment="0" pref="212" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
