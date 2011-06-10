@@ -32,6 +32,15 @@ public class MCServerGUIServerModel extends Observable implements Observer, java
     // Method for starting the server
     public String start() {
         File jar = new File(config.cmdLine.getServerJar());
+        /*
+        try {
+            guiServer = new MCServerGUIHTTPServer(25566);
+            guiServer.start();
+        } catch (IOException ioe) {
+            System.err.println("Could not start http server");
+            return "ERROR";
+        }
+         */
         try {
             // Run the server
             ProcessFinder pf = new ProcessFinder(new Sigar());
@@ -79,16 +88,17 @@ public class MCServerGUIServerModel extends Observable implements Observer, java
         }
     }
 
-    public void update(Observable o, Object arg) {
+    @Override public void update(Observable o, Object arg) {
         receivedFromServer = serverReceiver.get();
         this.setChanged();
         notifyObservers("newOutput");
     }
 
-    public void propertyChange(java.beans.PropertyChangeEvent evt) {
+    @Override public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (evt.getNewValue().equals(false)) {
             serverRunning = false;
             pid = 0;
+            //guiServer.stop();
             setChanged();
             notifyObservers("serverStopped");
             setChanged();
@@ -139,5 +149,6 @@ public class MCServerGUIServerModel extends Observable implements Observer, java
     private OutputStreamWriter osw;
     private MCServerGUIServerReceiver serverReceiver;
     private MCServerGUIConfig config;
+    //private MCServerGUIHTTPServer guiServer;
     private boolean serverRunning;
 }
