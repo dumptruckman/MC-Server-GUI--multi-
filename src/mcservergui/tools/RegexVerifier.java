@@ -9,8 +9,8 @@ package mcservergui.tools;
  *
  * @author dumptruckman
  */
-public class MCServerGUIRegexVerifier extends javax.swing.InputVerifier {
-    public MCServerGUIRegexVerifier(String regex) {
+public class RegexVerifier extends javax.swing.InputVerifier {
+    public RegexVerifier(String regex) {
         this.regex = regex;
     }
 

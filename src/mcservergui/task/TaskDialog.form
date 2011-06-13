@@ -1,0 +1,1020 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+
+<Form version="1.7" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.ButtonGroup" name="serverTaskGroup">
+    </Component>
+  </NonVisualComponents>
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="name" type="java.lang.String" value="Form" noResource="true"/>
+    <Property name="resizable" type="boolean" value="false"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="2"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JPanel" name="jPanel1">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="New Task">
+              <Property name="titleX" resourceKey="jPanel1.border.title"/>
+            </TitledBorder>
+          </Border>
+        </Property>
+        <Property name="name" type="java.lang.String" value="jPanel1" noResource="true"/>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="scheduleLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="hoursLabel" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="secondsLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="minutesLabel" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="secondsField" min="-2" pref="39" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="secondsAgainCheckBox" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="secondsAgainField" min="-2" pref="24" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="minutesField" min="-2" pref="39" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="minutesAgainCheckBox" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="minutesAgainField" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="minutesAllCheckBox" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="hoursField" min="-2" pref="39" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="hoursAgainCheckBox" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="hoursAgainField" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="hoursAllCheckBox" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="taskNameLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="taskNameField" min="-2" pref="203" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="wedButton" min="-2" pref="35" max="-2" attributes="1"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="thuButton" min="-2" pref="35" max="-2" attributes="1"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="friButton" min="-2" pref="35" max="-2" attributes="1"/>
+                              </Group>
+                              <Component id="satButton" alignment="0" min="-2" pref="35" max="-2" attributes="1"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="julButton" min="-2" pref="38" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="augButton" min="-2" pref="38" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="sepButton" min="-2" pref="38" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="aprButton" min="-2" pref="38" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="mayButton" min="-2" pref="38" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="junButton" min="-2" pref="38" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="octButton" min="-2" pref="38" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="novButton" min="-2" pref="38" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="decButton" min="-2" pref="38" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="domButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="domField" min="-2" pref="131" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="225" max="-2" attributes="0"/>
+                          <Component id="domAllCheckBox" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="sunButton" min="-2" pref="35" max="-2" attributes="1"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="monButton" min="-2" pref="35" max="-2" attributes="1"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="tueButton" min="-2" pref="35" max="-2" attributes="1"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="dowLabel" min="-2" max="-2" attributes="1"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="dowAllButton" min="-2" pref="47" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="monthLabel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="monthAllButton" min="-2" pref="47" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="janButton" min="-2" pref="38" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="febButton" min="-2" pref="38" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="marButton" min="-2" pref="38" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                  <Component id="jSeparator1" min="-2" pref="11" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="startServerRadio" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="sendCommandRadio" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="sendCommandField" pref="187" max="32767" attributes="0"/>
+                      </Group>
+                      <Component id="stopServerRadio" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                          <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="197" max="32767" attributes="0"/>
+                          <Component id="createButton" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="restartServerRadio" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="remainDownLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="remainDownField" pref="88" max="32767" attributes="0"/>
+                      </Group>
+                      <Component id="jScrollPane1" alignment="1" pref="292" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="serverWarningLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="warningAddButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="warningEditButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="79" max="32767" attributes="0"/>
+                          <Component id="warningRemoveButton" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="saveWorldsRadio" min="-2" max="-2" attributes="0"/>
+                      <Component id="backupRadio" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="taskNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="taskNameField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="scheduleLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="secondsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="secondsField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="secondsAgainCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="secondsAgainField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="minutesLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="minutesAgainCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="minutesAgainField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="minutesField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="minutesAllCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="hoursLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="hoursAgainCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="hoursAgainField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="hoursAllCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="hoursField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="dowLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="dowAllButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="monthLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="monthAllButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="sunButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="monButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="tueButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="janButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="febButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="marButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="wedButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="thuButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="friButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="aprButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="mayButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="junButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="satButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="julButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="augButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="sepButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="octButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="novButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="decButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="7" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="domButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="domField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="domAllCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Component id="jSeparator1" alignment="0" pref="305" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="startServerRadio" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="sendCommandRadio" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="sendCommandField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="stopServerRadio" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="remainDownLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="remainDownField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="restartServerRadio" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="saveWorldsRadio" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="backupRadio" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="24" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="serverWarningLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="warningAddButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="warningRemoveButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="warningEditButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" min="-2" pref="83" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="createButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="taskNameLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="taskNameLabel.text"/>
+            <Property name="name" type="java.lang.String" value="taskNameLabel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="taskNameField">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="taskNameField.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="taskNameField.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="taskNameField" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSeparator" name="jSeparator1">
+          <Properties>
+            <Property name="orientation" type="int" value="1"/>
+            <Property name="name" type="java.lang.String" value="jSeparator1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="secondsLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="secondsLabel.text"/>
+            <Property name="name" type="java.lang.String" value="secondsLabel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="secondsField">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="secondsField.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="secondsField.toolTipText"/>
+            <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new mcservergui.tools.RegexVerifier(&quot;^([0-5]?\\d(,\\s?[0-5]?\\d){0,59}|[0-5]?\\d-[0-5]?\\d)$&quot;)" type="code"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="secondsField" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="scheduleLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="scheduleLabel.text"/>
+            <Property name="name" type="java.lang.String" value="scheduleLabel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="secondsAgainCheckBox">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="secondsAgainCheckBox.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="secondsAgainCheckBox.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="secondsAgainCheckBox" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="secondsAgainField">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="secondsAgainField.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="secondsAgainField.toolTipText"/>
+            <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new mcservergui.tools.RegexVerifier(&quot;^[0-5]?\\d$&quot;)" type="code"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="secondsAgainField" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="minutesLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="minutesLabel.text"/>
+            <Property name="name" type="java.lang.String" value="minutesLabel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="minutesAgainCheckBox">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="minutesAgainCheckBox.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="minutesAgainCheckBox.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="minutesAgainCheckBox" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="minutesAgainField">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="minutesAgainField.toolTipText"/>
+            <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new mcservergui.tools.RegexVerifier(&quot;^[0-5]?\\d$&quot;)" type="code"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="minutesAgainField" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="minutesField">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="minutesField.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="minutesField.toolTipText"/>
+            <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new mcservergui.tools.RegexVerifier(&quot;^([0-5]?\\d(,\\s?[0-5]?\\d){0,59}|[0-5]?\\d-[0-5]?\\d)$&quot;)" type="code"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="minutesField" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="minutesAllCheckBox">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="minutesAllCheckBox.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="minutesAllCheckBox.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="minutesAllCheckBox" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="minutesAllCheckBoxActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="hoursLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="hoursLabel.text"/>
+            <Property name="name" type="java.lang.String" value="hoursLabel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="hoursField">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="hoursField.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="hoursField.toolTipText"/>
+            <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new mcservergui.tools.RegexVerifier(&quot;^([0-2]?\\d(,\\s?[0-2]?\\d){0,23}|[0-2]?\\d-[0-2]?\\d)$&quot;)" type="code"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="hoursField" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="hoursAgainCheckBox">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="hoursAgainCheckBox.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="hoursAgainCheckBox.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="hoursAgainCheckBox" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="hoursAgainField">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="hoursAgainField.toolTipText"/>
+            <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new mcservergui.tools.RegexVerifier(&quot;^[0-2]?\\d$&quot;)" type="code"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="hoursAgainField" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="hoursAllCheckBox">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="hoursAllCheckBox.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="hoursAllCheckBox.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="hoursAllCheckBox" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="hoursAllCheckBoxActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="dowLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="dowLabel.text"/>
+            <Property name="name" type="java.lang.String" value="dowLabel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="dowAllButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="dowAllButton.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="dowAllButton.toolTipText"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 2]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="dowAllButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dowAllButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="monthLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="monthLabel.text"/>
+            <Property name="name" type="java.lang.String" value="monthLabel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="domButton">
+          <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="domButton.font"/>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="domButton.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="domButton.toolTipText"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 2]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="domButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="domButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="domField">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="domField.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="domField.toolTipText"/>
+            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new mcservergui.tools.RegexVerifier(&quot;^([0-3]?\\d(,\\s?[0-3]?\\d){0,30}|[0-3]?\\d-[0-3]?\\d)$&quot;)" type="code"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="domField" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="domAllCheckBox">
+          <Properties>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="domAllCheckBox.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="domAllCheckBox.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="domAllCheckBox" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="domAllCheckBoxActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="sunButton">
+          <Properties>
+            <Property name="background" type="java.awt.Color" resourceKey="sunButton.background"/>
+            <Property name="text" type="java.lang.String" resourceKey="sunButton.text"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 2]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="sunButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sunButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="monButton">
+          <Properties>
+            <Property name="background" type="java.awt.Color" resourceKey="monButton.background"/>
+            <Property name="text" type="java.lang.String" resourceKey="monButton.text"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 2]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="monButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="monButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="tueButton">
+          <Properties>
+            <Property name="background" type="java.awt.Color" resourceKey="tueButton.background"/>
+            <Property name="text" type="java.lang.String" resourceKey="tueButton.text"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 2]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="tueButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tueButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="wedButton">
+          <Properties>
+            <Property name="background" type="java.awt.Color" resourceKey="wedButton.background"/>
+            <Property name="text" type="java.lang.String" resourceKey="wedButton.text"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 2]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="wedButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="wedButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="thuButton">
+          <Properties>
+            <Property name="background" type="java.awt.Color" resourceKey="thuButton.background"/>
+            <Property name="text" type="java.lang.String" resourceKey="thuButton.text"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 2]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="thuButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="thuButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="friButton">
+          <Properties>
+            <Property name="background" type="java.awt.Color" resourceKey="friButton.background"/>
+            <Property name="text" type="java.lang.String" resourceKey="friButton.text"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 2]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="friButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="friButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="satButton">
+          <Properties>
+            <Property name="background" type="java.awt.Color" resourceKey="satButton.background"/>
+            <Property name="text" type="java.lang.String" resourceKey="satButton.text"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 2]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="satButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="satButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="janButton">
+          <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="janButton.font"/>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="janButton.text"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 2]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="janButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="janButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="febButton">
+          <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="febButton.font"/>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="febButton.text"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 2]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="febButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="febButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="marButton">
+          <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="marButton.font"/>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="marButton.text"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 2]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="marButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="marButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="aprButton">
+          <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="aprButton.font"/>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="aprButton.text"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 2]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="aprButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="aprButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="mayButton">
+          <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="mayButton.font"/>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="mayButton.text"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 2]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="mayButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mayButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="junButton">
+          <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="junButton.font"/>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="junButton.text"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 2]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="junButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="junButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="julButton">
+          <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="julButton.font"/>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="julButton.text"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 2]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="julButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="julButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="augButton">
+          <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="augButton.font"/>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="augButton.text"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 2]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="augButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="augButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="sepButton">
+          <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="sepButton.font"/>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="sepButton.text"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 2]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="sepButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sepButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="octButton">
+          <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="octButton.font"/>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="octButton.text"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 2]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="octButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="octButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="novButton">
+          <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="novButton.font"/>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="novButton.text"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 2]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="novButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="novButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="decButton">
+          <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="decButton.font"/>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="decButton.text"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 2]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="decButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="decButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="monthAllButton">
+          <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="monthAllButton.font"/>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="monthAllButton.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="monthAllButton.toolTipText"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 2]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="monthAllButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="monthAllButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="startServerRadio">
+          <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="serverTaskGroup"/>
+            </Property>
+            <Property name="text" type="java.lang.String" resourceKey="startServerRadio.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="startServerRadio.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="startServerRadio" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="startServerRadioActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="sendCommandRadio">
+          <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="serverTaskGroup"/>
+            </Property>
+            <Property name="text" type="java.lang.String" resourceKey="sendCommandRadio.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="sendCommandRadio.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="sendCommandRadio" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sendCommandRadioActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="sendCommandField">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="sendCommandField.text"/>
+            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="name" type="java.lang.String" value="sendCommandField" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="stopServerRadio">
+          <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="serverTaskGroup"/>
+            </Property>
+            <Property name="text" type="java.lang.String" resourceKey="stopServerRadio.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="stopServerRadio.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="stopServerRadio" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="stopServerRadioActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="restartServerRadio">
+          <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="serverTaskGroup"/>
+            </Property>
+            <Property name="text" type="java.lang.String" resourceKey="restartServerRadio.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="restartServerRadio.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="restartServerRadio" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="restartServerRadioActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="backupRadio">
+          <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="serverTaskGroup"/>
+            </Property>
+            <Property name="text" type="java.lang.String" resourceKey="backupRadio.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="backupRadio.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="backupRadio" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backupRadioActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="remainDownLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="remainDownLabel.text"/>
+            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="name" type="java.lang.String" value="remainDownLabel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="remainDownField">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="remainDownField.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="remainDownField.toolTipText"/>
+            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new mcservergui.tools.RegexVerifier(&quot;^(\\d{1,2}\\s?h)?\\s?(\\d{1,2}\\s?m)?\\s?(\\d{1,2}\\s?s)?$&quot;)" type="code"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="remainDownField" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="createButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="createButton.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="createButton.toolTipText"/>
+            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 5, 2, 5]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="createButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="cancelButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="cancelButton.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="cancelButton.toolTipText"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 5, 2, 5]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="cancelButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="serverWarningLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="serverWarningLabel.text"/>
+            <Property name="name" type="java.lang.String" value="serverWarningLabel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="jScrollPane1" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JList" name="warningList">
+              <Properties>
+                <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="warningListModel" type="code"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="warningList.toolTipText"/>
+                <Property name="cellRenderer" type="javax.swing.ListCellRenderer" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="new WarningListCellRenderer()" type="code"/>
+                </Property>
+                <Property name="enabled" type="boolean" value="false"/>
+                <Property name="name" type="java.lang.String" value="warningList" noResource="true"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Component class="javax.swing.JButton" name="warningAddButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="warningAddButton.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="warningAddButton.toolTipText"/>
+            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 5, 2, 5]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="warningAddButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="warningAddButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="warningRemoveButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="warningRemoveButton.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="warningRemoveButton.toolTipText"/>
+            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 5, 2, 5]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="warningRemoveButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="warningRemoveButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="saveWorldsRadio">
+          <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="serverTaskGroup"/>
+            </Property>
+            <Property name="text" type="java.lang.String" resourceKey="saveWorldsRadio.text"/>
+            <Property name="name" type="java.lang.String" value="saveWorldsRadio" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveWorldsRadioActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="warningEditButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="warningEditButton.text"/>
+            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 5, 2, 5]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="warningEditButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="warningEditButtonActionPerformed"/>
+          </Events>
+        </Component>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>
