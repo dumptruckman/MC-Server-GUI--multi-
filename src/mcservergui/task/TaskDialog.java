@@ -628,6 +628,7 @@ public class TaskDialog extends javax.swing.JDialog {
 
         serverTaskGroup.add(saveWorldsRadio);
         saveWorldsRadio.setText(resourceMap.getString("saveWorldsRadio.text")); // NOI18N
+        saveWorldsRadio.setToolTipText(resourceMap.getString("saveWorldsRadio.toolTipText")); // NOI18N
         saveWorldsRadio.setName("saveWorldsRadio"); // NOI18N
         saveWorldsRadio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

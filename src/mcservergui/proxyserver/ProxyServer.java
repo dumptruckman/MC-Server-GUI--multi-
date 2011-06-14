@@ -109,8 +109,8 @@ public class ProxyServer {
                     try {
                         address = InetAddress.getByName(ip);
                     } catch (UnknownHostException e) {
-                        System.out.println("[MC Server GUI] " + e);
-                        System.out.println("[MC Server GUI] Invalid listening address " + ip);
+                        gui.addTextToConsoleOutput("[MC Server GUI] " + e);
+                        gui.addTextToConsoleOutput("[MC Server GUI] Invalid listening address " + ip);
                         break;
                     }
                 }
@@ -118,8 +118,8 @@ public class ProxyServer {
                 try {
                     socket = new ServerSocket(port, 0, address);
                 } catch (java.io.IOException e) {
-                    System.out.println("[MC Server GUI] " + e);
-                    System.out.println("[MC Server GUI] Could not listen on port " + port
+                    gui.addTextToConsoleOutput("[MC Server GUI] " + e);
+                    gui.addTextToConsoleOutput("[MC Server GUI] Could not listen on port " + port
                     + "!\nIs it already in use? Exiting application...");
                     break;
                 }
@@ -138,8 +138,8 @@ public class ProxyServer {
                         try {
                             client = socket.accept();
                         } catch (java.io.IOException e) {
-                            System.out.println("[MC Server GUI] " + e);
-                            System.out.println("[MC Server GUI] Accept failed on port "
+                            gui.addTextToConsoleOutput("[MC Server GUI] " + e);
+                            gui.addTextToConsoleOutput("[MC Server GUI] Accept failed on port "
                                     + port + "!");
                             break;
                         }

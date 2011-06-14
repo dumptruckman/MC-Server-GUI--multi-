@@ -7,12 +7,12 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="tabber" alignment="0" max="32767" attributes="0"/>
+              <Component id="tabber" alignment="0" pref="547" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="tabber" alignment="0" max="32767" attributes="0"/>
+              <Component id="tabber" alignment="0" pref="379" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -55,11 +55,11 @@
                               <Group type="102" alignment="0" attributes="1">
                                   <Component id="consoleOutputPanel" min="-2" pref="397" max="-2" attributes="2"/>
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                                  <Component id="playerListPanel" pref="129" max="32767" attributes="0"/>
+                                  <Component id="playerListPanel" pref="95" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="consoleInputPanel" alignment="0" pref="532" max="32767" attributes="1"/>
+                              <Component id="consoleInputPanel" alignment="0" pref="498" max="32767" attributes="1"/>
                           </Group>
-                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -80,7 +80,7 @@
                               </Group>
                               <Component id="serverInfoPanel" max="32767" attributes="1"/>
                           </Group>
-                          <EmptySpace pref="19" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -164,7 +164,7 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane2" alignment="0" pref="117" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" alignment="0" pref="83" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -225,7 +225,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="sayCheckBox" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="consoleInput" pref="404" max="32767" attributes="0"/>
+                              <Component id="consoleInput" pref="370" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="submitButton" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -566,13 +566,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="jPanel2" alignment="0" max="32767" attributes="1"/>
-                                      <Component id="serverCmdLinePanel" alignment="0" pref="252" max="32767" attributes="1"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jPanel3" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="proxyServerPanel" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="serverCmdLinePanel" alignment="0" pref="252" max="32767" attributes="1"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
@@ -580,23 +576,25 @@
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
+                          <Component id="serverPropertiesPanel" min="-2" pref="186" max="-2" attributes="0"/>
+                          <EmptySpace pref="98" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="jPanel3" alignment="0" max="32767" attributes="1"/>
-                              <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="1">
                                   <Component id="serverCmdLinePanel" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="proxyServerPanel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="saveServerConfigButton" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="serverPropertiesPanel" alignment="0" min="-2" max="-2" attributes="1"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="saveServerConfigButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="27" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -611,7 +609,13 @@
                         </TitledBorder>
                       </Border>
                     </Property>
+                    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[252, 239]"/>
+                    </Property>
                     <Property name="name" type="java.lang.String" value="serverCmdLinePanel" noResource="true"/>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[252, 239]"/>
+                    </Property>
                   </Properties>
 
                   <Layout>
@@ -853,16 +857,19 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveServerConfigButtonActionPerformed"/>
                   </Events>
                 </Component>
-                <Container class="javax.swing.JPanel" name="jPanel2">
+                <Container class="javax.swing.JPanel" name="proxyServerPanel">
                   <Properties>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                         <TitledBorder title="Proxy Server">
-                          <Property name="titleX" resourceKey="jPanel2.border.title"/>
+                          <Property name="titleX" resourceKey="proxyServerPanel.border.title"/>
                         </TitledBorder>
                       </Border>
                     </Property>
-                    <Property name="name" type="java.lang.String" value="jPanel2" noResource="true"/>
+                    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[252, 50]"/>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="proxyServerPanel" noResource="true"/>
                   </Properties>
 
                   <Layout>
@@ -910,16 +917,16 @@
                     </Component>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JPanel" name="jPanel3">
+                <Container class="javax.swing.JPanel" name="serverPropertiesPanel">
                   <Properties>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                         <TitledBorder title="Server Properties">
-                          <Property name="titleX" resourceKey="jPanel3.border.title"/>
+                          <Property name="titleX" resourceKey="serverPropertiesPanel.border.title"/>
                         </TitledBorder>
                       </Border>
                     </Property>
-                    <Property name="name" type="java.lang.String" value="jPanel3" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="serverPropertiesPanel" noResource="true"/>
                   </Properties>
 
                   <Layout>
@@ -927,41 +934,71 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="maxPlayersLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="maxPlayersSpinner" min="-2" pref="45" max="-2" attributes="0"/>
+                                  </Group>
                                   <Group type="102" attributes="0">
-                                      <Component id="allowFlightCheckBox" min="-2" max="-2" attributes="0"/>
+                                      <Component id="onlineModeCheckBox" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="allowNetherCheckBox" min="-2" max="-2" attributes="0"/>
+                                      <Component id="pvpCheckBox" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="1">
+                                          <Component id="levelSeedLabel" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="levelSeedField" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="1">
+                                          <Component id="levelNameLabel" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="levelNameField" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="allowFlightCheckBox" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="allowNetherCheckBox" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="levelNameLabel" min="-2" max="-2" attributes="0"/>
+                                      <Component id="serverPortLabel" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="levelNameField" pref="199" max="32767" attributes="0"/>
+                                      <Component id="serverPortField" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="levelSeedLabel" min="-2" max="-2" attributes="0"/>
+                                      <Component id="serverIpLabel" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="levelSeedField" pref="202" max="32767" attributes="0"/>
+                                      <Component id="serverIpField" min="-2" pref="90" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="maxPlayersLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="maxPlayersSpinner" min="-2" pref="45" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="158" max="-2" attributes="0"/>
+                              <Component id="spawnAnimalsCheckBox" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Component id="onlineModeCheckBox" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="pvpCheckBox" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="126" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="spawnMonstersCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="spawnProtectionLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="spawnProtectionField" pref="80" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace pref="30" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="serverIpLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="viewDistanceLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="serverIpField" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="129" max="32767" attributes="0"/>
+                              <Component id="viewDistanceSpinner" min="-2" pref="43" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="whiteListCheckBox" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -997,7 +1034,27 @@
                                   <Component id="serverIpLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="serverIpField" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="148" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="serverPortLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="serverPortField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="spawnAnimalsCheckBox" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="spawnMonstersCheckBox" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="spawnProtectionLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="spawnProtectionField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="viewDistanceLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="viewDistanceSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="whiteListCheckBox" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1086,6 +1143,64 @@
                         <Property name="name" type="java.lang.String" value="serverIpField" noResource="true"/>
                       </Properties>
                     </Component>
+                    <Component class="javax.swing.JLabel" name="serverPortLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="serverPortLabel.text"/>
+                        <Property name="name" type="java.lang.String" value="serverPortLabel" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="serverPortField">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="serverPortField.text"/>
+                        <Property name="name" type="java.lang.String" value="serverPortField" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="spawnAnimalsCheckBox">
+                      <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
+                        <Property name="text" type="java.lang.String" resourceKey="spawnAnimalsCheckBox.text"/>
+                        <Property name="name" type="java.lang.String" value="spawnAnimalsCheckBox" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="spawnMonstersCheckBox">
+                      <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
+                        <Property name="text" type="java.lang.String" resourceKey="spawnMonstersCheckBox.text"/>
+                        <Property name="name" type="java.lang.String" value="spawnMonstersCheckBox" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="spawnProtectionLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="spawnProtectionLabel.text"/>
+                        <Property name="name" type="java.lang.String" value="spawnProtectionLabel" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="spawnProtectionField">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="spawnProtectionField.text"/>
+                        <Property name="name" type="java.lang.String" value="spawnProtectionField" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="viewDistanceLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="viewDistanceLabel.text"/>
+                        <Property name="name" type="java.lang.String" value="viewDistanceLabel" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JSpinner" name="viewDistanceSpinner">
+                      <Properties>
+                        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                          <SpinnerModel initial="10" maximum="15" minimum="3" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" value="viewDistanceSpinner" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="whiteListCheckBox">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="whiteListCheckBox.text"/>
+                        <Property name="name" type="java.lang.String" value="whiteListCheckBox" noResource="true"/>
+                      </Properties>
+                    </Component>
                   </SubComponents>
                 </Container>
               </SubComponents>
@@ -1106,16 +1221,16 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jPanel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="saveGuiConfigButton" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="47" max="32767" attributes="0"/>
+                          <EmptySpace pref="197" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1130,7 +1245,7 @@
                               </Group>
                               <Component id="jPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="161" max="32767" attributes="0"/>
+                          <EmptySpace pref="168" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1151,15 +1266,20 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="windowTitleLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="windowTitleField" min="-2" pref="169" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="inputHistoryMaxSizeLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="inputHistoryMaxSizeField" min="-2" pref="118" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="windowTitleLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="windowTitleField" pref="93" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="inputHistoryMaxSizeLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="inputHistoryMaxSizeField" min="-2" pref="42" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1250,45 +1370,13 @@
                                   <Component id="textSizeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="severeColorField" min="0" pref="0" max="32767" attributes="1"/>
-                                          <Component id="warningColorField" alignment="0" min="0" pref="0" max="32767" attributes="1"/>
-                                          <Component id="infoColorField" alignment="0" min="0" pref="0" max="32767" attributes="1"/>
-                                          <Component id="bgColorField" alignment="0" min="0" pref="0" max="32767" attributes="1"/>
-                                          <Component id="textColorField" alignment="0" pref="50" max="32767" attributes="1"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="textColorButton" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="textColorBox" min="-2" pref="21" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" attributes="0">
-                                              <Component id="bgColorButton" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="bgColorBox" min="-2" pref="21" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" attributes="0">
-                                              <Component id="infoColorButton" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="infoColorBox" min="-2" pref="21" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" attributes="0">
-                                              <Component id="warningColorButton" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="warningColorBox" min="-2" pref="21" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" attributes="0">
-                                              <Component id="severeColorButton" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="severeColorBox" min="-2" pref="21" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                  </Group>
-                                  <Component id="textSizeField" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="textSizeField" alignment="0" pref="40" max="32767" attributes="1"/>
+                                  <Component id="textColorBox" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="bgColorBox" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="infoColorBox" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="warningColorBox" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="severeColorBox" alignment="0" max="32767" attributes="1"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -1299,36 +1387,26 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="textColorLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="textColorField" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="textColorButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="textColorBox" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="bgColorLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="bgColorField" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="bgColorButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="bgColorBox" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="infoColorLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="infoColorField" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="infoColorButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="infoColorBox" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="warningColorLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="warningColorField" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="warningColorButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="warningColorBox" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="severeColorLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="severeColorField" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="severeColorButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="severeColorBox" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
@@ -1371,171 +1449,61 @@
                         <Property name="name" type="java.lang.String" value="severeColorLabel" noResource="true"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="warningColorField">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" resourceKey="warningColorField.text"/>
-                        <Property name="toolTipText" type="java.lang.String" resourceKey="warningColorField.toolTipText"/>
-                        <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="new RegexVerifier(&quot;^([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}$&quot;)" type="code"/>
-                        </Property>
-                        <Property name="name" type="java.lang.String" value="warningColorField" noResource="true"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="warningColorFieldFocusLost"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="infoColorField">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" resourceKey="infoColorField.text"/>
-                        <Property name="toolTipText" type="java.lang.String" resourceKey="infoColorField.toolTipText"/>
-                        <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="new RegexVerifier(&quot;^([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}$&quot;)" type="code"/>
-                        </Property>
-                        <Property name="name" type="java.lang.String" value="infoColorField" noResource="true"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="infoColorFieldFocusLost"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="textColorField">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" resourceKey="textColorField.text"/>
-                        <Property name="toolTipText" type="java.lang.String" resourceKey="textColorField.toolTipText"/>
-                        <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="new RegexVerifier(&quot;^([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}$&quot;)" type="code"/>
-                        </Property>
-                        <Property name="name" type="java.lang.String" value="textColorField" noResource="true"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="textColorFieldFocusLost"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="bgColorField">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" resourceKey="bgColorField.text"/>
-                        <Property name="toolTipText" type="java.lang.String" resourceKey="bgColorField.toolTipText"/>
-                        <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="new RegexVerifier(&quot;^([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}$&quot;)" type="code"/>
-                        </Property>
-                        <Property name="name" type="java.lang.String" value="bgColorField" noResource="true"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="bgColorFieldFocusLost"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="severeColorField">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" resourceKey="severeColorField.text"/>
-                        <Property name="toolTipText" type="java.lang.String" resourceKey="severeColorField.toolTipText"/>
-                        <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="new RegexVerifier(&quot;^([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}$&quot;)" type="code"/>
-                        </Property>
-                        <Property name="name" type="java.lang.String" value="severeColorField" noResource="true"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="severeColorFieldFocusLost"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JButton" name="textColorButton">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" resourceKey="textColorButton.text"/>
-                        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[2, 5, 2, 5]"/>
-                        </Property>
-                        <Property name="name" type="java.lang.String" value="textColorButton" noResource="true"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textColorButtonActionPerformed"/>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="textColorButtonFocusLost"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JButton" name="bgColorButton">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" resourceKey="bgColorButton.text"/>
-                        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[2, 5, 2, 5]"/>
-                        </Property>
-                        <Property name="name" type="java.lang.String" value="bgColorButton" noResource="true"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bgColorButtonActionPerformed"/>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="bgColorButtonFocusLost"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JButton" name="infoColorButton">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" resourceKey="infoColorButton.text"/>
-                        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[2, 5, 2, 5]"/>
-                        </Property>
-                        <Property name="name" type="java.lang.String" value="infoColorButton" noResource="true"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="infoColorButtonActionPerformed"/>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="infoColorButtonFocusLost"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JButton" name="warningColorButton">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" resourceKey="warningColorButton.text"/>
-                        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[2, 5, 2, 5]"/>
-                        </Property>
-                        <Property name="name" type="java.lang.String" value="warningColorButton" noResource="true"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="warningColorButtonActionPerformed"/>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="warningColorButtonFocusLost"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JButton" name="severeColorButton">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" resourceKey="severeColorButton.text"/>
-                        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[2, 5, 2, 5]"/>
-                        </Property>
-                        <Property name="name" type="java.lang.String" value="severeColorButton" noResource="true"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="severeColorButtonActionPerformed"/>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="severeColorButtonFocusLost"/>
-                      </Events>
-                    </Component>
                     <Component class="javax.swing.JTextField" name="textColorBox">
                       <Properties>
                         <Property name="editable" type="boolean" value="false"/>
                         <Property name="text" type="java.lang.String" resourceKey="textColorBox.text"/>
-                        <Property name="focusable" type="boolean" value="false"/>
+                        <Property name="toolTipText" type="java.lang.String" resourceKey="textColorBox.toolTipText"/>
                         <Property name="name" type="java.lang.String" value="textColorBox" noResource="true"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="textColorBoxMouseClicked"/>
+                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="textColorBoxFocusLost"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JTextField" name="bgColorBox">
                       <Properties>
                         <Property name="editable" type="boolean" value="false"/>
-                        <Property name="focusable" type="boolean" value="false"/>
+                        <Property name="toolTipText" type="java.lang.String" resourceKey="bgColorBox.toolTipText"/>
                         <Property name="name" type="java.lang.String" value="bgColorBox" noResource="true"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bgColorBoxMouseClicked"/>
+                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="bgColorBoxFocusLost"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JTextField" name="infoColorBox">
                       <Properties>
                         <Property name="editable" type="boolean" value="false"/>
-                        <Property name="focusable" type="boolean" value="false"/>
+                        <Property name="toolTipText" type="java.lang.String" resourceKey="infoColorBox.toolTipText"/>
                         <Property name="name" type="java.lang.String" value="infoColorBox" noResource="true"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="infoColorBoxMouseClicked"/>
+                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="infoColorBoxFocusLost"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JTextField" name="warningColorBox">
                       <Properties>
                         <Property name="editable" type="boolean" value="false"/>
-                        <Property name="focusable" type="boolean" value="false"/>
+                        <Property name="toolTipText" type="java.lang.String" resourceKey="warningColorBox.toolTipText"/>
                         <Property name="name" type="java.lang.String" value="warningColorBox" noResource="true"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="warningColorBoxMouseClicked"/>
+                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="warningColorBoxFocusLost"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JTextField" name="severeColorBox">
                       <Properties>
                         <Property name="editable" type="boolean" value="false"/>
-                        <Property name="focusable" type="boolean" value="false"/>
+                        <Property name="toolTipText" type="java.lang.String" resourceKey="severeColorBox.toolTipText"/>
                         <Property name="name" type="java.lang.String" value="severeColorBox" noResource="true"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="severeColorBoxMouseClicked"/>
+                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="severeColorBoxFocusLost"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="textSizeLabel">
                       <Properties>
@@ -1582,7 +1550,7 @@
                                   <Component id="backupControlRefreshButton" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="saveBackupControlButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="161" max="32767" attributes="0"/>
+                                  <EmptySpace pref="156" max="32767" attributes="0"/>
                                   <Component id="backupButton" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -1643,7 +1611,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="backupPathLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="backupPathField" pref="184" max="32767" attributes="0"/>
+                              <Component id="backupPathField" pref="179" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="backupPathBrowseButton" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -1733,12 +1701,12 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane3" alignment="0" pref="306" max="32767" attributes="0"/>
+                          <Component id="jScrollPane3" alignment="0" pref="301" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane3" alignment="0" pref="190" max="32767" attributes="0"/>
+                          <Component id="jScrollPane3" alignment="0" pref="182" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -1782,12 +1750,12 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane4" alignment="0" pref="206" max="32767" attributes="0"/>
+                          <Component id="jScrollPane4" alignment="0" pref="201" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane4" alignment="0" pref="190" max="32767" attributes="0"/>
+                          <Component id="jScrollPane4" alignment="0" pref="182" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -1844,7 +1812,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="443" max="32767" attributes="0"/>
+                          <EmptySpace pref="433" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1853,7 +1821,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="334" max="32767" attributes="0"/>
+                          <EmptySpace pref="326" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1889,7 +1857,7 @@
                           <Component id="taskListEditButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="taskListRemoveButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="345" max="32767" attributes="0"/>
+                          <EmptySpace pref="335" max="32767" attributes="0"/>
                       </Group>
                       <Component id="taskSchedulerPanel" alignment="1" max="32767" attributes="0"/>
                   </Group>
@@ -1925,12 +1893,12 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane5" alignment="0" pref="540" max="32767" attributes="0"/>
+                          <Component id="jScrollPane5" alignment="0" pref="530" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane5" alignment="0" pref="220" max="32767" attributes="0"/>
+                          <Component id="jScrollPane5" alignment="0" pref="212" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -2064,16 +2032,16 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="statusPanelSeparator" alignment="0" pref="557" max="32767" attributes="0"/>
+              <Component id="statusPanelSeparator" alignment="0" pref="547" max="32767" attributes="0"/>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="statusMessageLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="462" max="32767" attributes="0"/>
+                  <EmptySpace pref="452" max="32767" attributes="0"/>
                   <Component id="statusAnimationLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="401" max="32767" attributes="0"/>
+                  <EmptySpace pref="391" max="32767" attributes="0"/>
                   <Component id="progressBar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -2159,6 +2127,6 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="1"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,1,-87,0,0,2,45"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,1,-87,0,0,2,35"/>
   </AuxValues>
 </Form>

@@ -995,6 +995,7 @@
               <ComponentRef name="serverTaskGroup"/>
             </Property>
             <Property name="text" type="java.lang.String" resourceKey="saveWorldsRadio.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="saveWorldsRadio.toolTipText"/>
             <Property name="name" type="java.lang.String" value="saveWorldsRadio" noResource="true"/>
           </Properties>
           <Events>

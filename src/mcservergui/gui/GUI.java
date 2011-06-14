@@ -40,6 +40,7 @@ import mcservergui.mcserver.MCServerModel;
 import mcservergui.mcserver.MCServerReceiver;
 import mcservergui.task.TaskDialog;
 import mcservergui.Main;
+import mcservergui.config.ServerProperties;
 import org.quartz.*;
 import static mcservergui.task.event.EventScheduler.*;
 
@@ -120,8 +121,10 @@ public class GUI extends FrameView implements Observer {
         taskList = new GUIListModel();
         taskSchedulerList.setModel(taskList);
 
+        serverProperties = new ServerProperties();
         config = newConfig;
         server = newServer;
+        server.addObserver(serverProperties);
         getFrame().setTitle(config.getWindowTitle());
         controlSwitcher("OFF");
 
@@ -202,11 +205,11 @@ public class GUI extends FrameView implements Observer {
         cmdLineField = new javax.swing.JTextField();
         customLaunchCheckBox = new javax.swing.JCheckBox();
         saveServerConfigButton = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        proxyServerPanel = new javax.swing.JPanel();
         useProxyCheckBox = new javax.swing.JCheckBox();
         extPortLabel = new javax.swing.JLabel();
         extPortField = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
+        serverPropertiesPanel = new javax.swing.JPanel();
         allowFlightCheckBox = new javax.swing.JCheckBox();
         allowNetherCheckBox = new javax.swing.JCheckBox();
         levelNameLabel = new javax.swing.JLabel();
@@ -220,6 +223,15 @@ public class GUI extends FrameView implements Observer {
         pvpCheckBox = new javax.swing.JCheckBox();
         serverIpLabel = new javax.swing.JLabel();
         serverIpField = new javax.swing.JTextField();
+        serverPortLabel = new javax.swing.JLabel();
+        serverPortField = new javax.swing.JTextField();
+        spawnAnimalsCheckBox = new javax.swing.JCheckBox();
+        spawnMonstersCheckBox = new javax.swing.JCheckBox();
+        spawnProtectionLabel = new javax.swing.JLabel();
+        spawnProtectionField = new javax.swing.JTextField();
+        viewDistanceLabel = new javax.swing.JLabel();
+        viewDistanceSpinner = new javax.swing.JSpinner();
+        whiteListCheckBox = new javax.swing.JCheckBox();
         guiConfigTab = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         windowTitleLabel = new javax.swing.JLabel();
@@ -233,16 +245,6 @@ public class GUI extends FrameView implements Observer {
         infoColorLabel = new javax.swing.JLabel();
         warningColorLabel = new javax.swing.JLabel();
         severeColorLabel = new javax.swing.JLabel();
-        warningColorField = new javax.swing.JTextField();
-        infoColorField = new javax.swing.JTextField();
-        textColorField = new javax.swing.JTextField();
-        bgColorField = new javax.swing.JTextField();
-        severeColorField = new javax.swing.JTextField();
-        textColorButton = new javax.swing.JButton();
-        bgColorButton = new javax.swing.JButton();
-        infoColorButton = new javax.swing.JButton();
-        warningColorButton = new javax.swing.JButton();
-        severeColorButton = new javax.swing.JButton();
         textColorBox = new javax.swing.JTextField();
         bgColorBox = new javax.swing.JTextField();
         infoColorBox = new javax.swing.JTextField();
@@ -371,7 +373,7 @@ public class GUI extends FrameView implements Observer {
         playerListPanel.setLayout(playerListPanelLayout);
         playerListPanelLayout.setHorizontalGroup(
             playerListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
         );
         playerListPanelLayout.setVerticalGroup(
             playerListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -425,7 +427,7 @@ public class GUI extends FrameView implements Observer {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, consoleInputPanelLayout.createSequentialGroup()
                 .addComponent(sayCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(consoleInput, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+                .addComponent(consoleInput, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(submitButton))
         );
@@ -620,9 +622,9 @@ public class GUI extends FrameView implements Observer {
                     .addGroup(mainWindowTabLayout.createSequentialGroup()
                         .addComponent(consoleOutputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(playerListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
-                    .addComponent(consoleInputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE))
-                .addGap(20, 20, 20))
+                        .addComponent(playerListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE))
+                    .addComponent(consoleInputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE))
+                .addGap(44, 44, 44))
         );
         mainWindowTabLayout.setVerticalGroup(
             mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -638,7 +640,7 @@ public class GUI extends FrameView implements Observer {
                         .addComponent(serverControlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(guiInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(serverInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("mainWindowTab.TabConstraints.tabTitle"), mainWindowTab); // NOI18N
@@ -646,7 +648,9 @@ public class GUI extends FrameView implements Observer {
         serverConfigTab.setName("serverConfigTab"); // NOI18N
 
         serverCmdLinePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("serverCmdLinePanel.border.title"))); // NOI18N
+        serverCmdLinePanel.setMaximumSize(new java.awt.Dimension(252, 239));
         serverCmdLinePanel.setName("serverCmdLinePanel"); // NOI18N
+        serverCmdLinePanel.setPreferredSize(new java.awt.Dimension(252, 239));
 
         javaExecLabel.setText(resourceMap.getString("javaExecLabel.text")); // NOI18N
         javaExecLabel.setName("javaExecLabel"); // NOI18N
@@ -835,8 +839,9 @@ public class GUI extends FrameView implements Observer {
             }
         });
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel2.border.title"))); // NOI18N
-        jPanel2.setName("jPanel2"); // NOI18N
+        proxyServerPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("proxyServerPanel.border.title"))); // NOI18N
+        proxyServerPanel.setMaximumSize(new java.awt.Dimension(252, 50));
+        proxyServerPanel.setName("proxyServerPanel"); // NOI18N
 
         useProxyCheckBox.setText(resourceMap.getString("useProxyCheckBox.text")); // NOI18N
         useProxyCheckBox.setToolTipText(resourceMap.getString("useProxyCheckBox.toolTipText")); // NOI18N
@@ -849,27 +854,27 @@ public class GUI extends FrameView implements Observer {
         extPortField.setToolTipText(resourceMap.getString("extPortField.toolTipText")); // NOI18N
         extPortField.setName("extPortField"); // NOI18N
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout proxyServerPanelLayout = new javax.swing.GroupLayout(proxyServerPanel);
+        proxyServerPanel.setLayout(proxyServerPanelLayout);
+        proxyServerPanelLayout.setHorizontalGroup(
+            proxyServerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(proxyServerPanelLayout.createSequentialGroup()
                 .addComponent(useProxyCheckBox)
                 .addGap(18, 18, 18)
                 .addComponent(extPortLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(extPortField, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        proxyServerPanelLayout.setVerticalGroup(
+            proxyServerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(proxyServerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(useProxyCheckBox)
                 .addComponent(extPortLabel)
                 .addComponent(extPortField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel3.border.title"))); // NOI18N
-        jPanel3.setName("jPanel3"); // NOI18N
+        serverPropertiesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("serverPropertiesPanel.border.title"))); // NOI18N
+        serverPropertiesPanel.setName("serverPropertiesPanel"); // NOI18N
 
         allowFlightCheckBox.setText(resourceMap.getString("allowFlightCheckBox.text")); // NOI18N
         allowFlightCheckBox.setName("allowFlightCheckBox"); // NOI18N
@@ -913,68 +918,136 @@ public class GUI extends FrameView implements Observer {
         serverIpField.setText(resourceMap.getString("serverIpField.text")); // NOI18N
         serverIpField.setName("serverIpField"); // NOI18N
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(allowFlightCheckBox)
+        serverPortLabel.setText(resourceMap.getString("serverPortLabel.text")); // NOI18N
+        serverPortLabel.setName("serverPortLabel"); // NOI18N
+
+        serverPortField.setText(resourceMap.getString("serverPortField.text")); // NOI18N
+        serverPortField.setName("serverPortField"); // NOI18N
+
+        spawnAnimalsCheckBox.setSelected(true);
+        spawnAnimalsCheckBox.setText(resourceMap.getString("spawnAnimalsCheckBox.text")); // NOI18N
+        spawnAnimalsCheckBox.setName("spawnAnimalsCheckBox"); // NOI18N
+
+        spawnMonstersCheckBox.setSelected(true);
+        spawnMonstersCheckBox.setText(resourceMap.getString("spawnMonstersCheckBox.text")); // NOI18N
+        spawnMonstersCheckBox.setName("spawnMonstersCheckBox"); // NOI18N
+
+        spawnProtectionLabel.setText(resourceMap.getString("spawnProtectionLabel.text")); // NOI18N
+        spawnProtectionLabel.setName("spawnProtectionLabel"); // NOI18N
+
+        spawnProtectionField.setText(resourceMap.getString("spawnProtectionField.text")); // NOI18N
+        spawnProtectionField.setName("spawnProtectionField"); // NOI18N
+
+        viewDistanceLabel.setText(resourceMap.getString("viewDistanceLabel.text")); // NOI18N
+        viewDistanceLabel.setName("viewDistanceLabel"); // NOI18N
+
+        viewDistanceSpinner.setModel(new javax.swing.SpinnerNumberModel(10, 3, 15, 1));
+        viewDistanceSpinner.setName("viewDistanceSpinner"); // NOI18N
+
+        whiteListCheckBox.setText(resourceMap.getString("whiteListCheckBox.text")); // NOI18N
+        whiteListCheckBox.setName("whiteListCheckBox"); // NOI18N
+
+        javax.swing.GroupLayout serverPropertiesPanelLayout = new javax.swing.GroupLayout(serverPropertiesPanel);
+        serverPropertiesPanel.setLayout(serverPropertiesPanelLayout);
+        serverPropertiesPanelLayout.setHorizontalGroup(
+            serverPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(serverPropertiesPanelLayout.createSequentialGroup()
+                .addGroup(serverPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(serverPropertiesPanelLayout.createSequentialGroup()
+                        .addComponent(maxPlayersLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(maxPlayersSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(serverPropertiesPanelLayout.createSequentialGroup()
+                        .addComponent(onlineModeCheckBox)
                         .addGap(18, 18, 18)
-                        .addComponent(allowNetherCheckBox))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(levelNameLabel)
+                        .addComponent(pvpCheckBox))
+                    .addGroup(serverPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, serverPropertiesPanelLayout.createSequentialGroup()
+                            .addComponent(levelSeedLabel)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(levelSeedField))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, serverPropertiesPanelLayout.createSequentialGroup()
+                            .addComponent(levelNameLabel)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(levelNameField))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, serverPropertiesPanelLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(allowFlightCheckBox)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(allowNetherCheckBox)))
+                    .addGroup(serverPropertiesPanelLayout.createSequentialGroup()
+                        .addComponent(serverPortLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(levelNameField, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(levelSeedLabel)
+                        .addComponent(serverPortField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(serverPropertiesPanelLayout.createSequentialGroup()
+                        .addComponent(serverIpLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(levelSeedField, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)))
+                        .addComponent(serverIpField, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(maxPlayersLabel)
+            .addGroup(serverPropertiesPanelLayout.createSequentialGroup()
+                .addComponent(spawnAnimalsCheckBox)
+                .addGap(105, 105, 105))
+            .addGroup(serverPropertiesPanelLayout.createSequentialGroup()
+                .addGroup(serverPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(spawnMonstersCheckBox)
+                    .addGroup(serverPropertiesPanelLayout.createSequentialGroup()
+                        .addComponent(spawnProtectionLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(spawnProtectionField, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)))
+                .addContainerGap(30, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(serverPropertiesPanelLayout.createSequentialGroup()
+                .addComponent(viewDistanceLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(maxPlayersSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(158, 158, 158))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(onlineModeCheckBox)
-                .addGap(18, 18, 18)
-                .addComponent(pvpCheckBox)
-                .addGap(126, 126, 126))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(serverIpLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(serverIpField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addComponent(viewDistanceSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(85, 85, 85))
+            .addGroup(serverPropertiesPanelLayout.createSequentialGroup()
+                .addComponent(whiteListCheckBox)
+                .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        serverPropertiesPanelLayout.setVerticalGroup(
+            serverPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(serverPropertiesPanelLayout.createSequentialGroup()
+                .addGroup(serverPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(allowFlightCheckBox)
                     .addComponent(allowNetherCheckBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(serverPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(levelNameLabel)
                     .addComponent(levelNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(serverPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(levelSeedLabel)
                     .addComponent(levelSeedField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(serverPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(maxPlayersLabel)
                     .addComponent(maxPlayersSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(serverPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(onlineModeCheckBox)
                     .addComponent(pvpCheckBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(serverPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(serverIpLabel)
                     .addComponent(serverIpField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(148, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(serverPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(serverPortLabel)
+                    .addComponent(serverPortField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(spawnAnimalsCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(spawnMonstersCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(serverPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(spawnProtectionLabel)
+                    .addComponent(spawnProtectionField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(serverPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(viewDistanceLabel)
+                    .addComponent(viewDistanceSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(whiteListCheckBox))
         );
 
         javax.swing.GroupLayout serverConfigTabLayout = new javax.swing.GroupLayout(serverConfigTab);
@@ -983,29 +1056,28 @@ public class GUI extends FrameView implements Observer {
             serverConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(serverConfigTabLayout.createSequentialGroup()
                 .addGroup(serverConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(serverConfigTabLayout.createSequentialGroup()
-                        .addGroup(serverConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(serverCmdLinePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(serverConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(proxyServerPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(serverCmdLinePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))
                     .addGroup(serverConfigTabLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(saveServerConfigButton)))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(serverPropertiesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(98, Short.MAX_VALUE))
         );
         serverConfigTabLayout.setVerticalGroup(
             serverConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(serverConfigTabLayout.createSequentialGroup()
-                .addGroup(serverConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, serverConfigTabLayout.createSequentialGroup()
+                .addGroup(serverConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(serverConfigTabLayout.createSequentialGroup()
                         .addComponent(serverCmdLinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(saveServerConfigButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(proxyServerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(saveServerConfigButton))
+                    .addComponent(serverPropertiesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("serverConfigTab.TabConstraints.tabTitle"), serverConfigTab); // NOI18N
@@ -1039,13 +1111,16 @@ public class GUI extends FrameView implements Observer {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(windowTitleLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(windowTitleField, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(inputHistoryMaxSizeLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(inputHistoryMaxSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(windowTitleLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(windowTitleField, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(inputHistoryMaxSizeLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(inputHistoryMaxSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1086,146 +1161,76 @@ public class GUI extends FrameView implements Observer {
         severeColorLabel.setText(resourceMap.getString("severeColorLabel.text")); // NOI18N
         severeColorLabel.setName("severeColorLabel"); // NOI18N
 
-        warningColorField.setText(resourceMap.getString("warningColorField.text")); // NOI18N
-        warningColorField.setToolTipText(resourceMap.getString("warningColorField.toolTipText")); // NOI18N
-        warningColorField.setInputVerifier(new RegexVerifier("^([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}$"));
-        warningColorField.setName("warningColorField"); // NOI18N
-        warningColorField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                warningColorFieldFocusLost(evt);
-            }
-        });
-
-        infoColorField.setText(resourceMap.getString("infoColorField.text")); // NOI18N
-        infoColorField.setToolTipText(resourceMap.getString("infoColorField.toolTipText")); // NOI18N
-        infoColorField.setInputVerifier(new RegexVerifier("^([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}$"));
-        infoColorField.setName("infoColorField"); // NOI18N
-        infoColorField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                infoColorFieldFocusLost(evt);
-            }
-        });
-
-        textColorField.setText(resourceMap.getString("textColorField.text")); // NOI18N
-        textColorField.setToolTipText(resourceMap.getString("textColorField.toolTipText")); // NOI18N
-        textColorField.setInputVerifier(new RegexVerifier("^([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}$"));
-        textColorField.setName("textColorField"); // NOI18N
-        textColorField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                textColorFieldFocusLost(evt);
-            }
-        });
-
-        bgColorField.setText(resourceMap.getString("bgColorField.text")); // NOI18N
-        bgColorField.setToolTipText(resourceMap.getString("bgColorField.toolTipText")); // NOI18N
-        bgColorField.setInputVerifier(new RegexVerifier("^([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}$"));
-        bgColorField.setName("bgColorField"); // NOI18N
-        bgColorField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                bgColorFieldFocusLost(evt);
-            }
-        });
-
-        severeColorField.setText(resourceMap.getString("severeColorField.text")); // NOI18N
-        severeColorField.setToolTipText(resourceMap.getString("severeColorField.toolTipText")); // NOI18N
-        severeColorField.setInputVerifier(new RegexVerifier("^([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}$"));
-        severeColorField.setName("severeColorField"); // NOI18N
-        severeColorField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                severeColorFieldFocusLost(evt);
-            }
-        });
-
-        textColorButton.setText(resourceMap.getString("textColorButton.text")); // NOI18N
-        textColorButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
-        textColorButton.setName("textColorButton"); // NOI18N
-        textColorButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textColorButtonActionPerformed(evt);
-            }
-        });
-        textColorButton.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                textColorButtonFocusLost(evt);
-            }
-        });
-
-        bgColorButton.setText(resourceMap.getString("bgColorButton.text")); // NOI18N
-        bgColorButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
-        bgColorButton.setName("bgColorButton"); // NOI18N
-        bgColorButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bgColorButtonActionPerformed(evt);
-            }
-        });
-        bgColorButton.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                bgColorButtonFocusLost(evt);
-            }
-        });
-
-        infoColorButton.setText(resourceMap.getString("infoColorButton.text")); // NOI18N
-        infoColorButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
-        infoColorButton.setName("infoColorButton"); // NOI18N
-        infoColorButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                infoColorButtonActionPerformed(evt);
-            }
-        });
-        infoColorButton.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                infoColorButtonFocusLost(evt);
-            }
-        });
-
-        warningColorButton.setText(resourceMap.getString("warningColorButton.text")); // NOI18N
-        warningColorButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
-        warningColorButton.setName("warningColorButton"); // NOI18N
-        warningColorButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                warningColorButtonActionPerformed(evt);
-            }
-        });
-        warningColorButton.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                warningColorButtonFocusLost(evt);
-            }
-        });
-
-        severeColorButton.setText(resourceMap.getString("severeColorButton.text")); // NOI18N
-        severeColorButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
-        severeColorButton.setName("severeColorButton"); // NOI18N
-        severeColorButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                severeColorButtonActionPerformed(evt);
-            }
-        });
-        severeColorButton.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                severeColorButtonFocusLost(evt);
-            }
-        });
-
         textColorBox.setEditable(false);
         textColorBox.setText(resourceMap.getString("textColorBox.text")); // NOI18N
-        textColorBox.setFocusable(false);
+        textColorBox.setToolTipText(resourceMap.getString("textColorBox.toolTipText")); // NOI18N
         textColorBox.setName("textColorBox"); // NOI18N
+        textColorBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                textColorBoxMouseClicked(evt);
+            }
+        });
+        textColorBox.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textColorBoxFocusLost(evt);
+            }
+        });
 
         bgColorBox.setEditable(false);
-        bgColorBox.setFocusable(false);
+        bgColorBox.setToolTipText(resourceMap.getString("bgColorBox.toolTipText")); // NOI18N
         bgColorBox.setName("bgColorBox"); // NOI18N
+        bgColorBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bgColorBoxMouseClicked(evt);
+            }
+        });
+        bgColorBox.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                bgColorBoxFocusLost(evt);
+            }
+        });
 
         infoColorBox.setEditable(false);
-        infoColorBox.setFocusable(false);
+        infoColorBox.setToolTipText(resourceMap.getString("infoColorBox.toolTipText")); // NOI18N
         infoColorBox.setName("infoColorBox"); // NOI18N
+        infoColorBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                infoColorBoxMouseClicked(evt);
+            }
+        });
+        infoColorBox.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                infoColorBoxFocusLost(evt);
+            }
+        });
 
         warningColorBox.setEditable(false);
-        warningColorBox.setFocusable(false);
+        warningColorBox.setToolTipText(resourceMap.getString("warningColorBox.toolTipText")); // NOI18N
         warningColorBox.setName("warningColorBox"); // NOI18N
+        warningColorBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                warningColorBoxMouseClicked(evt);
+            }
+        });
+        warningColorBox.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                warningColorBoxFocusLost(evt);
+            }
+        });
 
         severeColorBox.setEditable(false);
-        severeColorBox.setFocusable(false);
+        severeColorBox.setToolTipText(resourceMap.getString("severeColorBox.toolTipText")); // NOI18N
         severeColorBox.setName("severeColorBox"); // NOI18N
+        severeColorBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                severeColorBoxMouseClicked(evt);
+            }
+        });
+        severeColorBox.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                severeColorBoxFocusLost(evt);
+            }
+        });
 
         textSizeLabel.setText(resourceMap.getString("textSizeLabel.text")); // NOI18N
         textSizeLabel.setName("textSizeLabel"); // NOI18N
@@ -1251,37 +1256,13 @@ public class GUI extends FrameView implements Observer {
                     .addComponent(severeColorLabel)
                     .addComponent(textSizeLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(severeColorField, 0, 0, Short.MAX_VALUE)
-                            .addComponent(warningColorField, 0, 0, Short.MAX_VALUE)
-                            .addComponent(infoColorField, 0, 0, Short.MAX_VALUE)
-                            .addComponent(bgColorField, 0, 0, Short.MAX_VALUE)
-                            .addComponent(textColorField, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(textColorButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textColorBox, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(bgColorButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(bgColorBox, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(infoColorButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(infoColorBox, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(warningColorButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(warningColorBox, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(severeColorButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(severeColorBox, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(textSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(textSizeField, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(textColorBox)
+                    .addComponent(bgColorBox)
+                    .addComponent(infoColorBox)
+                    .addComponent(warningColorBox)
+                    .addComponent(severeColorBox))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -1289,32 +1270,22 @@ public class GUI extends FrameView implements Observer {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textColorLabel)
-                    .addComponent(textColorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textColorButton)
                     .addComponent(textColorBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bgColorLabel)
-                    .addComponent(bgColorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bgColorButton)
                     .addComponent(bgColorBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(infoColorLabel)
-                    .addComponent(infoColorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(infoColorButton)
                     .addComponent(infoColorBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(warningColorLabel)
-                    .addComponent(warningColorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(warningColorButton)
                     .addComponent(warningColorBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(severeColorLabel)
-                    .addComponent(severeColorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(severeColorButton)
                     .addComponent(severeColorBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1327,14 +1298,14 @@ public class GUI extends FrameView implements Observer {
         guiConfigTabLayout.setHorizontalGroup(
             guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(guiConfigTabLayout.createSequentialGroup()
-                .addGroup(guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, guiConfigTabLayout.createSequentialGroup()
+                .addGroup(guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(guiConfigTabLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(saveGuiConfigButton)))
+                        .addComponent(saveGuiConfigButton))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(197, Short.MAX_VALUE))
         );
         guiConfigTabLayout.setVerticalGroup(
             guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1345,7 +1316,7 @@ public class GUI extends FrameView implements Observer {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(saveGuiConfigButton))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(161, Short.MAX_VALUE))
+                .addContainerGap(168, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("guiConfigTab.TabConstraints.tabTitle"), guiConfigTab); // NOI18N
@@ -1399,7 +1370,7 @@ public class GUI extends FrameView implements Observer {
             .addGroup(backupSettingsPanelLayout.createSequentialGroup()
                 .addComponent(backupPathLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(backupPathField, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                .addComponent(backupPathField, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(backupPathBrowseButton))
             .addGroup(backupSettingsPanelLayout.createSequentialGroup()
@@ -1441,11 +1412,11 @@ public class GUI extends FrameView implements Observer {
         backupFileChooserPanel.setLayout(backupFileChooserPanelLayout);
         backupFileChooserPanelLayout.setHorizontalGroup(
             backupFileChooserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
         );
         backupFileChooserPanelLayout.setVerticalGroup(
             backupFileChooserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
         );
 
         backupStatusPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("backupStatusPanel.border.title"))); // NOI18N
@@ -1461,11 +1432,11 @@ public class GUI extends FrameView implements Observer {
         backupStatusPanel.setLayout(backupStatusPanelLayout);
         backupStatusPanelLayout.setHorizontalGroup(
             backupStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
         );
         backupStatusPanelLayout.setVerticalGroup(
             backupStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
         );
 
         backupControlRefreshButton.setText(resourceMap.getString("backupControlRefreshButton.text")); // NOI18N
@@ -1490,7 +1461,7 @@ public class GUI extends FrameView implements Observer {
                         .addComponent(backupControlRefreshButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(saveBackupControlButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
                         .addComponent(backupButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(backupStatusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1526,14 +1497,14 @@ public class GUI extends FrameView implements Observer {
             .addGroup(restoreTabLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addContainerGap(443, Short.MAX_VALUE))
+                .addContainerGap(433, Short.MAX_VALUE))
         );
         restoreTabLayout.setVerticalGroup(
             restoreTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(restoreTabLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addContainerGap(334, Short.MAX_VALUE))
+                .addContainerGap(326, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("restoreTab.TabConstraints.tabTitle"), restoreTab); // NOI18N
@@ -1558,11 +1529,11 @@ public class GUI extends FrameView implements Observer {
         taskSchedulerPanel.setLayout(taskSchedulerPanelLayout);
         taskSchedulerPanelLayout.setHorizontalGroup(
             taskSchedulerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
         );
         taskSchedulerPanelLayout.setVerticalGroup(
             taskSchedulerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
         );
 
         taskListAddButton.setText(resourceMap.getString("taskListAddButton.text")); // NOI18N
@@ -1600,7 +1571,7 @@ public class GUI extends FrameView implements Observer {
                 .addComponent(taskListEditButton)
                 .addGap(18, 18, 18)
                 .addComponent(taskListRemoveButton)
-                .addContainerGap(345, Short.MAX_VALUE))
+                .addContainerGap(335, Short.MAX_VALUE))
             .addComponent(taskSchedulerPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         schedulerTabLayout.setVerticalGroup(
@@ -1621,11 +1592,11 @@ public class GUI extends FrameView implements Observer {
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabber)
+            .addComponent(tabber, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabber)
+            .addComponent(tabber, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
         );
 
         menuBar.setName("menuBar"); // NOI18N
@@ -1665,15 +1636,15 @@ public class GUI extends FrameView implements Observer {
         statusPanel.setLayout(statusPanelLayout);
         statusPanelLayout.setHorizontalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
+            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE)
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(statusMessageLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 462, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 452, Short.MAX_VALUE)
                 .addComponent(statusAnimationLabel)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusPanelLayout.createSequentialGroup()
-                .addContainerGap(401, Short.MAX_VALUE)
+                .addContainerGap(391, Short.MAX_VALUE)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -1735,6 +1706,36 @@ public class GUI extends FrameView implements Observer {
                     .addComponent(serverInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(serverControlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     //.addComponent(backupControlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+        javax.swing.GroupLayout serverConfigTabLayout = new javax.swing.GroupLayout(serverConfigTab);
+        serverConfigTab.setLayout(serverConfigTabLayout);
+        serverConfigTabLayout.setHorizontalGroup(
+            serverConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(serverConfigTabLayout.createSequentialGroup()
+                .addGroup(serverConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(serverConfigTabLayout.createSequentialGroup()
+                        .addGroup(serverConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(proxyServerPanel, javax.swing.GroupLayout.Alignment.LEADING, 252, 252, 252)
+                            .addComponent(serverCmdLinePanel, javax.swing.GroupLayout.Alignment.LEADING, 252, 252, 252))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(serverPropertiesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(serverConfigTabLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(saveServerConfigButton)))
+                .addContainerGap(98, Short.MAX_VALUE))
+        );
+        serverConfigTabLayout.setVerticalGroup(
+            serverConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(serverConfigTabLayout.createSequentialGroup()
+                .addComponent(serverCmdLinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(proxyServerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(saveServerConfigButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(serverConfigTabLayout.createSequentialGroup()
+                .addComponent(serverPropertiesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(57, 57, 57))
         );
         backupFileChooser.getCheckingModel().setCheckingMode(CheckingMode.PROPAGATE_PRESERVING_CHECK);
         taskSchedulerList.setCellRenderer(new TaskSchedulerListCellRenderer());
@@ -2109,131 +2110,97 @@ public class GUI extends FrameView implements Observer {
         }
     }//GEN-LAST:event_taskListRemoveButtonActionPerformed
 
-    private void textColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textColorButtonActionPerformed
-        JFrame mainFrame = Main.getApplication().getMainFrame();
-        ColorChooser colorchooser = new ColorChooser(
-                mainFrame, textColorField, textColorBox);
-        colorchooser.setLocationRelativeTo(mainFrame);
-        Main.getApplication().show(colorchooser);
-    }//GEN-LAST:event_textColorButtonActionPerformed
-
-    private void bgColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bgColorButtonActionPerformed
-        JFrame mainFrame = Main.getApplication().getMainFrame();
-        ColorChooser colorchooser = new ColorChooser(
-                mainFrame, bgColorField, bgColorBox);
-        colorchooser.setLocationRelativeTo(mainFrame);
-        Main.getApplication().show(colorchooser);
-    }//GEN-LAST:event_bgColorButtonActionPerformed
-
-    private void infoColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoColorButtonActionPerformed
-        JFrame mainFrame = Main.getApplication().getMainFrame();
-        ColorChooser colorchooser = new ColorChooser(
-                mainFrame, infoColorField, infoColorBox);
-        colorchooser.setLocationRelativeTo(mainFrame);
-        Main.getApplication().show(colorchooser);
-    }//GEN-LAST:event_infoColorButtonActionPerformed
-
-    private void warningColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_warningColorButtonActionPerformed
-        JFrame mainFrame = Main.getApplication().getMainFrame();
-        ColorChooser colorchooser = new ColorChooser(
-                mainFrame, warningColorField, warningColorBox);
-        colorchooser.setLocationRelativeTo(mainFrame);
-        Main.getApplication().show(colorchooser);
-    }//GEN-LAST:event_warningColorButtonActionPerformed
-
-    private void severeColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_severeColorButtonActionPerformed
-        JFrame mainFrame = Main.getApplication().getMainFrame();
-        ColorChooser colorchooser = new ColorChooser(
-                mainFrame, severeColorField, severeColorBox);
-        colorchooser.setLocationRelativeTo(mainFrame);
-        Main.getApplication().show(colorchooser);
-    }//GEN-LAST:event_severeColorButtonActionPerformed
-
-    private void textColorFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textColorFieldFocusLost
-        if (textColorField.getInputVerifier().verify(textColorField)) {
-            config.display.setTextColor(textColorField.getText());
-            textColorBox.setBackground(java.awt.Color.decode("0x"
-                    + textColorField.getText()));
-        }
-    }//GEN-LAST:event_textColorFieldFocusLost
-
-    private void textColorButtonFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textColorButtonFocusLost
-        if (textColorField.getInputVerifier().verify(textColorField)) {
-            config.display.setTextColor(textColorField.getText());
-            textColorBox.setBackground(java.awt.Color.decode("0x"
-                    + textColorField.getText()));
-        }
-    }//GEN-LAST:event_textColorButtonFocusLost
-
-    private void bgColorFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bgColorFieldFocusLost
-        if (bgColorField.getInputVerifier().verify(bgColorField)) {
-            config.display.setBgColor(bgColorField.getText());
-            bgColorBox.setBackground(java.awt.Color.decode("0x"
-                    + bgColorField.getText()));
-            updateConsoleOutputBgColor();
-        }
-    }//GEN-LAST:event_bgColorFieldFocusLost
-
-    private void bgColorButtonFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bgColorButtonFocusLost
-        if (bgColorField.getInputVerifier().verify(bgColorField)) {
-            config.display.setBgColor(bgColorField.getText());
-            bgColorBox.setBackground(java.awt.Color.decode("0x"
-                    + bgColorField.getText()));
-            updateConsoleOutputBgColor();
-        }
-    }//GEN-LAST:event_bgColorButtonFocusLost
-
-    private void infoColorFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_infoColorFieldFocusLost
-        if (infoColorField.getInputVerifier().verify(infoColorField)) {
-            config.display.setInfoColor(infoColorField.getText());
-            infoColorBox.setBackground(java.awt.Color.decode("0x"
-                    + infoColorField.getText()));
-        }
-    }//GEN-LAST:event_infoColorFieldFocusLost
-
-    private void infoColorButtonFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_infoColorButtonFocusLost
-        if (infoColorField.getInputVerifier().verify(infoColorField)) {
-            config.display.setInfoColor(infoColorField.getText());
-            infoColorBox.setBackground(java.awt.Color.decode("0x"
-                    + infoColorField.getText()));
-        }
-    }//GEN-LAST:event_infoColorButtonFocusLost
-
-    private void warningColorFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_warningColorFieldFocusLost
-        if (warningColorField.getInputVerifier().verify(warningColorField)) {
-            config.display.setWarningColor(warningColorField.getText());
-            warningColorBox.setBackground(java.awt.Color.decode("0x"
-                    + warningColorField.getText()));
-        }
-    }//GEN-LAST:event_warningColorFieldFocusLost
-
-    private void warningColorButtonFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_warningColorButtonFocusLost
-        if (warningColorField.getInputVerifier().verify(warningColorField)) {
-            config.display.setWarningColor(warningColorField.getText());
-            warningColorBox.setBackground(java.awt.Color.decode("0x"
-                    + warningColorField.getText()));
-        }
-    }//GEN-LAST:event_warningColorButtonFocusLost
-
-    private void severeColorFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_severeColorFieldFocusLost
-        if (severeColorField.getInputVerifier().verify(severeColorField)) {
-            config.display.setSevereColor(severeColorField.getText());
-            severeColorBox.setBackground(java.awt.Color.decode("0x"
-                    + severeColorField.getText()));
-        }
-    }//GEN-LAST:event_severeColorFieldFocusLost
-
-    private void severeColorButtonFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_severeColorButtonFocusLost
-        if (severeColorField.getInputVerifier().verify(severeColorField)) {
-            config.display.setSevereColor(severeColorField.getText());
-            severeColorBox.setBackground(java.awt.Color.decode("0x"
-                    + severeColorField.getText()));
-        }
-    }//GEN-LAST:event_severeColorButtonFocusLost
-
     private void textSizeFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_textSizeFieldPropertyChange
         config.display.setTextSize(Integer.parseInt(textSizeField.getValue().toString()));
     }//GEN-LAST:event_textSizeFieldPropertyChange
+
+    private void textColorBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textColorBoxMouseClicked
+        JFrame mainFrame = Main.getApplication().getMainFrame();
+        ColorChooser colorchooser = new ColorChooser(
+                mainFrame, textColorBox);
+        colorchooser.setLocationRelativeTo(mainFrame);
+        Main.getApplication().show(colorchooser);
+    }//GEN-LAST:event_textColorBoxMouseClicked
+
+    private void bgColorBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bgColorBoxMouseClicked
+        JFrame mainFrame = Main.getApplication().getMainFrame();
+        ColorChooser colorchooser = new ColorChooser(
+                mainFrame, bgColorBox);
+        colorchooser.setLocationRelativeTo(mainFrame);
+        Main.getApplication().show(colorchooser);
+    }//GEN-LAST:event_bgColorBoxMouseClicked
+
+    private void infoColorBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_infoColorBoxMouseClicked
+        JFrame mainFrame = Main.getApplication().getMainFrame();
+        ColorChooser colorchooser = new ColorChooser(
+                mainFrame, infoColorBox);
+        colorchooser.setLocationRelativeTo(mainFrame);
+        Main.getApplication().show(colorchooser);
+    }//GEN-LAST:event_infoColorBoxMouseClicked
+
+    private void warningColorBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_warningColorBoxMouseClicked
+        JFrame mainFrame = Main.getApplication().getMainFrame();
+        ColorChooser colorchooser = new ColorChooser(
+                mainFrame, warningColorBox);
+        colorchooser.setLocationRelativeTo(mainFrame);
+        Main.getApplication().show(colorchooser);
+    }//GEN-LAST:event_warningColorBoxMouseClicked
+
+    private void severeColorBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_severeColorBoxMouseClicked
+        JFrame mainFrame = Main.getApplication().getMainFrame();
+        ColorChooser colorchooser = new ColorChooser(
+                mainFrame, severeColorBox);
+        colorchooser.setLocationRelativeTo(mainFrame);
+        Main.getApplication().show(colorchooser);
+    }//GEN-LAST:event_severeColorBoxMouseClicked
+
+    private void textColorBoxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textColorBoxFocusLost
+        String rgb = Integer.toHexString(textColorBox.getBackground().getRGB());
+        rgb = rgb.substring(2, rgb.length());
+        config.display.setTextColor(rgb);
+        /*
+        if (textColorField.getInputVerifier().verify(textColorField)) {
+            config.display.setTextColor(textColorField.getText());
+            textColorBox.setBackground(java.awt.Color.decode("0x"
+                    + textColorField.getText()));
+        }
+         * 
+         */
+    }//GEN-LAST:event_textColorBoxFocusLost
+
+    private void bgColorBoxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bgColorBoxFocusLost
+        String rgb = Integer.toHexString(bgColorBox.getBackground().getRGB());
+        rgb = rgb.substring(2, rgb.length());
+        config.display.setBgColor(rgb);
+        updateConsoleOutputBgColor();
+        /*
+        if (bgColorField.getInputVerifier().verify(bgColorField)) {
+            config.display.setBgColor(bgColorField.getText());
+            bgColorBox.setBackground(java.awt.Color.decode("0x"
+                    + bgColorField.getText()));
+            updateConsoleOutputBgColor();
+        }
+         *
+         */
+    }//GEN-LAST:event_bgColorBoxFocusLost
+
+    private void infoColorBoxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_infoColorBoxFocusLost
+        String rgb = Integer.toHexString(infoColorBox.getBackground().getRGB());
+        rgb = rgb.substring(2, rgb.length());
+        config.display.setInfoColor(rgb);
+    }//GEN-LAST:event_infoColorBoxFocusLost
+
+    private void warningColorBoxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_warningColorBoxFocusLost
+        String rgb = Integer.toHexString(warningColorBox.getBackground().getRGB());
+        rgb = rgb.substring(2, rgb.length());
+        config.display.setWarningColor(rgb);
+    }//GEN-LAST:event_warningColorBoxFocusLost
+
+    private void severeColorBoxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_severeColorBoxFocusLost
+        String rgb = Integer.toHexString(severeColorBox.getBackground().getRGB());
+        rgb = rgb.substring(2, rgb.length());
+        config.display.setSevereColor(rgb);
+    }//GEN-LAST:event_severeColorBoxFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JCheckBox allowFlightCheckBox;
@@ -2250,8 +2217,6 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JPanel backupStatusPanel;
     public javax.swing.JPanel backupTab;
     public javax.swing.JTextField bgColorBox;
-    public javax.swing.JButton bgColorButton;
-    public javax.swing.JTextField bgColorField;
     public javax.swing.JLabel bgColorLabel;
     public javax.swing.JCheckBox bukkitCheckBox;
     public javax.swing.JTextField cmdLineField;
@@ -2271,8 +2236,6 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JLabel guiMemoryUsage;
     public javax.swing.JLabel guiMemoryUsageLabel;
     public javax.swing.JTextField infoColorBox;
-    public javax.swing.JButton infoColorButton;
-    public javax.swing.JTextField infoColorField;
     public javax.swing.JLabel infoColorLabel;
     public javax.swing.JTextField inputHistoryMaxSizeField;
     public javax.swing.JLabel inputHistoryMaxSizeLabel;
@@ -2281,8 +2244,6 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JLabel jLabel3;
     public javax.swing.JList jList1;
     public javax.swing.JPanel jPanel1;
-    public javax.swing.JPanel jPanel2;
-    public javax.swing.JPanel jPanel3;
     public javax.swing.JPanel jPanel4;
     public javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JScrollPane jScrollPane2;
@@ -2304,6 +2265,7 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JCheckBox onlineModeCheckBox;
     public javax.swing.JPanel playerListPanel;
     private javax.swing.JProgressBar progressBar;
+    public javax.swing.JPanel proxyServerPanel;
     public javax.swing.JCheckBox pvpCheckBox;
     public javax.swing.JLabel receivingBytes;
     public javax.swing.JLabel receivingBytesLabel;
@@ -2327,10 +2289,15 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JLabel serverJarLabel;
     public javax.swing.JLabel serverMemoryUsage;
     public javax.swing.JLabel serverMemoryUsageLabel;
+    public javax.swing.JTextField serverPortField;
+    public javax.swing.JLabel serverPortLabel;
+    public javax.swing.JPanel serverPropertiesPanel;
     public javax.swing.JTextField severeColorBox;
-    public javax.swing.JButton severeColorButton;
-    public javax.swing.JTextField severeColorField;
     public javax.swing.JLabel severeColorLabel;
+    public javax.swing.JCheckBox spawnAnimalsCheckBox;
+    public javax.swing.JCheckBox spawnMonstersCheckBox;
+    public javax.swing.JTextField spawnProtectionField;
+    public javax.swing.JLabel spawnProtectionLabel;
     public javax.swing.JButton startstopButton;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
@@ -2343,8 +2310,6 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JList taskSchedulerList;
     public javax.swing.JPanel taskSchedulerPanel;
     public javax.swing.JTextField textColorBox;
-    public javax.swing.JButton textColorButton;
-    public javax.swing.JTextField textColorField;
     public javax.swing.JLabel textColorLabel;
     public javax.swing.JSpinner textSizeField;
     public javax.swing.JLabel textSizeLabel;
@@ -2353,10 +2318,11 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JCheckBox useNetStat;
     public javax.swing.JCheckBox useProxyCheckBox;
     public javax.swing.JLabel versionLabel;
+    public javax.swing.JLabel viewDistanceLabel;
+    public javax.swing.JSpinner viewDistanceSpinner;
     public javax.swing.JTextField warningColorBox;
-    public javax.swing.JButton warningColorButton;
-    public javax.swing.JTextField warningColorField;
     public javax.swing.JLabel warningColorLabel;
+    public javax.swing.JCheckBox whiteListCheckBox;
     public javax.swing.JTextField windowTitleField;
     public javax.swing.JLabel windowTitleLabel;
     public javax.swing.JCheckBox xincgcCheckBox;
@@ -2580,6 +2546,7 @@ public class GUI extends FrameView implements Observer {
             setConsoleOutput("Configuration file not found or invalid!  Creating new config file with default values.");
         }
         updateGuiWithConfigValues();
+        updateGuiWithServerProperties();
         saveConfig();
         initSchedule();
     }
@@ -2590,23 +2557,42 @@ public class GUI extends FrameView implements Observer {
         }
     }
 
+    public void updateGuiWithServerProperties() {
+        allowFlightCheckBox.setSelected(serverProperties.getAllowFlight());
+        allowNetherCheckBox.setSelected(serverProperties.getAllowNether());
+        onlineModeCheckBox.setSelected(serverProperties.getOnlineMode());
+        pvpCheckBox.setSelected(serverProperties.getPvp());
+        spawnAnimalsCheckBox.setSelected(serverProperties.getSpawnAnimals());
+        spawnMonstersCheckBox.setSelected(serverProperties.getSpawnMonsters());
+        whiteListCheckBox.setSelected(serverProperties.getWhiteList());
+        levelNameField.setText(serverProperties.getLevelName());
+        levelSeedField.setText(serverProperties.getLevelSeed());
+        serverIpField.setText(serverProperties.getServerIp());
+        serverPortField.setText(serverProperties.getServerPort());
+        spawnProtectionField.setText(serverProperties.getSpawnProtection());
+        maxPlayersSpinner.setValue(serverProperties.getMaxPlayers());
+        viewDistanceSpinner.setValue(serverProperties.getViewDistance());
+    }
+
     public void updateGuiWithConfigValues() {
-        textColorField.setText(config.display.getTextColor());
+        //textColorField.setText(config.display.getTextColor());
         textColorBox.setBackground(java.awt.Color.decode("0x"
-                + textColorField.getText()));
-        bgColorField.setText(config.display.getBgColor());
+                + config.display.getTextColor()));
+        //bgColorField.setText(config.display.getBgColor());
         bgColorBox.setBackground(java.awt.Color.decode("0x"
-                + bgColorField.getText()));
-        infoColorField.setText(config.display.getInfoColor());
+                + config.display.getBgColor()));
+        //infoColorField.setText(config.display.getInfoColor());
         infoColorBox.setBackground(java.awt.Color.decode("0x"
-                + infoColorField.getText()));
-        warningColorField.setText(config.display.getWarningColor());
+                + config.display.getInfoColor()));
+        //warningColorField.setText(config.display.getWarningColor());
         warningColorBox.setBackground(java.awt.Color.decode("0x"
-                + warningColorField.getText()));
-        severeColorField.setText(config.display.getSevereColor());
+                + config.display.getWarningColor()));
+        //severeColorField.setText(config.display.getSevereColor());
         severeColorBox.setBackground(java.awt.Color.decode("0x"
-                + severeColorField.getText()));
+                + config.display.getSevereColor()));
         textSizeField.setValue(config.display.getTextSize());
+        useProxyCheckBox.setSelected(config.getProxy());
+        extPortField.setText(Integer.toString(config.getExtPort()));
         zipBackupCheckBox.setSelected(config.backups.getZip());
         pathsToBackup = config.backups.getPathsToBackup();
         backupPathField.setText(config.backups.getPath());
@@ -2683,6 +2669,33 @@ public class GUI extends FrameView implements Observer {
         config.backups.setPath(backupPathField.getText());
         config.save();
         statusMessageLabel.setText(temp);
+        config.setProxy(useProxyCheckBox.isSelected());
+        config.setExtPort(Integer.valueOf(extPortField.getText()));
+        saveServerProperties();
+    }
+
+    public void saveServerProperties() {
+        serverProperties.setAllowFlight(allowFlightCheckBox.isSelected());
+        serverProperties.setAllowNether(allowNetherCheckBox.isSelected());
+        serverProperties.setOnlineMode(onlineModeCheckBox.isSelected());
+        serverProperties.setPvp(pvpCheckBox.isSelected());
+        serverProperties.setSpawnAnimals(spawnAnimalsCheckBox.isSelected());
+        serverProperties.setSpawnMonsters(spawnMonstersCheckBox.isSelected());
+        serverProperties.setWhiteList(whiteListCheckBox.isSelected());
+        serverProperties.setLevelName(levelNameField.getText());
+        serverProperties.setLevelSeed(levelSeedField.getText());
+        serverProperties.setServerIp(serverIpField.getText());
+        serverProperties.setServerPort(serverPortField.getText());
+        serverProperties.setSpawnProtection(spawnProtectionField.getText());
+        serverProperties.setMaxPlayers(Integer.valueOf(maxPlayersSpinner.getValue().toString()));
+        serverProperties.setViewDistance(Integer.valueOf(viewDistanceSpinner.getValue().toString()));
+        if (!server.isRunning()) {
+            try {
+                serverProperties.writeProps();
+            } catch (IOException ioe) {
+                
+            }
+        }
     }
 
     /**
@@ -2885,6 +2898,7 @@ public class GUI extends FrameView implements Observer {
     private boolean restarting;
     private ConsoleParser parser;
     private boolean saving;
+    private ServerProperties serverProperties;
 
     //Auto created
     private final Timer messageTimer;

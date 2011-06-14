@@ -1026,7 +1026,7 @@ public class StreamTunnel {
 
     private void sendMessagePacket(String message) throws IOException {
         if (message.length() > MESSAGE_SIZE) {
-            System.out.println("[SimpleServer] Invalid message size: " + message);
+            System.out.println("[MC Server GUI] Invalid message size: " + message);
             return;
         }
         write(0x03);
@@ -1069,8 +1069,8 @@ public class StreamTunnel {
                         flushAll();
                     } catch (IOException e) {
                         if (run/* && !player.isRobot()*/) {
-                            System.out.println("[SimpleServer] " + e);
-                            System.out.println("[SimpleServer] " + streamType
+                            System.err.println("[MC Server GUI] " + e);
+                            System.err.println("[MC Server GUI] " + streamType
                                     + " error handling traffic for "
                                     + player.getIPAddress());
                         }

@@ -1,3 +1,9 @@
+Version .6.0-dev
+  Added a proxy server into the GUI.  This means that the GUI will be what people connect to instead of the MC Server.  (This will be optional)
+  Added a section to the Server Config tab to edit the server.properties file of your server.
+  Removed the text field and button from the color section... Now you can just click the color box to change the color.  Simple!  (If you want to edit the hex values directly, do so in the config file.)
+  Added a tooltip to the save worlds task.
+
 Version .5.0
   Added colorization options for the console output.
   You may now set text color, background color, and specific colors for the INFO, WARNING, and SEVERE tags.

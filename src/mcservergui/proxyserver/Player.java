@@ -89,7 +89,7 @@ public class Player {
         //+ ".");
         //isRobot = true;
         //} else {
-        System.out.println("[SimpleServer] IP Connection from " + getIPAddress()
+        System.out.println("[MC Server GUI] IP Connection from " + getIPAddress()
                 + "!");
         //}
 

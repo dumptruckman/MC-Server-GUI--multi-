@@ -21,17 +21,19 @@ import org.jdesktop.application.Action;
 public class ColorChooser extends javax.swing.JDialog {
 
     /** Creates new form ColorChooser */
-    public ColorChooser(java.awt.Frame parent,
-            javax.swing.JTextField colorField, javax.swing.JTextField colorBox) {
+    public ColorChooser(java.awt.Frame parent, javax.swing.JTextField colorBox) {
         super(parent);
         initComponents();
-        this.colorField = colorField;
         this.colorBox = colorBox;
+        colorChooser.setColor(this.colorBox.getBackground());
+        /*
         try {
             colorChooser.setColor(Color.decode("0x" + this.colorField.getText()));
         } catch (NumberFormatException nfe) {
             colorChooser.setColor(Color.white);
         }
+         * 
+         */
     }
 
     @Action public void closeColorChooser() {
@@ -108,14 +110,13 @@ public class ColorChooser extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String rgb = Integer.toHexString(colorChooser.getColor().getRGB());
-        rgb = rgb.substring(2, rgb.length());
+        //String rgb = Integer.toHexString(colorChooser.getColor().getRGB());
+        //rgb = rgb.substring(2, rgb.length());
         colorBox.setBackground(colorChooser.getColor());
-        colorField.setText(rgb);
+        //colorField.setText(rgb);
         closeColorChooser();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private javax.swing.JTextField colorField;
     private javax.swing.JTextField colorBox;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

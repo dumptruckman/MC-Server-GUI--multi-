@@ -23,6 +23,7 @@ public class Config {
         _windowTitle = "MC Server GUI";
         _inputHistoryMaxSize = 30;
         _extPort = 25565;
+        _proxy = true;
         cmdLine = new CMDLine();
         backups = new Backups();
         schedule = new Schedule();
@@ -30,17 +31,19 @@ public class Config {
     }
     
     private String _windowTitle;
-    private int _inputHistoryMaxSize;
-    private int _extPort;
+    private int _inputHistoryMaxSize, _extPort;
+    private boolean _proxy;
     public CMDLine cmdLine;
     public Backups backups;
     public Schedule schedule;
     public Display display;
 
+    public boolean getProxy() { return _proxy; }
     public int getExtPort() { return _extPort; }
     public String getWindowTitle() { return _windowTitle; }
     public int getInputHistoryMaxSize() { return _inputHistoryMaxSize; }
 
+    public void setProxy(boolean b) { _proxy = b; }
     public void setExtPort(int i) { _extPort = i; }
     public void setWindowTitle(String s) { _windowTitle = s; }
     public void setInputHistoryMaxSize(int i) { _inputHistoryMaxSize = i; }
@@ -287,6 +290,10 @@ public class Config {
                         setWindowTitle(jp.getText());
                     } else if ("Input History Max Size".equals(fieldname)) {
                         setInputHistoryMaxSize(jp.getIntValue());
+                    } else if ("Use Proxy Server".equals(fieldname)) {
+                        setProxy(jp.getBooleanValue());
+                    } else if ("Proxy Port".equals(fieldname)) {
+                        setExtPort(jp.getIntValue());
                     } else if ("Display".equals(fieldname)) {
                         while (jp.nextToken() != JsonToken.END_OBJECT) {
                             String displayfield = jp.getCurrentName();
@@ -418,6 +425,8 @@ public class Config {
             //General Config Options
             jg.writeStringField("Window Title", getWindowTitle());
             jg.writeNumberField("Input History Max Size", getInputHistoryMaxSize());
+            jg.writeBooleanField("Use Proxy Server", getProxy());
+            jg.writeNumberField("Proxy Port", getExtPort());
             jg.writeObjectFieldStart("Display");
             // Display Config Options
             jg.writeStringField("Text Color", display.getTextColor());
