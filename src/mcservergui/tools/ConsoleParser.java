@@ -21,7 +21,7 @@ public class ConsoleParser {
 
     public String parseText(String text) {
         String time = "";
-        if (text.contains("["))  {
+        if (text.contains("[") && text.contains("]"))  {
             if (text.indexOf("[") != 0) {
                 time = text.substring(0, text.indexOf("[") - 1);
             }

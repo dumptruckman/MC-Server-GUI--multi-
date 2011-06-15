@@ -33,7 +33,10 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -133,15 +136,6 @@
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="domButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="domField" min="-2" pref="131" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="225" max="-2" attributes="0"/>
-                          <Component id="domAllCheckBox" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="sunButton" min="-2" pref="35" max="-2" attributes="1"/>
@@ -172,6 +166,15 @@
                               </Group>
                           </Group>
                       </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="domButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                          <Component id="domField" min="-2" pref="131" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="domAllCheckBox" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="jScrollPane2" min="-2" pref="266" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                   <Component id="jSeparator1" min="-2" pref="11" max="-2" attributes="0"/>
@@ -181,13 +184,13 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="sendCommandRadio" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="sendCommandField" pref="187" max="32767" attributes="0"/>
+                          <Component id="sendCommandField" pref="177" max="32767" attributes="0"/>
                       </Group>
                       <Component id="stopServerRadio" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                           <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="197" max="32767" attributes="0"/>
+                          <EmptySpace pref="187" max="32767" attributes="0"/>
                           <Component id="createButton" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -195,20 +198,20 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="remainDownLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="remainDownField" pref="88" max="32767" attributes="0"/>
+                          <Component id="remainDownField" pref="78" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane1" alignment="1" pref="292" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" alignment="1" pref="282" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="serverWarningLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="warningAddButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="warningEditButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="79" max="32767" attributes="0"/>
+                          <EmptySpace pref="69" max="32767" attributes="0"/>
                           <Component id="warningRemoveButton" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="saveWorldsRadio" min="-2" max="-2" attributes="0"/>
-                      <Component id="backupRadio" min="-2" max="-2" attributes="0"/>
+                      <Component id="saveWorldsRadio" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="backupRadio" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -286,14 +289,16 @@
                               <Component id="novButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="decButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="7" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="domButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="domField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="domButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="domAllCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jScrollPane2" pref="47" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jSeparator1" alignment="0" pref="305" max="32767" attributes="0"/>
+                      <Component id="jSeparator1" alignment="0" pref="357" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="startServerRadio" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -313,7 +318,7 @@
                           <Component id="saveWorldsRadio" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="backupRadio" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="24" max="32767" attributes="0"/>
+                          <EmptySpace pref="76" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="serverWarningLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="warningAddButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -369,6 +374,10 @@
             </Property>
             <Property name="name" type="java.lang.String" value="secondsField" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="secondsFieldFocusLost"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="secondsFieldKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="scheduleLabel">
           <Properties>
@@ -382,16 +391,23 @@
             <Property name="toolTipText" type="java.lang.String" resourceKey="secondsAgainCheckBox.toolTipText"/>
             <Property name="name" type="java.lang.String" value="secondsAgainCheckBox" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="secondsAgainCheckBoxActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="secondsAgainField">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="secondsAgainField.text"/>
             <Property name="toolTipText" type="java.lang.String" resourceKey="secondsAgainField.toolTipText"/>
+            <Property name="enabled" type="boolean" value="false"/>
             <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="new mcservergui.tools.RegexVerifier(&quot;^[0-5]?\\d$&quot;)" type="code"/>
             </Property>
             <Property name="name" type="java.lang.String" value="secondsAgainField" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="secondsAgainFieldFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="minutesLabel">
           <Properties>
@@ -405,15 +421,23 @@
             <Property name="toolTipText" type="java.lang.String" resourceKey="minutesAgainCheckBox.toolTipText"/>
             <Property name="name" type="java.lang.String" value="minutesAgainCheckBox" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="minutesAgainCheckBoxActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="minutesAgainField">
           <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="minutesAgainField.text"/>
             <Property name="toolTipText" type="java.lang.String" resourceKey="minutesAgainField.toolTipText"/>
+            <Property name="enabled" type="boolean" value="false"/>
             <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="new mcservergui.tools.RegexVerifier(&quot;^[0-5]?\\d$&quot;)" type="code"/>
             </Property>
             <Property name="name" type="java.lang.String" value="minutesAgainField" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="minutesAgainFieldFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="minutesField">
           <Properties>
@@ -424,6 +448,10 @@
             </Property>
             <Property name="name" type="java.lang.String" value="minutesField" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="minutesFieldFocusLost"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="minutesFieldKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JCheckBox" name="minutesAllCheckBox">
           <Properties>
@@ -450,6 +478,10 @@
             </Property>
             <Property name="name" type="java.lang.String" value="hoursField" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="hoursFieldFocusLost"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="hoursFieldKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JCheckBox" name="hoursAgainCheckBox">
           <Properties>
@@ -457,15 +489,23 @@
             <Property name="toolTipText" type="java.lang.String" resourceKey="hoursAgainCheckBox.toolTipText"/>
             <Property name="name" type="java.lang.String" value="hoursAgainCheckBox" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="hoursAgainCheckBoxActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="hoursAgainField">
           <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="hoursAgainField.text"/>
             <Property name="toolTipText" type="java.lang.String" resourceKey="hoursAgainField.toolTipText"/>
+            <Property name="enabled" type="boolean" value="false"/>
             <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="new mcservergui.tools.RegexVerifier(&quot;^[0-2]?\\d$&quot;)" type="code"/>
             </Property>
             <Property name="name" type="java.lang.String" value="hoursAgainField" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="hoursAgainFieldFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JCheckBox" name="hoursAllCheckBox">
           <Properties>
@@ -493,6 +533,7 @@
             <Property name="name" type="java.lang.String" value="dowAllButton" noResource="true"/>
           </Properties>
           <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="dowAllButtonStateChanged"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dowAllButtonActionPerformed"/>
           </Events>
         </Component>
@@ -810,6 +851,7 @@
             <Property name="name" type="java.lang.String" value="monthAllButton" noResource="true"/>
           </Properties>
           <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="monthAllButtonStateChanged"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="monthAllButtonActionPerformed"/>
           </Events>
         </Component>
@@ -1015,6 +1057,28 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="warningEditButtonActionPerformed"/>
           </Events>
         </Component>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="jScrollPane2" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTextArea" name="timeSummaryField">
+              <Properties>
+                <Property name="columns" type="int" value="20"/>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="lineWrap" type="boolean" value="true"/>
+                <Property name="rows" type="int" value="5"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="timeSummaryField.toolTipText"/>
+                <Property name="name" type="java.lang.String" value="timeSummaryField" noResource="true"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
       </SubComponents>
     </Container>
   </SubComponents>

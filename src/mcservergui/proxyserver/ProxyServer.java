@@ -23,6 +23,8 @@ package mcservergui.proxyserver;
 
 import mcservergui.gui.GUI;
 import mcservergui.config.Config;
+import mcservergui.config.ServerProperties;
+
 import java.net.*;
 
 /**
@@ -31,12 +33,13 @@ import java.net.*;
  */
 public class ProxyServer {
 
-    public ProxyServer(GUI gui, Config config) {
+    public ProxyServer(GUI gui, Config config, ServerProperties serverProps) {
         listener = new Listener();
         run = true;
         listener.start();
         this.gui = gui;
         this.config = config;
+        this.serverProps = serverProps;
     }
 
     public void stop() {
@@ -96,11 +99,14 @@ public class ProxyServer {
             while (run) {
                 //startup();
                 playerList = new PlayerList();
+                gui.setPlayerList(playerList);
 
                 //String ip = options.get("ipAddress");
-                String ip = "0.0.0.0";
-                //int port = options.getInt("port");
-                int port = 25566;
+                String ip = serverProps.getServerIp();
+                if (ip.isEmpty()) {
+                    ip = "0.0.0.0";
+                }
+                int port = config.getExtPort();
 
                 InetAddress address;
                 if (ip.equals("0.0.0.0")) {
@@ -161,6 +167,7 @@ public class ProxyServer {
     private Listener listener;
     private ServerSocket socket;
     public PlayerList playerList;
+    public ServerProperties serverProps;
     public GUI gui;
     private Config config;
     private boolean run;

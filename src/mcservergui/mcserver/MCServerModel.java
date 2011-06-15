@@ -13,6 +13,7 @@ import mcservergui.config.Config;
 import org.hyperic.sigar.ptql.ProcessFinder;
 import org.hyperic.sigar.Sigar;
 import mcservergui.proxyserver.ProxyServer;
+import mcservergui.config.ServerProperties;
 import mcservergui.gui.GUI;
 
 /**
@@ -29,6 +30,10 @@ public class MCServerModel extends Observable implements Observer, java.beans.Pr
 
     public void setGui(GUI gui) {
         this.gui = gui;
+    }
+
+    public void setServerProps(ServerProperties sp) {
+        serverProps = sp;
     }
 
     // Method for building the cmdLine
@@ -48,7 +53,9 @@ public class MCServerModel extends Observable implements Observer, java.beans.Pr
             return "ERROR";
         }
          */
-        proxyServer = new ProxyServer(gui, config);
+        if (config.getProxy()) {
+            proxyServer = new ProxyServer(gui, config, serverProps);
+        }
         try {
             // Run the server
             ProcessFinder pf = new ProcessFinder(new Sigar());
@@ -107,7 +114,9 @@ public class MCServerModel extends Observable implements Observer, java.beans.Pr
             serverRunning = false;
             pid = 0;
             //guiServer.stop();
-            proxyServer.stop();
+            if (config.getProxy()) {
+                proxyServer.stop();
+            }
             setChanged();
             notifyObservers("serverStopped");
             setChanged();
@@ -161,4 +170,5 @@ public class MCServerModel extends Observable implements Observer, java.beans.Pr
     private ProxyServer proxyServer;
     private boolean serverRunning;
     private GUI gui;
+    private ServerProperties serverProps;
 }

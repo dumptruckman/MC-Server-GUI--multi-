@@ -41,6 +41,7 @@ import mcservergui.mcserver.MCServerReceiver;
 import mcservergui.task.TaskDialog;
 import mcservergui.Main;
 import mcservergui.config.ServerProperties;
+import mcservergui.proxyserver.PlayerList;
 import org.quartz.*;
 import static mcservergui.task.event.EventScheduler.*;
 
@@ -53,6 +54,7 @@ public class GUI extends FrameView implements Observer {
         super(app);
 
         backupFileSystem = new mcservergui.fileexplorer.FileSystemModel(".");
+        playerListModel = new PlayerList();
 
         initComponents();
         fixComponents();
@@ -125,6 +127,7 @@ public class GUI extends FrameView implements Observer {
         config = newConfig;
         server = newServer;
         server.addObserver(serverProperties);
+        server.setServerProps(serverProperties);
         getFrame().setTitle(config.getWindowTitle());
         controlSwitcher("OFF");
 
@@ -163,7 +166,7 @@ public class GUI extends FrameView implements Observer {
         consoleOutput = new javax.swing.JTextPane();
         playerListPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        playerList = new javax.swing.JList();
         consoleInputPanel = new javax.swing.JPanel();
         consoleInput = new javax.swing.JTextField();
         submitButton = new javax.swing.JButton();
@@ -353,21 +356,21 @@ public class GUI extends FrameView implements Observer {
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Not yet implemented" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jList1.setToolTipText(resourceMap.getString("playerList.toolTipText")); // NOI18N
-        jList1.setEnabled(false);
-        jList1.setFocusable(false);
-        jList1.setName("playerList"); // NOI18N
-        jList1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jList1KeyTyped(evt);
+        playerList.setModel(playerListModel);
+        playerList.setToolTipText(resourceMap.getString("playerList.toolTipText")); // NOI18N
+        playerList.setFocusable(false);
+        playerList.setName("playerList"); // NOI18N
+        playerList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                playerListMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(jList1);
+        playerList.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                playerListKeyTyped(evt);
+            }
+        });
+        jScrollPane2.setViewportView(playerList);
 
         javax.swing.GroupLayout playerListPanelLayout = new javax.swing.GroupLayout(playerListPanel);
         playerListPanel.setLayout(playerListPanelLayout);
@@ -1933,9 +1936,9 @@ public class GUI extends FrameView implements Observer {
         }
     }//GEN-LAST:event_tabberKeyTyped
 
-    private void jList1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jList1KeyTyped
+    private void playerListKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_playerListKeyTyped
         giveInputFocus(evt);
-    }//GEN-LAST:event_jList1KeyTyped
+    }//GEN-LAST:event_playerListKeyTyped
 
     private void sayCheckBoxKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_sayCheckBoxKeyTyped
         giveInputFocus(evt);
@@ -2202,6 +2205,26 @@ public class GUI extends FrameView implements Observer {
         config.display.setSevereColor(rgb);
     }//GEN-LAST:event_severeColorBoxFocusLost
 
+    private void playerListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playerListMouseClicked
+        if (evt.getButton() == evt.BUTTON3 && (playerList.getSelectedIndex() > -1)) {
+            javax.swing.JPopupMenu playerListContextMenu = new javax.swing.JPopupMenu();
+            javax.swing.JMenuItem kickMenuItem;
+            kickMenuItem = new javax.swing.JMenuItem("Kick");
+            kickMenuItem.addActionListener(
+                    new ActionListener() {
+                @Override public void actionPerformed(ActionEvent ev) {
+                    String s = (String)javax.swing.JOptionPane.showInputDialog(
+                            GUI.this.getFrame(), "Add a kick message or just "
+                            + "press enter.", "Kick player", javax.swing
+                            .JOptionPane.PLAIN_MESSAGE, null, null, "");
+                    playerListModel.findPlayer(playerListModel.getElementAt(
+                            playerList.getSelectedIndex())).kick(s);
+                }});
+            playerListContextMenu.add(kickMenuItem);
+            playerListContextMenu.show(evt.getComponent(), evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_playerListMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JCheckBox allowFlightCheckBox;
     public javax.swing.JCheckBox allowNetherCheckBox;
@@ -2242,7 +2265,6 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JCheckBox jCheckBox1;
     public javax.swing.JLabel jLabel2;
     public javax.swing.JLabel jLabel3;
-    public javax.swing.JList jList1;
     public javax.swing.JPanel jPanel1;
     public javax.swing.JPanel jPanel4;
     public javax.swing.JScrollPane jScrollPane1;
@@ -2263,6 +2285,7 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JSpinner maxPlayersSpinner;
     public javax.swing.JMenuBar menuBar;
     public javax.swing.JCheckBox onlineModeCheckBox;
+    public javax.swing.JList playerList;
     public javax.swing.JPanel playerListPanel;
     private javax.swing.JProgressBar progressBar;
     public javax.swing.JPanel proxyServerPanel;
@@ -2330,6 +2353,12 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JLabel xmxMemoryLabel;
     public javax.swing.JCheckBox zipBackupCheckBox;
     // End of variables declaration//GEN-END:variables
+
+    public void setPlayerList(PlayerList playerListModel) {
+        this.playerListModel = playerListModel;
+        playerList.setModel(playerListModel);
+        playerList.updateUI();
+    }
 
     private void enableSystemTrayIcon() {
         java.awt.TrayIcon trayIcon = null;
@@ -2838,6 +2867,7 @@ public class GUI extends FrameView implements Observer {
             statusMessageLabel.setText("Server Running");
             textScrolling = true;
             saveWorldsButton.setEnabled(true);
+            useProxyCheckBox.setEnabled(false);
         } else if (serverState.equals("OFF")) {
             // Switch GUI controls to "OFF" status
             startstopButton.setText("Start");
@@ -2847,6 +2877,7 @@ public class GUI extends FrameView implements Observer {
             textScrolling = false;
             mouseInConsoleOutput = false;
             saveWorldsButton.setEnabled(false);
+            useProxyCheckBox.setEnabled(true);
         } else if (serverState.equals("BADCONFIG")) {
             startstopButton.setEnabled(false);
         } else if (serverState.equals("BACKUP")) {
@@ -2899,6 +2930,7 @@ public class GUI extends FrameView implements Observer {
     private ConsoleParser parser;
     private boolean saving;
     private ServerProperties serverProperties;
+    private PlayerList playerListModel;
 
     //Auto created
     private final Timer messageTimer;

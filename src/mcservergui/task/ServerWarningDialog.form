@@ -52,16 +52,18 @@
               <Group type="102" alignment="0" attributes="0">
                   <Component id="timeBeforeLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="timeBeforeField" pref="223" max="32767" attributes="0"/>
+                  <Component id="timeBeforeField" pref="230" max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <Component id="messageLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="messageField" pref="261" max="32767" attributes="0"/>
+                  <Component id="messageField" pref="182" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="commandIsMessage" min="-2" max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="195" max="32767" attributes="0"/>
+                  <EmptySpace pref="202" max="32767" attributes="0"/>
                   <Component id="addButton" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -77,8 +79,9 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="messageLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="messageField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="commandIsMessage" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="7" max="32767" attributes="0"/>
+                  <EmptySpace pref="6" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="addButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -137,6 +140,12 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelButtonActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="commandIsMessage">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="commandIsMessage.text"/>
+            <Property name="name" type="java.lang.String" value="commandIsMessage" noResource="true"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

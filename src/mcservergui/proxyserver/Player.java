@@ -89,7 +89,7 @@ public class Player {
         //+ ".");
         //isRobot = true;
         //} else {
-        System.out.println("[MC Server GUI] IP Connection from " + getIPAddress()
+        parent.gui.addTextToConsoleOutput("[MC Server GUI] IP Connection from " + getIPAddress()
                 + "!");
         //}
 
@@ -105,11 +105,11 @@ public class Player {
 
         try {
             InetAddress localAddress = InetAddress.getByName(addressFactory.getNextAddress());
-            intsocket = new Socket(InetAddress.getByName(null), 25567,
+            intsocket = new Socket(InetAddress.getByName(null), Integer.valueOf(parent.serverProps.getServerPort()),
                     localAddress, 0);
         } catch (Exception e) {
             try {
-                intsocket = new Socket(InetAddress.getByName(null), 25567);
+                intsocket = new Socket(InetAddress.getByName(null), Integer.valueOf(parent.serverProps.getServerPort()));
             } catch (Exception E) {
                 System.err.println("Error opening forwarding socket");
                 //e.printStackTrace();

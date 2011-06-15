@@ -1,7 +1,12 @@
-Version .6.0-dev
+Version .6.0
   Added a proxy server into the GUI.  This means that the GUI will be what people connect to instead of the MC Server.  (This will be optional)
+  The player list now works!
+  Currently the player list has a right-click menu with a kick option.
   Added a section to the Server Config tab to edit the server.properties file of your server.
+  Selecting the Bukkit check box will now make sure that the proper command line parameters are added to the launch when using custom command line.
   Removed the text field and button from the color section... Now you can just click the color box to change the color.  Simple!  (If you want to edit the hex values directly, do so in the config file.)
+  Changed task warning to allow for commands instead of just "say" messages.
+  Added a time summary for tasks.
   Added a tooltip to the save worlds task.
 
 Version .5.0

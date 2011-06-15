@@ -63,6 +63,7 @@ public class ServerWarningDialog extends javax.swing.JDialog {
         messageField = new javax.swing.JTextField();
         addButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        commandIsMessage = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("Form"); // NOI18N
@@ -108,6 +109,9 @@ public class ServerWarningDialog extends javax.swing.JDialog {
             }
         });
 
+        commandIsMessage.setText(resourceMap.getString("commandIsMessage.text")); // NOI18N
+        commandIsMessage.setName("commandIsMessage"); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -115,14 +119,16 @@ public class ServerWarningDialog extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(timeBeforeLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(timeBeforeField, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE))
+                .addComponent(timeBeforeField, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(messageLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(messageField, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE))
+                .addComponent(messageField, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(commandIsMessage))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(cancelButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 195, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
                 .addComponent(addButton))
         );
         jPanel1Layout.setVerticalGroup(
@@ -134,8 +140,9 @@ public class ServerWarningDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(messageLabel)
-                    .addComponent(messageField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                    .addComponent(messageField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(commandIsMessage))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addButton)
                     .addComponent(cancelButton)))
@@ -177,7 +184,12 @@ public class ServerWarningDialog extends javax.swing.JDialog {
 
     private void addOldWarning() {
         timeBeforeField.setText(hmsFromSeconds(oldWarning.getTime()));
-        messageField.setText(oldWarning.getMessage());
+        String command = oldWarning.getMessage();
+        if (command.startsWith("say ")) {
+            command = command.replaceFirst("say ", "");
+            commandIsMessage.setSelected(true);
+        }
+        messageField.setText(command);
     }
 
     private void closeAndAdd() {
@@ -190,10 +202,14 @@ public class ServerWarningDialog extends javax.swing.JDialog {
             serverWarningList.remove(oldWarning);
         }
 
+        String command = messageField.getText();
+        if (commandIsMessage.isSelected()) {
+            command = "say " + command;
+        }
         serverWarningList.add(new ServerWarning(
-                messageField.getText(),seconds));
+                command,seconds));
         System.out.println(serverWarningList.get(serverWarningList.size()-1));
-        warningListModel.add("Message: " + messageField.getText() 
+        warningListModel.add("Message: " + command
                 + "<br><font size=2>Time: "
                 + hoursMinutesSecondsFromSeconds(seconds));
         closeTaskDialog();
@@ -205,6 +221,7 @@ public class ServerWarningDialog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JButton cancelButton;
+    private javax.swing.JCheckBox commandIsMessage;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField messageField;
     private javax.swing.JLabel messageLabel;

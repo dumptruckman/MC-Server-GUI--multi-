@@ -24,18 +24,27 @@ package mcservergui.proxyserver;
 import mcservergui.proxyserver.Player;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.*;
 
 /**
  *
  * @author dumptruckman
  */
-public class PlayerList {
+public class PlayerList extends javax.swing.AbstractListModel {
     //private final MCServerGUIConfig config;
     private final ConcurrentMap<String, Player> players;
 
     public PlayerList(/*MCServerGUIConfig config*/) {
         /*this.config = config;*/
         players = new ConcurrentHashMap<String, Player>();
+    }
+
+    @Override public String getElementAt(int i) {
+        return players.keySet().toArray()[i].toString();
+    }
+
+    @Override public int getSize() {
+        return this.size();
     }
 
     public synchronized Player[] getArray() {
@@ -82,30 +91,12 @@ public class PlayerList {
     public synchronized void removePlayer(Player player) {
         players.remove(player.getName().toLowerCase());
         notifyAll();
+        fireContentsChanged(this, 0, getSize());
     }
 
     public synchronized void addPlayer(Player player) {
-        //if (players.size() < options.getInt("maxPlayers")) {
-            players.put(player.getName().toLowerCase(), player);
-        /*
-        } else {
-            Player playerToKick = null;
-            for (Player friend : players.values()) {
-                if (!((friend.getGroupId() >= player.getGroupId()) || (playerToKick != null)
-                        && (friend.getConnectedAt() < playerToKick.getConnectedAt())
-                        && (friend.getGroupId() > playerToKick.getGroupId()))) {
-                    playerToKick = friend;
-                }
-            }
-
-            if (playerToKick == null) {
-                player.kick("Sorry, server is full!");
-            } else {
-                playerToKick.kick("Sorry, making space for more senior member.");
-                players.remove(playerToKick.getName().toLowerCase());
-                players.put(player.getName().toLowerCase(), player);
-            }
-        }
-        */
+        System.out.println("player joined");
+        players.put(player.getName().toLowerCase(), player);
+        fireContentsChanged(this, 0, getSize());
     }
 }

@@ -9,11 +9,8 @@ Add indicator show when/what next event will be
 Allow console output to be searched
 Add filtering to console output
 Add php web interface (maybe?)
-Add edit button to warning list for task entries
 Add restoration of backups
 Add plugin manager
-Ability to modify server properties
-Make player list work
 Ability to give players items by right clicking name in player list
 Compatibility with many bukkit plugins (mcMMO or iConomy for instance)
 Ability to restart based on memory limits

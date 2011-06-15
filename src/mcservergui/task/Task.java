@@ -26,7 +26,7 @@ public class Task implements Job {
             java.util.Collections.sort(event.getWarningList());
             for (int i = 0; i < event.getWarningList().size(); i++) {
                 System.out.println("There is a warning.");
-                gui.sendInput("say " + event.getWarningList().get(i).getMessage());
+                gui.sendInput(event.getWarningList().get(i).getMessage());
                 int sleeptime;
                 if (i+1 < event.getWarningList().size()) {
                     sleeptime = event.getWarningList().get(i).getTime() -
