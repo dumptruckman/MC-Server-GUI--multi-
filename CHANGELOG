@@ -1,9 +1,10 @@
-Version .6.1-dev
+Version .6.1
   Backup tab now has option to "clear" your server.log file.  This option deletes the server.log file after performing a backup.
   Made sure the server doesn't start when the proxy fails to start.
   Added Start Server on GUI Start option to GUI Config tab.
   Added Ban and Ban IP options to the player list right-click menu.
-  Added initial stages of a php web interface.
+  Added ability to hide/show GUI by double clicking on the tray icon. (Only if your OS supports tray icons!)
+  Added initial stages of a tcp json interface.
 
 Version .6.0
   Added a proxy server into the GUI.  This means that the GUI will be what people connect to instead of the MC Server.  (This will be optional)

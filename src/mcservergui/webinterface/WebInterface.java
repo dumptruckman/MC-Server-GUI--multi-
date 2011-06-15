@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package mcservergui.phpinterface;
+package mcservergui.webinterface;
 
 import java.io.*;
 import java.net.*;
@@ -14,9 +14,9 @@ import mcservergui.gui.GUI;
  *
  * @author dumptruckman
  */
-public class PhpInterface {
+public class WebInterface {
 
-    public PhpInterface (int port, GUI gui) {
+    public WebInterface (int port, GUI gui) {
         this.port = port;
         this.gui = gui;
     }

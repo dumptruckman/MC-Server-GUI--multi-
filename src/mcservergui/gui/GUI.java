@@ -42,7 +42,7 @@ import mcservergui.task.TaskDialog;
 import mcservergui.Main;
 import mcservergui.config.ServerProperties;
 import mcservergui.proxyserver.PlayerList;
-import mcservergui.phpinterface.PhpInterface;
+import mcservergui.webinterface.WebInterface;
 import org.quartz.*;
 import static mcservergui.task.event.EventScheduler.*;
 
@@ -59,6 +59,7 @@ public class GUI extends FrameView implements Observer {
 
         initComponents();
         fixComponents();
+        isHidden = false;
 
         // status bar initialization - message timeout, idle icon and busy animation, etc
         ResourceMap resourceMap = getResourceMap();
@@ -139,8 +140,8 @@ public class GUI extends FrameView implements Observer {
 
         parser = new ConsoleParser(config.display, this);
 
-        phpInterface = new PhpInterface(3000, this);
-        phpInterface.start();
+        //webInterface = new WebInterface(3000, this);
+        //webInterface.start();
     }
 
     @Action
@@ -1864,6 +1865,7 @@ public class GUI extends FrameView implements Observer {
     private void windowTitleFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_windowTitleFieldActionPerformed
         config.setWindowTitle(windowTitleField.getText());
         getFrame().setTitle(windowTitleField.getText());
+        trayIcon.setToolTip(windowTitleField.getText());
     }//GEN-LAST:event_windowTitleFieldActionPerformed
 
     private void javaExecBrowseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_javaExecBrowseButtonActionPerformed
@@ -2432,7 +2434,7 @@ public class GUI extends FrameView implements Observer {
     }
 
     private void enableSystemTrayIcon() {
-        java.awt.TrayIcon trayIcon = null;
+        trayIcon = null;
         if (java.awt.SystemTray.isSupported()) {
             // get the SystemTray instance
             java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
@@ -2441,20 +2443,25 @@ public class GUI extends FrameView implements Observer {
             // create a action listener to listen for default action executed on the tray icon
             ActionListener listener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    // execute default action of the application
-                    // ...
+                    if (!isHidden) {
+                        GUI.this.getApplication().hide(GUI.this);
+                        isHidden = true;
+                    } else {
+                        GUI.this.getApplication().show(GUI.this);
+                        isHidden = false;
+                    }
                 }
             };
             // create a popup menu
             java.awt.PopupMenu popup = new java.awt.PopupMenu();
             // create menu item for the default action
-            java.awt.MenuItem defaultItem = new java.awt.MenuItem("Show");
+            java.awt.MenuItem defaultItem = new java.awt.MenuItem("Show/Hide");
             defaultItem.addActionListener(listener);
             popup.add(defaultItem);
             /// ... add other items
             // construct a TrayIcon
             
-            trayIcon = new java.awt.TrayIcon(resourceMap.getImageIcon("imageLabel.icon").getImage(), "Test", popup);
+            trayIcon = new java.awt.TrayIcon(resourceMap.getImageIcon("imageLabel.icon").getImage(), config.getWindowTitle(), popup);
             trayIcon.setImageAutoSize(true);
             // set the TrayIcon properties
             trayIcon.addActionListener(listener);
@@ -2465,8 +2472,6 @@ public class GUI extends FrameView implements Observer {
             } catch (java.awt.AWTException e) {
                 System.err.println(e);
             }
-            
-            // ...
         } else {
             // disable tray option in your application or
             // perform other actions
@@ -2746,6 +2751,7 @@ public class GUI extends FrameView implements Observer {
         statusMessageLabel.setText("Saving configuration...");
         config.setWindowTitle(windowTitleField.getText());
         getFrame().setTitle(windowTitleField.getText());
+        trayIcon.setToolTip(windowTitleField.getText());
         config.setInputHistoryMaxSize(Integer.parseInt(inputHistoryMaxSizeField.getText()));
         config.cmdLine.setXmx(xmxMemoryField.getText());
         config.cmdLine.setExtraArgs(extraArgsField.getText());
@@ -3004,7 +3010,9 @@ public class GUI extends FrameView implements Observer {
     private boolean saving;
     private ServerProperties serverProperties;
     private PlayerList playerListModel;
-    private PhpInterface phpInterface;
+    private boolean isHidden;
+    private java.awt.TrayIcon trayIcon;
+    //private WebInterface webInterface;
 
     //Auto created
     private final Timer messageTimer;
