@@ -15,6 +15,7 @@ import org.hyperic.sigar.Sigar;
 import mcservergui.proxyserver.ProxyServer;
 import mcservergui.config.ServerProperties;
 import mcservergui.gui.GUI;
+import mcservergui.proxyserver.Player;
 
 /**
  *
@@ -41,6 +42,33 @@ public class MCServerModel extends Observable implements Observer, java.beans.Pr
         cmdLine = args;
     }
 
+    public void banKick(String name, String msg) {
+        if (name != null) {
+            gui.sendInput("ban " + name);
+            Player p = proxyServer.playerList.findPlayer(name);
+            if (p != null) {
+                p.kick(msg);
+            }
+        }
+    }
+
+    public void banKick(String name) {
+        banKick(name, "Banned!");
+    }
+
+    public void banKickIP(String ipAddress, String reason) {
+        gui.sendInput("banip " + ipAddress);
+        for (Player player : proxyServer.playerList.getArray()) {
+            if (player.getIPAddress().equals(ipAddress)) {
+                player.kick(reason);
+            }
+        }
+    }
+
+    public void banKickIP(String ipAddress) {
+        banKickIP(ipAddress, "Banned!");
+    }
+
     // Method for starting the server
     public String start() {
         File jar = new File(config.cmdLine.getServerJar());
@@ -55,6 +83,14 @@ public class MCServerModel extends Observable implements Observer, java.beans.Pr
          */
         if (config.getProxy()) {
             proxyServer = new ProxyServer(gui, config, serverProps);
+            if (proxyServer.getStartCode() == -1) {
+                gui.addTextToConsoleOutput("[MC Server GUI] Proxy Server "
+                        + "failed to starts correctly.  Aborting server "
+                        + "start.");
+                return "ERROR";
+            } else {
+                // continue
+            }
         }
         try {
             // Run the server
@@ -98,7 +134,7 @@ public class MCServerModel extends Observable implements Observer, java.beans.Pr
            
             return "SUCCESS";
         } catch (Exception e) {
-            System.out.println("Problem launching server");
+            gui.addTextToConsoleOutput("[MC Server GUI] Unknown error occured while launching server.");
             return "ERROR";
         }
     }

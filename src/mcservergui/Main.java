@@ -28,7 +28,8 @@ public class Main extends SingleFrameApplication implements Application.ExitList
     }
     
     /**
-     * At startup create and show the main frame of the application.
+     * At startup create and show the main frame of the application.  This also
+     * sets up all the other required shit.
      */
     @Override protected void startup() {
         try {
@@ -50,6 +51,9 @@ public class Main extends SingleFrameApplication implements Application.ExitList
         server.addObserver(mainWorker);
         gui.setMainWorker(mainWorker);
         mainWorker.startMainWorker();
+        if (config.getServerStartOnStartup()) {
+            gui.startServer();
+        }
     }
 
     /**

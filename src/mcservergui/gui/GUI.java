@@ -42,6 +42,7 @@ import mcservergui.task.TaskDialog;
 import mcservergui.Main;
 import mcservergui.config.ServerProperties;
 import mcservergui.proxyserver.PlayerList;
+import mcservergui.phpinterface.PhpInterface;
 import org.quartz.*;
 import static mcservergui.task.event.EventScheduler.*;
 
@@ -134,9 +135,12 @@ public class GUI extends FrameView implements Observer {
         inputHistory = new ArrayList<String>();
         inputHistoryIndex = -1;
 
-        //enableSystemTrayIcon();
+        enableSystemTrayIcon();
 
         parser = new ConsoleParser(config.display, this);
+
+        phpInterface = new PhpInterface(3000, this);
+        phpInterface.start();
     }
 
     @Action
@@ -241,6 +245,7 @@ public class GUI extends FrameView implements Observer {
         windowTitleField = new javax.swing.JTextField();
         inputHistoryMaxSizeLabel = new javax.swing.JLabel();
         inputHistoryMaxSizeField = new javax.swing.JTextField();
+        startServerOnLaunchCheckBox = new javax.swing.JCheckBox();
         saveGuiConfigButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         textColorLabel = new javax.swing.JLabel();
@@ -262,6 +267,7 @@ public class GUI extends FrameView implements Observer {
         backupPathField = new javax.swing.JTextField();
         backupPathBrowseButton = new javax.swing.JButton();
         zipBackupCheckBox = new javax.swing.JCheckBox();
+        clearLogCheckBox = new javax.swing.JCheckBox();
         saveBackupControlButton = new javax.swing.JButton();
         backupFileChooserPanel = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -1109,6 +1115,14 @@ public class GUI extends FrameView implements Observer {
         inputHistoryMaxSizeField.setInputVerifier(new numberVerifier());
         inputHistoryMaxSizeField.setName("inputHistoryMaxSizeField"); // NOI18N
 
+        startServerOnLaunchCheckBox.setText(resourceMap.getString("startServerOnLaunchCheckBox.text")); // NOI18N
+        startServerOnLaunchCheckBox.setName("startServerOnLaunchCheckBox"); // NOI18N
+        startServerOnLaunchCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startServerOnLaunchCheckBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -1122,7 +1136,8 @@ public class GUI extends FrameView implements Observer {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(inputHistoryMaxSizeLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(inputHistoryMaxSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(inputHistoryMaxSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(startServerOnLaunchCheckBox))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -1134,7 +1149,9 @@ public class GUI extends FrameView implements Observer {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(inputHistoryMaxSizeLabel)
-                    .addComponent(inputHistoryMaxSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(inputHistoryMaxSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(startServerOnLaunchCheckBox))
         );
 
         saveGuiConfigButton.setText(resourceMap.getString("saveGuiConfigButton.text")); // NOI18N
@@ -1302,10 +1319,10 @@ public class GUI extends FrameView implements Observer {
             guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(guiConfigTabLayout.createSequentialGroup()
                 .addGroup(guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(guiConfigTabLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(saveGuiConfigButton))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(saveGuiConfigButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(197, Short.MAX_VALUE))
@@ -1366,6 +1383,15 @@ public class GUI extends FrameView implements Observer {
             }
         });
 
+        clearLogCheckBox.setText(resourceMap.getString("clearLogCheckBox.text")); // NOI18N
+        clearLogCheckBox.setToolTipText(resourceMap.getString("clearLogCheckBox.toolTipText")); // NOI18N
+        clearLogCheckBox.setName("clearLogCheckBox"); // NOI18N
+        clearLogCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearLogCheckBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout backupSettingsPanelLayout = new javax.swing.GroupLayout(backupSettingsPanel);
         backupSettingsPanel.setLayout(backupSettingsPanelLayout);
         backupSettingsPanelLayout.setHorizontalGroup(
@@ -1373,12 +1399,14 @@ public class GUI extends FrameView implements Observer {
             .addGroup(backupSettingsPanelLayout.createSequentialGroup()
                 .addComponent(backupPathLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(backupPathField, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                .addComponent(backupPathField, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(backupPathBrowseButton))
             .addGroup(backupSettingsPanelLayout.createSequentialGroup()
                 .addComponent(zipBackupCheckBox)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(clearLogCheckBox)
+                .addGap(125, 125, 125))
         );
         backupSettingsPanelLayout.setVerticalGroup(
             backupSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1388,7 +1416,9 @@ public class GUI extends FrameView implements Observer {
                     .addComponent(backupPathField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(backupPathBrowseButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(zipBackupCheckBox))
+                .addGroup(backupSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(zipBackupCheckBox)
+                    .addComponent(clearLogCheckBox)))
         );
 
         saveBackupControlButton.setText(resourceMap.getString("saveBackupControlButton.text")); // NOI18N
@@ -1415,7 +1445,7 @@ public class GUI extends FrameView implements Observer {
         backupFileChooserPanel.setLayout(backupFileChooserPanelLayout);
         backupFileChooserPanelLayout.setHorizontalGroup(
             backupFileChooserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
         );
         backupFileChooserPanelLayout.setVerticalGroup(
             backupFileChooserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1435,7 +1465,7 @@ public class GUI extends FrameView implements Observer {
         backupStatusPanel.setLayout(backupStatusPanelLayout);
         backupStatusPanelLayout.setHorizontalGroup(
             backupStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
         );
         backupStatusPanelLayout.setVerticalGroup(
             backupStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1464,7 +1494,7 @@ public class GUI extends FrameView implements Observer {
                         .addComponent(backupControlRefreshButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(saveBackupControlButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
                         .addComponent(backupButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(backupStatusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -2066,7 +2096,7 @@ public class GUI extends FrameView implements Observer {
                 config.backups.setPath(fc.getSelectedFile().getPath());
             }
         } catch (IOException e) {
-            System.err.println("[GUI] Error retrieving program path.");
+            System.err.println("[MC Server GUI] Error retrieving program path.");
         }
     }//GEN-LAST:event_backupPathBrowseButtonActionPerformed
 
@@ -2215,15 +2245,54 @@ public class GUI extends FrameView implements Observer {
                 @Override public void actionPerformed(ActionEvent ev) {
                     String s = (String)javax.swing.JOptionPane.showInputDialog(
                             GUI.this.getFrame(), "Add a kick message or just "
-                            + "press enter.", "Kick player", javax.swing
+                            + "press enter.", "Kick Player", javax.swing
                             .JOptionPane.PLAIN_MESSAGE, null, null, "");
                     playerListModel.findPlayer(playerListModel.getElementAt(
                             playerList.getSelectedIndex())).kick(s);
-                }});
+                }
+            });
+            javax.swing.JMenuItem banMenuItem;
+            banMenuItem = new javax.swing.JMenuItem("Ban");
+            banMenuItem.addActionListener(
+                    new ActionListener() {
+                @Override public void actionPerformed(ActionEvent ev) {
+                    String s = (String)javax.swing.JOptionPane.showInputDialog(
+                            GUI.this.getFrame(), "Add a ban message or just "
+                            + "press enter.", "Ban Player", javax.swing
+                            .JOptionPane.PLAIN_MESSAGE, null, null, "Banned!");
+                    server.banKick(playerListModel.findPlayer(
+                            playerListModel.getElementAt(
+                            playerList.getSelectedIndex())).getName(), s);
+                }
+            });
+            javax.swing.JMenuItem banIpMenuItem;
+            banIpMenuItem = new javax.swing.JMenuItem("Ban IP");
+            banIpMenuItem.addActionListener(
+                    new ActionListener() {
+                @Override public void actionPerformed(ActionEvent ev) {
+                    String s = (String)javax.swing.JOptionPane.showInputDialog(
+                            GUI.this.getFrame(), "Add a ban message or just "
+                            + "press enter.", "Ban Player IP Address", javax.swing
+                            .JOptionPane.PLAIN_MESSAGE, null, null, "Banned!");
+                    server.banKickIP(playerListModel.findPlayer(
+                            playerListModel.getElementAt(
+                            playerList.getSelectedIndex())).getIPAddress(), s);
+                }
+            });
             playerListContextMenu.add(kickMenuItem);
+            playerListContextMenu.add(banMenuItem);
+            playerListContextMenu.add(banIpMenuItem);
             playerListContextMenu.show(evt.getComponent(), evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_playerListMouseClicked
+
+    private void clearLogCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearLogCheckBoxActionPerformed
+        config.backups.setClearLog(clearLogCheckBox.isSelected());
+    }//GEN-LAST:event_clearLogCheckBoxActionPerformed
+
+    private void startServerOnLaunchCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startServerOnLaunchCheckBoxActionPerformed
+        config.setServerStartOnStartup(startServerOnLaunchCheckBox.isSelected());
+    }//GEN-LAST:event_startServerOnLaunchCheckBoxActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JCheckBox allowFlightCheckBox;
@@ -2242,6 +2311,7 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JTextField bgColorBox;
     public javax.swing.JLabel bgColorLabel;
     public javax.swing.JCheckBox bukkitCheckBox;
+    public javax.swing.JCheckBox clearLogCheckBox;
     public javax.swing.JTextField cmdLineField;
     public javax.swing.JTextField consoleInput;
     public javax.swing.JPanel consoleInputPanel;
@@ -2321,6 +2391,7 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JCheckBox spawnMonstersCheckBox;
     public javax.swing.JTextField spawnProtectionField;
     public javax.swing.JLabel spawnProtectionLabel;
+    public javax.swing.JCheckBox startServerOnLaunchCheckBox;
     public javax.swing.JButton startstopButton;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
@@ -2622,7 +2693,9 @@ public class GUI extends FrameView implements Observer {
         textSizeField.setValue(config.display.getTextSize());
         useProxyCheckBox.setSelected(config.getProxy());
         extPortField.setText(Integer.toString(config.getExtPort()));
+        startServerOnLaunchCheckBox.setSelected(config.getServerStartOnStartup());
         zipBackupCheckBox.setSelected(config.backups.getZip());
+        clearLogCheckBox.setSelected(config.backups.getClearLog());
         pathsToBackup = config.backups.getPathsToBackup();
         backupPathField.setText(config.backups.getPath());
         backupFileChooser.setCheckingPaths(createTreePathArray(pathsToBackup));
@@ -2772,9 +2845,9 @@ public class GUI extends FrameView implements Observer {
             server.setCmdLine(config.cmdLine.getCmdLine());
             if (server.start().equals("SUCCESS")) {
             } else if (server.start().equals("ERROR")) {
-                setConsoleOutput("[GUI] Unknown error occured while launching the server.");
+                //setConsoleOutput("[MC Server GUI] Unknown error occured while launching the server.");
             } else if (server.start().equals("INVALIDJAR")) {
-                setConsoleOutput("[GUI] The jar file you specified is not a valid file."
+                setConsoleOutput("[MC Server GUI] The jar file you specified is not a valid file."
                         + "  Please make corrections on the Server Config tab.");
             }
         }
@@ -2910,7 +2983,7 @@ public class GUI extends FrameView implements Observer {
         return controlState;
     }
 
-    private MCServerModel server;
+    public MCServerModel server;
     private MCServerReceiver serverReceiver;
     private MainWorker mainWorker;
     private boolean textScrolling;
@@ -2931,6 +3004,7 @@ public class GUI extends FrameView implements Observer {
     private boolean saving;
     private ServerProperties serverProperties;
     private PlayerList playerListModel;
+    private PhpInterface phpInterface;
 
     //Auto created
     private final Timer messageTimer;

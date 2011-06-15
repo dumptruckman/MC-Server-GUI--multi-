@@ -63,8 +63,18 @@ public class Backup extends Observable {
                     addTextToBackupLog("<font color=red>Failed to create backup folder " + backupfolder.toString() + nl);
                     return false;
                 }
+                // Perform the backup
                 for (int i = 0 ; i < config.backups.getPathsToBackup().size(); i++) {
                     backup(new File(config.backups.getPathsToBackup().get(i)), backupfolder);
+                }
+                // Delete the server log if set to do so
+                if (config.backups.getClearLog()) {
+                    addTextToBackupLog("Deleting server.log...");
+                    if (new File("./server.log").delete()) {
+                        addTextToBackupLog("<font color=green>Success!");
+                    } else {
+                        addTextToBackupLog("<font color=red>Failed!");
+                    }
                 }
 
                 // Compression

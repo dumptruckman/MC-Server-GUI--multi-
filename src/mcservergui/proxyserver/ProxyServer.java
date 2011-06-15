@@ -36,6 +36,8 @@ public class ProxyServer {
     public ProxyServer(GUI gui, Config config, ServerProperties serverProps) {
         listener = new Listener();
         run = true;
+        startCode = 0;
+        //this.addObserver(gui.server);
         listener.start();
         this.gui = gui;
         this.config = config;
@@ -49,6 +51,17 @@ public class ProxyServer {
         }
         run = false;
         listener.interrupt();
+    }
+
+    public int getStartCode() {
+        try {
+            synchronized (listener) {
+                listener.wait();
+            }
+        } catch (InterruptedException ie) {
+            
+        }
+        return startCode;
     }
 
     public void kick(String name, String reason) {
@@ -108,34 +121,42 @@ public class ProxyServer {
                 }
                 int port = config.getExtPort();
 
-                InetAddress address;
-                if (ip.equals("0.0.0.0")) {
-                    address = null;
-                } else {
+                synchronized (this) {
+                    InetAddress address;
+                    if (ip.equals("0.0.0.0")) {
+                        address = null;
+                    } else {
+                        try {
+                            address = InetAddress.getByName(ip);
+                        } catch (UnknownHostException e) {
+                            gui.addTextToConsoleOutput("[MC Server GUI] " + e);
+                            gui.addTextToConsoleOutput("[MC Server GUI] Invalid listening address " + ip);
+                            startCode = -1;
+                            this.notifyAll();
+                            break;
+                        }
+                    }
+
                     try {
-                        address = InetAddress.getByName(ip);
-                    } catch (UnknownHostException e) {
+                        socket = new ServerSocket(port, 0, address);
+                    } catch (java.io.IOException e) {
                         gui.addTextToConsoleOutput("[MC Server GUI] " + e);
-                        gui.addTextToConsoleOutput("[MC Server GUI] Invalid listening address " + ip);
+                        gui.addTextToConsoleOutput("[MC Server GUI] Could not listen on port " + port
+                        + "!\nIs it already in use? Exiting application...");
+                        startCode = -1;
+                        this.notifyAll();
                         break;
                     }
-                }
 
-                try {
-                    socket = new ServerSocket(port, 0, address);
-                } catch (java.io.IOException e) {
-                    gui.addTextToConsoleOutput("[MC Server GUI] " + e);
-                    gui.addTextToConsoleOutput("[MC Server GUI] Could not listen on port " + port
-                    + "!\nIs it already in use? Exiting application...");
-                    break;
-                }
-
-                gui.addTextToConsoleOutput("[MC Server GUI] listening on "
-                        + socket.getInetAddress().getHostAddress() + ":"
-                        + socket.getLocalPort() + " (players connect here)");
-                if (socket.getInetAddress().getHostAddress().equals("0.0.0.0")) {
-                    gui.addTextToConsoleOutput("Note: 0.0.0.0 means all"
-                            + " IP addresses; you want this.");
+                    gui.addTextToConsoleOutput("[MC Server GUI] listening on "
+                            + socket.getInetAddress().getHostAddress() + ":"
+                            + socket.getLocalPort() + " (players connect here)");
+                    if (socket.getInetAddress().getHostAddress().equals("0.0.0.0")) {
+                        gui.addTextToConsoleOutput("Note: 0.0.0.0 means all"
+                                + " IP addresses; you want this.");
+                    }
+                    startCode = 1;
+                    this.notifyAll();
                 }
 
                 try {
@@ -158,12 +179,14 @@ public class ProxyServer {
                     }
                 }
 
-                ProxyServer.this.stop();
+                //ProxyServer.this.stop();
             }
+            ProxyServer.this.stop();
             gui.stopServer();
         }
     }
 
+    private int startCode;
     private Listener listener;
     private ServerSocket socket;
     public PlayerList playerList;

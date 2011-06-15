@@ -24,6 +24,7 @@ public class Config {
         _inputHistoryMaxSize = 30;
         _extPort = 25565;
         _proxy = true;
+        _serverStartOnStartup = false;
         cmdLine = new CMDLine();
         backups = new Backups();
         schedule = new Schedule();
@@ -32,7 +33,7 @@ public class Config {
     
     private String _windowTitle;
     private int _inputHistoryMaxSize, _extPort;
-    private boolean _proxy;
+    private boolean _proxy, _serverStartOnStartup;
     public CMDLine cmdLine;
     public Backups backups;
     public Schedule schedule;
@@ -42,11 +43,13 @@ public class Config {
     public int getExtPort() { return _extPort; }
     public String getWindowTitle() { return _windowTitle; }
     public int getInputHistoryMaxSize() { return _inputHistoryMaxSize; }
+    public boolean getServerStartOnStartup() { return _serverStartOnStartup; }
 
     public void setProxy(boolean b) { _proxy = b; }
     public void setExtPort(int i) { _extPort = i; }
     public void setWindowTitle(String s) { _windowTitle = s; }
     public void setInputHistoryMaxSize(int i) { _inputHistoryMaxSize = i; }
+    public void setServerStartOnStartup(boolean b) { _serverStartOnStartup = b; }
 
     public class Display {
         public Display() {
@@ -203,6 +206,7 @@ public class Config {
     public class Backups {
         public Backups() {
             _zip = true;
+            _clearLog = false;
             try {
                 _path = new File(".").getCanonicalPath() + System.getProperty("file.separator") + "mcservergui-backups";
             } catch (IOException e) {
@@ -213,16 +217,18 @@ public class Config {
         }
 
         private String _path;
-        private boolean _zip;
+        private boolean _zip, _clearLog;
         private List<String> _pathsToBackup;
 
         public String getPath() { return _path; }
         public boolean getZip() { return _zip; }
         public List<String> getPathsToBackup() { return _pathsToBackup; }
+        public boolean getClearLog() { return _clearLog; }
 
         public void setPath(String s) { _path = s; }
         public void setZip(boolean b) { _zip = b; }
         public void setPathsToBackup(List<String> l) { _pathsToBackup = l; }
+        public void setClearLog(boolean b) { _clearLog = b; }
     }
 
     public class Schedule {
@@ -294,6 +300,8 @@ public class Config {
                         setProxy(jp.getBooleanValue());
                     } else if ("Proxy Port".equals(fieldname)) {
                         setExtPort(jp.getIntValue());
+                    } else if ("MC Server Start on GUI Start".equals(fieldname)) {
+                        setServerStartOnStartup(jp.getBooleanValue());
                     } else if ("Display".equals(fieldname)) {
                         while (jp.nextToken() != JsonToken.END_OBJECT) {
                             String displayfield = jp.getCurrentName();
@@ -343,6 +351,8 @@ public class Config {
                                 backups.setPath(jp.getText());
                             } else if ("Zip Backup".equals(backupfield)) {
                                 backups.setZip(jp.getBooleanValue());
+                            } else if ("Clear Log".equals(backupfield)) {
+                                backups.setClearLog(jp.getBooleanValue());
                             } else if ("Paths to Backup".equals(backupfield)) {
                                 List<String> pathlist = new ArrayList<String>();
                                 jp.nextToken();
@@ -427,6 +437,7 @@ public class Config {
             jg.writeNumberField("Input History Max Size", getInputHistoryMaxSize());
             jg.writeBooleanField("Use Proxy Server", getProxy());
             jg.writeNumberField("Proxy Port", getExtPort());
+            jg.writeBooleanField("MC Server Start on GUI Start", getServerStartOnStartup());
             jg.writeObjectFieldStart("Display");
             // Display Config Options
             jg.writeStringField("Text Color", display.getTextColor());
@@ -451,6 +462,7 @@ public class Config {
             // Backups Config Options
             jg.writeStringField("Path", backups.getPath());
             jg.writeBooleanField("Zip Backup", backups.getZip());
+            jg.writeBooleanField("Clear Log", backups.getClearLog());
             // Paths to Backup list
             jg.writeArrayFieldStart("Paths to Backup");
             for (int i = 0; i < backups.getPathsToBackup().size(); i++) {

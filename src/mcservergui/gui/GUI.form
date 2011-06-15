@@ -1220,11 +1220,11 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
+                              <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="saveGuiConfigButton" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
@@ -1276,8 +1276,9 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="inputHistoryMaxSizeField" min="-2" pref="42" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="startServerOnLaunchCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1293,6 +1294,8 @@
                                   <Component id="inputHistoryMaxSizeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="inputHistoryMaxSizeField" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="startServerOnLaunchCheckBox" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1328,6 +1331,15 @@
                         </Property>
                         <Property name="name" type="java.lang.String" value="inputHistoryMaxSizeField" noResource="true"/>
                       </Properties>
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="startServerOnLaunchCheckBox">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="startServerOnLaunchCheckBox.text"/>
+                        <Property name="name" type="java.lang.String" value="startServerOnLaunchCheckBox" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="startServerOnLaunchCheckBoxActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -1548,7 +1560,7 @@
                                   <Component id="backupControlRefreshButton" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="saveBackupControlButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="156" max="32767" attributes="0"/>
+                                  <EmptySpace pref="178" max="32767" attributes="0"/>
                                   <Component id="backupButton" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -1609,13 +1621,15 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="backupPathLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="backupPathField" pref="179" max="32767" attributes="0"/>
+                              <Component id="backupPathField" pref="201" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="backupPathBrowseButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="zipBackupCheckBox" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="clearLogCheckBox" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="125" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1628,7 +1642,10 @@
                                   <Component id="backupPathBrowseButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="zipBackupCheckBox" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="zipBackupCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="clearLogCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1670,6 +1687,16 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="zipBackupCheckBoxActionPerformed"/>
                       </Events>
                     </Component>
+                    <Component class="javax.swing.JCheckBox" name="clearLogCheckBox">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="clearLogCheckBox.text"/>
+                        <Property name="toolTipText" type="java.lang.String" resourceKey="clearLogCheckBox.toolTipText"/>
+                        <Property name="name" type="java.lang.String" value="clearLogCheckBox" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clearLogCheckBoxActionPerformed"/>
+                      </Events>
+                    </Component>
                   </SubComponents>
                 </Container>
                 <Component class="javax.swing.JButton" name="saveBackupControlButton">
@@ -1699,7 +1726,7 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane3" alignment="0" pref="301" max="32767" attributes="0"/>
+                          <Component id="jScrollPane3" alignment="0" pref="323" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -1748,7 +1775,7 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane4" alignment="0" pref="201" max="32767" attributes="0"/>
+                          <Component id="jScrollPane4" alignment="0" pref="179" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
