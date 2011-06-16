@@ -1,4 +1,4 @@
-$command = array('command' => update, 'id' => 12);
+$command = array('command' => 'update', 'id' => 12);
 $sock = fsockopen('localhost', 3000);
 fwrite($sock, json_encode($command));
 $response = json_decode(fread($sock));

@@ -10,6 +10,8 @@ import java.io.Reader;
 import javax.swing.text.html.HTMLEditorKit.ParserCallback;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.HTMLDocument;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -140,8 +142,7 @@ public class GUI extends FrameView implements Observer {
 
         parser = new ConsoleParser(config.display, this);
 
-        //webInterface = new WebInterface(3000, this);
-        //webInterface.start();
+        webServer = new WebInterface(this);
     }
 
     @Action
@@ -277,8 +278,6 @@ public class GUI extends FrameView implements Observer {
         jScrollPane4 = new javax.swing.JScrollPane();
         backupStatusLog = new javax.swing.JTextPane();
         backupControlRefreshButton = new javax.swing.JButton();
-        restoreTab = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
         schedulerTab = new javax.swing.JPanel();
         taskSchedulerPanel = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -286,6 +285,14 @@ public class GUI extends FrameView implements Observer {
         taskListAddButton = new javax.swing.JButton();
         taskListEditButton = new javax.swing.JButton();
         taskListRemoveButton = new javax.swing.JButton();
+        webInterfaceTab = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        webPortLabel = new javax.swing.JLabel();
+        webPortField = new javax.swing.JTextField();
+        useWebInterfaceCheckBox = new javax.swing.JCheckBox();
+        webLogPanel = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        webLog = new javax.swing.JTextPane();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
@@ -862,6 +869,7 @@ public class GUI extends FrameView implements Observer {
 
         extPortField.setText(resourceMap.getString("extPortField.text")); // NOI18N
         extPortField.setToolTipText(resourceMap.getString("extPortField.toolTipText")); // NOI18N
+        extPortField.setInputVerifier(new RegexVerifier("^(6553[0-5]|655[0-2]\\d|65[0-4]\\d\\d|6[0-4]\\d{3}|[1-5]\\d{4}|[1-9]\\d{0,3}|0)$"));
         extPortField.setName("extPortField"); // NOI18N
 
         javax.swing.GroupLayout proxyServerPanelLayout = new javax.swing.GroupLayout(proxyServerPanel);
@@ -932,6 +940,7 @@ public class GUI extends FrameView implements Observer {
         serverPortLabel.setName("serverPortLabel"); // NOI18N
 
         serverPortField.setText(resourceMap.getString("serverPortField.text")); // NOI18N
+        serverPortField.setInputVerifier(new RegexVerifier("^(6553[0-5]|655[0-2]\\d|65[0-4]\\d\\d|6[0-4]\\d{3}|[1-5]\\d{4}|[1-9]\\d{0,3}|0)$"));
         serverPortField.setName("serverPortField"); // NOI18N
 
         spawnAnimalsCheckBox.setSelected(true);
@@ -1519,30 +1528,6 @@ public class GUI extends FrameView implements Observer {
 
         tabber.addTab(resourceMap.getString("backupTab.TabConstraints.tabTitle"), backupTab); // NOI18N
 
-        restoreTab.setName("restoreTab"); // NOI18N
-
-        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
-        jLabel3.setName("jLabel3"); // NOI18N
-
-        javax.swing.GroupLayout restoreTabLayout = new javax.swing.GroupLayout(restoreTab);
-        restoreTab.setLayout(restoreTabLayout);
-        restoreTabLayout.setHorizontalGroup(
-            restoreTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(restoreTabLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3)
-                .addContainerGap(433, Short.MAX_VALUE))
-        );
-        restoreTabLayout.setVerticalGroup(
-            restoreTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(restoreTabLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3)
-                .addContainerGap(326, Short.MAX_VALUE))
-        );
-
-        tabber.addTab(resourceMap.getString("restoreTab.TabConstraints.tabTitle"), restoreTab); // NOI18N
-
         schedulerTab.setName("schedulerTab"); // NOI18N
 
         taskSchedulerPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("taskSchedulerPanel.border.title"))); // NOI18N
@@ -1621,6 +1606,93 @@ public class GUI extends FrameView implements Observer {
         );
 
         tabber.addTab(resourceMap.getString("schedulerTab.TabConstraints.tabTitle"), schedulerTab); // NOI18N
+
+        webInterfaceTab.setName("webInterfaceTab"); // NOI18N
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel2.border.title"))); // NOI18N
+        jPanel2.setName("jPanel2"); // NOI18N
+
+        webPortLabel.setText(resourceMap.getString("webPortLabel.text")); // NOI18N
+        webPortLabel.setName("webPortLabel"); // NOI18N
+
+        webPortField.setText(resourceMap.getString("webPortField.text")); // NOI18N
+        webPortField.setToolTipText(resourceMap.getString("webPortField.toolTipText")); // NOI18N
+        webPortField.setInputVerifier(new RegexVerifier("^(6553[0-5]|655[0-2]\\d|65[0-4]\\d\\d|6[0-4]\\d{3}|[1-5]\\d{4}|[1-9]\\d{0,3}|0)$"));
+        webPortField.setName("webPortField"); // NOI18N
+        webPortField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                webPortFieldFocusLost(evt);
+            }
+        });
+
+        useWebInterfaceCheckBox.setText(resourceMap.getString("useWebInterfaceCheckBox.text")); // NOI18N
+        useWebInterfaceCheckBox.setToolTipText(resourceMap.getString("useWebInterfaceCheckBox.toolTipText")); // NOI18N
+        useWebInterfaceCheckBox.setName("useWebInterfaceCheckBox"); // NOI18N
+        useWebInterfaceCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                useWebInterfaceCheckBoxActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(webPortLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(webPortField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(useWebInterfaceCheckBox)
+                .addContainerGap(312, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(webPortLabel)
+                .addComponent(webPortField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(useWebInterfaceCheckBox))
+        );
+
+        webLogPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("webLogPanel.border.title"))); // NOI18N
+        webLogPanel.setName("webLogPanel"); // NOI18N
+
+        jScrollPane6.setName("jScrollPane6"); // NOI18N
+
+        webLog.setName("webLog"); // NOI18N
+        jScrollPane6.setViewportView(webLog);
+
+        javax.swing.GroupLayout webLogPanelLayout = new javax.swing.GroupLayout(webLogPanel);
+        webLogPanel.setLayout(webLogPanelLayout);
+        webLogPanelLayout.setHorizontalGroup(
+            webLogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+        );
+        webLogPanelLayout.setVerticalGroup(
+            webLogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout webInterfaceTabLayout = new javax.swing.GroupLayout(webInterfaceTab);
+        webInterfaceTab.setLayout(webInterfaceTabLayout);
+        webInterfaceTabLayout.setHorizontalGroup(
+            webInterfaceTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, webInterfaceTabLayout.createSequentialGroup()
+                .addGroup(webInterfaceTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(webLogPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        webInterfaceTabLayout.setVerticalGroup(
+            webInterfaceTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(webInterfaceTabLayout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(webLogPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        tabber.addTab(resourceMap.getString("webInterfaceTab.TabConstraints.tabTitle"), webInterfaceTab); // NOI18N
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -1777,6 +1849,8 @@ public class GUI extends FrameView implements Observer {
         backupStatusLog.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
         consoleOutput.setStyledDocument(new javax.swing.text.html.HTMLDocument());
         backupStatusLog.setStyledDocument(new javax.swing.text.html.HTMLDocument());
+        webLog.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
+        webLog.setStyledDocument(new javax.swing.text.html.HTMLDocument());
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(mcservergui.Main.class).getContext().getResourceMap(GUI.class);
         this.getFrame().setIconImage(resourceMap.getImageIcon("imageLabel.icon").getImage());
     }
@@ -2296,6 +2370,25 @@ public class GUI extends FrameView implements Observer {
         config.setServerStartOnStartup(startServerOnLaunchCheckBox.isSelected());
     }//GEN-LAST:event_startServerOnLaunchCheckBoxActionPerformed
 
+    private void useWebInterfaceCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useWebInterfaceCheckBoxActionPerformed
+        config.web.setEnabled(useWebInterfaceCheckBox.isSelected());
+        if (useWebInterfaceCheckBox.isSelected()) {
+            if (webPortField.getInputVerifier().verify(webPortField)) {
+                config.web.setPort(Integer.valueOf(webPortField.getText()));
+                webServer.setPort(config.web.getPort());
+                webServer.start();
+            } else {
+                webPortField.requestFocusInWindow();
+            }
+        } else {
+            webServer.stop();
+        }
+    }//GEN-LAST:event_useWebInterfaceCheckBoxActionPerformed
+
+    private void webPortFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_webPortFieldFocusLost
+        config.web.setPort(Integer.valueOf(webPortField.getText()));
+    }//GEN-LAST:event_webPortFieldFocusLost
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JCheckBox allowFlightCheckBox;
     public javax.swing.JCheckBox allowNetherCheckBox;
@@ -2336,14 +2429,15 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JLabel inputHistoryMaxSizeLabel;
     public javax.swing.JCheckBox jCheckBox1;
     public javax.swing.JLabel jLabel2;
-    public javax.swing.JLabel jLabel3;
     public javax.swing.JPanel jPanel1;
+    public javax.swing.JPanel jPanel2;
     public javax.swing.JPanel jPanel4;
     public javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JScrollPane jScrollPane3;
     public javax.swing.JScrollPane jScrollPane4;
     public javax.swing.JScrollPane jScrollPane5;
+    public javax.swing.JScrollPane jScrollPane6;
     public javax.swing.JButton javaExecBrowseButton;
     public javax.swing.JTextField javaExecField;
     public javax.swing.JLabel javaExecLabel;
@@ -2364,7 +2458,6 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JCheckBox pvpCheckBox;
     public javax.swing.JLabel receivingBytes;
     public javax.swing.JLabel receivingBytesLabel;
-    public javax.swing.JPanel restoreTab;
     public javax.swing.JButton saveBackupControlButton;
     public javax.swing.JButton saveGuiConfigButton;
     public javax.swing.JButton saveServerConfigButton;
@@ -2413,11 +2506,17 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JLabel transmittingBytesLabel;
     public javax.swing.JCheckBox useNetStat;
     public javax.swing.JCheckBox useProxyCheckBox;
+    public javax.swing.JCheckBox useWebInterfaceCheckBox;
     public javax.swing.JLabel versionLabel;
     public javax.swing.JLabel viewDistanceLabel;
     public javax.swing.JSpinner viewDistanceSpinner;
     public javax.swing.JTextField warningColorBox;
     public javax.swing.JLabel warningColorLabel;
+    public javax.swing.JPanel webInterfaceTab;
+    public javax.swing.JTextPane webLog;
+    public javax.swing.JPanel webLogPanel;
+    public javax.swing.JTextField webPortField;
+    public javax.swing.JLabel webPortLabel;
     public javax.swing.JCheckBox whiteListCheckBox;
     public javax.swing.JTextField windowTitleField;
     public javax.swing.JLabel windowTitleLabel;
@@ -2640,6 +2739,15 @@ public class GUI extends FrameView implements Observer {
         mainWorker = newMainWorker;
     }
 
+    public void startWebServer() {
+        webServer.setPort(config.web.getPort());
+        webServer.start();
+    }
+
+    public void stopWebServer() {
+        webServer.stop();
+    }
+
     /**
      * Initializes the config file if necessary and sets all the gui elements to their config'd values
      * Usually this is only called once during the constructor.
@@ -2654,6 +2762,10 @@ public class GUI extends FrameView implements Observer {
         updateGuiWithServerProperties();
         saveConfig();
         initSchedule();
+
+        if (config.web.isEnabled()) {
+            startWebServer();
+        }
     }
 
     public void initSchedule() {
@@ -2696,6 +2808,8 @@ public class GUI extends FrameView implements Observer {
         severeColorBox.setBackground(java.awt.Color.decode("0x"
                 + config.display.getSevereColor()));
         textSizeField.setValue(config.display.getTextSize());
+        webPortField.setText(Integer.toString(config.web.getPort()));
+        useWebInterfaceCheckBox.setSelected(config.web.isEnabled());
         useProxyCheckBox.setSelected(config.getProxy());
         extPortField.setText(Integer.toString(config.getExtPort()));
         startServerOnLaunchCheckBox.setSelected(config.getServerStartOnStartup());
@@ -2813,6 +2927,7 @@ public class GUI extends FrameView implements Observer {
         if (textScrolling) {
             consoleOutput.setCaretPosition(consoleOutput.getDocument().getLength());
         }
+        webLog.setCaretPosition(webLog.getDocument().getLength());
     }
 
     public boolean isRestarting() { return restarting; }
@@ -2888,18 +3003,45 @@ public class GUI extends FrameView implements Observer {
         scrollText();
     }
 
+    public void webLogAdd(String text) {
+        try
+        {
+            text = new SimpleDateFormat(DATE_FORMAT_NOW).format(
+                    Calendar.getInstance().getTime()) + " [Web Interface] "
+                    + text;
+            String textToAdd = parser.parseText(text);
+
+            ((HTMLEditorKit)webLog.getEditorKit())
+                    .insertHTML((HTMLDocument)webLog.getDocument(),
+                    webLog.getDocument().getEndPosition().getOffset()-1,
+                    textToAdd, 1, 0, null);
+            //System.out.println(webLog.getText());
+        } catch ( Exception e ) {
+            //e.printStackTrace();
+            System.err.println("Error appending text to web interface log: " + text);
+        }
+        scrollText();
+    }
+
     public void setConsoleOutput(String text) {
         consoleOutput.setText("<body bgcolor = " + config.display.getBgColor() 
                 + "><font color = \"" + config.display.getTextColor()
                 + "\" size = " + config.display.getTextSize() + ">" + text);
     }
 
+    public void webLogReplace(String text) {
+        webLog.setText("<body bgcolor = " + config.display.getBgColor()
+                + "><font color = \"" + config.display.getTextColor()
+                + "\" size = " + config.display.getTextSize() + ">" + text);
+    }
+
     public void updateConsoleOutputBgColor() {
-        System.out.println(consoleOutput.getText());
         consoleOutput.setText(consoleOutput.getText().replaceFirst(
                 "([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}",
                 config.display.getBgColor()));
-        System.out.println(consoleOutput.getText());
+        webLog.setText(webLog.getText().replaceFirst(
+                "([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}",
+                config.display.getBgColor()));
     }
 
     /**
@@ -3012,7 +3154,9 @@ public class GUI extends FrameView implements Observer {
     private PlayerList playerListModel;
     private boolean isHidden;
     private java.awt.TrayIcon trayIcon;
-    //private WebInterface webInterface;
+    private WebInterface webServer;
+
+    public static final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
 
     //Auto created
     private final Timer messageTimer;

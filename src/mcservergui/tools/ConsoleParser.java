@@ -69,7 +69,7 @@ public class ConsoleParser {
                 message = message.replaceFirst("ConcurrentExecutionException",
                         "[<font color = " + display.getSevereColor() +
                         ">ConcurrentExecutionException</font>]");
-            } else if (tag.equals("MC Server GUI")) {
+            } else /*if (tag.equals("MC Server GUI")) */{
                 tag = "[" + tag + "]";
             }
 

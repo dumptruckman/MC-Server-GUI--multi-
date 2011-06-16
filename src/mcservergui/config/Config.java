@@ -29,6 +29,7 @@ public class Config {
         backups = new Backups();
         schedule = new Schedule();
         display = new Display();
+        web = new WebInterface();
     }
     
     private String _windowTitle;
@@ -38,6 +39,7 @@ public class Config {
     public Backups backups;
     public Schedule schedule;
     public Display display;
+    public WebInterface web;
 
     public boolean getProxy() { return _proxy; }
     public int getExtPort() { return _extPort; }
@@ -243,6 +245,32 @@ public class Config {
         public void setEvents(java.util.List<EventModel> e) { events = e; }
     }
 
+    public class WebInterface {
+        public WebInterface() {
+            _port = 42424;
+            _enabled = false;
+        }
+
+        int _port;
+        boolean _enabled;
+
+        public int getPort() {
+            return _port;
+        }
+
+        public boolean isEnabled() {
+            return _enabled;
+        }
+
+        public void setEnabled(boolean _enabled) {
+            this._enabled = _enabled;
+        }
+
+        public void setPort(int _port) {
+            this._port = _port;
+        }
+    }
+
     public boolean load() {
         File configFile = new File("guiconfig.json");
 
@@ -412,6 +440,16 @@ public class Config {
                                 schedule.setEvents(eventlist);
                             }
                         }
+                    } else if ("Web Interface".equals(fieldname)) {
+                        while (jp.nextToken() != JsonToken.END_OBJECT) {
+                            String webfield = jp.getCurrentName();
+                            jp.nextToken();
+                            if ("Port".equals(webfield)) {
+                                web.setPort(jp.getNumberValue().intValue());
+                            } else if ("Enabled".equals(webfield)) {
+                                web.setEnabled(jp.getBooleanValue());
+                            }
+                        }
                     }
                 }
             } else {
@@ -495,6 +533,11 @@ public class Config {
             }
             jg.writeEndObject();  // End of EventModel list;
             jg.writeEndObject();  // End of Schedule Config Options
+            // Web Interface Config Options
+            jg.writeObjectFieldStart("Web Interface");
+            jg.writeNumberField("Port", web.getPort());
+            jg.writeBooleanField("Enabled", web.isEnabled());
+            jg.writeEndObject(); // End of Web Interface Config Options
             jg.writeEndObject();
             jg.close();
         } catch (IOException e) {

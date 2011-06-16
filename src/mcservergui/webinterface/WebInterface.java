@@ -8,6 +8,8 @@ package mcservergui.webinterface;
 import java.io.*;
 import java.net.*;
 
+import org.codehaus.jackson.*;
+
 import mcservergui.gui.GUI;
 
 /**
@@ -21,6 +23,11 @@ public class WebInterface {
         this.gui = gui;
     }
 
+    public WebInterface(GUI gui) {
+        this.gui = gui;
+        port = 42424;
+    }
+
     public void setPort(int port) {
         this.port = port;
     }
@@ -32,8 +39,17 @@ public class WebInterface {
     }
 
     public void stop() {
+        try {
+            gui.webLogAdd("Shutting down web interface");
+            socket.close();
+        } catch (Exception e) {
+        }
         run = false;
         listener.interrupt();
+        // Because I don't know enough about thread locking!:
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException ie) {}
     }
 
     private int port;
@@ -46,9 +62,10 @@ public class WebInterface {
         @Override public void run() {
             try {
                 socket = new ServerSocket(port);
-                System.out.println("Listening on " + port);
+                gui.webLogAdd("Listening on port: " + port);
             } catch (IOException ioe) {
-                // server failed to start
+                gui.webLogAdd("Failed to listen on port: " + port + "!");
+                gui.webLogAdd("Perhaps it is already in use?");
                 return;
             }
             try {
@@ -56,40 +73,46 @@ public class WebInterface {
                     Socket client;
                     try {
                         client = socket.accept();
+                        handleConnection(client);
+                        client.close();
                     } catch (java.io.IOException e) {
-                        /*
-                        gui.addTextToConsoleOutput("[MC Server GUI] " + e);
-                        gui.addTextToConsoleOutput("[MC Server GUI] Accept failed on port "
-                                + port + "!");
-                         * 
-                         */
                         break;
                     }
-                    handleConnection(client);
                 }
             } finally {
-                try {
-                    socket.close();
-                } catch (java.io.IOException e) {
-                }
+                WebInterface.this.stop();
             }
         }
     }
 
     private void handleConnection(Socket client) {
+        //gui.webLogAdd("Connection from " + client.getInetAddress().getHostAddress());
         BufferedReader in = null;
-        BufferedWriter out = null;
-        System.out.println("Connection accepted");
+        PrintWriter out = null;
         try {
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            out = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
-
             String data = "";
             String line = "";
-            while ((line = in.readLine()) != null) {
-                data += line;
+            if (in.ready()) {
+                System.out.println("wee");
             }
-            processData(data);
+            while (in.ready()) {
+                line = in.readLine();
+
+                if (line != null) {
+                    System.out.println(line);
+                    data += line;
+                } else {
+                    System.out.println("null");
+                    break;
+                }
+            }
+            String response = processData(client, data);
+            System.out.println(response);
+
+            out = new PrintWriter(client.getOutputStream(), true);
+            out.write(response);
+            out.flush();
         } catch (IOException ioe) {
 
         } finally {
@@ -99,14 +122,119 @@ public class WebInterface {
                 } catch (IOException ioe) { }
             }
             if (out != null) {
-                try {
-                    out.close();
-                } catch (IOException ioe) { }
+                out.close();
             }
         }
     }
 
-    private void processData(String data) {
-        System.out.println(data);
+    private void webLog(Socket client, String message) {
+        gui.webLogAdd(client.getInetAddress().getHostAddress() + " " + message);
     }
+
+    private String processData(Socket client, String data) {
+        JsonParser jp = null;
+        String response = "";
+        try {
+            jp = new JsonFactory().createJsonParser(data);
+            jp.nextToken();
+            if (jp.getCurrentToken() != null) {
+                jp.nextToken();
+                String identifier = jp.getCurrentName();
+                jp.nextToken();
+                if (identifier.equalsIgnoreCase("Server Control")) {
+                    String control = jp.getText();
+                    if (control.equalsIgnoreCase("Start")) {
+                        webLog(client, "issued a Server Start");
+                        gui.startServer();
+                        response = new ResponseWriter("Success", "Server Start").getResponse();
+                    } else if (control.equalsIgnoreCase("Stop")) {
+                        webLog(client, "issued a Server Stop");
+                        gui.stopServer();
+                        response = new ResponseWriter("Success", "Server Stop").getResponse();
+                    } else {
+                        webLog(client, " sent an unrecognized Server Control!");
+                        response = new ResponseWriter("Error", "No such Server Control").getResponse();
+                    }
+                } else if (identifier.equalsIgnoreCase("Server Command")) {
+                    response = new ResponseWriter("Error", "No such Server Command").getResponse();
+                } else {
+                    webLog(client, " sent an unrecognized identifier!");
+                    response = new ResponseWriter("Error", "Unrecognized Identifier").getResponse();
+                }
+            }
+        } catch (IOException ioe) {
+            webLog(client, " sent invalid data!");
+            response = new ResponseWriter("Error", "Invalid Data").getResponse();
+        } finally {
+            if (jp != null) {
+                try {
+                    jp.close();
+                } catch (IOException ioe) { }
+            }
+            return response;
+        }
+    }
+
+    class ResponseWriter {
+        
+        private StringWriter response;
+        private JsonGenerator jg;
+        
+        public ResponseWriter() {
+            response = new StringWriter();
+            try {
+                jg = new JsonFactory().createJsonGenerator(response);
+                jg.writeStartObject();
+            } catch (IOException ioe) {
+                jg = null;
+            }
+        }
+
+        public ResponseWriter(String s) {
+            response = new StringWriter();
+            try {
+                jg = new JsonFactory().createJsonGenerator(response);
+                jg.writeStartObject();
+            } catch (IOException ioe) {
+                jg = null;
+            }
+            add(s, "");
+        }
+
+        public ResponseWriter(String s1, String s2) {
+            response = new StringWriter();
+            try {
+                jg = new JsonFactory().createJsonGenerator(response);
+                jg.writeStartObject();
+            } catch (IOException ioe) {
+                jg = null;
+            }
+            add(s1, s2);
+        }
+
+        public void add(String s1, String s2) {
+            if (jg != null) {
+                try {
+                    jg.writeStringField(s1, s2);
+                } catch (IOException ioe) {
+                }
+            }
+        }
+
+        public String getResponse() {
+            if (jg != null) {
+                try {
+                    jg.writeEndObject();
+                    jg.close();
+                    return response.toString();
+                } catch (IOException ioe) {
+                    return "";
+                }
+            } else {
+                return "";
+            }
+        }
+    }
+
 }
+
