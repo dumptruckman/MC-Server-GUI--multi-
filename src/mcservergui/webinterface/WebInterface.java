@@ -7,6 +7,7 @@ package mcservergui.webinterface;
 
 import java.io.*;
 import java.net.*;
+import java.nio.channels.*;
 
 import org.codehaus.jackson.*;
 
@@ -55,6 +56,7 @@ public class WebInterface {
     private int port;
     private boolean run;
     private ServerSocket socket;
+    //private ServerSocketChannel socket;
     private GUI gui;
     private Listener listener;
 
@@ -62,6 +64,11 @@ public class WebInterface {
         @Override public void run() {
             try {
                 socket = new ServerSocket(port);
+                //socket = ServerSocketChannel.open();
+                //socket.configureBlocking(false);
+                //socket.socket().bind(new InetSocketAddress(port));
+                //Selector selector = Selector.open();
+                //socket.register(selector, SelectionKey.OP_ACCEPT);
                 gui.webLogAdd("Listening on port: " + port);
             } catch (IOException ioe) {
                 gui.webLogAdd("Failed to listen on port: " + port + "!");
@@ -93,20 +100,35 @@ public class WebInterface {
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             String data = "";
             String line = "";
-            if (in.ready()) {
-                System.out.println("wee");
-            }
+            System.out.println("reading..");
+            //client.getChannel().configureBlocking(false);
             while (in.ready()) {
-                line = in.readLine();
-
+                /*line = in.readLine();
+                System.out.println(line);
                 if (line != null) {
                     System.out.println(line);
                     data += line;
                 } else {
                     System.out.println("null");
                     break;
+                }*/
+                int c;
+                while ((c = in.read()) != -1) {
+                    data += Character.toString((char)c);
                 }
             }
+            
+            
+            
+            //while ((line = in.readLine()) != null) {
+            //    System.out.println(line);
+            //    data += line;
+            //}
+            //while ((c = in.read()) != -1) {
+            //    data += Character.toString((char)c);
+            //}
+            System.out.println(data);
+            System.out.println("responding..");
             String response = processData(client, data);
             System.out.println(response);
 
