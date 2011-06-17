@@ -1,7 +1,6 @@
 /*
  * GUI.java
  */
-
 package mcservergui.gui;
 
 import mcservergui.gui.ColorChooser;
@@ -290,6 +289,9 @@ public class GUI extends FrameView implements Observer {
         webPortLabel = new javax.swing.JLabel();
         webPortField = new javax.swing.JTextField();
         useWebInterfaceCheckBox = new javax.swing.JCheckBox();
+        webPasswordLabel = new javax.swing.JLabel();
+        webPasswordField = new javax.swing.JPasswordField();
+        showWebPasswordButton = new javax.swing.JToggleButton();
         webLogPanel = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         webLog = new javax.swing.JTextPane();
@@ -641,7 +643,7 @@ public class GUI extends FrameView implements Observer {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(playerListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE))
                     .addComponent(consoleInputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE))
-                .addGap(44, 44, 44))
+                .addGap(46, 46, 46))
         );
         mainWindowTabLayout.setVerticalGroup(
             mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1083,7 +1085,7 @@ public class GUI extends FrameView implements Observer {
                         .addComponent(saveServerConfigButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(serverPropertiesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
         serverConfigTabLayout.setVerticalGroup(
             serverConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1335,7 +1337,7 @@ public class GUI extends FrameView implements Observer {
                         .addComponent(saveGuiConfigButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(197, Short.MAX_VALUE))
+                .addContainerGap(199, Short.MAX_VALUE))
         );
         guiConfigTabLayout.setVerticalGroup(
             guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1409,7 +1411,7 @@ public class GUI extends FrameView implements Observer {
             .addGroup(backupSettingsPanelLayout.createSequentialGroup()
                 .addComponent(backupPathLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(backupPathField, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                .addComponent(backupPathField, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(backupPathBrowseButton))
             .addGroup(backupSettingsPanelLayout.createSequentialGroup()
@@ -1455,7 +1457,7 @@ public class GUI extends FrameView implements Observer {
         backupFileChooserPanel.setLayout(backupFileChooserPanelLayout);
         backupFileChooserPanelLayout.setHorizontalGroup(
             backupFileChooserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
         );
         backupFileChooserPanelLayout.setVerticalGroup(
             backupFileChooserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1475,7 +1477,7 @@ public class GUI extends FrameView implements Observer {
         backupStatusPanel.setLayout(backupStatusPanelLayout);
         backupStatusPanelLayout.setHorizontalGroup(
             backupStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
         );
         backupStatusPanelLayout.setVerticalGroup(
             backupStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1504,7 +1506,7 @@ public class GUI extends FrameView implements Observer {
                         .addComponent(backupControlRefreshButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(saveBackupControlButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 179, Short.MAX_VALUE)
                         .addComponent(backupButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(backupStatusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1548,7 +1550,7 @@ public class GUI extends FrameView implements Observer {
         taskSchedulerPanel.setLayout(taskSchedulerPanelLayout);
         taskSchedulerPanelLayout.setHorizontalGroup(
             taskSchedulerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
         );
         taskSchedulerPanelLayout.setVerticalGroup(
             taskSchedulerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1590,7 +1592,7 @@ public class GUI extends FrameView implements Observer {
                 .addComponent(taskListEditButton)
                 .addGap(18, 18, 18)
                 .addComponent(taskListRemoveButton)
-                .addContainerGap(335, Short.MAX_VALUE))
+                .addContainerGap(337, Short.MAX_VALUE))
             .addComponent(taskSchedulerPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         schedulerTabLayout.setVerticalGroup(
@@ -1634,6 +1636,26 @@ public class GUI extends FrameView implements Observer {
             }
         });
 
+        webPasswordLabel.setText(resourceMap.getString("webPasswordLabel.text")); // NOI18N
+        webPasswordLabel.setName("webPasswordLabel"); // NOI18N
+
+        webPasswordField.setText(resourceMap.getString("webPasswordField.text")); // NOI18N
+        webPasswordField.setName("webPasswordField"); // NOI18N
+        webPasswordField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                webPasswordFieldFocusLost(evt);
+            }
+        });
+
+        showWebPasswordButton.setText(resourceMap.getString("showWebPasswordButton.text")); // NOI18N
+        showWebPasswordButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        showWebPasswordButton.setName("showWebPasswordButton"); // NOI18N
+        showWebPasswordButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showWebPasswordButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -1644,14 +1666,23 @@ public class GUI extends FrameView implements Observer {
                 .addComponent(webPortField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(useWebInterfaceCheckBox)
-                .addContainerGap(312, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(webPasswordLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(webPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(showWebPasswordButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(68, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(webPortLabel)
                 .addComponent(webPortField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(useWebInterfaceCheckBox))
+                .addComponent(useWebInterfaceCheckBox)
+                .addComponent(webPasswordLabel)
+                .addComponent(webPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(showWebPasswordButton))
         );
 
         webLogPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("webLogPanel.border.title"))); // NOI18N
@@ -1666,7 +1697,7 @@ public class GUI extends FrameView implements Observer {
         webLogPanel.setLayout(webLogPanelLayout);
         webLogPanelLayout.setHorizontalGroup(
             webLogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
         );
         webLogPanelLayout.setVerticalGroup(
             webLogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1698,7 +1729,7 @@ public class GUI extends FrameView implements Observer {
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabber, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE)
+            .addComponent(tabber)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1742,15 +1773,15 @@ public class GUI extends FrameView implements Observer {
         statusPanel.setLayout(statusPanelLayout);
         statusPanelLayout.setHorizontalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE)
+            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(statusMessageLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 452, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 454, Short.MAX_VALUE)
                 .addComponent(statusAnimationLabel)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusPanelLayout.createSequentialGroup()
-                .addContainerGap(391, Short.MAX_VALUE)
+                .addContainerGap(393, Short.MAX_VALUE)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -2373,6 +2404,7 @@ public class GUI extends FrameView implements Observer {
     private void useWebInterfaceCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useWebInterfaceCheckBoxActionPerformed
         config.web.setEnabled(useWebInterfaceCheckBox.isSelected());
         if (useWebInterfaceCheckBox.isSelected()) {
+            config.web.setPassword(String.valueOf(webPasswordField.getPassword()));
             if (webPortField.getInputVerifier().verify(webPortField)) {
                 config.web.setPort(Integer.valueOf(webPortField.getText()));
                 webServer.setPort(config.web.getPort());
@@ -2388,6 +2420,18 @@ public class GUI extends FrameView implements Observer {
     private void webPortFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_webPortFieldFocusLost
         config.web.setPort(Integer.valueOf(webPortField.getText()));
     }//GEN-LAST:event_webPortFieldFocusLost
+
+    private void showWebPasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showWebPasswordButtonActionPerformed
+        if (showWebPasswordButton.isSelected()) {
+            webPasswordField.setEchoChar((char)0);
+        } else {
+            webPasswordField.setEchoChar('\u25cf');
+        }
+    }//GEN-LAST:event_showWebPasswordButtonActionPerformed
+
+    private void webPasswordFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_webPasswordFieldFocusLost
+        config.web.setPassword(String.valueOf(webPasswordField.getPassword()));
+    }//GEN-LAST:event_webPasswordFieldFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JCheckBox allowFlightCheckBox;
@@ -2482,6 +2526,7 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JPanel serverPropertiesPanel;
     public javax.swing.JTextField severeColorBox;
     public javax.swing.JLabel severeColorLabel;
+    public javax.swing.JToggleButton showWebPasswordButton;
     public javax.swing.JCheckBox spawnAnimalsCheckBox;
     public javax.swing.JCheckBox spawnMonstersCheckBox;
     public javax.swing.JTextField spawnProtectionField;
@@ -2515,6 +2560,8 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JPanel webInterfaceTab;
     public javax.swing.JTextPane webLog;
     public javax.swing.JPanel webLogPanel;
+    public javax.swing.JPasswordField webPasswordField;
+    public javax.swing.JLabel webPasswordLabel;
     public javax.swing.JTextField webPortField;
     public javax.swing.JLabel webPortLabel;
     public javax.swing.JCheckBox whiteListCheckBox;
@@ -2748,6 +2795,13 @@ public class GUI extends FrameView implements Observer {
         webServer.stop();
     }
 
+    public String getConsoleOutput() {
+        //String output = consoleOutput.getText().replaceAll("<br>", "\n");
+        String output = consoleOutput.getText();
+        output = output.replaceAll("(<html.*>|<body.*>|<head.*>|</head>|</body>|</html>)", "");
+        return output;
+    }
+
     /**
      * Initializes the config file if necessary and sets all the gui elements to their config'd values
      * Usually this is only called once during the constructor.
@@ -2792,24 +2846,20 @@ public class GUI extends FrameView implements Observer {
     }
 
     public void updateGuiWithConfigValues() {
-        //textColorField.setText(config.display.getTextColor());
         textColorBox.setBackground(java.awt.Color.decode("0x"
                 + config.display.getTextColor()));
-        //bgColorField.setText(config.display.getBgColor());
         bgColorBox.setBackground(java.awt.Color.decode("0x"
                 + config.display.getBgColor()));
-        //infoColorField.setText(config.display.getInfoColor());
         infoColorBox.setBackground(java.awt.Color.decode("0x"
                 + config.display.getInfoColor()));
-        //warningColorField.setText(config.display.getWarningColor());
         warningColorBox.setBackground(java.awt.Color.decode("0x"
                 + config.display.getWarningColor()));
-        //severeColorField.setText(config.display.getSevereColor());
         severeColorBox.setBackground(java.awt.Color.decode("0x"
                 + config.display.getSevereColor()));
         textSizeField.setValue(config.display.getTextSize());
         webPortField.setText(Integer.toString(config.web.getPort()));
         useWebInterfaceCheckBox.setSelected(config.web.isEnabled());
+        webPasswordField.setText(config.web.getPassword());
         useProxyCheckBox.setSelected(config.getProxy());
         extPortField.setText(Integer.toString(config.getExtPort()));
         startServerOnLaunchCheckBox.setSelected(config.getServerStartOnStartup());
@@ -3143,7 +3193,7 @@ public class GUI extends FrameView implements Observer {
     private String stateBeforeBackup;
     private String statusBeforeBackup;
     private mcservergui.fileexplorer.FileSystemModel backupFileSystem;
-    private Config config;
+    public Config config;
     private boolean badConfig;
     private Scheduler scheduler;
     private GUIListModel taskList;

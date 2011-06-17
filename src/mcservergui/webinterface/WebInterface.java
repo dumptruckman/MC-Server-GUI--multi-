@@ -8,6 +8,9 @@ package mcservergui.webinterface;
 import java.io.*;
 import java.net.*;
 import java.nio.channels.*;
+import java.nio.channels.spi.*;
+import java.nio.*;
+import java.nio.charset.*;
 
 import org.codehaus.jackson.*;
 
@@ -39,10 +42,20 @@ public class WebInterface {
         listener.start();
     }
 
+    /*public void start() {
+        run = true;
+        
+    }*/
+
     public void stop() {
         try {
             gui.webLogAdd("Shutting down web interface");
-            socket.close();
+            if (serverChannel != null) {
+                serverChannel.close();
+            }
+            //if (socketChannel != null) {
+            //    socketChannel.close();
+            //}
         } catch (Exception e) {
         }
         run = false;
@@ -55,133 +68,208 @@ public class WebInterface {
 
     private int port;
     private boolean run;
-    private ServerSocket socket;
-    //private ServerSocketChannel socket;
+    private Selector selector;
+    private ServerSocketChannel serverChannel;
+    private SocketChannel sChannel;
     private GUI gui;
     private Listener listener;
 
     private final class Listener extends Thread {
         @Override public void run() {
+            selector = null;
+            serverChannel = null;
+            // Create a non-blocking server socket and check for connections
             try {
-                socket = new ServerSocket(port);
-                //socket = ServerSocketChannel.open();
-                //socket.configureBlocking(false);
-                //socket.socket().bind(new InetSocketAddress(port));
-                //Selector selector = Selector.open();
-                //socket.register(selector, SelectionKey.OP_ACCEPT);
+                // Create the selector
+                selector = Selector.open();
+
+                // Create a non-blocking server socket channel on port 80
+                serverChannel = ServerSocketChannel.open();
+                serverChannel.configureBlocking(false);
+                serverChannel.socket().bind(new InetSocketAddress(port));
                 gui.webLogAdd("Listening on port: " + port);
-            } catch (IOException ioe) {
+                
+                // Register both channels with selector
+                serverChannel.register(selector, SelectionKey.OP_ACCEPT);
+            } catch (IOException e) {
                 gui.webLogAdd("Failed to listen on port: " + port + "!");
                 gui.webLogAdd("Perhaps it is already in use?");
+                if (selector != null) {
+                    try {
+                        selector.close();
+                    } catch (IOException ie) {}
+                }
+                if (serverChannel != null) {
+                    try {
+                        serverChannel.close();
+                    } catch (IOException ie) {}
+                }
                 return;
             }
-            try {
-                while (run) {
-                    Socket client;
-                    try {
-                        client = socket.accept();
-                        handleConnection(client);
-                        client.close();
-                    } catch (java.io.IOException e) {
-                        break;
-                    }
+
+            while (run) {
+                try {
+                    // Wait for an event
+                    selector.select();
+                } catch (IOException ioe) {
+                    System.err.println("Error with selector");
+                    break;
                 }
-            } finally {
-                WebInterface.this.stop();
+
+                // Get list of selection keys with pending events
+                java.util.Iterator it = selector.selectedKeys().iterator();
+
+                // Process each key
+                while (it.hasNext()) {
+                    // Get the selection key
+                    SelectionKey selKey = (SelectionKey)it.next();
+
+                    // Remove it from the list to indicate that it is being processed
+                    it.remove();
+
+                    try {
+                        processSelectionKey(selKey);
+                    } catch (IOException e) {
+                        // Handle error with channel and unregister
+                        System.err.println("Error processing channel");
+                        selKey.cancel();
+                    }
+                }    
+            }
+            if (selector != null) {
+                try {
+                    selector.close();
+                } catch (IOException ie) {}
+            }
+            if (serverChannel != null) {
+                try {
+                    serverChannel.close();
+                } catch (IOException ie) {}
             }
         }
     }
 
-    private void handleConnection(Socket client) {
-        //gui.webLogAdd("Connection from " + client.getInetAddress().getHostAddress());
-        BufferedReader in = null;
-        PrintWriter out = null;
-        try {
-            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            String data = "";
-            String line = "";
-            System.out.println("reading..");
-            //client.getChannel().configureBlocking(false);
-            while (in.ready()) {
-                /*line = in.readLine();
-                System.out.println(line);
-                if (line != null) {
-                    System.out.println(line);
-                    data += line;
-                } else {
-                    System.out.println("null");
-                    break;
-                }*/
-                int c;
-                while ((c = in.read()) != -1) {
-                    data += Character.toString((char)c);
-                }
-            }
-            
-            
-            
-            //while ((line = in.readLine()) != null) {
-            //    System.out.println(line);
-            //    data += line;
-            //}
-            //while ((c = in.read()) != -1) {
-            //    data += Character.toString((char)c);
-            //}
-            System.out.println(data);
-            System.out.println("responding..");
-            String response = processData(client, data);
-            System.out.println(response);
+    public void processSelectionKey(SelectionKey selKey) throws IOException {
+        if (selKey.isValid() && selKey.isAcceptable()) {
+            // Get channel with connection request
+            ServerSocketChannel connectedChannel =
+                    (ServerSocketChannel)selKey.channel();
 
-            out = new PrintWriter(client.getOutputStream(), true);
-            out.write(response);
-            out.flush();
-        } catch (IOException ioe) {
+            // Accept the connection request.
+            sChannel = (SocketChannel) connectedChannel.accept();
+            sChannel.configureBlocking(false);
 
-        } finally {
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (IOException ioe) { }
-            }
-            if (out != null) {
-                out.close();
+            // If serverSocketChannel is non-blocking, sChannel may be null
+            if (sChannel == null) {
+                selKey.cancel();
+                // There were no pending connection requests; try again later.
+            } else {
+                // Establish connection and set up for reading
+                sChannel.finishConnect();
+                sChannel.register(selector, sChannel.validOps());
             }
         }
+        // Read data and respond
+        if (selKey.isValid() && selKey.isReadable()) {
+            // Read from the channel
+            String data = readMessage(selKey);
+
+            sChannel = (SocketChannel)selKey.channel();
+            // Process the data and send a response
+            writeMessage(sChannel, processData(sChannel.socket(), data));
+
+            // Close the channel
+            sChannel.close();
+            selKey.cancel();
+        }
+    }
+
+    public String readMessage(SelectionKey key) {
+        int nBytes = 0;
+        SocketChannel socketConection = (SocketChannel)key.channel();
+        ByteBuffer buf = ByteBuffer.allocate(1024);
+        String result = "";
+        try {
+            nBytes = socketConection.read(buf);
+            buf.flip();
+            Charset charset = Charset.forName("us-ascii");
+            CharsetDecoder decoder = charset.newDecoder();
+            CharBuffer charBuffer = decoder.decode(buf);
+            result =  charBuffer.toString();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public void writeMessage(SocketChannel socket, String message) {
+        try {
+            int numBytesWritten = socket.write(str_to_bb(message));
+        } catch (IOException e) {
+            webLog(socket.socket(), "Connection closed unexpectedly!");
+        }
+    }
+    
+    public static ByteBuffer str_to_bb(String msg){
+        try{
+            return Charset.forName("UTF-8").newEncoder()
+                    .encode(CharBuffer.wrap(msg));
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void webLog(Socket client, String message) {
         gui.webLogAdd(client.getInetAddress().getHostAddress() + " " + message);
     }
 
-    private String processData(Socket client, String data) {
+    private String processData(Socket client, String json) {
         JsonParser jp = null;
         String response = "";
+        System.out.println(json);
         try {
-            jp = new JsonFactory().createJsonParser(data);
+            jp = new JsonFactory().createJsonParser(json);
             jp.nextToken();
             if (jp.getCurrentToken() != null) {
                 jp.nextToken();
-                String identifier = jp.getCurrentName();
+                String auth = jp.getCurrentName();
                 jp.nextToken();
-                if (identifier.equalsIgnoreCase("Server Control")) {
-                    String control = jp.getText();
-                    if (control.equalsIgnoreCase("Start")) {
-                        webLog(client, "issued a Server Start");
-                        gui.startServer();
-                        response = new ResponseWriter("Success", "Server Start").getResponse();
-                    } else if (control.equalsIgnoreCase("Stop")) {
-                        webLog(client, "issued a Server Stop");
-                        gui.stopServer();
-                        response = new ResponseWriter("Success", "Server Stop").getResponse();
-                    } else {
-                        webLog(client, " sent an unrecognized Server Control!");
-                        response = new ResponseWriter("Error", "No such Server Control").getResponse();
+                String password = jp.getText();
+                jp.nextToken();
+                if (auth.equalsIgnoreCase("Password") && password.equals(gui.config.web.getPassword())) {
+                    String identifier = jp.getCurrentName();
+                    jp.nextToken();
+                    if (identifier.equalsIgnoreCase("Request")) {
+                        String request = jp.getText();
+                        if (request.equalsIgnoreCase("Start Server")) {
+                            gui.startServer();
+                            webLog(client, "issued a Server Start");
+                            response = new ResponseWriter("Success", "Server Started").getResponse();
+                        } else if (request.equalsIgnoreCase("Stop Server")) {
+                            gui.stopServer();
+                            webLog(client, "issued a Server Stop");
+                            response = new ResponseWriter("Success", "Server Stopped").getResponse();
+                        } else if (request.equalsIgnoreCase("Send Input")) {
+                            java.util.List<String> data = getRequestData(jp);
+                            if (!data.isEmpty()) {
+                                gui.sendInput(data.get(0));
+                                webLog(client, "sent command '" + data.get(0) + "'");
+                                response = new ResponseWriter("Success", "Command sent").getResponse();
+                            } else {
+                                response = new ResponseWriter("Error", "Did not specify command!").getResponse();
+                            }
+                        } else if (request.equalsIgnoreCase("Get Output")) {
+                            webLog(client, "requested server output");
+                            response = new ResponseWriter("Success", gui.getConsoleOutput()).getResponse();
+                        } else {
+                            webLog(client, "sent an unrecognized request!");
+                            response = new ResponseWriter("Error", "No such request").getResponse();
+                        }
                     }
-                } else if (identifier.equalsIgnoreCase("Server Command")) {
-                    response = new ResponseWriter("Error", "No such Server Command").getResponse();
                 } else {
-                    webLog(client, " sent an unrecognized identifier!");
-                    response = new ResponseWriter("Error", "Unrecognized Identifier").getResponse();
+                    webLog(client, "did not pass authentication!");
+                    response = new ResponseWriter("Error", "Authentication Error").getResponse();
                 }
             }
         } catch (IOException ioe) {
@@ -195,6 +283,18 @@ public class WebInterface {
             }
             return response;
         }
+    }
+
+    private java.util.List<String> getRequestData(JsonParser jp) throws IOException {
+        java.util.List<String> data = new java.util.ArrayList<String>();
+        jp.nextToken();
+        jp.nextToken();
+        jp.nextToken();
+        while (jp.getCurrentToken() != JsonToken.END_ARRAY) {
+            data.add(jp.getText());
+            jp.nextToken();
+        }
+        return data;
     }
 
     class ResponseWriter {

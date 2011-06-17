@@ -249,10 +249,12 @@ public class Config {
         public WebInterface() {
             _port = 42424;
             _enabled = false;
+            _password = "password";
         }
 
         int _port;
         boolean _enabled;
+        String _password;
 
         public int getPort() {
             return _port;
@@ -262,12 +264,20 @@ public class Config {
             return _enabled;
         }
 
+        public String getPassword() {
+            return _password;
+        }
+
         public void setEnabled(boolean _enabled) {
             this._enabled = _enabled;
         }
 
         public void setPort(int _port) {
             this._port = _port;
+        }
+
+        public void setPassword(String s) {
+            _password = s;
         }
     }
 
@@ -448,6 +458,8 @@ public class Config {
                                 web.setPort(jp.getNumberValue().intValue());
                             } else if ("Enabled".equals(webfield)) {
                                 web.setEnabled(jp.getBooleanValue());
+                            } else if ("Password".equals(webfield)) {
+                                web.setPassword(jp.getText());
                             }
                         }
                     }
@@ -537,6 +549,7 @@ public class Config {
             jg.writeObjectFieldStart("Web Interface");
             jg.writeNumberField("Port", web.getPort());
             jg.writeBooleanField("Enabled", web.isEnabled());
+            jg.writeStringField("Password", web.getPassword());
             jg.writeEndObject(); // End of Web Interface Config Options
             jg.writeEndObject();
             jg.close();
