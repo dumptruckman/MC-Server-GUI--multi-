@@ -578,7 +578,7 @@ public class Player {
         }
     }
 
-        private static final class LocalAddressFactory {
+    private static final class LocalAddressFactory {
         private static final int[] octets = { 0, 0, 1 };
         private static Boolean canCycle = null;
 

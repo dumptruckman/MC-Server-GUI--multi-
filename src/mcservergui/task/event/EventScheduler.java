@@ -47,4 +47,27 @@ public class EventScheduler {
             return false;
         }
     }
+    public static boolean scheduleImmediateEvent(EventModel event, Scheduler scheduler, GUI gui) {
+        JobDetail job;
+        Trigger trigger;
+        job = newJob(Task.class)
+                .withIdentity(event.getName())
+                .build();
+        job.getJobDataMap().put("Event", event);
+        job.getJobDataMap().put("GUI", gui);
+        //job.getJobDataMap().put("Scheduler", scheduler);
+
+        trigger = newTrigger()
+                .forJob(job)
+                .startNow()
+                .build();
+        try {
+            scheduler.scheduleJob(job, trigger);
+            System.out.println(trigger.getNextFireTime());
+            return true;
+        } catch (SchedulerException se) {
+            System.out.println("scheduling exception error");
+            return false;
+        }
+    }
 }

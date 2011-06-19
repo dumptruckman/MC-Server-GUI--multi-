@@ -25,7 +25,6 @@ public class Task implements Job {
         if (!event.getWarningList().isEmpty()) {
             java.util.Collections.sort(event.getWarningList());
             for (int i = 0; i < event.getWarningList().size(); i++) {
-                System.out.println("There is a warning.");
                 gui.sendInput(event.getWarningList().get(i).getMessage());
                 int sleeptime;
                 if (i+1 < event.getWarningList().size()) {
@@ -35,7 +34,6 @@ public class Task implements Job {
                     sleeptime = event.getWarningList().get(i).getTime();
                 }
                 try {
-                    System.out.println("Sleeping for " + sleeptime);
                     Thread.sleep(sleeptime * 1000);
                 } catch (InterruptedException ie) {
                     System.out.println("Warning sleep interrupted");

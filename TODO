@@ -2,14 +2,14 @@ Add tasks for scheduler:
   Launch with custom run line or change server properties
 Add scheduler pause button
 Add simple task option
-Add hide button
 Custom skins?!
+Change the tooltips on the Web Interface
+Have the Web Interface log to a file as well.
 Add custom command drop down (uses New Task interface without the timing section)
 Allow for 12-hour hour format, like 3pm
 Add indicator show when/what next event will be
 Allow console output to be searched
 Add filtering to console output
-Add php web interface (maybe?)
 Add restoration of backups
 Add plugin manager
 Ability to give players items by right clicking name in player list

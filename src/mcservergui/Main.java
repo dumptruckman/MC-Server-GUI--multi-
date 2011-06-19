@@ -80,6 +80,10 @@ public class Main extends SingleFrameApplication implements Application.ExitList
     @Override public void update(Observable o, Object arg) {
         if ((arg.equals("serverStopped")) && (wantsToQuit)) {
             try {
+                while(!scheduler.getCurrentlyExecutingJobs().isEmpty()) {
+                    System.out.println("Interrupting a job");
+                    scheduler.interrupt(scheduler.getCurrentlyExecutingJobs().get(0).getJobDetail().getKey());
+                }
                 scheduler.shutdown();
             } catch (SchedulerException se) {
                 se.printStackTrace();

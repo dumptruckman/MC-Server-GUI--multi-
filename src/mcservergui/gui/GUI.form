@@ -293,6 +293,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="saveWorldsButton" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="warnStopButton" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -302,7 +303,9 @@
                                   <Component id="startstopButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="saveWorldsButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="63" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="warnStopButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="34" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -330,6 +333,20 @@
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveWorldsButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="warnStopButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="warnStopButton.text"/>
+                        <Property name="toolTipText" type="java.lang.String" resourceKey="warnStopButton.toolTipText"/>
+                        <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                          <Insets value="[2, 5, 2, 5]"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" value="warnStopButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="warnStopButtonActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -2196,6 +2213,15 @@
               </AuxValues>
             </MenuItem>
           </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="hideMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="hideMenu.text"/>
+            <Property name="name" type="java.lang.String" value="hideMenu" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="menuSelected" listener="javax.swing.event.MenuListener" parameters="javax.swing.event.MenuEvent" handler="hideMenuMenuSelected"/>
+          </Events>
         </Menu>
       </SubComponents>
     </Container>

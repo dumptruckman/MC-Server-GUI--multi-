@@ -1,3 +1,11 @@
+Version .7.0
+  Added TCP JSON interface!  This will allow you to remotely control the GUI through JSON.
+  Currently supported web interface options are start, stop, send input, receive output.
+  Added a Hide menu button to easily "minimize to tray" but only if your system supports such an action.
+  The About dialog now works again!
+  Added a temporary Warn Stop button.  It will give warnings at 2 minutes, 1 minute, 30 seconds, 10 seconds before stopping.  This feature will be replaced by something better in .8.0!
+  Removed some debugging info from the scheduler.
+
 Version .6.1
   Backup tab now has option to "clear" your server.log file.  This option deletes the server.log file after performing a backup.
   Made sure the server doesn't start when the proxy fails to start.

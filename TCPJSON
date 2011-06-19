@@ -1,0 +1,10 @@
+This is the format for the JSON for the Web Interface:
+
+{ "Password" : "password", "Request" : "request name", "Data" : [ "" ] }
+
+Password contains the password set in the gui on the Web Interface tab
+
+Request is either "Start Server", "Stop Server", "Get Output", "Send Input"
+
+Data an array containing data specific to the request.  Only "Send Input" uses
+this field and the first element is the input to send.

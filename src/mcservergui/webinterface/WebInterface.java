@@ -87,7 +87,7 @@ public class WebInterface {
                 serverChannel = ServerSocketChannel.open();
                 serverChannel.configureBlocking(false);
                 serverChannel.socket().bind(new InetSocketAddress(port));
-                gui.webLogAdd("Listening on port: " + port);
+                gui.webLogAdd("Listening on port: " + serverChannel.socket().getLocalPort());
                 
                 // Register both channels with selector
                 serverChannel.register(selector, SelectionKey.OP_ACCEPT);
@@ -152,6 +152,7 @@ public class WebInterface {
     public void processSelectionKey(SelectionKey selKey) throws IOException {
         if (selKey.isValid() && selKey.isAcceptable()) {
             // Get channel with connection request
+            System.out.println("poop");
             ServerSocketChannel connectedChannel =
                     (ServerSocketChannel)selKey.channel();
 

@@ -44,6 +44,8 @@ import mcservergui.Main;
 import mcservergui.config.ServerProperties;
 import mcservergui.proxyserver.PlayerList;
 import mcservergui.webinterface.WebInterface;
+import mcservergui.task.event.EventModel;
+import mcservergui.task.ServerWarning;
 import org.quartz.*;
 import static mcservergui.task.event.EventScheduler.*;
 
@@ -179,6 +181,7 @@ public class GUI extends FrameView implements Observer {
         serverControlPanel = new javax.swing.JPanel();
         startstopButton = new javax.swing.JButton();
         saveWorldsButton = new javax.swing.JButton();
+        warnStopButton = new javax.swing.JButton();
         serverInfoPanel = new javax.swing.JPanel();
         serverCpuUsageLabel = new javax.swing.JLabel();
         serverCpuUsage = new javax.swing.JLabel();
@@ -300,6 +303,7 @@ public class GUI extends FrameView implements Observer {
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
+        hideMenu = new javax.swing.JMenu();
         statusPanel = new javax.swing.JPanel();
         javax.swing.JSeparator statusPanelSeparator = new javax.swing.JSeparator();
         statusMessageLabel = new javax.swing.JLabel();
@@ -479,6 +483,17 @@ public class GUI extends FrameView implements Observer {
             }
         });
 
+        warnStopButton.setText(resourceMap.getString("warnStopButton.text")); // NOI18N
+        warnStopButton.setToolTipText(resourceMap.getString("warnStopButton.toolTipText")); // NOI18N
+        warnStopButton.setEnabled(false);
+        warnStopButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        warnStopButton.setName("warnStopButton"); // NOI18N
+        warnStopButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                warnStopButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout serverControlPanelLayout = new javax.swing.GroupLayout(serverControlPanel);
         serverControlPanel.setLayout(serverControlPanelLayout);
         serverControlPanelLayout.setHorizontalGroup(
@@ -487,6 +502,7 @@ public class GUI extends FrameView implements Observer {
                 .addComponent(startstopButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveWorldsButton))
+            .addComponent(warnStopButton)
         );
         serverControlPanelLayout.setVerticalGroup(
             serverControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -494,7 +510,9 @@ public class GUI extends FrameView implements Observer {
                 .addGroup(serverControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(startstopButton)
                     .addComponent(saveWorldsButton))
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(warnStopButton)
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         serverInfoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Server Information"));
@@ -1757,6 +1775,19 @@ public class GUI extends FrameView implements Observer {
 
         menuBar.add(helpMenu);
 
+        hideMenu.setText(resourceMap.getString("hideMenu.text")); // NOI18N
+        hideMenu.setName("hideMenu"); // NOI18N
+        hideMenu.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                hideMenuMenuSelected(evt);
+            }
+        });
+        menuBar.add(hideMenu);
+
         statusPanel.setName("statusPanel"); // NOI18N
 
         statusPanelSeparator.setName("statusPanelSeparator"); // NOI18N
@@ -2433,6 +2464,25 @@ public class GUI extends FrameView implements Observer {
         config.web.setPassword(String.valueOf(webPasswordField.getPassword()));
     }//GEN-LAST:event_webPasswordFieldFocusLost
 
+    private void hideMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_hideMenuMenuSelected
+        GUI.this.getApplication().hide(GUI.this);
+        isHidden = true;
+    }//GEN-LAST:event_hideMenuMenuSelected
+
+    private void warnStopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_warnStopButtonActionPerformed
+        warnStopButton.setEnabled(false);
+        EventModel warnStopEvent = new EventModel();
+        List<ServerWarning> warnStopWarnings = new ArrayList<ServerWarning>();
+        warnStopWarnings.add(new ServerWarning("say Server stopping in 2 minutes.", 120));
+        warnStopWarnings.add(new ServerWarning("say Server stopping in 1 minute.", 60));
+        warnStopWarnings.add(new ServerWarning("say Server stopping in 30 seconds.", 30));
+        warnStopWarnings.add(new ServerWarning("say Server stopping in 10 seconds.", 10));
+        warnStopEvent.setWarningList(warnStopWarnings);
+        warnStopEvent.setName("Warn Stop");
+        warnStopEvent.setTask("Stop Server");
+        scheduleImmediateEvent(warnStopEvent, scheduler, this);
+    }//GEN-LAST:event_warnStopButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JCheckBox allowFlightCheckBox;
     public javax.swing.JCheckBox allowNetherCheckBox;
@@ -2467,6 +2517,7 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JPanel guiInfoPanel;
     public javax.swing.JLabel guiMemoryUsage;
     public javax.swing.JLabel guiMemoryUsageLabel;
+    public javax.swing.JMenu hideMenu;
     public javax.swing.JTextField infoColorBox;
     public javax.swing.JLabel infoColorLabel;
     public javax.swing.JTextField inputHistoryMaxSizeField;
@@ -2555,6 +2606,7 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JLabel versionLabel;
     public javax.swing.JLabel viewDistanceLabel;
     public javax.swing.JSpinner viewDistanceSpinner;
+    public javax.swing.JButton warnStopButton;
     public javax.swing.JTextField warningColorBox;
     public javax.swing.JLabel warningColorLabel;
     public javax.swing.JPanel webInterfaceTab;
@@ -2582,6 +2634,8 @@ public class GUI extends FrameView implements Observer {
     private void enableSystemTrayIcon() {
         trayIcon = null;
         if (java.awt.SystemTray.isSupported()) {
+            hideMenu.setEnabled(true);
+            hideMenu.setToolTipText("Press this to minimize to tray.");
             // get the SystemTray instance
             java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
             // load an image
@@ -2619,6 +2673,8 @@ public class GUI extends FrameView implements Observer {
                 System.err.println(e);
             }
         } else {
+            hideMenu.setEnabled(false);
+            hideMenu.setToolTipText("Your Operating System does not support this action!");
             // disable tray option in your application or
             // perform other actions
         }
@@ -3139,6 +3195,7 @@ public class GUI extends FrameView implements Observer {
             textScrolling = true;
             saveWorldsButton.setEnabled(true);
             useProxyCheckBox.setEnabled(false);
+            warnStopButton.setEnabled(true);
         } else if (serverState.equals("OFF")) {
             // Switch GUI controls to "OFF" status
             startstopButton.setText("Start");
@@ -3149,6 +3206,7 @@ public class GUI extends FrameView implements Observer {
             mouseInConsoleOutput = false;
             saveWorldsButton.setEnabled(false);
             useProxyCheckBox.setEnabled(true);
+            warnStopButton.setEnabled(false);
         } else if (serverState.equals("BADCONFIG")) {
             startstopButton.setEnabled(false);
         } else if (serverState.equals("BACKUP")) {
