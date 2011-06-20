@@ -1985,7 +1985,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="webLogPanel" alignment="0" max="32767" attributes="0"/>
+                              <Component id="webLogPanel" alignment="1" max="32767" attributes="0"/>
                               <Component id="jPanel2" alignment="1" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -2019,31 +2019,40 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="webPortLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="webPortField" min="-2" pref="45" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="useWebInterfaceCheckBox" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="webPasswordLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="webPasswordField" min="-2" pref="121" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="showWebPasswordButton" min="-2" pref="47" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="webPortLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="webPortField" min="-2" pref="45" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="useWebInterfaceCheckBox" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="webPasswordLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="webPasswordField" min="-2" pref="121" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="showWebPasswordButton" min="-2" pref="47" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="disableGetOutputNotificationsCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace pref="68" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="webPortLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="webPortField" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="useWebInterfaceCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="webPasswordLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="webPasswordField" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="showWebPasswordButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="webPortLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="webPortField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="useWebInterfaceCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="webPasswordLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="webPasswordField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="showWebPasswordButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="disableGetOutputNotificationsCheckBox" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -2105,6 +2114,16 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showWebPasswordButtonActionPerformed"/>
                       </Events>
                     </Component>
+                    <Component class="javax.swing.JCheckBox" name="disableGetOutputNotificationsCheckBox">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="disableGetOutputNotificationsCheckBox.text"/>
+                        <Property name="toolTipText" type="java.lang.String" resourceKey="disableGetOutputNotificationsCheckBox.toolTipText"/>
+                        <Property name="name" type="java.lang.String" value="disableGetOutputNotificationsCheckBox" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="disableGetOutputNotificationsCheckBoxActionPerformed"/>
+                      </Events>
+                    </Component>
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="webLogPanel">
@@ -2127,7 +2146,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane6" alignment="0" pref="257" max="32767" attributes="0"/>
+                          <Component id="jScrollPane6" alignment="0" pref="232" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>

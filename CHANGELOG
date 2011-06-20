@@ -1,3 +1,9 @@
+Version .7.1
+  Removed some additional debugging data.
+  Fixed some tooltips for the Web Interface tab.
+  Added an option to disable notifications of remote interfaces retrieving the console output.
+  Fixed issue where some lines of the retrieved output did not have <br> in them.
+
 Version .7.0
   Added TCP JSON interface!  This will allow you to remotely control the GUI through JSON.
   Currently supported web interface options are start, stop, send input, receive output.

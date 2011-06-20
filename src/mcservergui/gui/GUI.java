@@ -295,6 +295,7 @@ public class GUI extends FrameView implements Observer {
         webPasswordLabel = new javax.swing.JLabel();
         webPasswordField = new javax.swing.JPasswordField();
         showWebPasswordButton = new javax.swing.JToggleButton();
+        disableGetOutputNotificationsCheckBox = new javax.swing.JCheckBox();
         webLogPanel = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         webLog = new javax.swing.JTextPane();
@@ -1674,33 +1675,48 @@ public class GUI extends FrameView implements Observer {
             }
         });
 
+        disableGetOutputNotificationsCheckBox.setText(resourceMap.getString("disableGetOutputNotificationsCheckBox.text")); // NOI18N
+        disableGetOutputNotificationsCheckBox.setToolTipText(resourceMap.getString("disableGetOutputNotificationsCheckBox.toolTipText")); // NOI18N
+        disableGetOutputNotificationsCheckBox.setName("disableGetOutputNotificationsCheckBox"); // NOI18N
+        disableGetOutputNotificationsCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                disableGetOutputNotificationsCheckBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(webPortLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(webPortField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(useWebInterfaceCheckBox)
-                .addGap(18, 18, 18)
-                .addComponent(webPasswordLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(webPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(showWebPasswordButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(webPortLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(webPortField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(useWebInterfaceCheckBox)
+                        .addGap(18, 18, 18)
+                        .addComponent(webPasswordLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(webPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(showWebPasswordButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(disableGetOutputNotificationsCheckBox))
                 .addContainerGap(68, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(webPortLabel)
-                .addComponent(webPortField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(useWebInterfaceCheckBox)
-                .addComponent(webPasswordLabel)
-                .addComponent(webPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(showWebPasswordButton))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(webPortLabel)
+                    .addComponent(webPortField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(useWebInterfaceCheckBox)
+                    .addComponent(webPasswordLabel)
+                    .addComponent(webPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(showWebPasswordButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(disableGetOutputNotificationsCheckBox))
         );
 
         webLogPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("webLogPanel.border.title"))); // NOI18N
@@ -1719,7 +1735,7 @@ public class GUI extends FrameView implements Observer {
         );
         webLogPanelLayout.setVerticalGroup(
             webLogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout webInterfaceTabLayout = new javax.swing.GroupLayout(webInterfaceTab);
@@ -1728,7 +1744,7 @@ public class GUI extends FrameView implements Observer {
             webInterfaceTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, webInterfaceTabLayout.createSequentialGroup()
                 .addGroup(webInterfaceTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(webLogPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(webLogPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -2483,6 +2499,10 @@ public class GUI extends FrameView implements Observer {
         scheduleImmediateEvent(warnStopEvent, scheduler, this);
     }//GEN-LAST:event_warnStopButtonActionPerformed
 
+    private void disableGetOutputNotificationsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disableGetOutputNotificationsCheckBoxActionPerformed
+        config.web.setDisableGetRequests(disableGetOutputNotificationsCheckBox.isSelected());
+    }//GEN-LAST:event_disableGetOutputNotificationsCheckBoxActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JCheckBox allowFlightCheckBox;
     public javax.swing.JCheckBox allowNetherCheckBox;
@@ -2507,6 +2527,7 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JTextPane consoleOutput;
     public javax.swing.JPanel consoleOutputPanel;
     public javax.swing.JCheckBox customLaunchCheckBox;
+    public javax.swing.JCheckBox disableGetOutputNotificationsCheckBox;
     public javax.swing.JTextField extPortField;
     public javax.swing.JLabel extPortLabel;
     public javax.swing.JTextField extraArgsField;
@@ -2916,6 +2937,7 @@ public class GUI extends FrameView implements Observer {
         webPortField.setText(Integer.toString(config.web.getPort()));
         useWebInterfaceCheckBox.setSelected(config.web.isEnabled());
         webPasswordField.setText(config.web.getPassword());
+        disableGetOutputNotificationsCheckBox.setSelected(config.web.isDisableGetRequests());
         useProxyCheckBox.setSelected(config.getProxy());
         extPortField.setText(Integer.toString(config.getExtPort()));
         startServerOnLaunchCheckBox.setSelected(config.getServerStartOnStartup());

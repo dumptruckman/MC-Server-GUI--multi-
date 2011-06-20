@@ -69,16 +69,24 @@ public class ConsoleParser {
                 message = message.replaceFirst("ConcurrentExecutionException",
                         "[<font color = " + display.getSevereColor() +
                         ">ConcurrentExecutionException</font>]");
-            } else /*if (tag.equals("MC Server GUI")) */{
+            } else if (tag.equals("MC Server GUI")) {
+                tag = "[" + tag + "]";
+            } else {
                 tag = "[" + tag + "]";
             }
 
+            if (!message.contains("<br>")) {
+                message += "<br>";
+            }
             return  "<font color = \"" + display.getTextColor() + "\" size = "
                     + display.getTextSize() + ">" + date + " " + time + " " + tag
                     + " " + message + "</font>";
         } else {
             text = text.replaceAll("<", "&lt;");
             text = text.replaceAll(">", "&gt;");
+            if (!text.contains("<br>")) {
+                text += "<br>";
+            }
             return "<font color = \"" + display.getTextColor() + "\" size = "
                     + display.getTextSize() + ">" + text + "</font>";
         }

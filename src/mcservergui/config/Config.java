@@ -250,10 +250,11 @@ public class Config {
             _port = 42424;
             _enabled = false;
             _password = "password";
+            _disableGetRequests = false;
         }
 
         int _port;
-        boolean _enabled;
+        boolean _enabled, _disableGetRequests;
         String _password;
 
         public int getPort() {
@@ -262,6 +263,10 @@ public class Config {
 
         public boolean isEnabled() {
             return _enabled;
+        }
+
+        public boolean isDisableGetRequests() {
+            return _disableGetRequests;
         }
 
         public String getPassword() {
@@ -278,6 +283,10 @@ public class Config {
 
         public void setPassword(String s) {
             _password = s;
+        }
+
+        public void setDisableGetRequests(boolean b) {
+            _disableGetRequests = b;
         }
     }
 
@@ -460,6 +469,8 @@ public class Config {
                                 web.setEnabled(jp.getBooleanValue());
                             } else if ("Password".equals(webfield)) {
                                 web.setPassword(jp.getText());
+                            } else if ("Disable Get Output Notifications".equals(webfield)) {
+                                web.setDisableGetRequests(jp.getBooleanValue());
                             }
                         }
                     }
@@ -550,6 +561,7 @@ public class Config {
             jg.writeNumberField("Port", web.getPort());
             jg.writeBooleanField("Enabled", web.isEnabled());
             jg.writeStringField("Password", web.getPassword());
+            jg.writeBooleanField("Disable Get Output Notifications", web.isDisableGetRequests());
             jg.writeEndObject(); // End of Web Interface Config Options
             jg.writeEndObject();
             jg.close();

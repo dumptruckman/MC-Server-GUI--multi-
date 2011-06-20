@@ -152,7 +152,6 @@ public class WebInterface {
     public void processSelectionKey(SelectionKey selKey) throws IOException {
         if (selKey.isValid() && selKey.isAcceptable()) {
             // Get channel with connection request
-            System.out.println("poop");
             ServerSocketChannel connectedChannel =
                     (ServerSocketChannel)selKey.channel();
 
@@ -228,7 +227,6 @@ public class WebInterface {
     private String processData(Socket client, String json) {
         JsonParser jp = null;
         String response = "";
-        System.out.println(json);
         try {
             jp = new JsonFactory().createJsonParser(json);
             jp.nextToken();
@@ -261,7 +259,9 @@ public class WebInterface {
                                 response = new ResponseWriter("Error", "Did not specify command!").getResponse();
                             }
                         } else if (request.equalsIgnoreCase("Get Output")) {
-                            webLog(client, "requested server output");
+                            if (!gui.config.web.isDisableGetRequests()) {
+                                webLog(client, "requested server output");
+                            }
                             response = new ResponseWriter("Success", gui.getConsoleOutput()).getResponse();
                         } else {
                             webLog(client, "sent an unrecognized request!");
