@@ -67,8 +67,8 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="playerListPanel" pref="165" max="32767" attributes="0"/>
-                              <Component id="consoleOutputPanel" alignment="1" pref="165" max="32767" attributes="0"/>
+                              <Component id="playerListPanel" pref="153" max="32767" attributes="0"/>
+                              <Component id="consoleOutputPanel" alignment="1" pref="153" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="consoleInputPanel" min="-2" max="-2" attributes="0"/>
@@ -109,7 +109,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane1" alignment="0" pref="138" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" alignment="0" pref="126" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -135,6 +135,7 @@
                             <Property name="name" type="java.lang.String" value="consoleOutput" noResource="true"/>
                           </Properties>
                           <Events>
+                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="consoleOutputMouseClicked"/>
                             <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="consoleOutputMouseEntered"/>
                             <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="consoleOutputMouseExited"/>
                             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="consoleOutputFocusGained"/>
@@ -169,7 +170,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane2" alignment="0" pref="138" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" alignment="0" pref="126" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -293,7 +294,17 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="saveWorldsButton" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="warnStopButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="customCombo2" alignment="1" pref="93" max="32767" attributes="0"/>
+                                  <Component id="customCombo1" alignment="1" pref="93" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="customButton1" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="customButton2" alignment="1" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -304,8 +315,16 @@
                                   <Component id="saveWorldsButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="warnStopButton" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="34" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="customCombo1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="customButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="customCombo2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="customButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="17" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -335,18 +354,44 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveWorldsButtonActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="warnStopButton">
+                    <Component class="javax.swing.JComboBox" name="customCombo1">
                       <Properties>
-                        <Property name="text" type="java.lang.String" resourceKey="warnStopButton.text"/>
-                        <Property name="toolTipText" type="java.lang.String" resourceKey="warnStopButton.toolTipText"/>
-                        <Property name="enabled" type="boolean" value="false"/>
-                        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[2, 5, 2, 5]"/>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="customButtonBoxModel1" type="code"/>
                         </Property>
-                        <Property name="name" type="java.lang.String" value="warnStopButton" noResource="true"/>
+                        <Property name="name" type="java.lang.String" value="customCombo1" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="customButton1">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="customButton1.text"/>
+                        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                          <Insets value="[2, 2, 2, 2]"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" value="customButton1" noResource="true"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="warnStopButtonActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="customButton1ActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JComboBox" name="customCombo2">
+                      <Properties>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="customButtonBoxModel2" type="code"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" value="customCombo2" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="customButton2">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="customButton2.text"/>
+                        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                          <Insets value="[2, 2, 2, 2]"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" value="customButton2" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="customButton2ActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -413,7 +458,7 @@
                                   <Component id="transmittingBytesLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="transmittingBytes" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="12" max="32767" attributes="0"/>
+                              <EmptySpace pref="24" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -517,7 +562,7 @@
                               <Component id="versionLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="useNetStat" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="19" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1608,7 +1653,7 @@
                           </Group>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="backupSettingsPanel" min="-2" max="-2" attributes="1"/>
-                          <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1754,7 +1799,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane3" alignment="0" pref="182" max="32767" attributes="0"/>
+                          <Component id="jScrollPane3" alignment="0" pref="170" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -1803,7 +1848,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane4" alignment="0" pref="182" max="32767" attributes="0"/>
+                          <Component id="jScrollPane4" alignment="0" pref="170" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -1848,7 +1893,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="Scheduler">
+                  <JTabbedPaneConstraints tabName="Tasks">
                     <Property name="tabTitle" type="java.lang.String" resourceKey="schedulerTab.TabConstraints.tabTitle"/>
                   </JTabbedPaneConstraints>
                 </Constraint>

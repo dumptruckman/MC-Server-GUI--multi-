@@ -59,6 +59,10 @@ public class GUI extends FrameView implements Observer {
 
         backupFileSystem = new mcservergui.fileexplorer.FileSystemModel(".");
         playerListModel = new PlayerList();
+        customButtonBoxModel1 = new javax.swing.DefaultComboBoxModel();
+        customButtonBoxModel1.addElement("Edit Tasks");
+        customButtonBoxModel2 = new javax.swing.DefaultComboBoxModel();
+        customButtonBoxModel2.addElement("Edit Tasks");
 
         initComponents();
         fixComponents();
@@ -181,7 +185,10 @@ public class GUI extends FrameView implements Observer {
         serverControlPanel = new javax.swing.JPanel();
         startstopButton = new javax.swing.JButton();
         saveWorldsButton = new javax.swing.JButton();
-        warnStopButton = new javax.swing.JButton();
+        customCombo1 = new javax.swing.JComboBox();
+        customButton1 = new javax.swing.JButton();
+        customCombo2 = new javax.swing.JComboBox();
+        customButton2 = new javax.swing.JButton();
         serverInfoPanel = new javax.swing.JPanel();
         serverCpuUsageLabel = new javax.swing.JLabel();
         serverCpuUsage = new javax.swing.JLabel();
@@ -338,6 +345,9 @@ public class GUI extends FrameView implements Observer {
         consoleOutput.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         consoleOutput.setName("consoleOutput"); // NOI18N
         consoleOutput.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                consoleOutputMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 consoleOutputMouseEntered(evt);
             }
@@ -368,7 +378,7 @@ public class GUI extends FrameView implements Observer {
         );
         consoleOutputPanelLayout.setVerticalGroup(
             consoleOutputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
         );
 
         playerListPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("playerListPanel.border.title"))); // NOI18N
@@ -401,7 +411,7 @@ public class GUI extends FrameView implements Observer {
         );
         playerListPanelLayout.setVerticalGroup(
             playerListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
         );
 
         consoleInputPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("consoleInputPanel.border.title"))); // NOI18N
@@ -484,14 +494,27 @@ public class GUI extends FrameView implements Observer {
             }
         });
 
-        warnStopButton.setText(resourceMap.getString("warnStopButton.text")); // NOI18N
-        warnStopButton.setToolTipText(resourceMap.getString("warnStopButton.toolTipText")); // NOI18N
-        warnStopButton.setEnabled(false);
-        warnStopButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
-        warnStopButton.setName("warnStopButton"); // NOI18N
-        warnStopButton.addActionListener(new java.awt.event.ActionListener() {
+        customCombo1.setModel(customButtonBoxModel1);
+        customCombo1.setName("customCombo1"); // NOI18N
+
+        customButton1.setText(resourceMap.getString("customButton1.text")); // NOI18N
+        customButton1.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        customButton1.setName("customButton1"); // NOI18N
+        customButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                warnStopButtonActionPerformed(evt);
+                customButton1ActionPerformed(evt);
+            }
+        });
+
+        customCombo2.setModel(customButtonBoxModel2);
+        customCombo2.setName("customCombo2"); // NOI18N
+
+        customButton2.setText(resourceMap.getString("customButton2.text")); // NOI18N
+        customButton2.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        customButton2.setName("customButton2"); // NOI18N
+        customButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                customButton2ActionPerformed(evt);
             }
         });
 
@@ -503,7 +526,14 @@ public class GUI extends FrameView implements Observer {
                 .addComponent(startstopButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveWorldsButton))
-            .addComponent(warnStopButton)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, serverControlPanelLayout.createSequentialGroup()
+                .addGroup(serverControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(customCombo2, 0, 93, Short.MAX_VALUE)
+                    .addComponent(customCombo1, 0, 93, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(serverControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(customButton1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(customButton2, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
         serverControlPanelLayout.setVerticalGroup(
             serverControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -512,8 +542,14 @@ public class GUI extends FrameView implements Observer {
                     .addComponent(startstopButton)
                     .addComponent(saveWorldsButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(warnStopButton)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addGroup(serverControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(customCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(customButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(serverControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(customCombo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(customButton2))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         serverInfoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Server Information"));
@@ -585,7 +621,7 @@ public class GUI extends FrameView implements Observer {
                 .addGroup(serverInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(transmittingBytesLabel)
                     .addComponent(transmittingBytes))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         guiInfoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("GUI Information"));
@@ -642,7 +678,7 @@ public class GUI extends FrameView implements Observer {
                 .addComponent(versionLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(useNetStat)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout mainWindowTabLayout = new javax.swing.GroupLayout(mainWindowTab);
@@ -668,8 +704,8 @@ public class GUI extends FrameView implements Observer {
             mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainWindowTabLayout.createSequentialGroup()
                 .addGroup(mainWindowTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(playerListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-                    .addComponent(consoleOutputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))
+                    .addComponent(playerListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                    .addComponent(consoleOutputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(consoleInputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1480,7 +1516,7 @@ public class GUI extends FrameView implements Observer {
         );
         backupFileChooserPanelLayout.setVerticalGroup(
             backupFileChooserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
         );
 
         backupStatusPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("backupStatusPanel.border.title"))); // NOI18N
@@ -1500,7 +1536,7 @@ public class GUI extends FrameView implements Observer {
         );
         backupStatusPanelLayout.setVerticalGroup(
             backupStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
         );
 
         backupControlRefreshButton.setText(resourceMap.getString("backupControlRefreshButton.text")); // NOI18N
@@ -1544,7 +1580,7 @@ public class GUI extends FrameView implements Observer {
                     .addComponent(saveBackupControlButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(backupSettingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addGap(44, 44, 44))
         );
 
         tabber.addTab(resourceMap.getString("backupTab.TabConstraints.tabTitle"), backupTab); // NOI18N
@@ -2084,17 +2120,16 @@ public class GUI extends FrameView implements Observer {
     }//GEN-LAST:event_saveServerConfigButtonActionPerformed
 
     private void consoleOutputMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consoleOutputMouseEntered
-        if ((server.isRunning()) && (!consoleOutput.isFocusOwner())) {
-            textScrolling = false;
-
-        }
-        mouseInConsoleOutput = true;
+        //if ((server.isRunning()) && (!consoleOutput.isFocusOwner())) {
+        //    textScrolling = false;
+        //}
+        //mouseInConsoleOutput = true;
     }//GEN-LAST:event_consoleOutputMouseEntered
 
     private void consoleOutputMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consoleOutputMouseExited
         int selMin = consoleOutput.getSelectionStart();
         int selMax = consoleOutput.getSelectionEnd();
-        if ((!consoleOutput.isFocusOwner()) && (server.isRunning()) && (selMax - selMin == 0)) {
+        if (/*(!consoleOutput.isFocusOwner()) && */(server.isRunning()) && (selMax - selMin == 0)) {
             textScrolling = true;
         }
         mouseInConsoleOutput = false;
@@ -2289,6 +2324,10 @@ public class GUI extends FrameView implements Observer {
                 } catch (SchedulerException se) {
                     System.out.println("Error removing old task");
                 }
+                customButtonBoxModel1.removeElement(config.schedule.getEvents()
+                        .get(index));
+                customButtonBoxModel2.removeElement(config.schedule.getEvents()
+                        .get(index));
                 config.schedule.getEvents().remove(config.schedule.getEvents()
                         .get(index));
                 taskList.removeElement(taskList.getElementAt(index));
@@ -2485,23 +2524,32 @@ public class GUI extends FrameView implements Observer {
         isHidden = true;
     }//GEN-LAST:event_hideMenuMenuSelected
 
-    private void warnStopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_warnStopButtonActionPerformed
-        warnStopButton.setEnabled(false);
-        EventModel warnStopEvent = new EventModel();
-        List<ServerWarning> warnStopWarnings = new ArrayList<ServerWarning>();
-        warnStopWarnings.add(new ServerWarning("say Server stopping in 2 minutes.", 120));
-        warnStopWarnings.add(new ServerWarning("say Server stopping in 1 minute.", 60));
-        warnStopWarnings.add(new ServerWarning("say Server stopping in 30 seconds.", 30));
-        warnStopWarnings.add(new ServerWarning("say Server stopping in 10 seconds.", 10));
-        warnStopEvent.setWarningList(warnStopWarnings);
-        warnStopEvent.setName("Warn Stop");
-        warnStopEvent.setTask("Stop Server");
-        scheduleImmediateEvent(warnStopEvent, scheduler, this);
-    }//GEN-LAST:event_warnStopButtonActionPerformed
-
     private void disableGetOutputNotificationsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disableGetOutputNotificationsCheckBoxActionPerformed
         config.web.setDisableGetRequests(disableGetOutputNotificationsCheckBox.isSelected());
     }//GEN-LAST:event_disableGetOutputNotificationsCheckBoxActionPerformed
+
+    private void consoleOutputMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consoleOutputMouseClicked
+        if ((server.isRunning()) && (!consoleOutput.isFocusOwner())) {
+            textScrolling = false;
+        }
+        mouseInConsoleOutput = true;
+    }//GEN-LAST:event_consoleOutputMouseClicked
+
+    private void customButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customButton1ActionPerformed
+        customButtonAction(customCombo1);
+    }//GEN-LAST:event_customButton1ActionPerformed
+
+    private void customButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customButton2ActionPerformed
+        customButtonAction(customCombo2);
+    }//GEN-LAST:event_customButton2ActionPerformed
+
+    private void customButtonAction(javax.swing.JComboBox box) {
+        if (box.getSelectedItem().toString().equals("Edit Tasks")) {
+            tabber.setSelectedIndex(tabber.indexOfTab("Tasks"));
+        } else {
+            scheduleImmediateEvent((EventModel)box.getSelectedItem(), scheduler, this);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JCheckBox allowFlightCheckBox;
@@ -2526,6 +2574,10 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JPanel consoleInputPanel;
     public javax.swing.JTextPane consoleOutput;
     public javax.swing.JPanel consoleOutputPanel;
+    public javax.swing.JButton customButton1;
+    public javax.swing.JButton customButton2;
+    public javax.swing.JComboBox customCombo1;
+    public javax.swing.JComboBox customCombo2;
     public javax.swing.JCheckBox customLaunchCheckBox;
     public javax.swing.JCheckBox disableGetOutputNotificationsCheckBox;
     public javax.swing.JTextField extPortField;
@@ -2627,7 +2679,6 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JLabel versionLabel;
     public javax.swing.JLabel viewDistanceLabel;
     public javax.swing.JSpinner viewDistanceSpinner;
-    public javax.swing.JButton warnStopButton;
     public javax.swing.JTextField warningColorBox;
     public javax.swing.JLabel warningColorLabel;
     public javax.swing.JPanel webInterfaceTab;
@@ -3217,7 +3268,6 @@ public class GUI extends FrameView implements Observer {
             textScrolling = true;
             saveWorldsButton.setEnabled(true);
             useProxyCheckBox.setEnabled(false);
-            warnStopButton.setEnabled(true);
         } else if (serverState.equals("OFF")) {
             // Switch GUI controls to "OFF" status
             startstopButton.setText("Start");
@@ -3228,7 +3278,6 @@ public class GUI extends FrameView implements Observer {
             mouseInConsoleOutput = false;
             saveWorldsButton.setEnabled(false);
             useProxyCheckBox.setEnabled(true);
-            warnStopButton.setEnabled(false);
         } else if (serverState.equals("BADCONFIG")) {
             startstopButton.setEnabled(false);
         } else if (serverState.equals("BACKUP")) {
@@ -3277,6 +3326,8 @@ public class GUI extends FrameView implements Observer {
     private boolean badConfig;
     private Scheduler scheduler;
     private GUIListModel taskList;
+    public javax.swing.DefaultComboBoxModel customButtonBoxModel1;
+    public javax.swing.DefaultComboBoxModel customButtonBoxModel2;
     private boolean restarting;
     private ConsoleParser parser;
     private boolean saving;

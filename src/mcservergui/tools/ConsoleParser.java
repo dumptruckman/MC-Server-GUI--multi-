@@ -74,22 +74,137 @@ public class ConsoleParser {
             } else {
                 tag = "[" + tag + "]";
             }
-
-            if (!message.contains("<br>")) {
-                message += "<br>";
-            }
-            return  "<font color = \"" + display.getTextColor() + "\" size = "
+            text = "<font color = \"" + display.getTextColor() + "\" size = "
                     + display.getTextSize() + ">" + date + " " + time + " " + tag
                     + " " + message + "</font>";
         } else {
             text = text.replaceAll("<", "&lt;");
             text = text.replaceAll(">", "&gt;");
-            if (!text.contains("<br>")) {
-                text += "<br>";
-            }
-            return "<font color = \"" + display.getTextColor() + "\" size = "
+            text = "<font color = \"" + display.getTextColor() + "\" size = "
                     + display.getTextSize() + ">" + text + "</font>";
         }
+
+        // Make sure the line has a <br> tag
+        if (!text.contains("<br>")) {
+            text += "<br>";
+        }
+        
+        // Detect and replace color codes
+        // First, ascii escape sequence colors
+        int index;
+        while ((index = text.indexOf(27)) != -1) {
+            System.out.println("Found escape at " + index);
+            String afterescape = text.substring(index);
+            int mindex = afterescape.indexOf("m");
+            if ((mindex == -1) || (mindex > 4)) {
+                // Not a color code
+                text = text.replaceFirst(Character.toString((char)27), "");
+            } else {
+                // Is a color code
+                System.out.println(afterescape.substring(2, mindex));
+                int color = Integer.parseInt(afterescape.substring(2, mindex));
+                String replace = "";
+                switch (color) {
+                    case 30:
+                        replace = "<font color=000000>";
+                        break;
+                    case 31:
+                        replace = "<font color=ff0000>";
+                        break;
+                    case 32:
+                        replace = "<font color=00ff00>";
+                        break;
+                    case 33:
+                        replace = "<font color=ffff00>";
+                        break;
+                    case 34:
+                        replace = "<font color=0000ff>";
+                        break;
+                    case 35:
+                        replace = "<font color=8e35ef>";
+                        break;
+                    case 36:
+                        replace = "<font color=00ffff>";
+                        break;
+                    case 37:
+                        replace = "<font color=c0c0c0>";
+                        break;
+                    case 0:
+                        replace = "</font>";
+                        break;
+                }
+                System.out.println(mindex);
+                text = text.replaceFirst("\\Q" + text.substring(index, index+mindex+1) + "\\E", replace);
+            }
+        }
+        // Second, minecraft colors
+        while (((index = text.indexOf(65533)) != -1) || ((index = text.indexOf(167)) != -1)) {
+            int color = -1;
+            try {
+                color = Integer.parseInt(text.substring(index+1, index+2), 16);
+            } catch (NumberFormatException nfe) {
+                // Not a color code
+            }
+            if (color != -1) {
+                String replace = "";
+                switch (color) {
+                    case 0:
+                        replace = "<font color=000000>";
+                        break;
+                    case 1:
+                        replace = "<font color=0000bf>";
+                        break;
+                    case 2:
+                        replace = "<font color=00bf00>";
+                        break;
+                    case 3:
+                        replace = "<font color=00bfbf>";
+                        break;
+                    case 4:
+                        replace = "<font color=bf0000>";
+                        break;
+                    case 5:
+                        replace = "<font color=bf00bf>";
+                        break;
+                    case 6:
+                        replace = "<font color=bfbf00>";
+                        break;
+                    case 7:
+                        replace = "<font color=bfbfbf>";
+                        break;
+                    case 8:
+                        replace = "<font color=404040>";
+                        break;
+                    case 9:
+                        replace = "<font color=4040ff>";
+                        break;
+                    case 10:
+                        replace = "<font color=40ff40>";
+                        break;
+                    case 11:
+                        replace = "<font color=40ffff>";
+                        break;
+                    case 12:
+                        replace = "<font color=ff4040>";
+                        break;
+                    case 13:
+                        replace = "<font color=ff40ff>";
+                        break;
+                    case 14:
+                        replace = "<font color=ffff40>";
+                        break;
+                    case 15:
+                        replace = "</font>";
+                        break;
+                    case -1:
+                        break;
+                }
+                text = text.replaceFirst(text.substring(index, index+2), replace);
+            } else {
+                text = text.replaceFirst(text.substring(index, index), "");
+            }
+        }
+        return text;
     }
 
     private Config.Display display;

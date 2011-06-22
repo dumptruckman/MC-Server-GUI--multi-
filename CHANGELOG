@@ -1,3 +1,11 @@
+Version .8.0-dev
+  Added Custom Tasks Buttons.  Create tasks through the task tab to be triggered by a button!
+  Changed Scheduler Tab to Tasks Tab
+  Server Warning Dialog can no longer be completed with an invalid time entry.
+  Console output now parses escape sequence colors.
+  Console output now parses some other types of color codes
+  Changed conditions for the console output to stop scrolling.  Should make a little more sense.  Simply moving the mouse into the window no longer works, instead, you must click in the window.
+
 Version .7.1
   Removed some additional debugging data.
   Fixed some tooltips for the Web Interface tab.

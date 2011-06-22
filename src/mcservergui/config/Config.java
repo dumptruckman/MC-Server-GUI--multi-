@@ -424,7 +424,9 @@ public class Config {
                                     while (jp.nextToken() != JsonToken.END_OBJECT) {
                                         String eventfield = jp.getCurrentName();
                                         //jp.nextToken();
-                                        if ("Cron Expression".equals(eventfield)) {
+                                        if ("Custom Button".equals(eventfield)) {
+                                            event.setCustomButton(jp.getBooleanValue());
+                                        } else if("Cron Expression".equals(eventfield)) {
                                             event.setCronEx(jp.getText());
                                         } else if("Task".equals(eventfield)) {
                                             event.setTask(jp.getText());
@@ -537,6 +539,7 @@ public class Config {
             jg.writeObjectFieldStart("Events");
             for (int i = 0; i < schedule.getEvents().size(); i++) {
                 jg.writeObjectFieldStart(schedule.getEvents().get(i).getName());
+                jg.writeBooleanField("Custom Button", schedule.getEvents().get(i).isCustomButton());
                 jg.writeStringField("Cron Expression", schedule.getEvents().get(i).getCronEx());
                 jg.writeStringField("Task", schedule.getEvents().get(i).getTask());
                 jg.writeArrayFieldStart("Parameters");

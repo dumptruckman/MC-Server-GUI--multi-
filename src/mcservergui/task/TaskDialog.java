@@ -164,6 +164,7 @@ public class TaskDialog extends javax.swing.JDialog {
         warningEditButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         timeSummaryField = new javax.swing.JTextArea();
+        taskIsCustomButtonCheckBox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("Form"); // NOI18N
@@ -735,13 +736,24 @@ public class TaskDialog extends javax.swing.JDialog {
         timeSummaryField.setName("timeSummaryField"); // NOI18N
         jScrollPane2.setViewportView(timeSummaryField);
 
+        taskIsCustomButtonCheckBox.setText(resourceMap.getString("taskIsCustomButtonCheckBox.text")); // NOI18N
+        taskIsCustomButtonCheckBox.setName("taskIsCustomButtonCheckBox"); // NOI18N
+        taskIsCustomButtonCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                taskIsCustomButtonCheckBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scheduleLabel)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(scheduleLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                        .addComponent(taskIsCustomButtonCheckBox))
                     .addComponent(hoursLabel)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -749,12 +761,6 @@ public class TaskDialog extends javax.swing.JDialog {
                             .addComponent(minutesLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(secondsField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(secondsAgainCheckBox)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(secondsAgainField, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(minutesField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -770,7 +776,13 @@ public class TaskDialog extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(hoursAgainField, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(hoursAllCheckBox))))
+                                .addComponent(hoursAllCheckBox))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(secondsField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(secondsAgainCheckBox)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(secondsAgainField, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(taskNameLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -878,8 +890,10 @@ public class TaskDialog extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(taskNameLabel)
                             .addComponent(taskNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(scheduleLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(scheduleLabel)
+                            .addComponent(taskIsCustomButtonCheckBox))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(secondsLabel)
@@ -939,8 +953,8 @@ public class TaskDialog extends javax.swing.JDialog {
                             .addComponent(domButton)
                             .addComponent(domAllCheckBox))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE))
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(startServerRadio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -958,7 +972,7 @@ public class TaskDialog extends javax.swing.JDialog {
                         .addComponent(saveWorldsRadio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(backupRadio)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(serverWarningLabel)
                             .addComponent(warningAddButton)
@@ -981,9 +995,7 @@ public class TaskDialog extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -993,100 +1005,105 @@ public class TaskDialog extends javax.swing.JDialog {
     }
 
     private void updateTimeSummary() {
-        String summary = "At ";
-        if (hoursAllCheckBox.isSelected()) {
-            summary += "**";
+        if (taskIsCustomButtonCheckBox.isSelected()) {
+            timeSummaryField.setText("Task is triggered when it is selected and"
+                    + " Go button is pressed on the Main Window Tab");
         } else {
-            if (hoursAgainCheckBox.isSelected()
-                    && hoursAgainCheckBox.isEnabled()) {
-                if (hoursField.getText().contains("-")) {
-                    hoursField.setText(hoursField.getText().split("-")[0]);
-                }
-                if (hoursField.getText().contains(",")) {
-                    hoursField.setText(hoursField.getText().split(",")[0]);
-                }
-                summary += hoursField.getText();
-                int time = Integer.valueOf(hoursField.getText());
-                int inc = Integer.valueOf(hoursAgainField.getText());
-                while(time < 24) {
-                    time += inc;
-                    if (time < 24) {
-                        summary += "/" + time;
-                    }
-                }
+            String summary = "At ";
+            if (hoursAllCheckBox.isSelected()) {
+                summary += "**";
             } else {
-                summary += hoursField.getText();
+                if (hoursAgainCheckBox.isSelected()
+                        && hoursAgainCheckBox.isEnabled()) {
+                    if (hoursField.getText().contains("-")) {
+                        hoursField.setText(hoursField.getText().split("-")[0]);
+                    }
+                    if (hoursField.getText().contains(",")) {
+                        hoursField.setText(hoursField.getText().split(",")[0]);
+                    }
+                    summary += hoursField.getText();
+                    int time = Integer.valueOf(hoursField.getText());
+                    int inc = Integer.valueOf(hoursAgainField.getText());
+                    while(time < 24) {
+                        time += inc;
+                        if (time < 24) {
+                            summary += "/" + time;
+                        }
+                    }
+                } else {
+                    summary += hoursField.getText();
+                }
             }
-        }
-        summary += ":";
-        if (minutesAllCheckBox.isSelected()) {
-            summary += "**";
-        } else {
-            if (minutesAgainCheckBox.isSelected()
-                    && minutesAgainCheckBox.isEnabled()) {
-                if (minutesField.getText().contains("-")) {
-                    minutesField.setText(minutesField.getText().split("-")[0]);
+            summary += ":";
+            if (minutesAllCheckBox.isSelected()) {
+                summary += "**";
+            } else {
+                if (minutesAgainCheckBox.isSelected()
+                        && minutesAgainCheckBox.isEnabled()) {
+                    if (minutesField.getText().contains("-")) {
+                        minutesField.setText(minutesField.getText().split("-")[0]);
+                    }
+                    if (minutesField.getText().contains(",")) {
+                        minutesField.setText(minutesField.getText().split(",")[0]);
+                    }
+                    summary += minutesField.getText();
+                    int time = Integer.valueOf(minutesField.getText());
+                    int inc = Integer.valueOf(minutesAgainField.getText());
+                    while (time < 60) {
+                        time += inc;
+                        if (time < 60) {
+                            summary += "/" + time;
+                        }
+                    }
+                } else {
+                    summary += minutesField.getText();
                 }
-                if (minutesField.getText().contains(",")) {
-                    minutesField.setText(minutesField.getText().split(",")[0]);
+            }
+            summary += ":";
+            if (secondsAgainCheckBox.isSelected()
+                    && secondsAgainCheckBox.isEnabled()) {
+                if (secondsField.getText().contains("-")) {
+                    secondsField.setText(secondsField.getText().split("-")[0]);
                 }
-                summary += minutesField.getText();
-                int time = Integer.valueOf(minutesField.getText());
-                int inc = Integer.valueOf(minutesAgainField.getText());
+                if (secondsField.getText().contains(",")) {
+                    secondsField.setText(secondsField.getText().split(",")[0]);
+                }
+                summary += secondsField.getText();
+                int time = Integer.valueOf(secondsField.getText());
+                int inc = Integer.valueOf(secondsAgainField.getText());
                 while (time < 60) {
                     time += inc;
                     if (time < 60) {
                         summary += "/" + time;
+                    } else {
+                        break;
                     }
                 }
             } else {
-                summary += minutesField.getText();
+                summary += secondsField.getText();
             }
-        }
-        summary += ":";
-        if (secondsAgainCheckBox.isSelected()
-                && secondsAgainCheckBox.isEnabled()) {
-            if (secondsField.getText().contains("-")) {
-                secondsField.setText(secondsField.getText().split("-")[0]);
-            }
-            if (secondsField.getText().contains(",")) {
-                secondsField.setText(secondsField.getText().split(",")[0]);
-            }
-            summary += secondsField.getText();
-            int time = Integer.valueOf(secondsField.getText());
-            int inc = Integer.valueOf(secondsAgainField.getText());
-            while (time < 60) {
-                time += inc;
-                if (time < 60) {
-                    summary += "/" + time;
+            summary += " on ";
+            if (domButton.isSelected()) {
+                if (domAllCheckBox.isSelected()) {
+                    summary += "every day";
                 } else {
-                    break;
+                    summary += "select days";
+                }
+            } else {
+                if (dowAllButton.isSelected()) {
+                    summary += "every day";
+                } else {
+                    summary += "select days";
                 }
             }
-        } else {
-            summary += secondsField.getText();
-        }
-        summary += " on ";
-        if (domButton.isSelected()) {
-            if (domAllCheckBox.isSelected()) {
-                summary += "every day";
+            summary += " of ";
+            if (monthAllButton.isSelected()) {
+                summary += "every month.";
             } else {
-                summary += "select days";
+                summary += "select months.";
             }
-        } else {
-            if (dowAllButton.isSelected()) {
-                summary += "every day";
-            } else {
-                summary += "select days";
-            }
+            timeSummaryField.setText(summary);
         }
-        summary += " of ";
-        if (monthAllButton.isSelected()) {
-            summary += "every month.";
-        } else {
-            summary += "select months.";
-        }
-        timeSummaryField.setText(summary);
     }
 
     private class WarningListCellRenderer extends javax.swing.JTextPane implements javax.swing.ListCellRenderer {
@@ -1486,6 +1503,7 @@ public class TaskDialog extends javax.swing.JDialog {
         event.setCronEx(cronex);
         event.setName(taskNameField.getText());
         event.setTask(task);
+        event.setCustomButton(taskIsCustomButtonCheckBox.isSelected());
         java.util.List<String> params = new java.util.ArrayList<String>();
         if (task.equals("Send Command")) {
             params.add(sendCommandField.getText());
@@ -1518,6 +1536,8 @@ public class TaskDialog extends javax.swing.JDialog {
         if (editEvent != null) {
             taskList.removeElement(editEvent.getName() + "<br><font size=2>" + editEvent.getTask());
             scheduleEvents.remove(editEvent);
+            gui.customButtonBoxModel1.removeElement(editEvent);
+            gui.customButtonBoxModel2.removeElement(editEvent);
             try {
                 scheduler.deleteJob(JobKey.jobKey(editEvent.getName()));
             } catch (SchedulerException se) {
@@ -1527,7 +1547,12 @@ public class TaskDialog extends javax.swing.JDialog {
         taskList.add(taskNameField.getText() + "<br><font size=2>" + task);
         scheduleEvents.add(event);
         config.schedule.setEvents(scheduleEvents);
-        scheduleEvent(event, scheduler, gui);
+        if (taskIsCustomButtonCheckBox.isSelected()) {
+            gui.customButtonBoxModel1.addElement(event);
+            gui.customButtonBoxModel2.addElement(event);
+        } else {
+            scheduleEvent(event, scheduler, gui);
+        }
         config.save();
         closeTaskDialog();
     }//GEN-LAST:event_createButtonActionPerformed
@@ -1657,6 +1682,34 @@ public class TaskDialog extends javax.swing.JDialog {
         updateTimeSummary();
     }//GEN-LAST:event_dowAllButtonStateChanged
 
+    private void taskIsCustomButtonCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taskIsCustomButtonCheckBoxActionPerformed
+        enableTimingSettings(!taskIsCustomButtonCheckBox.isSelected());
+        updateTimeSummary();
+    }//GEN-LAST:event_taskIsCustomButtonCheckBoxActionPerformed
+
+    private void enableTimingSettings(boolean b) {
+        secondsField.setEnabled(b);
+        secondsAgainCheckBox.setEnabled(b);
+        secondsAgainField.setEnabled(b);
+        minutesField.setEnabled(b);
+        minutesAgainCheckBox.setEnabled(b);
+        minutesAgainField.setEnabled(b);
+        minutesAllCheckBox.setEnabled(b);
+        hoursField.setEnabled(b);
+        hoursAgainCheckBox.setEnabled(b);
+        hoursAgainField.setEnabled(b);
+        hoursAllCheckBox.setEnabled(b);
+        for (int i = 0; i < dayOfWeek.size(); i++) {
+            dayOfWeek.get(i).setEnabled(b);
+        }
+        for (int i = 0; i < month.size(); i++) {
+            month.get(i).setEnabled(b);
+        }
+        domButton.setEnabled(b);
+        domField.setEnabled(b);
+        domAllCheckBox.setEnabled(b);
+    }
+
     private void boldButton(javax.swing.JToggleButton button) {
         if (button.isSelected()) {
             button.setFont(boldFont);
@@ -1681,6 +1734,10 @@ public class TaskDialog extends javax.swing.JDialog {
     }
 
     private void parseEditEvent() {
+        if (editEvent.isCustomButton()) {
+            taskIsCustomButtonCheckBox.setSelected(true);
+            enableTimingSettings(false);
+        }
         taskNameField.setText(editEvent.getName());
         if (editEvent.getTask().equals("Start Server")) {
             startServerRadio.setSelected(true);
@@ -1799,6 +1856,7 @@ public class TaskDialog extends javax.swing.JDialog {
         secondsAgainField.setEnabled(secondsAgainCheckBox.isSelected());
         minutesAgainField.setEnabled(minutesAgainCheckBox.isSelected());
         hoursAgainField.setEnabled(hoursAgainCheckBox.isSelected());
+        
     }
 
     private void verifyAllSelected(
@@ -1902,6 +1960,7 @@ public class TaskDialog extends javax.swing.JDialog {
     private javax.swing.JRadioButton startServerRadio;
     private javax.swing.JRadioButton stopServerRadio;
     private javax.swing.JToggleButton sunButton;
+    private javax.swing.JCheckBox taskIsCustomButtonCheckBox;
     private javax.swing.JTextField taskNameField;
     private javax.swing.JLabel taskNameLabel;
     private javax.swing.JToggleButton thuButton;

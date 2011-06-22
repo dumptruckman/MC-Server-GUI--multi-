@@ -193,26 +193,30 @@ public class ServerWarningDialog extends javax.swing.JDialog {
     }
 
     private void closeAndAdd() {
-        int seconds = secondsFromHms(timeBeforeField.getText());
+        if (!timeBeforeField.getInputVerifier().verify(timeBeforeField)) {
+            timeBeforeField.requestFocus();
+        } else {
+            int seconds = secondsFromHms(timeBeforeField.getText());
 
-        if (oldWarning != null) {
-            warningListModel.removeElement("Message: " + oldWarning.getMessage()
-                + "<br><font size=2>Time: "
-                + hoursMinutesSecondsFromSeconds(oldWarning.getTime()));
-            serverWarningList.remove(oldWarning);
-        }
+            if (oldWarning != null) {
+                warningListModel.removeElement("Message: " + oldWarning.getMessage()
+                    + "<br><font size=2>Time: "
+                    + hoursMinutesSecondsFromSeconds(oldWarning.getTime()));
+                serverWarningList.remove(oldWarning);
+            }
 
-        String command = messageField.getText();
-        if (commandIsMessage.isSelected()) {
-            command = "say " + command;
+            String command = messageField.getText();
+            if (commandIsMessage.isSelected()) {
+                command = "say " + command;
+            }
+            serverWarningList.add(new ServerWarning(
+                    command,seconds));
+            System.out.println(serverWarningList.get(serverWarningList.size()-1));
+            warningListModel.add("Message: " + command
+                    + "<br><font size=2>Time: "
+                    + hoursMinutesSecondsFromSeconds(seconds));
+            closeTaskDialog();
         }
-        serverWarningList.add(new ServerWarning(
-                command,seconds));
-        System.out.println(serverWarningList.get(serverWarningList.size()-1));
-        warningListModel.add("Message: " + command
-                + "<br><font size=2>Time: "
-                + hoursMinutesSecondsFromSeconds(seconds));
-        closeTaskDialog();
     }
 
     private GUIListModel warningListModel;
