@@ -16,7 +16,6 @@ Ability to give players items by right clicking name in player list
 Compatibility with many bukkit plugins (mcMMO or iConomy for instance)
 Ability to restart based on memory limits
 Warnings when the server could be lagging
-Special GUI op only commands, such as restarting, restart + backup, and timed restarting (suggestions?)
 Possibly have cooperability with something like MccRestart
 Delete backups after x amount of time or x amount of backups
 Compatibility with MCSoD

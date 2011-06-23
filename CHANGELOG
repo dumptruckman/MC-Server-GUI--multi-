@@ -1,5 +1,5 @@
 Version .9.0
-    Added in game commands with a default prefix of "!".  This is changeable in the GUI Config tab.
+    Added op only in game commands with a default prefix of "!".  This is changeable in the GUI Config tab.  Note: You must be using the proxy server for these to work!
     Currently supported in game commands are:
         repeat - repeats the last command.
         task <task name> - executes task with specified name.

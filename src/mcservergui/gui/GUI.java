@@ -1213,6 +1213,7 @@ public class GUI extends FrameView implements Observer {
         commandPrefixLabel.setName("commandPrefixLabel"); // NOI18N
 
         commandPrefixField.setText(resourceMap.getString("commandPrefixField.text")); // NOI18N
+        commandPrefixField.setToolTipText(resourceMap.getString("commandPrefixField.toolTipText")); // NOI18N
         commandPrefixField.setName("commandPrefixField"); // NOI18N
         commandPrefixField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
