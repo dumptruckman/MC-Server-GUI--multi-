@@ -7,9 +7,16 @@ package mcservergui;
 
 import mcservergui.mcserver.MCServerModel;
 import mcservergui.gui.GUI;
+import mcservergui.gui.AboutBox;
 import java.util.Timer;
 import java.util.TimerTask;
 import org.hyperic.sigar.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.HttpURLConnection;
 
 /**
  *
@@ -21,6 +28,9 @@ public class MainWorker implements java.util.Observer {
         gui = newGui;
         timer = new java.util.Timer();
         sigarImpl = new Sigar();
+        version = org.jdesktop.application.Application
+                .getInstance(mcservergui.Main.class).getContext()
+                .getResourceMap(AboutBox.class).getString("Application.version");
         //sigar = SigarProxyCache.newInstance(sigarImpl, SigarProxyCache.EXPIRE_DEFAULT);
        // ProcessFinder.
         serverPid = 0;
@@ -47,11 +57,42 @@ public class MainWorker implements java.util.Observer {
 
     public void startMainWorker() {
         timer.scheduleAtFixedRate(new BackgroundWork(), 0, 1000);
+        timer.scheduleAtFixedRate(new UpdateChecker(), 0, 3600000);
+    }
+
+    class UpdateChecker extends TimerTask {
+        @Override public void run() {
+            String urltext = "https://raw.github.com/dumptruckman/MC-Server-GUI--multi-/master/VERSION";
+            try {
+                URL url = new URL(urltext);
+                HttpURLConnection huc =  (HttpURLConnection)  url.openConnection();
+                huc.setRequestMethod("GET");
+                huc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 (.NET CLR 3.5.30729)");
+                huc.connect();
+                if (!(huc.getResponseCode() == 200)) {
+                    return;
+                }
+                BufferedReader in = new BufferedReader(new InputStreamReader(url
+                                .openStream()));
+                String inputLine = "";
+
+                if ((inputLine = in.readLine()) != null) {
+                    if (inputLine.equals(version) || version.contains("-dev")) {
+                    } else {
+                        gui.outOfDate(inputLine);
+                    }
+                }
+                in.close();
+            } catch (java.net.MalformedURLException e) {
+
+            } catch (IOException ioe) {
+                
+            }
+        }
     }
 
     class BackgroundWork extends TimerTask {
         @Override public void run() {
-            gui.derp.setText("This is the value in the config that is in memory: " + gui.config.display.getTextSize());
             gui.scrollText();
             try {
                 gui.guiCpuUsage.setText(CpuPerc.format(sigarImpl.getProcCpu(
@@ -139,4 +180,5 @@ public class MainWorker implements java.util.Observer {
     private SigarProxy sigar;
     private long serverPid;
     private MCServerModel server;
+    private String version;
 }

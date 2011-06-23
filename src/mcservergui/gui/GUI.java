@@ -7,6 +7,9 @@ import mcservergui.gui.ColorChooser;
 import mcservergui.gui.AboutBox;
 import java.io.Reader;
 import javax.swing.text.html.HTMLEditorKit.ParserCallback;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.HTMLDocument;
 import java.util.Calendar;
@@ -31,6 +34,7 @@ import java.util.List;
 import java.util.ArrayList;
 import it.cnr.imaa.essi.lablib.gui.checkboxtree.*;
 import it.cnr.imaa.essi.lablib.gui.checkboxtree.TreeCheckingModel.CheckingMode;
+import java.awt.Color;
 import mcservergui.backup.Backup;
 import mcservergui.config.Config;
 import mcservergui.tools.ConsoleParser;
@@ -257,6 +261,8 @@ public class GUI extends FrameView implements Observer {
         inputHistoryMaxSizeLabel = new javax.swing.JLabel();
         inputHistoryMaxSizeField = new javax.swing.JTextField();
         startServerOnLaunchCheckBox = new javax.swing.JCheckBox();
+        commandPrefixLabel = new javax.swing.JLabel();
+        commandPrefixField = new javax.swing.JTextField();
         saveGuiConfigButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         textColorLabel = new javax.swing.JLabel();
@@ -271,7 +277,6 @@ public class GUI extends FrameView implements Observer {
         severeColorBox = new javax.swing.JTextField();
         textSizeLabel = new javax.swing.JLabel();
         textSizeField = new javax.swing.JSpinner();
-        derp = new javax.swing.JLabel();
         backupTab = new javax.swing.JPanel();
         backupButton = new javax.swing.JButton();
         backupSettingsPanel = new javax.swing.JPanel();
@@ -313,6 +318,10 @@ public class GUI extends FrameView implements Observer {
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         hideMenu = new javax.swing.JMenu();
+        versionNotifier = new javax.swing.JMenu();
+        launchSupportPage = new javax.swing.JMenuItem();
+        viewChangeLog = new javax.swing.JMenuItem();
+        downloadLatestVersion = new javax.swing.JMenuItem();
         statusPanel = new javax.swing.JPanel();
         javax.swing.JSeparator statusPanelSeparator = new javax.swing.JSeparator();
         statusMessageLabel = new javax.swing.JLabel();
@@ -1200,6 +1209,17 @@ public class GUI extends FrameView implements Observer {
             }
         });
 
+        commandPrefixLabel.setText(resourceMap.getString("commandPrefixLabel.text")); // NOI18N
+        commandPrefixLabel.setName("commandPrefixLabel"); // NOI18N
+
+        commandPrefixField.setText(resourceMap.getString("commandPrefixField.text")); // NOI18N
+        commandPrefixField.setName("commandPrefixField"); // NOI18N
+        commandPrefixField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                commandPrefixFieldActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -1214,7 +1234,11 @@ public class GUI extends FrameView implements Observer {
                         .addComponent(inputHistoryMaxSizeLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(inputHistoryMaxSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(startServerOnLaunchCheckBox))
+                    .addComponent(startServerOnLaunchCheckBox)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(commandPrefixLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(commandPrefixField, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -1228,7 +1252,11 @@ public class GUI extends FrameView implements Observer {
                     .addComponent(inputHistoryMaxSizeLabel)
                     .addComponent(inputHistoryMaxSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(startServerOnLaunchCheckBox))
+                .addComponent(startServerOnLaunchCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(commandPrefixLabel)
+                    .addComponent(commandPrefixField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         saveGuiConfigButton.setText(resourceMap.getString("saveGuiConfigButton.text")); // NOI18N
@@ -1395,27 +1423,19 @@ public class GUI extends FrameView implements Observer {
                     .addComponent(textSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
-        derp.setText(resourceMap.getString("derp.text")); // NOI18N
-        derp.setName("derp"); // NOI18N
-
         javax.swing.GroupLayout guiConfigTabLayout = new javax.swing.GroupLayout(guiConfigTab);
         guiConfigTab.setLayout(guiConfigTabLayout);
         guiConfigTabLayout.setHorizontalGroup(
             guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(guiConfigTabLayout.createSequentialGroup()
                 .addGroup(guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(guiConfigTabLayout.createSequentialGroup()
-                        .addGroup(guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(guiConfigTabLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(saveGuiConfigButton)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(guiConfigTabLayout.createSequentialGroup()
-                        .addGap(230, 230, 230)
-                        .addComponent(derp)))
-                .addContainerGap(199, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(saveGuiConfigButton)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(195, Short.MAX_VALUE))
         );
         guiConfigTabLayout.setVerticalGroup(
             guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1426,9 +1446,7 @@ public class GUI extends FrameView implements Observer {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(saveGuiConfigButton))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
-                .addComponent(derp)
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addContainerGap(168, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("guiConfigTab.TabConstraints.tabTitle"), guiConfigTab); // NOI18N
@@ -1824,7 +1842,7 @@ public class GUI extends FrameView implements Observer {
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabber)
+            .addComponent(tabber, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1860,6 +1878,39 @@ public class GUI extends FrameView implements Observer {
             }
         });
         menuBar.add(hideMenu);
+
+        versionNotifier.setText(resourceMap.getString("versionNotifier.text")); // NOI18N
+        versionNotifier.setToolTipText(resourceMap.getString("versionNotifier.toolTipText")); // NOI18N
+        versionNotifier.setName("versionNotifier"); // NOI18N
+
+        launchSupportPage.setText(resourceMap.getString("launchSupportPage.text")); // NOI18N
+        launchSupportPage.setName("launchSupportPage"); // NOI18N
+        launchSupportPage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                launchSupportPageActionPerformed(evt);
+            }
+        });
+        versionNotifier.add(launchSupportPage);
+
+        viewChangeLog.setText(resourceMap.getString("viewChangeLog.text")); // NOI18N
+        viewChangeLog.setName("viewChangeLog"); // NOI18N
+        viewChangeLog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewChangeLogActionPerformed(evt);
+            }
+        });
+        versionNotifier.add(viewChangeLog);
+
+        downloadLatestVersion.setText(resourceMap.getString("downloadLatestVersion.text")); // NOI18N
+        downloadLatestVersion.setName("downloadLatestVersion"); // NOI18N
+        downloadLatestVersion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                downloadLatestVersionActionPerformed(evt);
+            }
+        });
+        versionNotifier.add(downloadLatestVersion);
+
+        menuBar.add(versionNotifier);
 
         statusPanel.setName("statusPanel"); // NOI18N
 
@@ -1989,9 +2040,10 @@ public class GUI extends FrameView implements Observer {
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(mcservergui.Main.class).getContext().getResourceMap(GUI.class);
         this.getFrame().setIconImage(resourceMap.getImageIcon("imageLabel.icon").getImage());
 
-        versionLabel.setText("Version " + org.jdesktop.application.Application
+        versionNumber = org.jdesktop.application.Application
                 .getInstance(mcservergui.Main.class).getContext()
-                .getResourceMap(AboutBox.class).getString("Application.version"));
+                .getResourceMap(AboutBox.class).getString("Application.version");
+        versionLabel.setText("Version " + versionNumber);
     }
 
     private class TaskSchedulerListCellRenderer extends javax.swing.JTextPane implements javax.swing.ListCellRenderer {
@@ -2355,7 +2407,7 @@ public class GUI extends FrameView implements Observer {
                         .get(index));
                 config.schedule.getEvents().remove(config.schedule.getEvents()
                         .get(index));
-                taskList.removeElement(taskList.getElementAt(index));
+                taskList.removeElement(taskList.getElementAt(taskSchedulerList.getSelectedIndex()));
                 config.save();
             }
         }
@@ -2581,6 +2633,49 @@ public class GUI extends FrameView implements Observer {
         config.display.setTextSize(Integer.parseInt(textSizeField.getValue().toString()));
     }//GEN-LAST:event_textSizeFieldStateChanged
 
+    private void commandPrefixFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_commandPrefixFieldActionPerformed
+        config.setCommandPrefix(commandPrefixField.getText());
+    }//GEN-LAST:event_commandPrefixFieldActionPerformed
+
+    private void launchSupportPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_launchSupportPageActionPerformed
+        String url = "http://forums.bukkit.org/threads/admin-mc-server-gui-8-2-cross-platform-a-gui-wrapper-for-your-server-now-w-remote-ctrl-860.17834/";
+        try {
+            java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
+        } catch (IOException ioe) {
+            System.out.println("Error launching page.");
+        }
+    }//GEN-LAST:event_launchSupportPageActionPerformed
+
+    private void viewChangeLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewChangeLogActionPerformed
+        JFrame mainFrame = Main.getApplication().getMainFrame();
+        ChangeLog changeLog = new ChangeLog(mainFrame, versionNumber);
+        changeLog.setLocationRelativeTo(mainFrame);
+        Main.getApplication().show(changeLog);
+    }//GEN-LAST:event_viewChangeLogActionPerformed
+
+    private void downloadLatestVersionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_downloadLatestVersionActionPerformed
+        String urltext = "https://raw.github.com/dumptruckman/MC-Server-GUI--multi-/master/VERSION";
+        String newVersion= "";
+        try {
+            URL url = new URL(urltext);
+            BufferedReader in = new BufferedReader(new InputStreamReader(url
+                    .openStream()));
+            String line = "";
+            if ((line = in.readLine()) != null) {
+                newVersion = line;
+            }
+            in.close();
+            String downloadurl = "https://github.com/downloads/dumptruckman/MC-Server-GUI--multi-/mcservergui-" + newVersion + ".zip";
+            try {
+                java.awt.Desktop.getDesktop().browse(java.net.URI.create(downloadurl));
+            } catch (IOException ioe) {
+                System.out.println("Error launching page.");
+            }
+        } catch (java.net.MalformedURLException e) {
+        } catch (IOException ioe) {
+        }
+    }//GEN-LAST:event_downloadLatestVersionActionPerformed
+
     private void customButtonAction(javax.swing.JComboBox box) {
         if (box.getSelectedItem().toString().equals("Edit Tasks")) {
             tabber.setSelectedIndex(tabber.indexOfTab("Tasks"));
@@ -2608,6 +2703,8 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JCheckBox bukkitCheckBox;
     public javax.swing.JCheckBox clearLogCheckBox;
     public javax.swing.JTextField cmdLineField;
+    public javax.swing.JTextField commandPrefixField;
+    public javax.swing.JLabel commandPrefixLabel;
     public javax.swing.JTextField consoleInput;
     public javax.swing.JPanel consoleInputPanel;
     public javax.swing.JTextPane consoleOutput;
@@ -2617,8 +2714,8 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JComboBox customCombo1;
     public javax.swing.JComboBox customCombo2;
     public javax.swing.JCheckBox customLaunchCheckBox;
-    public javax.swing.JLabel derp;
     public javax.swing.JCheckBox disableGetOutputNotificationsCheckBox;
+    public javax.swing.JMenuItem downloadLatestVersion;
     public javax.swing.JTextField extPortField;
     public javax.swing.JLabel extPortLabel;
     public javax.swing.JTextField extraArgsField;
@@ -2648,6 +2745,7 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JButton javaExecBrowseButton;
     public javax.swing.JTextField javaExecField;
     public javax.swing.JLabel javaExecLabel;
+    public javax.swing.JMenuItem launchSupportPage;
     public javax.swing.JTextField levelNameField;
     public javax.swing.JLabel levelNameLabel;
     public javax.swing.JTextField levelSeedField;
@@ -2716,6 +2814,8 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JCheckBox useProxyCheckBox;
     public javax.swing.JCheckBox useWebInterfaceCheckBox;
     public javax.swing.JLabel versionLabel;
+    public javax.swing.JMenu versionNotifier;
+    public javax.swing.JMenuItem viewChangeLog;
     public javax.swing.JLabel viewDistanceLabel;
     public javax.swing.JSpinner viewDistanceSpinner;
     public javax.swing.JTextField warningColorBox;
@@ -2736,10 +2836,27 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JCheckBox zipBackupCheckBox;
     // End of variables declaration//GEN-END:variables
 
+    public void outOfDate(String version) {
+        versionNotifier.setForeground(Color.red);
+        versionNotifier.setText("New version " + version + " is available!");
+    }
+
     public void setPlayerList(PlayerList playerListModel) {
         this.playerListModel = playerListModel;
         playerList.setModel(playerListModel);
         playerList.updateUI();
+    }
+
+    public boolean startTaskByName(String name) {
+        for (int i = 0; i < config.schedule.getEvents().size(); i++) {
+            if (config.schedule.getEvents().get(i).getName()
+                    .equalsIgnoreCase(name)) {
+                scheduleImmediateEvent(config.schedule.getEvents().get(i),
+                        scheduler, this);
+                return true;
+            }
+        }
+        return false;
     }
 
     private void enableSystemTrayIcon() {
@@ -2807,7 +2924,6 @@ public class GUI extends FrameView implements Observer {
         }
     }
 
-    // My methods
     public void addTaskListEntry() {
         JFrame mainFrame = Main.getApplication().getMainFrame();
         taskDialog = new TaskDialog(
@@ -3042,6 +3158,7 @@ public class GUI extends FrameView implements Observer {
         backupPathField.setText(config.backups.getPath());
         backupFileChooser.setCheckingPaths(createTreePathArray(pathsToBackup));
         windowTitleField.setText(config.getWindowTitle());
+        commandPrefixField.setText(config.getCommandPrefix());
         getFrame().setTitle(windowTitleField.getText());
         javaExecField.setText(config.cmdLine.getJavaExec());
         serverJarField.setText(config.cmdLine.getServerJar());
@@ -3097,6 +3214,7 @@ public class GUI extends FrameView implements Observer {
             trayIcon.setToolTip(windowTitleField.getText());
         }
         config.setInputHistoryMaxSize(Integer.parseInt(inputHistoryMaxSizeField.getText()));
+        config.setCommandPrefix(commandPrefixField.getText());
         config.cmdLine.setXmx(xmxMemoryField.getText());
         config.cmdLine.setExtraArgs(extraArgsField.getText());
         config.cmdLine.setServerJar(serverJarField.getText());
@@ -3390,6 +3508,7 @@ public class GUI extends FrameView implements Observer {
     private boolean isHidden;
     private java.awt.TrayIcon trayIcon;
     private WebInterface webServer;
+    private String versionNumber;
 
     public static final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
 

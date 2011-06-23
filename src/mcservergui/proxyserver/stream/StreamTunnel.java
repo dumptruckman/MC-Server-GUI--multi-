@@ -168,6 +168,13 @@ public class StreamTunnel {
                 break;
             case 0x03: // Chat Message
                 String message = readUTF16();
+                if (!isServerTunnel) {
+                    if (message.startsWith(server.gui.config.getCommandPrefix())) {
+                        if (player.parseCommand(message)) {
+                            break;
+                        }
+                    }
+                }
                 /*
                 if (isServerTunnel && server.options.getBoolean("useMsgFormats")) {
 

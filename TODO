@@ -4,7 +4,6 @@ Add scheduler pause button
 Add a lot more functionality to the Web Interface
 Add simple task option
 Custom skins?!
-Limit to number of backups
 Have gui not auto-create backup folder immediately on load
 Have the Web Interface log to a file as well.
 Allow for 12-hour hour format, like 3pm

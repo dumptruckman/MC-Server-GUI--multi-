@@ -25,6 +25,7 @@ public class Config {
         _extPort = 25565;
         _proxy = true;
         _serverStartOnStartup = false;
+        _commandPrefix = "!";
         cmdLine = new CMDLine();
         backups = new Backups();
         schedule = new Schedule();
@@ -32,7 +33,7 @@ public class Config {
         web = new WebInterface();
     }
     
-    private String _windowTitle;
+    private String _windowTitle, _commandPrefix;
     private int _inputHistoryMaxSize, _extPort;
     private boolean _proxy, _serverStartOnStartup;
     public CMDLine cmdLine;
@@ -46,12 +47,14 @@ public class Config {
     public String getWindowTitle() { return _windowTitle; }
     public int getInputHistoryMaxSize() { return _inputHistoryMaxSize; }
     public boolean getServerStartOnStartup() { return _serverStartOnStartup; }
+    public String getCommandPrefix() { return _commandPrefix; }
 
     public void setProxy(boolean b) { _proxy = b; }
     public void setExtPort(int i) { _extPort = i; }
     public void setWindowTitle(String s) { _windowTitle = s; }
     public void setInputHistoryMaxSize(int i) { _inputHistoryMaxSize = i; }
     public void setServerStartOnStartup(boolean b) { _serverStartOnStartup = b; }
+    public void setCommandPrefix(String s) { _commandPrefix = s; }
 
     public class Display {
         public Display() {
@@ -345,6 +348,8 @@ public class Config {
                         setInputHistoryMaxSize(jp.getIntValue());
                     } else if ("Use Proxy Server".equals(fieldname)) {
                         setProxy(jp.getBooleanValue());
+                    } else if ("Command Prefix".equals(fieldname)) {
+                        setCommandPrefix(jp.getText());
                     } else if ("Proxy Port".equals(fieldname)) {
                         setExtPort(jp.getIntValue());
                     } else if ("MC Server Start on GUI Start".equals(fieldname)) {
@@ -502,6 +507,7 @@ public class Config {
             jg.writeBooleanField("Use Proxy Server", getProxy());
             jg.writeNumberField("Proxy Port", getExtPort());
             jg.writeBooleanField("MC Server Start on GUI Start", getServerStartOnStartup());
+            jg.writeStringField("Command Prefix", getCommandPrefix());
             jg.writeObjectFieldStart("Display");
             // Display Config Options
             jg.writeStringField("Text Color", display.getTextColor());

@@ -93,7 +93,6 @@ public class ConsoleParser {
         // First, ascii escape sequence colors
         int index;
         while ((index = text.indexOf(27)) != -1) {
-            System.out.println("Found escape at " + index);
             String afterescape = text.substring(index);
             int mindex = afterescape.indexOf("m");
             if ((mindex == -1) || (mindex > 4)) {
@@ -101,7 +100,6 @@ public class ConsoleParser {
                 text = text.replaceFirst(Character.toString((char)27), "");
             } else {
                 // Is a color code
-                System.out.println(afterescape.substring(2, mindex));
                 int color = Integer.parseInt(afterescape.substring(2, mindex));
                 String replace = "";
                 switch (color) {
@@ -133,7 +131,6 @@ public class ConsoleParser {
                         replace = "</font>";
                         break;
                 }
-                System.out.println(mindex);
                 text = text.replaceFirst("\\Q" + text.substring(index, index+mindex+1) + "\\E", replace);
             }
         }

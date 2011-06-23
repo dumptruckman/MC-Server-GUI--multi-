@@ -1,4 +1,4 @@
-Version .9.0-dev
+Version .9.0
     Added in game commands with a default prefix of "!".  This is changeable in the GUI Config tab.
     Currently supported in game commands are:
         repeat - repeats the last command.
@@ -7,6 +7,7 @@ Version .9.0-dev
     Added Version Checker that checks for a new version of the GUI approximately hourly and notifies you through Up to date menu if new version is available.
     View the change log of your current version and any new version through this menu.
     Removed debugging text left in the GUI by accident in .8.2.
+    Fixed issue where removing the last task from the task list could cause unexpected results.
 
 Version .8.2
     Fixed issue where part of the config would not load correctly resulting in a loss of saved Tasks and Web Interface settings.

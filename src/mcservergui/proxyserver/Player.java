@@ -21,7 +21,7 @@
 
 package mcservergui.proxyserver;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.BindException;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -172,6 +172,29 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isOp() throws IOException {
+        try {
+            File opfile = new File("./ops.txt");
+            if (name == null || name.isEmpty()) {
+                throw new IOException("Name is null or empty!");
+            }
+            if (opfile.canRead()) {
+                String line = "";
+                BufferedReader br = new BufferedReader(new FileReader(opfile));
+                while ((line = br.readLine()) != null) {
+                    if (line.equalsIgnoreCase(name)) {
+                        return true;
+                    }
+                }
+                return false;
+            } else {
+                throw new IOException("Can't read ops.txt!");
+            }
+        } catch (IOException ioe) {
+            throw new IOException("Unknown issue determining if player is op.");
+        }
     }
 
     /*
@@ -353,38 +376,48 @@ public class Player {
      *
      */
 
-    /*
     public boolean parseCommand(String message) {
         if (closed) {
             return true;
         }
 
-        // Repeat last command
-        if (message.equals(server.getCommandParser().commandPrefix() + "!")) {
-        message = lastCommand;
+        try {
+            if (!isOp()) {
+                return false;
+            }
+        } catch (IOException e) {
+            server.gui.addTextToConsoleOutput("[MC Server GUI] " + e.getMessage());
+            return false;
         }
 
-        PlayerCommand command = server.getCommandParser().getPlayerCommand(message);
-        if (command == null) {
-        return false;
+        message = message.replaceFirst(server.gui.config.getCommandPrefix(), "");
+
+        if (message.equalsIgnoreCase("repeat")) {
+            message = lastCommand;
+            sendMessage("Repeating last command..");
         }
 
-        boolean invalidCommand = command.getName() == null;
-
-        if (!invalidCommand && !commandAllowed(command.getName())) {
-        addMessage("\u00a7cInsufficient permission.");
-        return true;
+        if (message.startsWith("task")) {
+            if (message.split("\\s", 2).length > 1) {
+                if (server.gui.startTaskByName(message.split("\\s", 2)[1])) {
+                    sendMessage("Executing task: " + message.split("\\s", 2)[1]);
+                } else {
+                    sendMessage("No such task: " + message.split("\\s", 2)[1]);
+                }
+            } else {
+                sendMessage("You did not specify a task name!");
+            }
+        } else {
+            sendMessage("No such command!");
         }
 
-        command.execute(this, message);
         lastCommand = message;
-
-        return !((server.permissions.commandShouldPassThroughToMod(command.getName())
-        || server.options.getBoolean("forwardAllCommands")
-        || invalidCommand || command instanceof ExternalCommand) && server.options.contains("alternateJarFile"));
+        return true;
     }
-     * 
-     */
+
+    public void sendMessage(String message) {
+        server.gui.sendInput("msg " + name + " " + message);
+    }
 
     /*
     public void execute(Class<? extends PlayerCommand> c) {
