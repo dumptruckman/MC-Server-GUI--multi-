@@ -359,12 +359,14 @@
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="customButtonBoxModel1" type="code"/>
                         </Property>
+                        <Property name="toolTipText" type="java.lang.String" resourceKey="customCombo1.toolTipText"/>
                         <Property name="name" type="java.lang.String" value="customCombo1" noResource="true"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JButton" name="customButton1">
                       <Properties>
                         <Property name="text" type="java.lang.String" resourceKey="customButton1.text"/>
+                        <Property name="toolTipText" type="java.lang.String" resourceKey="customButton1.toolTipText"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
                           <Insets value="[2, 2, 2, 2]"/>
                         </Property>
@@ -379,12 +381,14 @@
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="customButtonBoxModel2" type="code"/>
                         </Property>
+                        <Property name="toolTipText" type="java.lang.String" resourceKey="customCombo2.toolTipText"/>
                         <Property name="name" type="java.lang.String" value="customCombo2" noResource="true"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JButton" name="customButton2">
                       <Properties>
                         <Property name="text" type="java.lang.String" resourceKey="customButton2.text"/>
+                        <Property name="toolTipText" type="java.lang.String" resourceKey="customButton2.toolTipText"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
                           <Insets value="[2, 2, 2, 2]"/>
                         </Property>
@@ -961,6 +965,9 @@
                         <Property name="toolTipText" type="java.lang.String" resourceKey="useProxyCheckBox.toolTipText"/>
                         <Property name="name" type="java.lang.String" value="useProxyCheckBox" noResource="true"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="useProxyCheckBoxActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="extPortLabel">
                       <Properties>

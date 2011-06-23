@@ -1086,6 +1086,7 @@
         <Component class="javax.swing.JCheckBox" name="taskIsCustomButtonCheckBox">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="taskIsCustomButtonCheckBox.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="taskIsCustomButtonCheckBox.toolTipText"/>
             <Property name="name" type="java.lang.String" value="taskIsCustomButtonCheckBox" noResource="true"/>
           </Properties>
           <Events>

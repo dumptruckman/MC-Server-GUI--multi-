@@ -4,9 +4,7 @@ Add scheduler pause button
 Add a lot more functionality to the Web Interface
 Add simple task option
 Custom skins?!
-Change the tooltips on the Web Interface
 Have the Web Interface log to a file as well.
-Add custom command drop down (uses New Task interface without the timing section)
 Allow for 12-hour hour format, like 3pm
 Add indicator show when/what next event will be
 Allow console output to be searched

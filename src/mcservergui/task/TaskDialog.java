@@ -737,6 +737,7 @@ public class TaskDialog extends javax.swing.JDialog {
         jScrollPane2.setViewportView(timeSummaryField);
 
         taskIsCustomButtonCheckBox.setText(resourceMap.getString("taskIsCustomButtonCheckBox.text")); // NOI18N
+        taskIsCustomButtonCheckBox.setToolTipText(resourceMap.getString("taskIsCustomButtonCheckBox.toolTipText")); // NOI18N
         taskIsCustomButtonCheckBox.setName("taskIsCustomButtonCheckBox"); // NOI18N
         taskIsCustomButtonCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

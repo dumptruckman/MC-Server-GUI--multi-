@@ -16,6 +16,7 @@ public class EventModel {
     public EventModel() {
         warningList = new java.util.ArrayList<ServerWarning>();
         params = new java.util.ArrayList<String>();
+        _isCustomButton = false;
     }
 
     private String name, cronEx, task;

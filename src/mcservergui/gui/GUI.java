@@ -495,9 +495,11 @@ public class GUI extends FrameView implements Observer {
         });
 
         customCombo1.setModel(customButtonBoxModel1);
+        customCombo1.setToolTipText(resourceMap.getString("customCombo1.toolTipText")); // NOI18N
         customCombo1.setName("customCombo1"); // NOI18N
 
         customButton1.setText(resourceMap.getString("customButton1.text")); // NOI18N
+        customButton1.setToolTipText(resourceMap.getString("customButton1.toolTipText")); // NOI18N
         customButton1.setMargin(new java.awt.Insets(2, 2, 2, 2));
         customButton1.setName("customButton1"); // NOI18N
         customButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -507,9 +509,11 @@ public class GUI extends FrameView implements Observer {
         });
 
         customCombo2.setModel(customButtonBoxModel2);
+        customCombo2.setToolTipText(resourceMap.getString("customCombo2.toolTipText")); // NOI18N
         customCombo2.setName("customCombo2"); // NOI18N
 
         customButton2.setText(resourceMap.getString("customButton2.text")); // NOI18N
+        customButton2.setToolTipText(resourceMap.getString("customButton2.toolTipText")); // NOI18N
         customButton2.setMargin(new java.awt.Insets(2, 2, 2, 2));
         customButton2.setName("customButton2"); // NOI18N
         customButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -920,6 +924,11 @@ public class GUI extends FrameView implements Observer {
         useProxyCheckBox.setText(resourceMap.getString("useProxyCheckBox.text")); // NOI18N
         useProxyCheckBox.setToolTipText(resourceMap.getString("useProxyCheckBox.toolTipText")); // NOI18N
         useProxyCheckBox.setName("useProxyCheckBox"); // NOI18N
+        useProxyCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                useProxyCheckBoxActionPerformed(evt);
+            }
+        });
 
         extPortLabel.setText(resourceMap.getString("extPortLabel.text")); // NOI18N
         extPortLabel.setName("extPortLabel"); // NOI18N
@@ -2543,6 +2552,15 @@ public class GUI extends FrameView implements Observer {
         customButtonAction(customCombo2);
     }//GEN-LAST:event_customButton2ActionPerformed
 
+    private void useProxyCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useProxyCheckBoxActionPerformed
+        config.setProxy(useProxyCheckBox.isSelected());
+        if (useProxyCheckBox.isSelected()) {
+            playerList.setToolTipText("This shows a list of players connected to the server.  Right click a to pull up the player action menu.");
+        } else {
+            playerList.setToolTipText("Player list is currently only supported when using the GUI's Proxy feature.");
+        }
+    }//GEN-LAST:event_useProxyCheckBoxActionPerformed
+
     private void customButtonAction(javax.swing.JComboBox box) {
         if (box.getSelectedItem().toString().equals("Edit Tasks")) {
             tabber.setSelectedIndex(tabber.indexOfTab("Tasks"));
@@ -3034,6 +3052,11 @@ public class GUI extends FrameView implements Observer {
                     + "<br><font size=2>"
                     + config.schedule.getEvents().get(i).getTask());
         }
+        if (useProxyCheckBox.isSelected()) {
+            playerList.setToolTipText("This shows a list of players connected to the server.  Right click a to pull up the player action menu.");
+        } else {
+            playerList.setToolTipText("Player list is currently only supported when using the GUI's Proxy feature.");
+        }
     }
 
     /**
@@ -3044,7 +3067,9 @@ public class GUI extends FrameView implements Observer {
         statusMessageLabel.setText("Saving configuration...");
         config.setWindowTitle(windowTitleField.getText());
         getFrame().setTitle(windowTitleField.getText());
-        trayIcon.setToolTip(windowTitleField.getText());
+        if (trayIcon != null) {
+            trayIcon.setToolTip(windowTitleField.getText());
+        }
         config.setInputHistoryMaxSize(Integer.parseInt(inputHistoryMaxSizeField.getText()));
         config.cmdLine.setXmx(xmxMemoryField.getText());
         config.cmdLine.setExtraArgs(extraArgsField.getText());
@@ -3068,11 +3093,13 @@ public class GUI extends FrameView implements Observer {
         }
         config.backups.setPathsToBackup(pathsToBackup);
         config.backups.setPath(backupPathField.getText());
-        config.save();
-        statusMessageLabel.setText(temp);
         config.setProxy(useProxyCheckBox.isSelected());
         config.setExtPort(Integer.valueOf(extPortField.getText()));
+
+        
+        config.save();
         saveServerProperties();
+        statusMessageLabel.setText(temp);
     }
 
     public void saveServerProperties() {
