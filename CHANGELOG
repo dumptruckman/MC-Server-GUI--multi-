@@ -1,3 +1,6 @@
+Version .8.1
+  Made sure that "custom button events" won't load into the schedule on GUI launch.
+
 Version .8.0
   Added Custom Tasks Buttons.  Create tasks through the task tab to be triggered by a button!
   Changed Scheduler Tab to Tasks Tab
@@ -5,7 +8,7 @@ Version .8.0
   Console output now parses escape sequence colors.
   Console output now parses some other types of color codes
   Changed conditions for the console output to stop scrolling.  Should make a little more sense.  Simply moving the mouse into the window no longer works, instead, you must click in the window.
-  Fixed a NullPointerError in systems that don't support Tray Icons.
+  Fixed a NullPointerException in systems that don't support Tray Icons.
 
 Version .7.1
   Removed some additional debugging data.

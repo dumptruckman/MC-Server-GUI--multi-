@@ -2970,7 +2970,9 @@ public class GUI extends FrameView implements Observer {
 
     public void initSchedule() {
         for (int i = 0; i < config.schedule.getEvents().size(); i++) {
-            scheduleEvent(config.schedule.getEvents().get(i), scheduler, this);
+            if (!config.schedule.getEvents().get(i).isCustomButton()) {
+                scheduleEvent(config.schedule.getEvents().get(i), scheduler, this);
+            }
         }
     }
 
