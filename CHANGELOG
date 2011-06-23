@@ -1,133 +1,143 @@
+Version .9.0-dev
+    Added in game commands with a default prefix of "!".  This is changeable in the GUI Config tab.
+    Currently supported in game commands are:
+        repeat - repeats the last command.
+        task <task name> - executes task with specified name.
+    Added Up to date menu which contains 3 options, link to support page, view change log, and download latest version link.
+    Added Version Checker that checks for a new version of the GUI approximately hourly and notifies you through Up to date menu if new version is available.
+    View the change log of your current version and any new version through this menu.
+    Removed debugging text left in the GUI by accident in .8.2.
+
 Version .8.2
-  Fixed issue where part of the config would not load correctly resulting in a loss of saved Tasks and Web Interface settings
-  Fixed issue where tasks would not load into the custom button drop downs. (not that you'd notice since they didn't load at all!)
-  Hide menu button is not so easy to accidently press now.
-  Ensured that Text Size is saved correctly for everyone.
+    Fixed issue where part of the config would not load correctly resulting in a loss of saved Tasks and Web Interface settings.
+    Fixed issue where tasks would not load into the custom button drop downs. (not that you'd notice since they didn't load at all!)
+    Hide menu button is not so easy to accidently press now.
+    Ensured that Text Size is saved correctly for everyone.
 
 Version .8.1
-  Made sure that "custom button events" won't load into the schedule on GUI launch.
+    Made sure that "custom button events" won't load into the schedule on GUI launch.
 
 Version .8.0
-  Added Custom Tasks Buttons.  Create tasks through the task tab to be triggered by a button!
-  Changed Scheduler Tab to Tasks Tab
-  Server Warning Dialog can no longer be completed with an invalid time entry.
-  Console output now parses escape sequence colors.
-  Console output now parses some other types of color codes
-  Changed conditions for the console output to stop scrolling.  Should make a little more sense.  Simply moving the mouse into the window no longer works, instead, you must click in the window.
-  Fixed a NullPointerException in systems that don't support Tray Icons.
+    Added Custom Tasks Buttons.  Create tasks through the task tab to be triggered by a button!
+    Changed Scheduler Tab to Tasks Tab
+    Server Warning Dialog can no longer be completed with an invalid time entry.
+    Console output now parses escape sequence colors.
+    Console output now parses some other types of color codes
+    Changed conditions for the console output to stop scrolling.  Should make a little more sense.  Simply moving the mouse into the window no longer works, instead, you must click in the window.
+    Fixed a NullPointerException in systems that don't support Tray Icons.
 
 Version .7.1
-  Removed some additional debugging data.
-  Fixed some tooltips for the Web Interface tab.
-  Added an option to disable notifications of remote interfaces retrieving the console output.
-  Fixed issue where some lines of the retrieved output did not have <br> in them.
+    Removed some additional debugging data.
+    Fixed some tooltips for the Web Interface tab.
+    Added an option to disable notifications of remote interfaces retrieving the console output.
+    Fixed issue where some lines of the retrieved output did not have <br> in them.
 
 Version .7.0
-  Added TCP JSON interface!  This will allow you to remotely control the GUI through JSON.
-  Currently supported web interface options are start, stop, send input, receive output.
-  Added a Hide menu button to easily "minimize to tray" but only if your system supports such an action.
-  The About dialog now works again!
-  Added a temporary Warn Stop button.  It will give warnings at 2 minutes, 1 minute, 30 seconds, 10 seconds before stopping.  This feature will be replaced by something better in .8.0!
-  Removed some debugging info from the scheduler.
+    Added TCP JSON interface!  This will allow you to remotely control the GUI through JSON.
+    Currently supported web interface options are start, stop, send input, receive output.
+    Added a Hide menu button to easily "minimize to tray" but only if your system supports such an action.
+    The About dialog now works again!
+    Added a temporary Warn Stop button.  It will give warnings at 2 minutes, 1 minute, 30 seconds, 10 seconds before stopping.  This feature will be replaced by something better in .8.0!
+    Removed some debugging info from the scheduler.
 
 Version .6.1
-  Backup tab now has option to "clear" your server.log file.  This option deletes the server.log file after performing a backup.
-  Made sure the server doesn't start when the proxy fails to start.
-  Added Start Server on GUI Start option to GUI Config tab.
-  Added Ban and Ban IP options to the player list right-click menu.
-  Added ability to hide/show GUI by double clicking on the tray icon. (Only if your OS supports tray icons!)
-  Added initial stages of a tcp json interface.
+    Backup tab now has option to "clear" your server.log file.  This option deletes the server.log file after performing a backup.
+    Made sure the server doesn't start when the proxy fails to start.
+    Added Start Server on GUI Start option to GUI Config tab.
+    Added Ban and Ban IP options to the player list right-click menu.
+    Added ability to hide/show GUI by double clicking on the tray icon. (Only if your OS supports tray icons!)
+    Added initial stages of a tcp json interface.
 
 Version .6.0
-  Added a proxy server into the GUI.  This means that the GUI will be what people connect to instead of the MC Server.  (This will be optional)
-  The player list now works!
-  Currently the player list has a right-click menu with a kick option.
-  Added a section to the Server Config tab to edit the server.properties file of your server.
-  Selecting the Bukkit check box will now make sure that the proper command line parameters are added to the launch when using custom command line.
-  Removed the text field and button from the color section... Now you can just click the color box to change the color.  Simple!  (If you want to edit the hex values directly, do so in the config file.)
-  Changed task warning to allow for commands instead of just "say" messages.
-  Added a time summary for tasks.
-  Added a tooltip to the save worlds task.
+    Added a proxy server into the GUI.  This means that the GUI will be what people connect to instead of the MC Server.  (This will be optional)
+    The player list now works!
+    Currently the player list has a right-click menu with a kick option.
+    Added a section to the Server Config tab to edit the server.properties file of your server.
+    Selecting the Bukkit check box will now make sure that the proper command line parameters are added to the launch when using custom command line.
+    Removed the text field and button from the color section... Now you can just click the color box to change the color.  Simple!  (If you want to edit the hex values directly, do so in the config file.)
+    Changed task warning to allow for commands instead of just "say" messages.
+    Added a time summary for tasks.
+    Added a tooltip to the save worlds task.
 
 Version .5.0
-  Added colorization options for the console output.
-  You may now set text color, background color, and specific colors for the INFO, WARNING, and SEVERE tags.
-  You can additionally change the text size.
+    Added colorization options for the console output.
+    You may now set text color, background color, and specific colors for the INFO, WARNING, and SEVERE tags.
+    You can additionally change the text size.
 
 Version .4.2
-  Turning off network statistics monitoring will now replace the displayed data with a question mark.
-  Console output text scrolls more often now(again?) (assuming nothing is preventing scrolling such as select text in the output)
+    Turning off network statistics monitoring will now replace the displayed data with a question mark.
+    Console output text scrolls more often now(again?) (assuming nothing is preventing scrolling such as select text in the output)
 
 Version .4.1
-  Added a checkbox to enable/disable the network statistics feature as it is quite cpu intensive.
+    Added a checkbox to enable/disable the network statistics feature as it is quite cpu intensive.
 
 Version .4.0
-  Added CPU/Memory Usage displays for the GUI and Server.
-  Added Network Usage statistics.
-  Added Save Worlds task
-  Toggle buttons now have bolded text when selected just in case the coloring doesn't show up.
-  Added task warning message edit button.
-  Fixed potential issue with removing warning messages.
+    Added CPU/Memory Usage displays for the GUI and Server.
+    Added Network Usage statistics.
+    Added Save Worlds task
+    Toggle buttons now have bolded text when selected just in case the coloring doesn't show up.
+    Added task warning message edit button.
+    Fixed potential issue with removing warning messages.
 
 Version .3.2
-  Changed window icon.
-  Fixed issue where backups would not disable level saving.
-  Changed console output to accept html formatting.  (There will be configuration options in future versions!)
-  Changed how often the server is polled for new output.  This MAY make initial output when starting the server appear faster.
-  Selecting large folders in the backup screen should no longer freeze the gui.
-  Backups will NOT backup the backup directory.
-  Added some colors to the backup log and hopefully made it a bit easier to read.
-  Removed the ALL seconds checkbox as it is simply too dangerous.
-  Added confirmation box to the All Minutes checkbox.
+    Changed window icon.
+    Fixed issue where backups would not disable level saving.
+    Changed console output to accept html formatting.  (There will be configuration options in future versions!)
+    Changed how often the server is polled for new output.  This MAY make initial output when starting the server appear faster.
+    Selecting large folders in the backup screen should no longer freeze the gui.
+    Backups will NOT backup the backup directory.
+    Added some colors to the backup log and hopefully made it a bit easier to read.
+    Removed the ALL seconds checkbox as it is simply too dangerous.
+    Added confirmation box to the All Minutes checkbox.
 
 Version .3.1
-  Fixed issue where the server config tab would display wrong when long filenames were used.
-  Scheduler should now wait to restart the server until it is actually finished shutting down, particularly when remain down delays are not being used.
-  Scheduled start/stop/restart events will now wait until the gui is done performing any backups.
-  Scheduled backups will now wait until the gui is done restarting the server.
-  Window title now updates properly.
-  When editing an event with a remain down time, it will now load the remain down time correctly.
-  Added confirmation dialogs in several places of the scheduler.
+    Fixed issue where the server config tab would display wrong when long filenames were used.
+    Scheduler should now wait to restart the server until it is actually finished shutting down, particularly when remain down delays are not being used.
+    Scheduled start/stop/restart events will now wait until the gui is done performing any backups.
+    Scheduled backups will now wait until the gui is done restarting the server.
+    Window title now updates properly.
+    When editing an event with a remain down time, it will now load the remain down time correctly.
+    Added confirmation dialogs in several places of the scheduler.
 
 Version .3.0
-  Added task scheduler!
-  Schedule events to go off at certain times, and have them repeat as well. (Uses Cron based timing.)
-  Add warnings to your events so that the server knows it is about to happen. (Such as warning before a restart.)
-  Added Restore tab as a placeholder for future features.
+    Added task scheduler!
+    Schedule events to go off at certain times, and have them repeat as well. (Uses Cron based timing.)
+    Add warnings to your events so that the server knows it is about to happen. (Such as warning before a restart.)
+    Added Restore tab as a placeholder for future features.
 
 Version .2.2
-  Added splash screen.
-  The tooltip no longer displays immediately for the Custom Launch check box.  This resolves the issue of it being grayed out in some cases.
+    Added splash screen.
+    The tooltip no longer displays immediately for the Custom Launch check box.  This resolves the issue of it being grayed out in some cases.
 
 Version .2.1
-  Backup Path browse button now allows you to select a folder.
-  Backup path text field saves the value when you press the Backup button, just in case.
-  Fixed Xmx Memory setting not loading properly from the config file.
+    Backup Path browse button now allows you to select a folder.
+    Backup path text field saves the value when you press the Backup button, just in case.
+    Fixed Xmx Memory setting not loading properly from the config file.
 
 Version .2.0
-  Rearranged the GUI a little.
-  Added a Save Worlds button. (Sends "save-all" to the server.)
-  Added MC Server GUI picture to about box.
-  Corrected version information in about box.
-  Added Backup tab which allows for:
-  Manual backup feature (restore backups and automatic backups to come.)
-  You may now select exactly which files you would like to back up.
-  Backup even with the server running.
-  Ability to zip your backups.
+    Rearranged the GUI a little.
+    Added a Save Worlds button. (Sends "save-all" to the server.)
+    Added MC Server GUI picture to about box.
+    Corrected version information in about box.
+    Added Backup tab which allows for:
+    Manual backup feature (restore backups and automatic backups to come.)
+    You may now select exactly which files you would like to back up.
+    Backup even with the server running.
+    Ability to zip your backups.
 
 Version .1.2
-  Typing anywhere on the Main Window tab will now automatically grant focus to the console input box while the server is running.
-  Pressing CONTROL+S will toggle the Say checkbox.
-  If Say is not checked, pressing SHIFT+ENTER will prepend "say " to your text when sending.  If Say IS checked, pressing SHIFT+ENTER will send text WITHOUT prepending "say ".
-  Added input history! Press up and down arrows while focused on the console input box and it will cycle through previously sent messages
-  Added option to specify how many lines should be saved into the history.
-  Added experimental option to completely customize the command line.  This is mostly in here to allow certain mod compatability.  Please let me know how it works!
+    Typing anywhere on the Main Window tab will now automatically grant focus to the console input box while the server is running.
+    Pressing CONTROL+S will toggle the Say checkbox.
+    If Say is not checked, pressing SHIFT+ENTER will prepend "say " to your text when sending.  If Say IS checked, pressing SHIFT+ENTER will send text WITHOUT prepending "say ".
+    Added input history! Press up and down arrows while focused on the console input box and it will cycle through previously sent messages
+    Added option to specify how many lines should be saved into the history.
+    Added experimental option to completely customize the command line.  This is mostly in here to allow certain mod compatability.  Please let me know how it works!
 
 Version .1.1
-  There is now a save button the config page to immediately save your settings.
-  Text now scrolls to the end under the following conditions: If the text box has focus or if the mouse is over it.  It will also NOT scroll if you have anything selected within it.
-  Console Input and Submit box are now properly disabled on GUI start.
-  Fixed potential issue with new lines not displaying properly on non-windows systems.
+    There is now a save button the config page to immediately save your settings.
+    Text now scrolls to the end under the following conditions: If the text box has focus or if the mouse is over it.  It will also NOT scroll if you have anything selected within it.
+    Console Input and Submit box are now properly disabled on GUI start.
+    Fixed potential issue with new lines not displaying properly on non-windows systems.
   
 Version .1.0
-  Initial release!
+    Initial release!
