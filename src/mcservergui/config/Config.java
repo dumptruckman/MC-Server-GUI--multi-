@@ -425,6 +425,7 @@ public class Config {
                                         String eventfield = jp.getCurrentName();
                                         //jp.nextToken();
                                         if ("Custom Button".equals(eventfield)) {
+                                            jp.nextToken();
                                             event.setCustomButton(jp.getBooleanValue());
                                         } else if("Cron Expression".equals(eventfield)) {
                                             event.setCronEx(jp.getText());

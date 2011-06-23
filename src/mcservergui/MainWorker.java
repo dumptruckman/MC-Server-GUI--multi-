@@ -51,6 +51,7 @@ public class MainWorker implements java.util.Observer {
 
     class BackgroundWork extends TimerTask {
         @Override public void run() {
+            gui.derp.setText("This is the value in the config that is in memory: " + gui.config.display.getTextSize());
             gui.scrollText();
             try {
                 gui.guiCpuUsage.setText(CpuPerc.format(sigarImpl.getProcCpu(

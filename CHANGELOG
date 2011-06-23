@@ -1,3 +1,9 @@
+Version .8.2
+  Fixed issue where part of the config would not load correctly resulting in a loss of saved Tasks and Web Interface settings
+  Fixed issue where tasks would not load into the custom button drop downs. (not that you'd notice since they didn't load at all!)
+  Hide menu button is not so easy to accidently press now.
+  Ensured that Text Size is saved correctly for everyone.
+
 Version .8.1
   Made sure that "custom button events" won't load into the schedule on GUI launch.
 

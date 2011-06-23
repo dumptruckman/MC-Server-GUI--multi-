@@ -271,6 +271,7 @@ public class GUI extends FrameView implements Observer {
         severeColorBox = new javax.swing.JTextField();
         textSizeLabel = new javax.swing.JLabel();
         textSizeField = new javax.swing.JSpinner();
+        derp = new javax.swing.JLabel();
         backupTab = new javax.swing.JPanel();
         backupButton = new javax.swing.JButton();
         backupSettingsPanel = new javax.swing.JPanel();
@@ -1333,6 +1334,11 @@ public class GUI extends FrameView implements Observer {
 
         textSizeField.setModel(new javax.swing.SpinnerNumberModel(3, 1, 10, 1));
         textSizeField.setName("textSizeField"); // NOI18N
+        textSizeField.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                textSizeFieldStateChanged(evt);
+            }
+        });
         textSizeField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 textSizeFieldPropertyChange(evt);
@@ -1389,18 +1395,26 @@ public class GUI extends FrameView implements Observer {
                     .addComponent(textSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
+        derp.setText(resourceMap.getString("derp.text")); // NOI18N
+        derp.setName("derp"); // NOI18N
+
         javax.swing.GroupLayout guiConfigTabLayout = new javax.swing.GroupLayout(guiConfigTab);
         guiConfigTab.setLayout(guiConfigTabLayout);
         guiConfigTabLayout.setHorizontalGroup(
             guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(guiConfigTabLayout.createSequentialGroup()
                 .addGroup(guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(guiConfigTabLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(saveGuiConfigButton)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(guiConfigTabLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(saveGuiConfigButton)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(guiConfigTabLayout.createSequentialGroup()
+                        .addGap(230, 230, 230)
+                        .addComponent(derp)))
                 .addContainerGap(199, Short.MAX_VALUE))
         );
         guiConfigTabLayout.setVerticalGroup(
@@ -1412,7 +1426,9 @@ public class GUI extends FrameView implements Observer {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(saveGuiConfigButton))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addGap(33, 33, 33)
+                .addComponent(derp)
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
         tabber.addTab(resourceMap.getString("guiConfigTab.TabConstraints.tabTitle"), guiConfigTab); // NOI18N
@@ -1838,13 +1854,9 @@ public class GUI extends FrameView implements Observer {
 
         hideMenu.setText(resourceMap.getString("hideMenu.text")); // NOI18N
         hideMenu.setName("hideMenu"); // NOI18N
-        hideMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
-            }
-            public void menuDeselected(javax.swing.event.MenuEvent evt) {
-            }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                hideMenuMenuSelected(evt);
+        hideMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                hideMenuMouseClicked(evt);
             }
         });
         menuBar.add(hideMenu);
@@ -1976,6 +1988,10 @@ public class GUI extends FrameView implements Observer {
         webLog.setStyledDocument(new javax.swing.text.html.HTMLDocument());
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(mcservergui.Main.class).getContext().getResourceMap(GUI.class);
         this.getFrame().setIconImage(resourceMap.getImageIcon("imageLabel.icon").getImage());
+
+        versionLabel.setText("Version " + org.jdesktop.application.Application
+                .getInstance(mcservergui.Main.class).getContext()
+                .getResourceMap(AboutBox.class).getString("Application.version"));
     }
 
     private class TaskSchedulerListCellRenderer extends javax.swing.JTextPane implements javax.swing.ListCellRenderer {
@@ -2528,11 +2544,6 @@ public class GUI extends FrameView implements Observer {
         config.web.setPassword(String.valueOf(webPasswordField.getPassword()));
     }//GEN-LAST:event_webPasswordFieldFocusLost
 
-    private void hideMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_hideMenuMenuSelected
-        GUI.this.getApplication().hide(GUI.this);
-        isHidden = true;
-    }//GEN-LAST:event_hideMenuMenuSelected
-
     private void disableGetOutputNotificationsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disableGetOutputNotificationsCheckBoxActionPerformed
         config.web.setDisableGetRequests(disableGetOutputNotificationsCheckBox.isSelected());
     }//GEN-LAST:event_disableGetOutputNotificationsCheckBoxActionPerformed
@@ -2560,6 +2571,15 @@ public class GUI extends FrameView implements Observer {
             playerList.setToolTipText("Player list is currently only supported when using the GUI's Proxy feature.");
         }
     }//GEN-LAST:event_useProxyCheckBoxActionPerformed
+
+    private void hideMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hideMenuMouseClicked
+        GUI.this.getApplication().hide(GUI.this);
+        isHidden = true;
+    }//GEN-LAST:event_hideMenuMouseClicked
+
+    private void textSizeFieldStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_textSizeFieldStateChanged
+        config.display.setTextSize(Integer.parseInt(textSizeField.getValue().toString()));
+    }//GEN-LAST:event_textSizeFieldStateChanged
 
     private void customButtonAction(javax.swing.JComboBox box) {
         if (box.getSelectedItem().toString().equals("Edit Tasks")) {
@@ -2597,6 +2617,7 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JComboBox customCombo1;
     public javax.swing.JComboBox customCombo2;
     public javax.swing.JCheckBox customLaunchCheckBox;
+    public javax.swing.JLabel derp;
     public javax.swing.JCheckBox disableGetOutputNotificationsCheckBox;
     public javax.swing.JTextField extPortField;
     public javax.swing.JLabel extPortLabel;
@@ -2972,6 +2993,9 @@ public class GUI extends FrameView implements Observer {
         for (int i = 0; i < config.schedule.getEvents().size(); i++) {
             if (!config.schedule.getEvents().get(i).isCustomButton()) {
                 scheduleEvent(config.schedule.getEvents().get(i), scheduler, this);
+            } else {
+                customCombo1.addItem(config.schedule.getEvents().get(i));
+                customCombo2.addItem(config.schedule.getEvents().get(i));
             }
         }
     }
@@ -3077,6 +3101,7 @@ public class GUI extends FrameView implements Observer {
         config.cmdLine.setExtraArgs(extraArgsField.getText());
         config.cmdLine.setServerJar(serverJarField.getText());
         config.cmdLine.setJavaExec(javaExecField.getText());
+        config.display.setTextSize(Integer.valueOf(textSizeField.getValue().toString()));
         if (config.cmdLine.getUseCustomLaunch()) {
             config.cmdLine.setCustomLaunch(cmdLineField.getText());
             if (java.util.regex.Pattern.matches("^\\s*$", cmdLineField.getText())) {

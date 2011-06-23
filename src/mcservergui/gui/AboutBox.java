@@ -12,6 +12,10 @@ public class AboutBox extends javax.swing.JDialog {
         super(parent);
         initComponents();
         getRootPane().setDefaultButton(closeButton);
+        org.jdesktop.application.Application.getInstance(mcservergui.Main.class).getContext().getResourceMap(AboutBox.class);
+        appVersionLabel.setText(org.jdesktop.application.Application
+                .getInstance(mcservergui.Main.class).getContext()
+                .getResourceMap(AboutBox.class).getString("Application.version"));
     }
 
     @Action public void closeAboutBox() {
@@ -29,7 +33,7 @@ public class AboutBox extends javax.swing.JDialog {
         closeButton = new javax.swing.JButton();
         javax.swing.JLabel appTitleLabel = new javax.swing.JLabel();
         javax.swing.JLabel versionLabel = new javax.swing.JLabel();
-        javax.swing.JLabel appVersionLabel = new javax.swing.JLabel();
+        appVersionLabel = new javax.swing.JLabel();
         javax.swing.JLabel vendorLabel = new javax.swing.JLabel();
         javax.swing.JLabel appVendorLabel = new javax.swing.JLabel();
         javax.swing.JLabel homepageLabel = new javax.swing.JLabel();
@@ -56,7 +60,7 @@ public class AboutBox extends javax.swing.JDialog {
         versionLabel.setText(resourceMap.getString("versionLabel.text")); // NOI18N
         versionLabel.setName("versionLabel"); // NOI18N
 
-        appVersionLabel.setText(resourceMap.getString("Application.version")); // NOI18N
+        appVersionLabel.setText(resourceMap.getString("appVersionLabel.text")); // NOI18N
         appVersionLabel.setName("appVersionLabel"); // NOI18N
 
         vendorLabel.setFont(vendorLabel.getFont().deriveFont(vendorLabel.getFont().getStyle() | java.awt.Font.BOLD));
@@ -94,7 +98,7 @@ public class AboutBox extends javax.swing.JDialog {
                             .addComponent(homepageLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(appVersionLabel)
+                            .addComponent(appVersionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(appVendorLabel)
                             .addComponent(appHomepageLabel)))
                     .addComponent(appTitleLabel)
@@ -112,7 +116,7 @@ public class AboutBox extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(versionLabel)
-                    .addComponent(appVersionLabel))
+                    .addComponent(appVersionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(vendorLabel)
@@ -131,7 +135,8 @@ public class AboutBox extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel appVersionLabel;
     private javax.swing.JButton closeButton;
     // End of variables declaration//GEN-END:variables
-    
+
 }

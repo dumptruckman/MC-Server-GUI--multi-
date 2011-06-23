@@ -38,7 +38,7 @@
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="appVersionLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="appVersionLabel" min="-2" pref="83" max="-2" attributes="0"/>
                           <Component id="appVendorLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="appHomepageLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -61,7 +61,7 @@
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="versionLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="appVersionLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="appVersionLabel" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -122,13 +122,9 @@
     </Component>
     <Component class="javax.swing.JLabel" name="appVersionLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="Application.version"/>
+        <Property name="text" type="java.lang.String" resourceKey="appVersionLabel.text"/>
         <Property name="name" type="java.lang.String" value="appVersionLabel" noResource="true"/>
       </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
-      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="vendorLabel">
       <Properties>
