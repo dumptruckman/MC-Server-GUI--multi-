@@ -9,7 +9,6 @@ import mcservergui.task.event.EventModel;
 import mcservergui.task.ServerWarning;
 import org.codehaus.jackson.*;
 import java.io.*;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.ArrayList;
 

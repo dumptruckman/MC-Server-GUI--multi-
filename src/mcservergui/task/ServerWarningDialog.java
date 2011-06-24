@@ -28,6 +28,7 @@ public class ServerWarningDialog extends javax.swing.JDialog {
         super(parent);
         this.warningListModel = warningListModel;
         this.serverWarningList = serverWarningList;
+        borderTitle = "New Server Warning";
         initComponents();
     }
 
@@ -39,8 +40,10 @@ public class ServerWarningDialog extends javax.swing.JDialog {
         this.warningListModel = warningListModel;
         this.serverWarningList = serverWarningList;
         this.oldWarning = oldWarning;
+        borderTitle = "Edit Server Warning";
         initComponents();
         addOldWarning();
+        addButton.setText("Update");
     }
 
     @org.jdesktop.application.Action public void closeTaskDialog() {
@@ -69,10 +72,10 @@ public class ServerWarningDialog extends javax.swing.JDialog {
         setName("Form"); // NOI18N
         setResizable(false);
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(mcservergui.Main.class).getContext().getResourceMap(ServerWarningDialog.class);
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel1.border.title"))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(borderTitle));
         jPanel1.setName("jPanel1"); // NOI18N
 
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(mcservergui.Main.class).getContext().getResourceMap(ServerWarningDialog.class);
         timeBeforeLabel.setText(resourceMap.getString("timeBeforeLabel.text")); // NOI18N
         timeBeforeLabel.setName("timeBeforeLabel"); // NOI18N
 
@@ -127,9 +130,9 @@ public class ServerWarningDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(commandIsMessage))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(cancelButton)
+                .addComponent(addButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
-                .addComponent(addButton))
+                .addComponent(cancelButton))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,8 +147,8 @@ public class ServerWarningDialog extends javax.swing.JDialog {
                     .addComponent(commandIsMessage))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addButton)
-                    .addComponent(cancelButton)))
+                    .addComponent(cancelButton)
+                    .addComponent(addButton)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -163,15 +166,14 @@ public class ServerWarningDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        /*if (javax.swing.JOptionPane.showConfirmDialog(this,
-                    "Are you sure you wish to remove this event?\n"
-                    + "If it is running it will be interrupted.\n",
-                    "Remove scheduled task",
+        if (javax.swing.JOptionPane.showConfirmDialog(this,
+                    "Are you sure you wish to cancel?\n",
+                    "Alert",
                     javax.swing.JOptionPane.YES_NO_OPTION) ==
                     javax.swing.JOptionPane.YES_OPTION) {
             closeTaskDialog();
-        }*/
-        closeTaskDialog();
+        }
+        //closeTaskDialog();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
@@ -193,15 +195,14 @@ public class ServerWarningDialog extends javax.swing.JDialog {
     }
 
     private void closeAndAdd() {
-        if (!timeBeforeField.getInputVerifier().verify(timeBeforeField)) {
+        if ((!timeBeforeField.getInputVerifier().verify(timeBeforeField)) ||
+                (timeBeforeField.getText().isEmpty())) {
             timeBeforeField.requestFocus();
         } else {
             int seconds = secondsFromHms(timeBeforeField.getText());
 
             if (oldWarning != null) {
-                warningListModel.removeElement("Message: " + oldWarning.getMessage()
-                    + "<br><font size=2>Time: "
-                    + hoursMinutesSecondsFromSeconds(oldWarning.getTime()));
+                warningListModel.removeElement(oldWarning.toString());
                 serverWarningList.remove(oldWarning);
             }
 
@@ -211,10 +212,8 @@ public class ServerWarningDialog extends javax.swing.JDialog {
             }
             serverWarningList.add(new ServerWarning(
                     command,seconds));
-            System.out.println(serverWarningList.get(serverWarningList.size()-1));
-            warningListModel.add("Message: " + command
-                    + "<br><font size=2>Time: "
-                    + hoursMinutesSecondsFromSeconds(seconds));
+            warningListModel.add(new ServerWarning(
+                    command,seconds).toString());
             closeTaskDialog();
         }
     }
@@ -222,6 +221,7 @@ public class ServerWarningDialog extends javax.swing.JDialog {
     private GUIListModel warningListModel;
     private java.util.List<ServerWarning> serverWarningList;
     private ServerWarning oldWarning;
+    private String borderTitle;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JButton cancelButton;

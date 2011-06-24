@@ -1,3 +1,16 @@
+Version .9.1-dev
+    Added scheduler pause button.
+    Fixed NullPointerException when trying to send input to the server without having ever started the server after launching the GUI.
+    Added date/time to Proxy connection notices.
+    Added in game help command.
+    Task entry dialog now has a properly titled border.
+    Reversed the position of the Create/Cancel buttons on the Task Dialog to better reflect most other button layouts.
+    Reversed the position of the Add/Cancel butons on the Server Warning Dialog to better reflect most other button layouts.
+    Add buton on Server Warning Dialog nows reads Update when editing a Warning.
+    Server Warnings appear in the list as either a Command or Message instead of just Message.
+    Server Warning Dialog no longer accepts an empty Time field.
+    Server Warning Dialog now has a properly titled border.
+
 Version .9.0
     Added op only in game commands with a default prefix of "!".  This is changeable in the GUI Config tab.  Note: You must be using the proxy server for these to work!
     Currently supported in game commands are:

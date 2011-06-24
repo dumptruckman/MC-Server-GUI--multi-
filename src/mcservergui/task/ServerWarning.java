@@ -5,6 +5,8 @@
 
 package mcservergui.task;
 
+import static mcservergui.tools.TimeTools.*;
+
 /**
  *
  * @author dumptruckman
@@ -26,6 +28,17 @@ public class ServerWarning implements Comparable<ServerWarning> {
 
     public void setTime(int i) { time = i; }
     public void setMessage(String s) { message = s; }
+
+    @Override public String toString() {
+        String name = "";
+        if (message.startsWith("say ")) {
+            name = "Message: " + message.substring(4);
+        } else {
+            name = "Command: " + message;
+        }
+        name += "<br><font size=2>Time: " + hoursMinutesSecondsFromSeconds(time);
+        return name;
+    }
 
     @Override public int compareTo(ServerWarning o) {
         return o.getTime() - this.getTime();

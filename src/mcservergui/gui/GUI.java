@@ -3,38 +3,37 @@
  */
 package mcservergui.gui;
 
-import mcservergui.gui.ColorChooser;
-import mcservergui.gui.AboutBox;
-import java.io.Reader;
-import javax.swing.text.html.HTMLEditorKit.ParserCallback;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
+import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+import javax.swing.Icon;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.Timer;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.HTMLDocument;
-import java.util.Calendar;
-import java.text.SimpleDateFormat;
+
+import it.cnr.imaa.essi.lablib.gui.checkboxtree.*;
+import it.cnr.imaa.essi.lablib.gui.checkboxtree.TreeCheckingModel.CheckingMode;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
 import org.jdesktop.application.FrameView;
 import org.jdesktop.application.TaskMonitor;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.Timer;
-import javax.swing.Icon;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import java.util.Observer;
-import java.util.Observable;
-import javax.swing.JFileChooser;
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.ArrayList;
-import it.cnr.imaa.essi.lablib.gui.checkboxtree.*;
-import it.cnr.imaa.essi.lablib.gui.checkboxtree.TreeCheckingModel.CheckingMode;
-import java.awt.Color;
+import org.quartz.*;
+
 import mcservergui.backup.Backup;
 import mcservergui.config.Config;
 import mcservergui.tools.ConsoleParser;
@@ -49,8 +48,6 @@ import mcservergui.config.ServerProperties;
 import mcservergui.proxyserver.PlayerList;
 import mcservergui.webinterface.WebInterface;
 import mcservergui.task.event.EventModel;
-import mcservergui.task.ServerWarning;
-import org.quartz.*;
 import static mcservergui.task.event.EventScheduler.*;
 
 /**
@@ -300,6 +297,7 @@ public class GUI extends FrameView implements Observer {
         taskListAddButton = new javax.swing.JButton();
         taskListEditButton = new javax.swing.JButton();
         taskListRemoveButton = new javax.swing.JButton();
+        pauseSchedulerButton = new javax.swing.JToggleButton();
         webInterfaceTab = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         webPortLabel = new javax.swing.JLabel();
@@ -1653,7 +1651,7 @@ public class GUI extends FrameView implements Observer {
         );
         taskSchedulerPanelLayout.setVerticalGroup(
             taskSchedulerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
         );
 
         taskListAddButton.setText(resourceMap.getString("taskListAddButton.text")); // NOI18N
@@ -1680,6 +1678,15 @@ public class GUI extends FrameView implements Observer {
             }
         });
 
+        pauseSchedulerButton.setText(resourceMap.getString("pauseSchedulerButton.text")); // NOI18N
+        pauseSchedulerButton.setToolTipText(resourceMap.getString("pauseSchedulerButton.toolTipText")); // NOI18N
+        pauseSchedulerButton.setName("pauseSchedulerButton"); // NOI18N
+        pauseSchedulerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pauseSchedulerButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout schedulerTabLayout = new javax.swing.GroupLayout(schedulerTab);
         schedulerTab.setLayout(schedulerTabLayout);
         schedulerTabLayout.setHorizontalGroup(
@@ -1691,7 +1698,9 @@ public class GUI extends FrameView implements Observer {
                 .addComponent(taskListEditButton)
                 .addGap(18, 18, 18)
                 .addComponent(taskListRemoveButton)
-                .addContainerGap(337, Short.MAX_VALUE))
+                .addGap(83, 83, 83)
+                .addComponent(pauseSchedulerButton)
+                .addContainerGap(143, Short.MAX_VALUE))
             .addComponent(taskSchedulerPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         schedulerTabLayout.setVerticalGroup(
@@ -1702,8 +1711,9 @@ public class GUI extends FrameView implements Observer {
                 .addGroup(schedulerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(taskListAddButton)
                     .addComponent(taskListEditButton)
-                    .addComponent(taskListRemoveButton))
-                .addGap(83, 83, 83))
+                    .addComponent(taskListRemoveButton)
+                    .addComponent(pauseSchedulerButton))
+                .addContainerGap())
         );
 
         tabber.addTab(resourceMap.getString("schedulerTab.TabConstraints.tabTitle"), schedulerTab); // NOI18N
@@ -2677,6 +2687,26 @@ public class GUI extends FrameView implements Observer {
         }
     }//GEN-LAST:event_downloadLatestVersionActionPerformed
 
+    private void pauseSchedulerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseSchedulerButtonActionPerformed
+        if (pauseSchedulerButton.isSelected()) {
+            try {
+                scheduler.pauseAll();
+                pauseSchedulerButton.setFont(new java.awt.Font("Tahoma",
+                        java.awt.Font.BOLD, 11));
+            } catch (SchedulerException se) {
+                pauseSchedulerButton.setSelected(false);
+            }
+        } else {
+            try {
+                scheduler.resumeAll();
+                pauseSchedulerButton.setFont(new java.awt.Font("Tahoma",
+                        java.awt.Font.PLAIN, 11));
+            } catch (SchedulerException se) {
+                pauseSchedulerButton.setSelected(true);
+            }
+        }
+    }//GEN-LAST:event_pauseSchedulerButtonActionPerformed
+
     private void customButtonAction(javax.swing.JComboBox box) {
         if (box.getSelectedItem().toString().equals("Edit Tasks")) {
             tabber.setSelectedIndex(tabber.indexOfTab("Tasks"));
@@ -2757,6 +2787,7 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JSpinner maxPlayersSpinner;
     public javax.swing.JMenuBar menuBar;
     public javax.swing.JCheckBox onlineModeCheckBox;
+    public javax.swing.JToggleButton pauseSchedulerButton;
     public javax.swing.JList playerList;
     public javax.swing.JPanel playerListPanel;
     private javax.swing.JProgressBar progressBar;

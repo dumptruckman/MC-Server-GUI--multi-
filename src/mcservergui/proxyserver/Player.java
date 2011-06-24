@@ -28,6 +28,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
 
 import mcservergui.proxyserver.stream.StreamTunnel;
 import mcservergui.proxyserver.Coordinate.Dimension;
@@ -38,6 +40,7 @@ import mcservergui.proxyserver.Coordinate.Dimension;
  */
 public class Player {
     private static final LocalAddressFactory addressFactory = new LocalAddressFactory();
+    public static final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
 
     private final long connected;
     private final Socket extsocket;
@@ -89,8 +92,9 @@ public class Player {
         //+ ".");
         //isRobot = true;
         //} else {
-        parent.gui.addTextToConsoleOutput("[MC Server GUI] IP Connection from " + getIPAddress()
-                + "!");
+        parent.gui.addTextToConsoleOutput(new SimpleDateFormat(DATE_FORMAT_NOW)
+                .format(Calendar.getInstance().getTime()) + "[MC Server GUI] IP"
+                + " Connection from " + getIPAddress() + "!");
         //}
 
         //if (server.isIPBanned(getIPAddress())) {
@@ -407,6 +411,12 @@ public class Player {
             } else {
                 sendMessage("You did not specify a task name!");
             }
+        } else if (message.equalsIgnoreCase("help")) {
+            sendMessage("Available commands are:");
+            sendMessage(server.gui.config.getCommandPrefix() + "repeat - "
+                    + "repeats last command entered.");
+            sendMessage(server.gui.config.getCommandPrefix() + "task <taskname>"
+                    + " - executes task with named <taskname>");
         } else {
             sendMessage("No such command!");
         }

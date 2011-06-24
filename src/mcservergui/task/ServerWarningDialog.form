@@ -38,8 +38,8 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="New Server Warning">
-              <Property name="titleX" resourceKey="jPanel1.border.title"/>
+            <TitledBorder title="&lt;User Code&gt;">
+              <Connection PropertyName="titleX" code="borderTitle" type="code"/>
             </TitledBorder>
           </Border>
         </Property>
@@ -62,9 +62,9 @@
                   <Component id="commandIsMessage" min="-2" max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
-                  <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="202" max="32767" attributes="0"/>
                   <Component id="addButton" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="202" max="32767" attributes="0"/>
+                  <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -83,8 +83,8 @@
                   </Group>
                   <EmptySpace pref="6" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="addButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="addButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>

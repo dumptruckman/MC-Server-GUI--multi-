@@ -175,12 +175,15 @@ public class MCServerModel extends Observable implements Observer, java.beans.Pr
     // Method for sending commands to the server
     public void send(final String string) {
         Runnable serverSender = new Runnable() {
-            public void run() {
-                try {
-                    osw.write(string + "\n");
-                    osw.flush();
-                } catch (IOException e) {
-                    System.out.println("[GUI] Error sending server data.");
+            @Override public void run() {
+                if (osw != null) {
+                    try {
+                        osw.write(string + "\n");
+                        osw.flush();
+                    } catch (IOException e) {
+                        System.out.println("[MC Server GUI] Error sending server"
+                                + " input.  Server is likely not running!");
+                    }
                 }
             }
         };
