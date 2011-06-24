@@ -10,6 +10,7 @@ import org.quartz.*;
 import java.util.List;
 import java.util.ArrayList;
 import mcservergui.task.event.EventModel;
+import mcservergui.task.ServerWarning;
 
 /**
  *
@@ -22,16 +23,17 @@ public class Task implements Job {
         EventModel event = (EventModel)context.getMergedJobDataMap().get("Event");
         GUI gui = (GUI)context.getMergedJobDataMap().get("GUI");
 
-        if (!event.getWarningList().isEmpty()) {
-            java.util.Collections.sort(event.getWarningList());
-            for (int i = 0; i < event.getWarningList().size(); i++) {
-                gui.sendInput(event.getWarningList().get(i).getMessage());
+        List<ServerWarning> warninglist = event.getWarningList().getList();
+        if (!warninglist.isEmpty()) {
+            java.util.Collections.sort(warninglist);
+            for (int i = 0; i < warninglist.size(); i++) {
+                gui.sendInput(warninglist.get(i).getMessage());
                 int sleeptime;
-                if (i+1 < event.getWarningList().size()) {
-                    sleeptime = event.getWarningList().get(i).getTime() -
-                            event.getWarningList().get(i+1).getTime();
+                if (i+1 < warninglist.size()) {
+                    sleeptime = warninglist.get(i).getTime() -
+                            warninglist.get(i+1).getTime();
                 } else {
-                    sleeptime = event.getWarningList().get(i).getTime();
+                    sleeptime = warninglist.get(i).getTime();
                 }
                 try {
                     Thread.sleep(sleeptime * 1000);

@@ -10,7 +10,12 @@ import mcservergui.gui.GUI;
 import mcservergui.gui.AboutBox;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Calendar;
+import java.util.Date;
 import org.hyperic.sigar.*;
+import org.quartz.listeners.BroadcastSchedulerListener;
+import org.quartz.*;
+import static mcservergui.tools.TimeTools.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,12 +27,13 @@ import java.net.HttpURLConnection;
  *
  * @author dumptruckman
  */
-public class MainWorker implements java.util.Observer {
+public class MainWorker extends BroadcastSchedulerListener implements java.util.Observer {
 
     public MainWorker(GUI newGui, MCServerModel server) {
         gui = newGui;
         timer = new java.util.Timer();
         sigarImpl = new Sigar();
+        jobKeys = new java.util.ArrayList<JobKey>();
         version = org.jdesktop.application.Application
                 .getInstance(mcservergui.Main.class).getContext()
                 .getResourceMap(AboutBox.class).getString("Application.version");
@@ -55,9 +61,72 @@ public class MainWorker implements java.util.Observer {
         }
     }
 
+    @Override public void jobAdded(JobDetail jobdetail) {
+        if (jobdetail.getDescription() != null) {
+            // Job is not a one shot
+            jobKeys.add(jobdetail.getKey());
+            findNextJobToFire();
+        }
+    }
+
+    @Override public void jobDeleted(JobKey jobkey) {
+        if (jobKeys.contains(jobkey)) {
+            // Job is not a one shot because it is in the tracked list
+            jobKeys.remove(jobkey);
+            findNextJobToFire();
+        }
+    }
+
+    public void findNextJobToFire() {
+        if (jobKeys.isEmpty()) {
+            nextJob = null;
+            return;
+        }
+        try {
+            JobKey nextjob = jobKeys.get(0);
+            for (int i = 1; i < jobKeys.size(); i++) {
+                if (gui.getScheduler().getTriggersOfJob(jobKeys.get(i)).get(0)
+                        .getNextFireTime().compareTo(gui.getScheduler()
+                        .getTriggersOfJob(nextjob).get(0).getNextFireTime())
+                        < 0) {
+                    nextjob = jobKeys.get(i);
+                }
+            }
+            nextJob = nextjob;
+        } catch (SchedulerException se) {
+            System.out.println("Error determing next job to fire.");
+        }
+    }
+
     public void startMainWorker() {
-        timer.scheduleAtFixedRate(new BackgroundWork(), 0, 1000);
+        timer.scheduleAtFixedRate(new MonitorUpdater(), 0, 1000);
+        timer.scheduleAtFixedRate(new ScheduleChecker(), 0, 1000);
         timer.scheduleAtFixedRate(new UpdateChecker(), 0, 3600000);
+    }
+
+    class ScheduleChecker extends TimerTask {
+        @Override public void run() {
+            if (nextJob != null) {
+                long currenttime = Calendar.getInstance().getTime().getTime();
+                long comparetime = 0;
+                try {
+                    comparetime = gui.getScheduler().getTriggersOfJob(nextJob)
+                            .get(0).getNextFireTime().getTime();
+                } catch (SchedulerException se) {
+                    se.printStackTrace();
+                }
+                if (comparetime != 0) {
+                    String timetilnextjob = daysHoursMinutesSecondsFromSeconds(
+                            (int)((comparetime - currenttime)/1000));
+                    gui.nextTaskLabel.setText("Next task: " + nextJob.getName()
+                            + " in " + timetilnextjob);
+                } else {
+                    gui.nextTaskLabel.setText("Next task: No tasks scheduled");
+                }
+            } else {
+                gui.nextTaskLabel.setText("Next task: No tasks scheduled");
+            }
+        }
     }
 
     class UpdateChecker extends TimerTask {
@@ -91,7 +160,7 @@ public class MainWorker implements java.util.Observer {
         }
     }
 
-    class BackgroundWork extends TimerTask {
+    class MonitorUpdater extends TimerTask {
         @Override public void run() {
             gui.scrollText();
             try {
@@ -181,4 +250,6 @@ public class MainWorker implements java.util.Observer {
     private long serverPid;
     private MCServerModel server;
     private String version;
+    private java.util.List<JobKey> jobKeys;
+    private JobKey nextJob;
 }

@@ -7,6 +7,7 @@ package mcservergui.config;
 import java.util.Arrays;
 import mcservergui.task.event.EventModel;
 import mcservergui.task.ServerWarning;
+import mcservergui.listmodel.GUIListModel;
 import org.codehaus.jackson.*;
 import java.io.*;
 import java.util.List;
@@ -445,8 +446,9 @@ public class Config {
                                             }
                                             event.setParams(params);
                                         } else if ("Warnings".equals(eventfield)) {
-                                            List<ServerWarning> warninglist =
-                                                    new ArrayList<ServerWarning>();
+                                            //List<ServerWarning> warninglist =
+                                            //        new ArrayList<ServerWarning>();
+                                            GUIListModel warninglist = new GUIListModel();
                                             while (jp.nextToken() != JsonToken.END_OBJECT) {
                                                 if (jp.getCurrentToken().equals(JsonToken.START_ARRAY)) {
                                                     ServerWarning warning =
@@ -494,7 +496,7 @@ public class Config {
     }
 
     public void save() {
-        new File(backups.getPath()).mkdir();
+        //new File(backups.getPath()).mkdir();
         JsonFactory jf = new JsonFactory();
         try {
             JsonGenerator jg = jf.createJsonGenerator(new File("guiconfig.json"), JsonEncoding.UTF8);
@@ -554,12 +556,25 @@ public class Config {
                 }
                 jg.writeEndArray();
                 jg.writeObjectFieldStart("Warnings");
+                java.util.Iterator it = schedule.getEvents().get(i).getWarningList().iterator();
+                int j = 0;
+                while (it.hasNext()) {
+                    jg.writeArrayFieldStart(String.valueOf(j+1));
+                    ServerWarning tempwarning = (ServerWarning)it.next();
+                    jg.writeString(tempwarning.getMessage());
+                    jg.writeNumber(tempwarning.getTime());
+                    jg.writeEndArray();
+                    j++;
+                }
+                /*
                 for (int j = 0; j < schedule.getEvents().get(i).getWarningList().size(); j++) {
                     jg.writeArrayFieldStart(String.valueOf(j+1));
                     jg.writeString(schedule.getEvents().get(i).getWarningList().get(j).getMessage());
                     jg.writeNumber(schedule.getEvents().get(i).getWarningList().get(j).getTime());
                     jg.writeEndArray();
                 }
+                 *
+                 */
                 jg.writeEndObject();
                 jg.writeEndObject();
             }

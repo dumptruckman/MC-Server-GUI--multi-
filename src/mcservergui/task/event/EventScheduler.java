@@ -24,6 +24,7 @@ public class EventScheduler {
         Trigger trigger;
         job = newJob(Task.class)
                 .withIdentity(event.getName())
+                .withDescription(event.getName())
                 .build();
         job.getJobDataMap().put("Event", event);
         job.getJobDataMap().put("GUI", gui);

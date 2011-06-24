@@ -62,6 +62,53 @@ public class TimeTools {
         return time;
     }
 
+    public static String daysHoursMinutesSecondsFromSeconds(int second) {
+        if (second == 0) {
+            return "0 seconds";
+        } else {
+            int minute = second / 60;
+            second = second % 60;
+            int hour = minute / 60;
+            minute = minute % 60;
+            int day = hour / 24;
+            hour = hour % 24;
+            String time = "";
+            if (day != 0) {
+                time += day;
+            }
+            if (day == 1) {
+                time += " day ";
+            } else if (day > 1) {
+                time += " days ";
+            }
+            if (hour != 0) {
+                time += hour;
+            }
+            if (hour == 1) {
+                time += " hour ";
+            } else if (hour > 1) {
+                time += " hours ";
+            }
+            if (minute != 0) {
+                time += minute;
+            }
+            if (minute == 1) {
+                time += " minute ";
+            } else if (minute > 1) {
+                time += " minutes ";
+            }
+            if (second != 0) {
+                time += second;
+            }
+            if (second == 1) {
+                time += " second";
+            } else if (second > 1) {
+                time += " seconds";
+            }
+            return time;
+        }
+    }
+
     public static int secondsFromHms(String hms) {
         int seconds = 0, minutes = 0, hours = 0;
         if (hms.contains("h")) {

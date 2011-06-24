@@ -32,6 +32,7 @@ import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
 import org.jdesktop.application.FrameView;
 import org.jdesktop.application.TaskMonitor;
+import org.jdesktop.application.TaskService;
 import org.quartz.*;
 
 import mcservergui.backup.Backup;
@@ -74,7 +75,7 @@ public class GUI extends FrameView implements Observer {
         int messageTimeout = resourceMap.getInteger("StatusBar.messageTimeout");
         messageTimer = new Timer(messageTimeout, new ActionListener() {
             @Override public void actionPerformed(ActionEvent e) {
-                statusMessageLabel.setText("");
+                //serverStatusLabel.setText("");
             }
         });
         messageTimer.setRepeats(false);
@@ -112,7 +113,7 @@ public class GUI extends FrameView implements Observer {
                     progressBar.setValue(0);
                 } else if ("message".equals(propertyName)) {
                     String text = (String)(evt.getNewValue());
-                    statusMessageLabel.setText((text == null) ? "" : text);
+                    //serverStatusLabel.setText((text == null) ? "" : text);
                     messageTimer.restart();
                 } else if ("progress".equals(propertyName)) {
                     int value = (Integer)(evt.getNewValue());
@@ -298,6 +299,7 @@ public class GUI extends FrameView implements Observer {
         taskListEditButton = new javax.swing.JButton();
         taskListRemoveButton = new javax.swing.JButton();
         pauseSchedulerButton = new javax.swing.JToggleButton();
+        nextTaskLabel = new javax.swing.JLabel();
         webInterfaceTab = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         webPortLabel = new javax.swing.JLabel();
@@ -322,9 +324,10 @@ public class GUI extends FrameView implements Observer {
         downloadLatestVersion = new javax.swing.JMenuItem();
         statusPanel = new javax.swing.JPanel();
         javax.swing.JSeparator statusPanelSeparator = new javax.swing.JSeparator();
-        statusMessageLabel = new javax.swing.JLabel();
+        serverStatusLabel = new javax.swing.JLabel();
         statusAnimationLabel = new javax.swing.JLabel();
         progressBar = new javax.swing.JProgressBar();
+        statusBarJob = new javax.swing.JLabel();
 
         tabber.setName("tabber"); // NOI18N
         tabber.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -1651,10 +1654,11 @@ public class GUI extends FrameView implements Observer {
         );
         taskSchedulerPanelLayout.setVerticalGroup(
             taskSchedulerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
         );
 
         taskListAddButton.setText(resourceMap.getString("taskListAddButton.text")); // NOI18N
+        taskListAddButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
         taskListAddButton.setName("taskListAddButton"); // NOI18N
         taskListAddButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1663,6 +1667,7 @@ public class GUI extends FrameView implements Observer {
         });
 
         taskListEditButton.setText(resourceMap.getString("taskListEditButton.text")); // NOI18N
+        taskListEditButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
         taskListEditButton.setName("taskListEditButton"); // NOI18N
         taskListEditButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1671,6 +1676,7 @@ public class GUI extends FrameView implements Observer {
         });
 
         taskListRemoveButton.setText(resourceMap.getString("taskListRemoveButton.text")); // NOI18N
+        taskListRemoveButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
         taskListRemoveButton.setName("taskListRemoveButton"); // NOI18N
         taskListRemoveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1680,6 +1686,7 @@ public class GUI extends FrameView implements Observer {
 
         pauseSchedulerButton.setText(resourceMap.getString("pauseSchedulerButton.text")); // NOI18N
         pauseSchedulerButton.setToolTipText(resourceMap.getString("pauseSchedulerButton.toolTipText")); // NOI18N
+        pauseSchedulerButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
         pauseSchedulerButton.setName("pauseSchedulerButton"); // NOI18N
         pauseSchedulerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1687,10 +1694,14 @@ public class GUI extends FrameView implements Observer {
             }
         });
 
+        nextTaskLabel.setText(resourceMap.getString("nextTaskLabel.text")); // NOI18N
+        nextTaskLabel.setName("nextTaskLabel"); // NOI18N
+
         javax.swing.GroupLayout schedulerTabLayout = new javax.swing.GroupLayout(schedulerTab);
         schedulerTab.setLayout(schedulerTabLayout);
         schedulerTabLayout.setHorizontalGroup(
             schedulerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(taskSchedulerPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(schedulerTabLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(taskListAddButton)
@@ -1698,10 +1709,13 @@ public class GUI extends FrameView implements Observer {
                 .addComponent(taskListEditButton)
                 .addGap(18, 18, 18)
                 .addComponent(taskListRemoveButton)
-                .addGap(83, 83, 83)
+                .addGap(18, 18, 18)
                 .addComponent(pauseSchedulerButton)
-                .addContainerGap(143, Short.MAX_VALUE))
-            .addComponent(taskSchedulerPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(280, Short.MAX_VALUE))
+            .addGroup(schedulerTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(nextTaskLabel)
+                .addContainerGap(481, Short.MAX_VALUE))
         );
         schedulerTabLayout.setVerticalGroup(
             schedulerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1713,7 +1727,9 @@ public class GUI extends FrameView implements Observer {
                     .addComponent(taskListEditButton)
                     .addComponent(taskListRemoveButton)
                     .addComponent(pauseSchedulerButton))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nextTaskLabel)
+                .addGap(12, 12, 12))
         );
 
         tabber.addTab(resourceMap.getString("schedulerTab.TabConstraints.tabTitle"), schedulerTab); // NOI18N
@@ -1927,13 +1943,16 @@ public class GUI extends FrameView implements Observer {
 
         statusPanelSeparator.setName("statusPanelSeparator"); // NOI18N
 
-        statusMessageLabel.setText(resourceMap.getString("statusMessageLabel.text")); // NOI18N
-        statusMessageLabel.setName("statusMessageLabel"); // NOI18N
+        serverStatusLabel.setText(resourceMap.getString("serverStatusLabel.text")); // NOI18N
+        serverStatusLabel.setName("serverStatusLabel"); // NOI18N
 
         statusAnimationLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         statusAnimationLabel.setName("statusAnimationLabel"); // NOI18N
 
         progressBar.setName("progressBar"); // NOI18N
+
+        statusBarJob.setText(resourceMap.getString("statusBarJob.text")); // NOI18N
+        statusBarJob.setName("statusBarJob"); // NOI18N
 
         javax.swing.GroupLayout statusPanelLayout = new javax.swing.GroupLayout(statusPanel);
         statusPanel.setLayout(statusPanelLayout);
@@ -1942,13 +1961,14 @@ public class GUI extends FrameView implements Observer {
             .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(statusMessageLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 454, Short.MAX_VALUE)
-                .addComponent(statusAnimationLabel)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusPanelLayout.createSequentialGroup()
-                .addContainerGap(393, Short.MAX_VALUE)
-                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(statusAnimationLabel)
+                    .addGroup(statusPanelLayout.createSequentialGroup()
+                        .addComponent(serverStatusLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 235, Short.MAX_VALUE)
+                        .addComponent(statusBarJob, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         statusPanelLayout.setVerticalGroup(
@@ -1958,8 +1978,9 @@ public class GUI extends FrameView implements Observer {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(statusMessageLabel)
-                        .addComponent(statusAnimationLabel))
+                        .addComponent(serverStatusLabel)
+                        .addComponent(statusAnimationLabel)
+                        .addComponent(statusBarJob, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(3, 3, 3))
         );
@@ -2335,16 +2356,6 @@ public class GUI extends FrameView implements Observer {
     }//GEN-LAST:event_saveWorldsButtonActionPerformed
 
     private void saveBackupControlButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBackupControlButtonActionPerformed
-        pathsToBackup.clear();
-        try {
-            int i = 0;
-            while(true) {
-                pathsToBackup.add(backupFileChooser.getCheckingRoots()[i].getLastPathComponent().toString());
-                i++;
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            config.backups.setPathsToBackup(pathsToBackup);
-        }
         saveConfig();
     }//GEN-LAST:event_saveBackupControlButtonActionPerformed
 
@@ -2365,7 +2376,13 @@ public class GUI extends FrameView implements Observer {
 
     private void backupPathBrowseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupPathBrowseButtonActionPerformed
         try {
-            final JFileChooser fc = new JFileChooser(new File(backupPathField.getText()).getCanonicalPath());
+            File backup = new File(backupPathField.getText());
+            final JFileChooser fc;
+            if (backup.exists()) {
+                fc = new JFileChooser(backup.getCanonicalPath());
+            } else {
+                fc = new JFileChooser(new File(".").getCanonicalPath());
+            }
             fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             int returnVal = fc.showOpenDialog(getFrame());
             if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -2786,11 +2803,12 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JLabel maxPlayersLabel;
     public javax.swing.JSpinner maxPlayersSpinner;
     public javax.swing.JMenuBar menuBar;
+    public javax.swing.JLabel nextTaskLabel;
     public javax.swing.JCheckBox onlineModeCheckBox;
     public javax.swing.JToggleButton pauseSchedulerButton;
     public javax.swing.JList playerList;
     public javax.swing.JPanel playerListPanel;
-    private javax.swing.JProgressBar progressBar;
+    public javax.swing.JProgressBar progressBar;
     public javax.swing.JPanel proxyServerPanel;
     public javax.swing.JCheckBox pvpCheckBox;
     public javax.swing.JLabel receivingBytes;
@@ -2817,6 +2835,7 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JTextField serverPortField;
     public javax.swing.JLabel serverPortLabel;
     public javax.swing.JPanel serverPropertiesPanel;
+    private javax.swing.JLabel serverStatusLabel;
     public javax.swing.JTextField severeColorBox;
     public javax.swing.JLabel severeColorLabel;
     public javax.swing.JToggleButton showWebPasswordButton;
@@ -2827,7 +2846,7 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JCheckBox startServerOnLaunchCheckBox;
     public javax.swing.JButton startstopButton;
     private javax.swing.JLabel statusAnimationLabel;
-    private javax.swing.JLabel statusMessageLabel;
+    public javax.swing.JLabel statusBarJob;
     public javax.swing.JPanel statusPanel;
     public javax.swing.JButton submitButton;
     public javax.swing.JTabbedPane tabber;
@@ -3001,20 +3020,21 @@ public class GUI extends FrameView implements Observer {
     public void backup() {
         stateBeforeBackup = controlState;
         controlSwitcher("BACKUP");
-        statusBeforeBackup = statusMessageLabel.getText();
-        statusMessageLabel.setText("Backing up...");
+        //statusBeforeBackup = serverStatusLabel.getText();
+        //serverStatusLabel.setText("Backing up...");
+        statusBarJob.setText("Backing up:");
+        TaskMonitor taskMonitor = getApplication().getContext().getTaskMonitor();
+        TaskService taskService = getApplication().getContext().getTaskService();
         if (server.isRunning()) {
             sendInput("save-off");
             sendInput("say Backing up server...");
         }
         new File(config.backups.getPath()).mkdir(); // Creates backup directory if it doesn't exist
-        Backup backup = new Backup(config, backupStatusLog);
+        Backup backup = new Backup(this, backupStatusLog);
+        taskMonitor.setForegroundTask(backup.getTask());
         backupStatusLog.setText("");
-        if (backup.startBackup()) {
-            backup.addObserver(this);
-        } else {
-            controlSwitcher("!BACKUP");
-        }
+        backup.addObserver(this);
+        taskService.execute(backup.getTask());
     }
 
     /**
@@ -3238,8 +3258,18 @@ public class GUI extends FrameView implements Observer {
      * Saves the config file with any changes made by the user through the gui.
      */
     public void saveConfig() {
-        String temp = statusMessageLabel.getText();
-        statusMessageLabel.setText("Saving configuration...");
+        pathsToBackup.clear();
+        try {
+            int i = 0;
+            while(true) {
+                pathsToBackup.add(backupFileChooser.getCheckingRoots()[i].getLastPathComponent().toString());
+                i++;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            config.backups.setPathsToBackup(pathsToBackup);
+        }
+        //String temp = serverStatusLabel.getText();
+        //serverStatusLabel.setText("Saving configuration...");
         config.setWindowTitle(windowTitleField.getText());
         getFrame().setTitle(windowTitleField.getText());
         if (trayIcon != null) {
@@ -3276,7 +3306,7 @@ public class GUI extends FrameView implements Observer {
         
         config.save();
         saveServerProperties();
-        statusMessageLabel.setText(temp);
+        //serverStatusLabel.setText(temp);
     }
 
     public void saveServerProperties() {
@@ -3362,7 +3392,7 @@ public class GUI extends FrameView implements Observer {
      */
     public void stopServer() {
         if (controlState.equals("ON")) {
-            statusMessageLabel.setText("Stopping server...");
+            //serverStatusLabel.setText("Stopping server...");
             server.stop();
         }
     }
@@ -3384,6 +3414,10 @@ public class GUI extends FrameView implements Observer {
             System.err.println("Error appending text to console output: " + textToAdd);
         }
         scrollText();
+    }
+
+    public Scheduler getScheduler() {
+        return scheduler;
     }
 
     public void webLogAdd(String text) {
@@ -3452,7 +3486,7 @@ public class GUI extends FrameView implements Observer {
                 sendInput("say Server backup complete!");
                 sendInput("save-on");
             }
-            statusMessageLabel.setText(statusBeforeBackup);
+            //serverStatusLabel.setText(statusBeforeBackup);
             controlSwitcher("!BACKUP");
         }
     }
@@ -3468,7 +3502,8 @@ public class GUI extends FrameView implements Observer {
             startstopButton.setText("Stop");
             consoleInput.setEnabled(true);
             submitButton.setEnabled(true);
-            statusMessageLabel.setText("Server Running");
+            serverStatusLabel.setForeground(Color.BLUE);
+            serverStatusLabel.setText("Server UP");
             textScrolling = true;
             saveWorldsButton.setEnabled(true);
             useProxyCheckBox.setEnabled(false);
@@ -3477,7 +3512,8 @@ public class GUI extends FrameView implements Observer {
             startstopButton.setText("Start");
             consoleInput.setEnabled(false);
             submitButton.setEnabled(false);
-            statusMessageLabel.setText("Server Stopped");
+            serverStatusLabel.setForeground(Color.red);
+            serverStatusLabel.setText("Server DOWN");
             textScrolling = false;
             mouseInConsoleOutput = false;
             saveWorldsButton.setEnabled(false);
@@ -3506,6 +3542,7 @@ public class GUI extends FrameView implements Observer {
             backupPathField.setEnabled(true);
             backupPathBrowseButton.setEnabled(true);
             backupFileChooser.setEnabled(true);
+            statusBarJob.setText("");
             controlSwitcher(stateBeforeBackup);
         }
     }

@@ -66,4 +66,13 @@ public class GUIListModel extends javax.swing.AbstractListModel {
         }
         return removed;
     }
+
+    public java.util.List getList() {
+        java.util.List list = new java.util.ArrayList();
+        java.util.Iterator it = this.iterator();
+        while (it.hasNext()) {
+            list.add(it.next());
+        }
+        return list;
+    }
 }

@@ -45,8 +45,8 @@ public class TaskDialog extends javax.swing.JDialog {
         borderTitle = "New Task";
         warningListModel = new GUIListModel();
         warningListModel.clear();
-        serverWarningList = new java.util.ArrayList<ServerWarning>();
-        serverWarningList.clear();
+        //serverWarningList = new java.util.ArrayList<ServerWarning>();
+        //serverWarningList.clear();
         boldFont = new java.awt.Font("Tahoma", java.awt.Font.BOLD, 11);
         normalFont = new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11);
         initComponents();
@@ -75,8 +75,8 @@ public class TaskDialog extends javax.swing.JDialog {
         borderTitle = "Edit Task";
         warningListModel = new GUIListModel();
         warningListModel.clear();
-        serverWarningList = new java.util.ArrayList<ServerWarning>();
-        serverWarningList.clear();
+        //serverWarningList = new java.util.ArrayList<ServerWarning>();
+        //serverWarningList.clear();
         boldFont = new java.awt.Font("Tahoma", java.awt.Font.BOLD, 11);
         normalFont = new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11);
         initComponents();
@@ -1384,24 +1384,25 @@ public class TaskDialog extends javax.swing.JDialog {
     private void warningAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_warningAddButtonActionPerformed
         javax.swing.JFrame mainFrame = Main.getApplication().getMainFrame();
         warningDialog = new ServerWarningDialog(
-                mainFrame, warningListModel, serverWarningList);
+                mainFrame, warningListModel/*, serverWarningList*/);
         warningDialog.setLocationRelativeTo(mainFrame);
         Main.getApplication().show(warningDialog);
     }//GEN-LAST:event_warningAddButtonActionPerformed
 
     private void warningRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_warningRemoveButtonActionPerformed
         try {
-            int index = warningList.getSelectedIndex();
-            ServerWarning warning = getWarningFromListIndex(index);
+            //int index = warningList.getSelectedIndex();
+            //ServerWarning warning = getWarningFromListIndex(index);
+            ServerWarning warning = (ServerWarning)warningList.getSelectedValue();
             if (warning != null) {
-                Object element = warningListModel.getElementAt(index);
+                //Object element = warningListModel.getElementAt(index);
                 if (javax.swing.JOptionPane.showConfirmDialog(this,
                         "Are you sure you wish to remove this warning?\n",
                         "Remove warning message",
                         javax.swing.JOptionPane.YES_NO_OPTION) ==
                         javax.swing.JOptionPane.YES_OPTION) {
-                    warningListModel.removeElement(element);
-                    serverWarningList.remove(warning);
+                    warningListModel.removeElement(warning);
+                    //serverWarningList.remove(warning);
                 }
             }
         } catch (ArrayIndexOutOfBoundsException e) {}
@@ -1534,7 +1535,8 @@ public class TaskDialog extends javax.swing.JDialog {
             params.add(Integer.toString((hours * 3600) + (minutes * 60) + seconds));
         }
         event.setParams(params);
-        event.setWarningList(serverWarningList);
+        //event.setWarningList(serverWarningList);
+        event.setWarningList(warningListModel);
         if (editEvent != null) {
             taskList.removeElement(editEvent.getName() + "<br><font size=2>" + editEvent.getTask());
             scheduleEvents.remove(editEvent);
@@ -1573,12 +1575,13 @@ public class TaskDialog extends javax.swing.JDialog {
 
     private void warningEditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_warningEditButtonActionPerformed
         try {
-            int index = warningList.getSelectedIndex();
-            ServerWarning warning = getWarningFromListIndex(index);
+            //int index = warningList.getSelectedIndex();
+            //ServerWarning warning = getWarningFromListIndex(index);
+            ServerWarning warning = (ServerWarning)warningList.getSelectedValue();
             if (warning != null) {
                 javax.swing.JFrame mainFrame = Main.getApplication().getMainFrame();
                 warningDialog = new ServerWarningDialog(
-                        mainFrame, warningListModel, serverWarningList,
+                        mainFrame, warningListModel, /*serverWarningList,*/
                         warning);
                 warningDialog.setLocationRelativeTo(mainFrame);
                 Main.getApplication().show(warningDialog);
@@ -1720,7 +1723,8 @@ public class TaskDialog extends javax.swing.JDialog {
         }
     }
 
-    private ServerWarning getWarningFromListIndex(int index) {
+    /*
+     private ServerWarning getWarningFromListIndex(int index) {
         for (int i = 0; i < serverWarningList.size(); i++) {
             if (serverWarningList.get(i).toString().equals(
                     warningListModel.getElementAt(index).toString())) {
@@ -1729,6 +1733,8 @@ public class TaskDialog extends javax.swing.JDialog {
         }
         return null;
     }
+     * 
+     */
 
     private void parseEditEvent() {
         if (editEvent.isCustomButton()) {
@@ -1840,13 +1846,17 @@ public class TaskDialog extends javax.swing.JDialog {
             }
             verifyAllSelected(dayOfWeek);
         }
-        for (int i = 0; i < editEvent.getWarningList().size(); i++) {
+
+        warningListModel = editEvent.getWarningList();
+        warningList.setModel(warningListModel);
+
+        /*for (int i = 0; i < editEvent.getWarningList().size(); i++) {
             serverWarningList.add(new ServerWarning(
                     editEvent.getWarningList().get(i).getMessage(),
                     editEvent.getWarningList().get(i).getTime()));
             String time = hoursMinutesSecondsFromSeconds(editEvent.getWarningList().get(i).getTime());
             warningListModel.add(editEvent.getWarningList().get(i).toString());
-        }
+        }*/
         createButton.setEnabled(true);
         createButton.setText("Update");
 
@@ -1891,7 +1901,7 @@ public class TaskDialog extends javax.swing.JDialog {
     private Config config;
     private EventModel editEvent;
     private GUI gui;
-    private java.util.List<ServerWarning> serverWarningList;
+    //private java.util.List<ServerWarning> serverWarningList;
     private java.util.List<EventModel> scheduleEvents;
     private ServerWarningDialog warningDialog;
     private java.util.List<javax.swing.JToggleButton> dayOfWeek;

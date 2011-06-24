@@ -1936,6 +1936,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="taskSchedulerPanel" alignment="1" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="taskListAddButton" min="-2" max="-2" attributes="0"/>
@@ -1943,11 +1944,15 @@
                           <Component id="taskListEditButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="taskListRemoveButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="pauseSchedulerButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="143" max="32767" attributes="0"/>
+                          <EmptySpace pref="280" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="taskSchedulerPanel" alignment="1" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="nextTaskLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="481" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -1962,6 +1967,8 @@
                               <Component id="pauseSchedulerButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
+                          <Component id="nextTaskLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1987,7 +1994,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane5" alignment="0" pref="284" max="32767" attributes="0"/>
+                          <Component id="jScrollPane5" alignment="0" pref="263" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -2024,6 +2031,9 @@
                 <Component class="javax.swing.JButton" name="taskListAddButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" resourceKey="taskListAddButton.text"/>
+                    <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                      <Insets value="[2, 5, 2, 5]"/>
+                    </Property>
                     <Property name="name" type="java.lang.String" value="taskListAddButton" noResource="true"/>
                   </Properties>
                   <Events>
@@ -2033,6 +2043,9 @@
                 <Component class="javax.swing.JButton" name="taskListEditButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" resourceKey="taskListEditButton.text"/>
+                    <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                      <Insets value="[2, 5, 2, 5]"/>
+                    </Property>
                     <Property name="name" type="java.lang.String" value="taskListEditButton" noResource="true"/>
                   </Properties>
                   <Events>
@@ -2042,6 +2055,9 @@
                 <Component class="javax.swing.JButton" name="taskListRemoveButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" resourceKey="taskListRemoveButton.text"/>
+                    <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                      <Insets value="[2, 5, 2, 5]"/>
+                    </Property>
                     <Property name="name" type="java.lang.String" value="taskListRemoveButton" noResource="true"/>
                   </Properties>
                   <Events>
@@ -2052,11 +2068,20 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" resourceKey="pauseSchedulerButton.text"/>
                     <Property name="toolTipText" type="java.lang.String" resourceKey="pauseSchedulerButton.toolTipText"/>
+                    <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                      <Insets value="[2, 5, 2, 5]"/>
+                    </Property>
                     <Property name="name" type="java.lang.String" value="pauseSchedulerButton" noResource="true"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pauseSchedulerButtonActionPerformed"/>
                   </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="nextTaskLabel">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="nextTaskLabel.text"/>
+                    <Property name="name" type="java.lang.String" value="nextTaskLabel" noResource="true"/>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>
@@ -2381,16 +2406,18 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="statusPanelSeparator" alignment="0" pref="549" max="32767" attributes="0"/>
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="statusMessageLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="454" max="32767" attributes="0"/>
-                  <Component id="statusAnimationLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="393" max="32767" attributes="0"/>
-                  <Component id="progressBar" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="statusAnimationLabel" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="serverStatusLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="235" max="32767" attributes="0"/>
+                          <Component id="statusBarJob" min="-2" pref="77" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="progressBar" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -2402,8 +2429,9 @@
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="statusMessageLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="serverStatusLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="statusAnimationLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="statusBarJob" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
                       </Group>
                       <Component id="progressBar" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -2422,10 +2450,10 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JLabel" name="statusMessageLabel">
+        <Component class="javax.swing.JLabel" name="serverStatusLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="statusMessageLabel.text"/>
-            <Property name="name" type="java.lang.String" value="statusMessageLabel" noResource="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="serverStatusLabel.text"/>
+            <Property name="name" type="java.lang.String" value="serverStatusLabel" noResource="true"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="false"/>
@@ -2450,6 +2478,12 @@
             <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="false"/>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="2"/>
           </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="statusBarJob">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="statusBarJob.text"/>
+            <Property name="name" type="java.lang.String" value="statusBarJob" noResource="true"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

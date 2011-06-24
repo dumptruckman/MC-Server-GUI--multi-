@@ -44,10 +44,16 @@ public class Main extends SingleFrameApplication implements Application.ExitList
         server = new MCServerModel(config);
         show(gui = new GUI(this, server, config, scheduler));
         server.setGui(gui);
+        
+        mainWorker = new MainWorker(gui, server);
+        try {
+            scheduler.getListenerManager().addSchedulerListener(mainWorker);
+        } catch (SchedulerException se) {
+            se.printStackTrace();
+        }
         gui.initConfig();
         server.addObserver(gui);
         server.addObserver(this);
-        mainWorker = new MainWorker(gui, server);
         server.addObserver(mainWorker);
         gui.setMainWorker(mainWorker);
         mainWorker.startMainWorker();

@@ -4,7 +4,6 @@ Add a lot more functionality to the Web Interface
 Custom skins?!
 Have gui not auto-create backup folder immediately on load
 Have the Web Interface log to a file as well.
-Add indicator show when/what next event will be
 Allow console output to be searched
 Add filtering to console output
 Add restoration of backups
@@ -17,4 +16,6 @@ Possibly have cooperability with something like MccRestart
 Delete backups after x amount of time or x amount of backups
 Compatibility with MCSoD
 
-need to merge warninglistmodel and serverwarninglist
+Development:
+    Merge the tasks lists so i can:
+    Change next task indicator to instead show a time on each task..

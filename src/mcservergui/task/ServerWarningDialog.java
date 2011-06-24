@@ -23,22 +23,22 @@ public class ServerWarningDialog extends javax.swing.JDialog {
 
     /** Creates new form ServerWarningDialog */
     public ServerWarningDialog(java.awt.Frame parent,
-            GUIListModel warningListModel,
-            java.util.List<ServerWarning> serverWarningList) {
+            GUIListModel warningListModel/*,
+            java.util.List<ServerWarning> serverWarningList*/) {
         super(parent);
         this.warningListModel = warningListModel;
-        this.serverWarningList = serverWarningList;
+        //this.serverWarningList = serverWarningList;
         borderTitle = "New Server Warning";
         initComponents();
     }
 
     public ServerWarningDialog(java.awt.Frame parent,
             GUIListModel warningListModel,
-            java.util.List<ServerWarning> serverWarningList,
+            /*java.util.List<ServerWarning> serverWarningList,*/
             ServerWarning oldWarning) {
         super(parent);
         this.warningListModel = warningListModel;
-        this.serverWarningList = serverWarningList;
+        //this.serverWarningList = serverWarningList;
         this.oldWarning = oldWarning;
         borderTitle = "Edit Server Warning";
         initComponents();
@@ -202,24 +202,25 @@ public class ServerWarningDialog extends javax.swing.JDialog {
             int seconds = secondsFromHms(timeBeforeField.getText());
 
             if (oldWarning != null) {
-                warningListModel.removeElement(oldWarning.toString());
-                serverWarningList.remove(oldWarning);
+                warningListModel.removeElement(oldWarning);
+                //warningListModel.removeElement(oldWarning.toString());
+                //serverWarningList.remove(oldWarning);
             }
 
             String command = messageField.getText();
             if (commandIsMessage.isSelected()) {
                 command = "say " + command;
             }
-            serverWarningList.add(new ServerWarning(
-                    command,seconds));
+            //serverWarningList.add(new ServerWarning(
+            //        command,seconds));
             warningListModel.add(new ServerWarning(
-                    command,seconds).toString());
+                    command,seconds));
             closeTaskDialog();
         }
     }
 
     private GUIListModel warningListModel;
-    private java.util.List<ServerWarning> serverWarningList;
+    //private java.util.List<ServerWarning> serverWarningList;
     private ServerWarning oldWarning;
     private String borderTitle;
     // Variables declaration - do not modify//GEN-BEGIN:variables

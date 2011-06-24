@@ -12,6 +12,8 @@ import java.util.zip.*;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.HTMLDocument;
 import mcservergui.config.Config;
+import mcservergui.gui.GUI;
+import org.jdesktop.application.Task;
 
 /**
  *
@@ -19,8 +21,9 @@ import mcservergui.config.Config;
  */
 public class Backup extends Observable {
 
-    public Backup(Config config, javax.swing.JTextPane backupLog) {
-        this.config = config;
+    public Backup(GUI gui, javax.swing.JTextPane backupLog) {
+        this.config = gui.config;
+        task = new BackupTask(gui.getApplication());
         this.backupLog = backupLog;
         nl = System.getProperty("line.separator");
         fs = System.getProperty("file.separator");
@@ -31,9 +34,8 @@ public class Backup extends Observable {
         }
     }
 
-    public boolean startBackup() {
-        backupWorker.execute();
-        return true;
+    public void startBackup() {
+        task.execute();
     }
 
     public void addTextToBackupLog(String textToAdd) {
@@ -50,9 +52,95 @@ public class Backup extends Observable {
         backupLog.setCaretPosition(backupLog.getDocument().getLength());
     }
 
-    private SwingWorker backupWorker = new SwingWorker<Boolean, Integer>() {
-        @Override
-        public Boolean doInBackground() {
+    public BackupTask getTask() {
+        return task;
+    }
+
+    private class BackupTask extends Task {
+
+        public BackupTask(org.jdesktop.application.Application app) {
+            super(app);
+        }
+
+        @Override protected Boolean doInBackground() {
+            message("startMessage");
+            if (!config.backups.getPathsToBackup().isEmpty()) {
+                // Copy paths to backup
+                String now = java.util.Calendar.getInstance().getTime().toString().replaceAll(":", ".");
+                File backupfolder = new File(config.backups.getPath() + fs + now);
+                if (backupfolder.mkdir()) {
+                    addTextToBackupLog("Created backup folder " + backupfolder.toString() + nl);
+                } else {
+                    addTextToBackupLog("<font color=red>Failed to create backup folder " + backupfolder.toString() + nl);
+                    message("errorMessage");
+                    return false;
+                }
+                // Perform the backup
+                for (int i = 0 ; i < config.backups.getPathsToBackup().size(); i++) {
+                    backup(new File(config.backups.getPathsToBackup().get(i)), backupfolder);
+                }
+                // Delete the server log if set to do so
+                if (config.backups.getClearLog()) {
+                    addTextToBackupLog("Deleting server.log...");
+                    if (new File("./server.log").delete()) {
+                        addTextToBackupLog("<font color=green>Success!");
+                    } else {
+                        addTextToBackupLog("<font color=red>Failed!");
+                    }
+                }
+
+                // Compression
+                if (config.backups.getZip()) {
+                    addTextToBackupLog(nl + "<br>Zipping backup folder to " + backupfolder.getName() + ".zip...");
+                    try {
+                        ZipOutputStream zipout = new ZipOutputStream(
+                                new BufferedOutputStream(
+                                new FileOutputStream(
+                                config.backups.getPath() + fs + backupfolder.getName() + ".7z")));
+                        depth = 0;
+                        addDirToZip(backupfolder, zipout);
+                        addTextToBackupLog(nl + "Finished compiling " + backupfolder.getName() + ".7z" + nl);
+                        try {
+                            zipout.close();
+                            deleteDir(backupfolder);
+                        } catch (IOException e) {
+                            addTextToBackupLog(nl + "<font color=green>Successfully created " + backupfolder.getName() + ".zip!" + nl);
+                        }
+                    } catch (FileNotFoundException e) {
+                        addTextToBackupLog("<font color=red>failure! Could not find file to compress!" + nl);
+                        message("errorMessage");
+                        return true;
+                    }
+                } else {
+                    addTextToBackupLog(nl + "Backup compression disabled...skipping." + nl);
+                }
+                return true;
+            } else {
+                addTextToBackupLog("Nothing selected to backup!" + nl);
+                return true;
+            }
+        }
+
+        @Override protected void finished() {
+            try {
+                backupSuccess = (Boolean)get();
+                if (backupSuccess) {
+                    addTextToBackupLog(nl + "<font color=green>Backup operation completed succesfully!");
+                } else {
+                    addTextToBackupLog(nl + "<font color=red>Backup operation encountered an error.  Aborting.");
+                }
+                setChanged();
+                notifyObservers("finishedBackup");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (java.util.concurrent.ExecutionException e) {
+                e.printStackTrace();
+            }
+            super.finished();
+        }
+    }
+   /* private SwingWorker backupWorker = new SwingWorker<Boolean, Integer>() {
+        @Override public Boolean doInBackground() {
             if (!config.backups.getPathsToBackup().isEmpty()) {
                 // Copy paths to backup
                 String now = java.util.Calendar.getInstance().getTime().toString().replaceAll(":", ".");
@@ -108,8 +196,7 @@ public class Backup extends Observable {
             }
         }
 
-        @Override
-        public void done() {
+        @Override public void done() {
             try {
                 backupSuccess = this.get();
                 if (backupSuccess) {
@@ -125,7 +212,7 @@ public class Backup extends Observable {
                 e.printStackTrace();
             }
         }
-    };
+    };*/
 
     public boolean deleteDir(File dir) {
         if (dir.isDirectory()) {
@@ -272,6 +359,7 @@ public class Backup extends Observable {
     private String workingDir;
     private int depth;
     private Config config;
+    private BackupTask task;
     private javax.swing.JTextPane backupLog;
     private boolean backupSuccess;
 }
