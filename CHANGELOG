@@ -1,3 +1,7 @@
+Version .9.2
+    The custom command buttons now work properly again.
+    The last selected custom command button is now remembered.
+
 Version .9.1
     Major structural changes in this version.  It is highly recommended you make backups before updating!
     Added scheduler pause button.

@@ -26,6 +26,8 @@ public class Config {
         _proxy = true;
         _serverStartOnStartup = false;
         _commandPrefix = "!";
+        _customButton1 = "Edit Tasks";
+        _customButton2 = "Edit Tasks";
         cmdLine = new CMDLine();
         backups = new Backups();
         schedule = new Schedule();
@@ -34,6 +36,7 @@ public class Config {
     }
     
     private String _windowTitle, _commandPrefix;
+    private String _customButton1, _customButton2;
     private int _inputHistoryMaxSize, _extPort;
     private boolean _proxy, _serverStartOnStartup;
     public CMDLine cmdLine;
@@ -48,6 +51,8 @@ public class Config {
     public int getInputHistoryMaxSize() { return _inputHistoryMaxSize; }
     public boolean getServerStartOnStartup() { return _serverStartOnStartup; }
     public String getCommandPrefix() { return _commandPrefix; }
+    public String getCustomButton1() { return _customButton1; }
+    public String getCustomButton2() { return _customButton2; }
 
     public void setProxy(boolean b) { _proxy = b; }
     public void setExtPort(int i) { _extPort = i; }
@@ -55,6 +60,8 @@ public class Config {
     public void setInputHistoryMaxSize(int i) { _inputHistoryMaxSize = i; }
     public void setServerStartOnStartup(boolean b) { _serverStartOnStartup = b; }
     public void setCommandPrefix(String s) { _commandPrefix = s; }
+    public void setCustomButton1(String s) { _customButton1 = s; }
+    public void setCustomButton2(String s) { _customButton2 = s; }
 
     public class Display {
         public Display() {
@@ -338,8 +345,9 @@ public class Config {
 
         // Begin parsing json configData
         JsonFactory jf = new JsonFactory();
+        JsonParser jp = null;
         try {
-            JsonParser jp = jf.createJsonParser(configData);
+            jp = jf.createJsonParser(configData);
             jp.nextToken();
             if (jp.getCurrentToken() != null) {
                 while (jp.nextToken() != JsonToken.END_OBJECT) {
@@ -358,6 +366,10 @@ public class Config {
                         setExtPort(jp.getIntValue());
                     } else if ("MC Server Start on GUI Start".equals(fieldname)) {
                         setServerStartOnStartup(jp.getBooleanValue());
+                    } else if ("Custom Button 1".equals(fieldname)) {
+                        setCustomButton1(jp.getText());
+                    } else if ("Custom Button 2".equals(fieldname)) {
+                        setCustomButton2(jp.getText());
                     } else if ("Display".equals(fieldname)) {
                         while (jp.nextToken() != JsonToken.END_OBJECT) {
                             String displayfield = jp.getCurrentName();
@@ -495,6 +507,13 @@ public class Config {
             jp.close();
             return true;
         } catch (IOException e) {
+            if (jp != null) {
+                try {
+                    jp.close();
+                } catch (IOException ioe) {
+                    
+                }
+            }
             System.out.println("Error creating JsonParser");
             return false;
         }
@@ -514,6 +533,8 @@ public class Config {
             jg.writeNumberField("Proxy Port", getExtPort());
             jg.writeBooleanField("MC Server Start on GUI Start", getServerStartOnStartup());
             jg.writeStringField("Command Prefix", getCommandPrefix());
+            jg.writeStringField("Custom Button 1", getCustomButton1());
+            jg.writeStringField("Custom Button 2", getCustomButton2());
             jg.writeObjectFieldStart("Display");
             // Display Config Options
             jg.writeStringField("Text Color", display.getTextColor());

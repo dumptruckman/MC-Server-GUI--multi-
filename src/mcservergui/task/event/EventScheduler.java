@@ -5,15 +5,12 @@
 
 package mcservergui.task.event;
 
-import mcservergui.task.event.EventModel;
 import mcservergui.gui.GUI;
 import org.quartz.*;
 import mcservergui.task.Task;
 import static org.quartz.TriggerBuilder.*;
 import static org.quartz.JobBuilder.*;
-import static org.quartz.DateBuilder.*;
 import static org.quartz.CronScheduleBuilder.*;
-import static mcservergui.task.Task.*;
 /**
  *
  * @author dumptruckman
@@ -28,7 +25,6 @@ public class EventScheduler {
                 .build();
         job.getJobDataMap().put("Event", event);
         job.getJobDataMap().put("GUI", gui);
-        //job.getJobDataMap().put("Scheduler", scheduler);
 
         try {
             trigger = newTrigger()
@@ -37,7 +33,6 @@ public class EventScheduler {
                     .build();
             try {
                 scheduler.scheduleJob(job, trigger);
-                System.out.println(trigger.getNextFireTime());
                 return true;
             } catch (SchedulerException se) {
                 System.out.println("scheduling exception error");
@@ -56,7 +51,6 @@ public class EventScheduler {
                 .build();
         job.getJobDataMap().put("Event", event);
         job.getJobDataMap().put("GUI", gui);
-        //job.getJobDataMap().put("Scheduler", scheduler);
 
         trigger = newTrigger()
                 .forJob(job)

@@ -72,6 +72,9 @@ public class MainWorker implements java.util.Observer {
             }
             java.util.Set<JobKey> keys = null;
             try {
+                if (gui.getScheduler().isShutdown()) {
+                    return;
+                }
                 keys = gui.getScheduler().getJobKeys(GroupMatcher
                         .groupContains("DEFAULT"));
             } catch (SchedulerException se) {

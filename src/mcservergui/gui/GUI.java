@@ -2695,7 +2695,7 @@ public class GUI extends FrameView implements Observer {
         if (box.getSelectedItem().toString().equals("Edit Tasks")) {
             tabber.setSelectedIndex(tabber.indexOfTab("Tasks"));
         } else {
-            scheduleImmediateEvent((EventModel)box.getSelectedItem(), scheduler, this);
+            startTaskByName(box.getSelectedItem().toString());
         }
     }
 
@@ -3127,9 +3127,9 @@ public class GUI extends FrameView implements Observer {
         }
         updateGuiWithConfigValues();
         updateGuiWithServerProperties();
-        saveConfig();
         initSchedule();
-
+        saveConfig();
+        
         if (config.web.isEnabled()) {
             startWebServer();
         }
@@ -3146,17 +3146,8 @@ public class GUI extends FrameView implements Observer {
                 customCombo2.addItem(event.getName());
             }
         }
-        /*
-        for (int i = 0; i < config.schedule.getEvents().size(); i++) {
-            if (!config.schedule.getEvents().get(i).isCustomButton()) {
-                scheduleEvent(config.schedule.getEvents().get(i), scheduler, this);
-            } else {
-                customCombo1.addItem(config.schedule.getEvents().get(i));
-                customCombo2.addItem(config.schedule.getEvents().get(i));
-            }
-        }
-         *
-         */
+        customCombo1.setSelectedItem(config.getCustomButton1());
+        customCombo2.setSelectedItem(config.getCustomButton2());
     }
 
     public void updateGuiWithServerProperties() {
@@ -3271,6 +3262,8 @@ public class GUI extends FrameView implements Observer {
         }
         config.setInputHistoryMaxSize(Integer.parseInt(inputHistoryMaxSizeField.getText()));
         config.setCommandPrefix(commandPrefixField.getText());
+        config.setCustomButton1(customCombo1.getSelectedItem().toString());
+        config.setCustomButton2(customCombo2.getSelectedItem().toString());
         config.cmdLine.setXmx(xmxMemoryField.getText());
         config.cmdLine.setExtraArgs(extraArgsField.getText());
         config.cmdLine.setServerJar(serverJarField.getText());
