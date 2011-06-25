@@ -2016,6 +2016,9 @@
                             <Property name="selectionMode" type="int" value="0"/>
                             <Property name="name" type="java.lang.String" value="taskSchedulerList" noResource="true"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="taskSchedulerListKeyTyped"/>
+                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>

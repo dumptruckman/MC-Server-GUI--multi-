@@ -72,15 +72,6 @@ public class MCServerModel extends Observable implements Observer, java.beans.Pr
     // Method for starting the server
     public String start() {
         File jar = new File(config.cmdLine.getServerJar());
-        /*
-        try {
-            guiServer = new MCServerGUIHTTPServer(25566);
-            guiServer.start();
-        } catch (IOException ioe) {
-            System.err.println("Could not start http server");
-            return "ERROR";
-        }
-         */
         if (config.getProxy()) {
             proxyServer = new ProxyServer(gui, config, serverProps);
             if (proxyServer.getStartCode() == -1) {
@@ -174,20 +165,21 @@ public class MCServerModel extends Observable implements Observer, java.beans.Pr
 
     // Method for sending commands to the server
     public void send(final String string) {
-        Runnable serverSender = new Runnable() {
-            @Override public void run() {
-                if (osw != null) {
-                    try {
-                        osw.write(string + "\n");
-                        osw.flush();
-                    } catch (IOException e) {
-                        System.out.println("[MC Server GUI] Error sending server"
-                                + " input.  Server is likely not running!");
-                    }
-                }
+        //Runnable serverSender = new Runnable() {
+        //    @Override public void run() {
+        if (osw != null) {
+            try {
+                osw.write(string + "\n");
+                osw.flush();
+            } catch (IOException e) {
+                gui.addTextToConsoleOutput("[MC Server GUI] Error "
+                        + "sending server input.  Server is likely not "
+                        + "running!");
             }
-        };
-        SwingUtilities.invokeLater(serverSender);
+        }
+        //    }
+       // };
+       // SwingUtilities.invokeLater(serverSender);
     }
 
     // Method for stopping server

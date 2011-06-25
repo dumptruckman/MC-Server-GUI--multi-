@@ -25,7 +25,6 @@ import javax.swing.Timer;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.HTMLDocument;
 
-import it.cnr.imaa.essi.lablib.gui.checkboxtree.*;
 import it.cnr.imaa.essi.lablib.gui.checkboxtree.TreeCheckingModel.CheckingMode;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
@@ -38,11 +37,8 @@ import org.quartz.*;
 import mcservergui.backup.Backup;
 import mcservergui.config.Config;
 import mcservergui.tools.ConsoleParser;
-import mcservergui.listmodel.GUIListModel;
-import mcservergui.MainWorker;
 import mcservergui.tools.RegexVerifier;
 import mcservergui.mcserver.MCServerModel;
-import mcservergui.mcserver.MCServerReceiver;
 import mcservergui.task.TaskDialog;
 import mcservergui.Main;
 import mcservergui.config.ServerProperties;
@@ -1643,6 +1639,11 @@ public class GUI extends FrameView implements Observer {
         });
         taskSchedulerList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         taskSchedulerList.setName("taskSchedulerList"); // NOI18N
+        taskSchedulerList.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                taskSchedulerListKeyTyped(evt);
+            }
+        });
         jScrollPane5.setViewportView(taskSchedulerList);
 
         javax.swing.GroupLayout taskSchedulerPanelLayout = new javax.swing.GroupLayout(taskSchedulerPanel);
@@ -2381,32 +2382,34 @@ public class GUI extends FrameView implements Observer {
     }//GEN-LAST:event_taskListEditButtonActionPerformed
 
     private void taskListRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taskListRemoveButtonActionPerformed
-        //if (getEventIndexFromSelected() != -1) {
-            if (javax.swing.JOptionPane.showConfirmDialog(this.getFrame(),
-                    "Are you sure you wish to remove this event?\n"
-                    + "If it is running it will be interrupted.\n",
-                    "Remove scheduled task",
-                    javax.swing.JOptionPane.YES_NO_OPTION) == 
-                    javax.swing.JOptionPane.YES_OPTION) {
-                //int index = getEventIndexFromSelected();
-                //EventModel event = (EventModel)config.schedule.getEvents()
-                //      .getElementAt(index);
-                EventModel event = (EventModel)taskSchedulerList
-                        .getSelectedValue();
-                try {
-                    scheduler.interrupt(JobKey.jobKey(event.getName()));
-                    scheduler.deleteJob(JobKey.jobKey(event.getName()));
-                } catch (SchedulerException se) {
-                    System.out.println("Error removing old task");
-                }
-                customButtonBoxModel1.removeElement(event.getName());
-                customButtonBoxModel2.removeElement(event.getName());
-                config.schedule.getEvents().removeElement(event);
-                //taskList.removeElement(taskList.getElementAt(taskSchedulerList.getSelectedIndex()));
-                config.save();
-            }
-        //}
+        removeTaskListEntry();
     }//GEN-LAST:event_taskListRemoveButtonActionPerformed
+
+    public void removeTaskListEntry() {
+        if (javax.swing.JOptionPane.showConfirmDialog(this.getFrame(),
+                "Are you sure you wish to remove this event?\n"
+                + "If it is running it will be interrupted.\n",
+                "Remove scheduled task",
+                javax.swing.JOptionPane.YES_NO_OPTION) ==
+                javax.swing.JOptionPane.YES_OPTION) {
+            //int index = getEventIndexFromSelected();
+            //EventModel event = (EventModel)config.schedule.getEvents()
+            //      .getElementAt(index);
+            EventModel event = (EventModel)taskSchedulerList
+                    .getSelectedValue();
+            try {
+                scheduler.interrupt(JobKey.jobKey(event.getName()));
+                scheduler.deleteJob(JobKey.jobKey(event.getName()));
+            } catch (SchedulerException se) {
+                System.out.println("Error removing old task");
+            }
+            customButtonBoxModel1.removeElement(event.getName());
+            customButtonBoxModel2.removeElement(event.getName());
+            config.schedule.getEvents().removeElement(event);
+            //taskList.removeElement(taskList.getElementAt(taskSchedulerList.getSelectedIndex()));
+            config.save();
+        }
+    }
 
     private void textSizeFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_textSizeFieldPropertyChange
         config.display.setTextSize(Integer.parseInt(textSizeField.getValue().toString()));
@@ -2690,6 +2693,12 @@ public class GUI extends FrameView implements Observer {
             }
         }
     }//GEN-LAST:event_pauseSchedulerButtonActionPerformed
+
+    private void taskSchedulerListKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_taskSchedulerListKeyTyped
+        if (evt.getKeyChar() == java.awt.event.KeyEvent.VK_DELETE) {
+            removeTaskListEntry();
+        }
+    }//GEN-LAST:event_taskSchedulerListKeyTyped
 
     private void customButtonAction(javax.swing.JComboBox box) {
         if (box.getSelectedItem().toString().equals("Edit Tasks")) {
@@ -3045,11 +3054,11 @@ public class GUI extends FrameView implements Observer {
         }
         inputHistory.add(0, stringToSend);
         if ((sayCheckBox.isSelected()) && (!shouldSay)) {
-            server.send("say " + stringToSend);
+            sendInput("say " + stringToSend);
         } else if ((!sayCheckBox.isSelected()) && (shouldSay)) {
-            server.send("say " + stringToSend);
+            sendInput("say " + stringToSend);
         } else {
-            server.send(stringToSend);
+            sendInput(stringToSend);
         }
         consoleInput.setText("");
         inputHistoryIndex = -1;
@@ -3060,11 +3069,7 @@ public class GUI extends FrameView implements Observer {
      * @param s String to send to the server
      */
     public void sendInput(String s) {
-        //if (getControlState().equals("ON")) {
         server.send(s);
-        //} else {
-        //    System.out.println("Server is not running, cannot send: " + s);
-        //}
     }
 
     public void setSaving(boolean b) {

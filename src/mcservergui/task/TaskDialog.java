@@ -684,6 +684,11 @@ public class TaskDialog extends javax.swing.JDialog {
         warningList.setCellRenderer(new WarningListCellRenderer());
         warningList.setEnabled(false);
         warningList.setName("warningList"); // NOI18N
+        warningList.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                warningListKeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(warningList);
 
         warningAddButton.setText(resourceMap.getString("warningAddButton.text")); // NOI18N
@@ -1390,23 +1395,21 @@ public class TaskDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_warningAddButtonActionPerformed
 
     private void warningRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_warningRemoveButtonActionPerformed
-        try {
-            //int index = warningList.getSelectedIndex();
-            //ServerWarning warning = getWarningFromListIndex(index);
-            ServerWarning warning = (ServerWarning)warningList.getSelectedValue();
-            if (warning != null) {
-                //Object element = warningListModel.getElementAt(index);
-                if (javax.swing.JOptionPane.showConfirmDialog(this,
-                        "Are you sure you wish to remove this warning?\n",
-                        "Remove warning message",
-                        javax.swing.JOptionPane.YES_NO_OPTION) ==
-                        javax.swing.JOptionPane.YES_OPTION) {
-                    warningListModel.removeElement(warning);
-                    //serverWarningList.remove(warning);
-                }
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {}
+        removeWarningListEntry();
     }//GEN-LAST:event_warningRemoveButtonActionPerformed
+
+    public void removeWarningListEntry() {
+        ServerWarning warning = (ServerWarning)warningList.getSelectedValue();
+        if (warning != null) {
+            if (javax.swing.JOptionPane.showConfirmDialog(this,
+                    "Are you sure you wish to remove this warning?\n",
+                    "Remove warning message",
+                    javax.swing.JOptionPane.YES_NO_OPTION) ==
+                    javax.swing.JOptionPane.YES_OPTION) {
+                warningListModel.removeElement(warning);
+            }
+        }
+    }
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         if (javax.swing.JOptionPane.showConfirmDialog(this,
@@ -1693,6 +1696,12 @@ public class TaskDialog extends javax.swing.JDialog {
         enableTimingSettings(!taskIsCustomButtonCheckBox.isSelected());
         updateTimeSummary();
     }//GEN-LAST:event_taskIsCustomButtonCheckBoxActionPerformed
+
+    private void warningListKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_warningListKeyTyped
+        if (evt.getKeyChar() == java.awt.event.KeyEvent.VK_DELETE) {
+            removeWarningListEntry();
+        }
+    }//GEN-LAST:event_warningListKeyTyped
 
     private void enableTimingSettings(boolean b) {
         secondsField.setEnabled(b);

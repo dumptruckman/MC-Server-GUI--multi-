@@ -1,3 +1,7 @@
+Version .9.3
+    You can now use the Delete key to remove entries from the task list and a task's warning list.
+    Slightly reworked how input was sent to the server, perhaps fixing a bug some users reported.
+
 Version .9.2
     The custom command buttons now work properly again.
     The last selected custom command button is now remembered.
