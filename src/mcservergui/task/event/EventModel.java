@@ -12,16 +12,19 @@ import mcservergui.listmodel.GUIListModel;
  *
  * @author dumptruckman
  */
-public class EventModel {
+public class EventModel implements Comparable<EventModel> {
 
     public EventModel() {
         //warningList = new java.util.ArrayList<ServerWarning>();
         warningList = new GUIListModel();
         params = new java.util.ArrayList<String>();
         _isCustomButton = false;
+        nextFireTime = null;
+        name = "";
+        task = "";
     }
 
-    private String name, cronEx, task;
+    private String name, cronEx, task, nextFireTime;
     private java.util.List<String> params;
     //private java.util.List<ServerWarning> warningList;
     private GUIListModel warningList;
@@ -43,7 +46,28 @@ public class EventModel {
     //public void setWarningList(java.util.List<ServerWarning> l) { warningList = l; }
     public void setCustomButton(boolean b) { _isCustomButton = b; }
 
+    public String getNextFireTime() {
+        return nextFireTime;
+    }
+
+    public void setNextFireTime(String s) {
+        nextFireTime = s;
+    }
+
     @Override public String toString() {
-        return name;
+        //return name;
+        if (name == null || task == null) {
+            return "";
+        }
+        String string = name + "<br><font size=2>" + task;
+        if (nextFireTime != null) {
+            string += "  in  " + nextFireTime;
+        }
+        string += "</font>";
+        return string;
+    }
+
+    @Override public int compareTo(EventModel e) {
+        return this.getName().compareTo(e.getName());
     }
 }

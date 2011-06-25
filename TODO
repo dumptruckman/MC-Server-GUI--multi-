@@ -3,7 +3,8 @@ Add tasks for scheduler:
 Add a lot more functionality to the Web Interface
 Custom skins?!
 Have gui not auto-create backup folder immediately on load
-Have the Web Interface log to a file as well.
+Have the Web Interface log to a file as well
+Added delete key functionality for lists
 Allow console output to be searched
 Add filtering to console output
 Add restoration of backups
@@ -15,7 +16,3 @@ Warnings when the server could be lagging
 Possibly have cooperability with something like MccRestart
 Delete backups after x amount of time or x amount of backups
 Compatibility with MCSoD
-
-Development:
-    Merge the tasks lists so i can:
-    Change next task indicator to instead show a time on each task..

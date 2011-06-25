@@ -238,14 +238,18 @@ public class Config {
 
     public class Schedule {
         public Schedule() {
-            events = new java.util.ArrayList<EventModel>();
+            //events = new java.util.ArrayList<EventModel>();
+            events = new GUIListModel();
         }
 
-        private java.util.List<EventModel> events;
+        //private java.util.List<EventModel> events;
+        private GUIListModel events;
 
-        public java.util.List<EventModel> getEvents() { return events; }
+        //public java.util.List<EventModel> getEvents() { return events; }
+        public GUIListModel getEvents() { return events; }
 
-        public void setEvents(java.util.List<EventModel> e) { events = e; }
+        //public void setEvents(java.util.List<EventModel> e) { events = e; }
+        public void setEvents(GUIListModel e) { events = e; }
     }
 
     public class WebInterface {
@@ -420,8 +424,9 @@ public class Config {
                             String schedulefield = jp.getCurrentName();
                             jp.nextToken();
                             if ("Events".equals(schedulefield)) {
-                                List<EventModel> eventlist =
-                                        new ArrayList<EventModel>();
+                                //List<EventModel> eventlist =
+                                //        new ArrayList<EventModel>();
+                                GUIListModel eventlist = new GUIListModel();
                                 while (jp.nextToken() != JsonToken.END_OBJECT) {
                                     EventModel event =
                                             new EventModel();
@@ -545,18 +550,19 @@ public class Config {
             jg.writeObjectFieldStart("Schedule");
             // EventModel list
             jg.writeObjectFieldStart("Events");
-            for (int i = 0; i < schedule.getEvents().size(); i++) {
-                jg.writeObjectFieldStart(schedule.getEvents().get(i).getName());
-                jg.writeBooleanField("Custom Button", schedule.getEvents().get(i).isCustomButton());
-                jg.writeStringField("Cron Expression", schedule.getEvents().get(i).getCronEx());
-                jg.writeStringField("Task", schedule.getEvents().get(i).getTask());
+            java.util.List<EventModel> eventlist = schedule.getEvents().getList();
+            for (int i = 0; i < eventlist.size(); i++) {
+                jg.writeObjectFieldStart(eventlist.get(i).getName());
+                jg.writeBooleanField("Custom Button", eventlist.get(i).isCustomButton());
+                jg.writeStringField("Cron Expression", eventlist.get(i).getCronEx());
+                jg.writeStringField("Task", eventlist.get(i).getTask());
                 jg.writeArrayFieldStart("Parameters");
-                for (int j = 0; j < schedule.getEvents().get(i).getParams().size(); j++) {
-                    jg.writeString(schedule.getEvents().get(i).getParams().get(j));
+                for (int j = 0; j < eventlist.get(i).getParams().size(); j++) {
+                    jg.writeString(eventlist.get(i).getParams().get(j));
                 }
                 jg.writeEndArray();
                 jg.writeObjectFieldStart("Warnings");
-                java.util.Iterator it = schedule.getEvents().get(i).getWarningList().iterator();
+                java.util.Iterator it = eventlist.get(i).getWarningList().iterator();
                 int j = 0;
                 while (it.hasNext()) {
                     jg.writeArrayFieldStart(String.valueOf(j+1));

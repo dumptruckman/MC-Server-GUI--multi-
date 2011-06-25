@@ -1942,16 +1942,11 @@
                           <Component id="taskListAddButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="taskListEditButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           <Component id="taskListRemoveButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           <Component id="pauseSchedulerButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="280" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="nextTaskLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="481" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1961,14 +1956,12 @@
                           <Component id="taskSchedulerPanel" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="taskListAddButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="taskListEditButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="taskListRemoveButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="pauseSchedulerButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="taskListRemoveButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="taskListEditButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="taskListAddButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="nextTaskLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1994,7 +1987,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane5" alignment="0" pref="263" max="32767" attributes="0"/>
+                          <Component id="jScrollPane5" alignment="0" pref="284" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -2076,12 +2069,6 @@
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pauseSchedulerButtonActionPerformed"/>
                   </Events>
-                </Component>
-                <Component class="javax.swing.JLabel" name="nextTaskLabel">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="nextTaskLabel.text"/>
-                    <Property name="name" type="java.lang.String" value="nextTaskLabel" noResource="true"/>
-                  </Properties>
                 </Component>
               </SubComponents>
             </Container>

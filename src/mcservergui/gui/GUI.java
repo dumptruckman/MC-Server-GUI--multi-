@@ -131,8 +131,8 @@ public class GUI extends FrameView implements Observer {
 
         this.scheduler = scheduler;
 
-        taskList = new GUIListModel();
-        taskSchedulerList.setModel(taskList);
+        //taskList = new GUIListModel();
+        //taskSchedulerList.setModel(taskList);
 
         serverProperties = new ServerProperties();
         config = newConfig;
@@ -299,7 +299,6 @@ public class GUI extends FrameView implements Observer {
         taskListEditButton = new javax.swing.JButton();
         taskListRemoveButton = new javax.swing.JButton();
         pauseSchedulerButton = new javax.swing.JToggleButton();
-        nextTaskLabel = new javax.swing.JLabel();
         webInterfaceTab = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         webPortLabel = new javax.swing.JLabel();
@@ -1654,7 +1653,7 @@ public class GUI extends FrameView implements Observer {
         );
         taskSchedulerPanelLayout.setVerticalGroup(
             taskSchedulerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
         );
 
         taskListAddButton.setText(resourceMap.getString("taskListAddButton.text")); // NOI18N
@@ -1694,9 +1693,6 @@ public class GUI extends FrameView implements Observer {
             }
         });
 
-        nextTaskLabel.setText(resourceMap.getString("nextTaskLabel.text")); // NOI18N
-        nextTaskLabel.setName("nextTaskLabel"); // NOI18N
-
         javax.swing.GroupLayout schedulerTabLayout = new javax.swing.GroupLayout(schedulerTab);
         schedulerTab.setLayout(schedulerTabLayout);
         schedulerTabLayout.setHorizontalGroup(
@@ -1712,10 +1708,6 @@ public class GUI extends FrameView implements Observer {
                 .addGap(18, 18, 18)
                 .addComponent(pauseSchedulerButton)
                 .addContainerGap(280, Short.MAX_VALUE))
-            .addGroup(schedulerTabLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(nextTaskLabel)
-                .addContainerGap(481, Short.MAX_VALUE))
         );
         schedulerTabLayout.setVerticalGroup(
             schedulerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1723,13 +1715,11 @@ public class GUI extends FrameView implements Observer {
                 .addComponent(taskSchedulerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(schedulerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(taskListAddButton)
-                    .addComponent(taskListEditButton)
+                    .addComponent(pauseSchedulerButton)
                     .addComponent(taskListRemoveButton)
-                    .addComponent(pauseSchedulerButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nextTaskLabel)
-                .addGap(12, 12, 12))
+                    .addComponent(taskListEditButton)
+                    .addComponent(taskListAddButton))
+                .addContainerGap())
         );
 
         tabber.addTab(resourceMap.getString("schedulerTab.TabConstraints.tabTitle"), schedulerTab); // NOI18N
@@ -2098,29 +2088,6 @@ public class GUI extends FrameView implements Observer {
         }
     }
 
-    private class BackupFileChooserCheckingListener implements TreeCheckingListener {
-        @Override public void valueChanged(TreeCheckingEvent e) {
-            //Changing how it saves what is checked.
-            /*if(e.isCheckedPath()) {
-                for (int childrenindex = 0; childrenindex < backupFileSystem.getChildCount(
-                        e.getPath().getLastPathComponent()); childrenindex++) {
-                    backupFileChooser.addCheckingPath(
-                            new javax.swing.tree.TreePath(
-                            backupFileSystem.getChild(e.getPath().getLastPathComponent(), childrenindex)));
-                }
-                addPathToBackup(e.getPath().getLastPathComponent().toString());
-            } else {
-                for (int childrenindex = 0; childrenindex < backupFileSystem.getChildCount(
-                        e.getPath().getLastPathComponent()); childrenindex++) {
-                    backupFileChooser.removeCheckingPath(
-                            new javax.swing.tree.TreePath(
-                            backupFileSystem.getChild(e.getPath().getLastPathComponent(), childrenindex)));
-                }
-                removePathFromBackup(e.getPath().getLastPathComponent().toString());
-            }*/
-        }
-    }
-
     /**
      * Action object for the toggling of the sayCheckBox
      */
@@ -2407,38 +2374,38 @@ public class GUI extends FrameView implements Observer {
     }//GEN-LAST:event_taskListAddButtonActionPerformed
 
     private void taskListEditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taskListEditButtonActionPerformed
-        if (getEventIndexFromSelected() != -1) {
-            editTaskListEntry(getEventIndexFromSelected());
-        }
+        //if (getEventIndexFromSelected() != -1) {
+        //    editTaskListEntry(getEventIndexFromSelected());
+        //}
+        editTaskListEntry((EventModel)taskSchedulerList.getSelectedValue());
     }//GEN-LAST:event_taskListEditButtonActionPerformed
 
     private void taskListRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taskListRemoveButtonActionPerformed
-        if (getEventIndexFromSelected() != -1) {
+        //if (getEventIndexFromSelected() != -1) {
             if (javax.swing.JOptionPane.showConfirmDialog(this.getFrame(),
                     "Are you sure you wish to remove this event?\n"
                     + "If it is running it will be interrupted.\n",
                     "Remove scheduled task",
                     javax.swing.JOptionPane.YES_NO_OPTION) == 
                     javax.swing.JOptionPane.YES_OPTION) {
-                int index = getEventIndexFromSelected();
+                //int index = getEventIndexFromSelected();
+                //EventModel event = (EventModel)config.schedule.getEvents()
+                //      .getElementAt(index);
+                EventModel event = (EventModel)taskSchedulerList
+                        .getSelectedValue();
                 try {
-                    scheduler.interrupt(JobKey.jobKey(config.schedule.getEvents()
-                            .get(index).getName()));
-                    scheduler.deleteJob(JobKey.jobKey(config.schedule.getEvents()
-                            .get(index).getName()));
+                    scheduler.interrupt(JobKey.jobKey(event.getName()));
+                    scheduler.deleteJob(JobKey.jobKey(event.getName()));
                 } catch (SchedulerException se) {
                     System.out.println("Error removing old task");
                 }
-                customButtonBoxModel1.removeElement(config.schedule.getEvents()
-                        .get(index));
-                customButtonBoxModel2.removeElement(config.schedule.getEvents()
-                        .get(index));
-                config.schedule.getEvents().remove(config.schedule.getEvents()
-                        .get(index));
-                taskList.removeElement(taskList.getElementAt(taskSchedulerList.getSelectedIndex()));
+                customButtonBoxModel1.removeElement(event.getName());
+                customButtonBoxModel2.removeElement(event.getName());
+                config.schedule.getEvents().removeElement(event);
+                //taskList.removeElement(taskList.getElementAt(taskSchedulerList.getSelectedIndex()));
                 config.save();
             }
-        }
+        //}
     }//GEN-LAST:event_taskListRemoveButtonActionPerformed
 
     private void textSizeFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_textSizeFieldPropertyChange
@@ -2803,12 +2770,11 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JLabel maxPlayersLabel;
     public javax.swing.JSpinner maxPlayersSpinner;
     public javax.swing.JMenuBar menuBar;
-    public javax.swing.JLabel nextTaskLabel;
     public javax.swing.JCheckBox onlineModeCheckBox;
     public javax.swing.JToggleButton pauseSchedulerButton;
     public javax.swing.JList playerList;
     public javax.swing.JPanel playerListPanel;
-    public javax.swing.JProgressBar progressBar;
+    private javax.swing.JProgressBar progressBar;
     public javax.swing.JPanel proxyServerPanel;
     public javax.swing.JCheckBox pvpCheckBox;
     public javax.swing.JLabel receivingBytes;
@@ -2899,14 +2865,15 @@ public class GUI extends FrameView implements Observer {
     }
 
     public boolean startTaskByName(String name) {
-        for (int i = 0; i < config.schedule.getEvents().size(); i++) {
-            if (config.schedule.getEvents().get(i).getName()
-                    .equalsIgnoreCase(name)) {
-                scheduleImmediateEvent(config.schedule.getEvents().get(i),
-                        scheduler, this);
+        java.util.Iterator it = config.schedule.getEvents().iterator();
+        while (it.hasNext()) {
+            EventModel event = (EventModel)it.next();
+            if (event.getName().equalsIgnoreCase(name)) {
+                scheduleImmediateEvent(event, scheduler, this);
                 return true;
             }
         }
+        System.err.println("Could not find event by that name");
         return false;
     }
 
@@ -2959,6 +2926,7 @@ public class GUI extends FrameView implements Observer {
         }
     }
 
+    /*
     private int getEventIndexFromSelected() {
         try {
             String taskname = taskList.getElementAt(
@@ -2974,20 +2942,27 @@ public class GUI extends FrameView implements Observer {
             return -1;
         }
     }
+     *
+     */
 
     public void addTaskListEntry() {
         JFrame mainFrame = Main.getApplication().getMainFrame();
-        taskDialog = new TaskDialog(
-                mainFrame, taskList, config, scheduler, config.schedule.getEvents(), this);
+        //taskDialog = new TaskDialog(
+        //        mainFrame, /*taskList,*/ config, scheduler, config.schedule.getEvents(), this);
+        taskDialog = new TaskDialog(mainFrame, config, scheduler, this);
         taskDialog.setLocationRelativeTo(mainFrame);
         Main.getApplication().show(taskDialog);
     }
 
-    public void editTaskListEntry(int i) {
+    //public void editTaskListEntry(int i) {
+    public void editTaskListEntry(EventModel event) {
         JFrame mainFrame = Main.getApplication().getMainFrame();
-        taskDialog = new TaskDialog(
-                mainFrame, taskList, config, scheduler, config.schedule.getEvents(), this,
-                config.schedule.getEvents().get(i));
+        //taskDialog = new TaskDialog(
+        //        mainFrame, taskList, config, scheduler, config.schedule.getEvents(), this,
+        //        config.schedule.getEvents().get(i));
+        taskDialog = new TaskDialog(mainFrame, config, scheduler, this,
+        //        (EventModel)config.schedule.getEvents().getElementAt(i));
+                event);
         taskDialog.setLocationRelativeTo(mainFrame);
         Main.getApplication().show(taskDialog);
     }
@@ -3117,9 +3092,12 @@ public class GUI extends FrameView implements Observer {
      * Defines the MainWorker so the view can have access.
      * @param newMainWorker
      */
+    /*
     public void setMainWorker(MainWorker newMainWorker) {
         mainWorker = newMainWorker;
     }
+     * 
+     */
 
     public void startWebServer() {
         webServer.setPort(config.web.getPort());
@@ -3158,6 +3136,17 @@ public class GUI extends FrameView implements Observer {
     }
 
     public void initSchedule() {
+        java.util.Iterator it = config.schedule.getEvents().iterator();
+        while (it.hasNext()) {
+            EventModel event = (EventModel)it.next();
+            if (!event.isCustomButton()) {
+                scheduleEvent(event, scheduler, this);
+            } else {
+                customCombo1.addItem(event.getName());
+                customCombo2.addItem(event.getName());
+            }
+        }
+        /*
         for (int i = 0; i < config.schedule.getEvents().size(); i++) {
             if (!config.schedule.getEvents().get(i).isCustomButton()) {
                 scheduleEvent(config.schedule.getEvents().get(i), scheduler, this);
@@ -3166,6 +3155,8 @@ public class GUI extends FrameView implements Observer {
                 customCombo2.addItem(config.schedule.getEvents().get(i));
             }
         }
+         *
+         */
     }
 
     public void updateGuiWithServerProperties() {
@@ -3240,13 +3231,16 @@ public class GUI extends FrameView implements Observer {
             xincgcCheckBox.setEnabled(false);
             extraArgsField.setEditable(false);
         }
-        backupFileChooser.addTreeCheckingListener(new BackupFileChooserCheckingListener());
         cmdLineField.setText(config.cmdLine.parseCmdLine());
+        taskSchedulerList.setModel(config.schedule.getEvents());
+        /*
         for (int i = 0; i < config.schedule.getEvents().size(); i++) {
             taskList.add(config.schedule.getEvents().get(i).getName()
                     + "<br><font size=2>"
                     + config.schedule.getEvents().get(i).getTask());
         }
+         * 
+         */
         if (useProxyCheckBox.isSelected()) {
             playerList.setToolTipText("This shows a list of players connected to the server.  Right click a to pull up the player action menu.");
         } else {
@@ -3552,8 +3546,8 @@ public class GUI extends FrameView implements Observer {
     }
 
     public MCServerModel server;
-    private MCServerReceiver serverReceiver;
-    private MainWorker mainWorker;
+    //private MCServerReceiver serverReceiver;
+    //private MainWorker mainWorker;
     private boolean textScrolling;
     private boolean mouseInConsoleOutput;
     private List<String> inputHistory;
@@ -3561,12 +3555,11 @@ public class GUI extends FrameView implements Observer {
     private int inputHistoryIndex;
     private String controlState;
     private String stateBeforeBackup;
-    private String statusBeforeBackup;
     private mcservergui.fileexplorer.FileSystemModel backupFileSystem;
     public Config config;
-    private boolean badConfig;
+    //private boolean badConfig;
     private Scheduler scheduler;
-    private GUIListModel taskList;
+    //private GUIListModel taskList;
     public javax.swing.DefaultComboBoxModel customButtonBoxModel1;
     public javax.swing.DefaultComboBoxModel customButtonBoxModel2;
     private boolean restarting;

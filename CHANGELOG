@@ -1,4 +1,5 @@
-Version .9.1-dev
+Version .9.1
+    Major structural changes in this version.  It is highly recommended you make backups before updating!
     Added scheduler pause button.
     Fixed NullPointerException when trying to send input to the server without having ever started the server after launching the GUI.
     Added date/time to Proxy connection notices.
@@ -10,9 +11,12 @@ Version .9.1-dev
     Server Warnings appear in the list as either a Command or Message instead of just Message.
     Server Warning Dialog no longer accepts an empty Time field.
     Server Warning Dialog now has a properly titled border.
+    Merged multiple warning lists which may result in better reliability.
     GUI only auto-creates a missing backup directory when a backup is run instead of every time the GUI starts.
     Backup paths are now saved just like everything else instead of ONLY when the save button the backup tab is pressed.
-    Added a Next Task indicator on the Tasks tab showing what the next job is and when it will fire.
+    POSSIBLY fixed freezing/delay when checking/unchecking items on the backup tab.
+    Merged multiple task lists which may result in better reliability.
+    Added countdown timers to each (scheduled) task to show when it will next trigger.
 
 Version .9.0
     Added op only in game commands with a default prefix of "!".  This is changeable in the GUI Config tab.  Note: You must be using the proxy server for these to work!

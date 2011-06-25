@@ -43,7 +43,6 @@ public class Task implements Job {
             }
         }
 
-        System.out.println("Proceeding to task");
         if (event.getTask().equals("Start Server")) {
             waitForBackupFinish(gui);
             gui.startServer();

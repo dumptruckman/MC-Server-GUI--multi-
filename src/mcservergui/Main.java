@@ -46,20 +46,28 @@ public class Main extends SingleFrameApplication implements Application.ExitList
         server.setGui(gui);
         
         mainWorker = new MainWorker(gui, server);
-        try {
-            scheduler.getListenerManager().addSchedulerListener(mainWorker);
-        } catch (SchedulerException se) {
-            se.printStackTrace();
-        }
+        //try {
+        //    scheduler.getListenerManager().addSchedulerListener(mainWorker);
+        //} catch (SchedulerException se) {
+        //    se.printStackTrace();
+        //}
         gui.initConfig();
         server.addObserver(gui);
         server.addObserver(this);
         server.addObserver(mainWorker);
-        gui.setMainWorker(mainWorker);
+        //gui.setMainWorker(mainWorker);
         mainWorker.startMainWorker();
         if (config.getServerStartOnStartup()) {
             gui.startServer();
         }
+        /*
+        try {
+            System.out.println(scheduler.getJobGroupNames());
+        } catch (SchedulerException e) {
+            System.out.println("poop");
+        }
+         * 
+         */
     }
 
     /**

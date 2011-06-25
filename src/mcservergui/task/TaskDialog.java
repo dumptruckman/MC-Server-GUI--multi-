@@ -31,16 +31,16 @@ public class TaskDialog extends javax.swing.JDialog {
     /** Creates new form TaskDialog */
     public TaskDialog(
             java.awt.Frame parent,
-            GUIListModel taskList,
+            /*GUIListModel taskList,*/
             Config config,
             Scheduler scheduler,
-            java.util.List<EventModel> scheduleEvents,
+            /*java.util.List<EventModel> scheduleEvents,*/
             GUI gui) {
         super(parent);
-        this.taskList = taskList;
+        //this.taskList = taskList;
         this.config = config;
         this.scheduler = scheduler;
-        this.scheduleEvents = scheduleEvents;
+        //this.scheduleEvents = scheduleEvents;
         this.gui = gui;
         borderTitle = "New Task";
         warningListModel = new GUIListModel();
@@ -59,17 +59,17 @@ public class TaskDialog extends javax.swing.JDialog {
 
     public TaskDialog(
             java.awt.Frame parent,
-            GUIListModel taskList,
+            /*GUIListModel taskList,*/
             Config config,
             Scheduler scheduler,
-            java.util.List<EventModel> scheduleEvents,
+            /*java.util.List<EventModel> scheduleEvents,*/
             GUI gui,
             EventModel editEvent) {
         super(parent);
-        this.taskList = taskList;
+        //this.taskList = taskList;
         this.config = config;
         this.scheduler = scheduler;
-        this.scheduleEvents = scheduleEvents;
+        //this.scheduleEvents = scheduleEvents;
         this.gui = gui;
         this.editEvent = editEvent;
         borderTitle = "Edit Task";
@@ -1538,22 +1538,24 @@ public class TaskDialog extends javax.swing.JDialog {
         //event.setWarningList(serverWarningList);
         event.setWarningList(warningListModel);
         if (editEvent != null) {
-            taskList.removeElement(editEvent.getName() + "<br><font size=2>" + editEvent.getTask());
-            scheduleEvents.remove(editEvent);
-            gui.customButtonBoxModel1.removeElement(editEvent);
-            gui.customButtonBoxModel2.removeElement(editEvent);
+            //taskList.removeElement(editEvent.getName() + "<br><font size=2>" + editEvent.getTask());
+            //scheduleEvents.remove(editEvent);
+            config.schedule.getEvents().removeElement(editEvent);
+            gui.customButtonBoxModel1.removeElement(editEvent.getName());
+            gui.customButtonBoxModel2.removeElement(editEvent.getName());
             try {
                 scheduler.deleteJob(JobKey.jobKey(editEvent.getName()));
             } catch (SchedulerException se) {
                 System.out.println("Error removing old task");
             }
         }
-        taskList.add(taskNameField.getText() + "<br><font size=2>" + task);
-        scheduleEvents.add(event);
-        config.schedule.setEvents(scheduleEvents);
+        //taskList.add(taskNameField.getText() + "<br><font size=2>" + task);
+        //scheduleEvents.add(event);
+        config.schedule.getEvents().add(event);
+        //config.schedule.setEvents(scheduleEvents);
         if (taskIsCustomButtonCheckBox.isSelected()) {
-            gui.customButtonBoxModel1.addElement(event);
-            gui.customButtonBoxModel2.addElement(event);
+            gui.customButtonBoxModel1.addElement(event.getName());
+            gui.customButtonBoxModel2.addElement(event.getName());
         } else {
             scheduleEvent(event, scheduler, gui);
         }
@@ -1896,13 +1898,13 @@ public class TaskDialog extends javax.swing.JDialog {
         boldButton(domButton);
     }
 
-    private GUIListModel taskList;
+    //private GUIListModel taskList;
     private GUIListModel warningListModel;
     private Config config;
     private EventModel editEvent;
     private GUI gui;
     //private java.util.List<ServerWarning> serverWarningList;
-    private java.util.List<EventModel> scheduleEvents;
+    //private java.util.List<EventModel> scheduleEvents;
     private ServerWarningDialog warningDialog;
     private java.util.List<javax.swing.JToggleButton> dayOfWeek;
     private java.util.List<javax.swing.JToggleButton> month;

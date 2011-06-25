@@ -8,13 +8,14 @@ package mcservergui;
 import mcservergui.mcserver.MCServerModel;
 import mcservergui.gui.GUI;
 import mcservergui.gui.AboutBox;
+import mcservergui.task.event.EventModel;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Calendar;
-import java.util.Date;
+import javax.swing.SwingUtilities;
 import org.hyperic.sigar.*;
-import org.quartz.listeners.BroadcastSchedulerListener;
 import org.quartz.*;
+import org.quartz.impl.matchers.GroupMatcher;
 import static mcservergui.tools.TimeTools.*;
 
 import java.io.BufferedReader;
@@ -27,18 +28,15 @@ import java.net.HttpURLConnection;
  *
  * @author dumptruckman
  */
-public class MainWorker extends BroadcastSchedulerListener implements java.util.Observer {
+public class MainWorker implements java.util.Observer {
 
     public MainWorker(GUI newGui, MCServerModel server) {
         gui = newGui;
         timer = new java.util.Timer();
         sigarImpl = new Sigar();
-        jobKeys = new java.util.ArrayList<JobKey>();
         version = org.jdesktop.application.Application
                 .getInstance(mcservergui.Main.class).getContext()
                 .getResourceMap(AboutBox.class).getString("Application.version");
-        //sigar = SigarProxyCache.newInstance(sigarImpl, SigarProxyCache.EXPIRE_DEFAULT);
-       // ProcessFinder.
         serverPid = 0;
         this.server = server;
         try {
@@ -61,43 +59,6 @@ public class MainWorker extends BroadcastSchedulerListener implements java.util.
         }
     }
 
-    @Override public void jobAdded(JobDetail jobdetail) {
-        if (jobdetail.getDescription() != null) {
-            // Job is not a one shot
-            jobKeys.add(jobdetail.getKey());
-            findNextJobToFire();
-        }
-    }
-
-    @Override public void jobDeleted(JobKey jobkey) {
-        if (jobKeys.contains(jobkey)) {
-            // Job is not a one shot because it is in the tracked list
-            jobKeys.remove(jobkey);
-            findNextJobToFire();
-        }
-    }
-
-    public void findNextJobToFire() {
-        if (jobKeys.isEmpty()) {
-            nextJob = null;
-            return;
-        }
-        try {
-            JobKey nextjob = jobKeys.get(0);
-            for (int i = 1; i < jobKeys.size(); i++) {
-                if (gui.getScheduler().getTriggersOfJob(jobKeys.get(i)).get(0)
-                        .getNextFireTime().compareTo(gui.getScheduler()
-                        .getTriggersOfJob(nextjob).get(0).getNextFireTime())
-                        < 0) {
-                    nextjob = jobKeys.get(i);
-                }
-            }
-            nextJob = nextjob;
-        } catch (SchedulerException se) {
-            System.out.println("Error determing next job to fire.");
-        }
-    }
-
     public void startMainWorker() {
         timer.scheduleAtFixedRate(new MonitorUpdater(), 0, 1000);
         timer.scheduleAtFixedRate(new ScheduleChecker(), 0, 1000);
@@ -106,26 +67,52 @@ public class MainWorker extends BroadcastSchedulerListener implements java.util.
 
     class ScheduleChecker extends TimerTask {
         @Override public void run() {
-            if (nextJob != null) {
-                long currenttime = Calendar.getInstance().getTime().getTime();
-                long comparetime = 0;
-                try {
-                    comparetime = gui.getScheduler().getTriggersOfJob(nextJob)
-                            .get(0).getNextFireTime().getTime();
-                } catch (SchedulerException se) {
-                    se.printStackTrace();
-                }
-                if (comparetime != 0) {
-                    String timetilnextjob = daysHoursMinutesSecondsFromSeconds(
-                            (int)((comparetime - currenttime)/1000));
-                    gui.nextTaskLabel.setText("Next task: " + nextJob.getName()
-                            + " in " + timetilnextjob);
-                } else {
-                    gui.nextTaskLabel.setText("Next task: No tasks scheduled");
-                }
-            } else {
-                gui.nextTaskLabel.setText("Next task: No tasks scheduled");
+            if (gui.taskSchedulerList.getModel() == null) {
+                return;
             }
+            java.util.Set<JobKey> keys = null;
+            try {
+                keys = gui.getScheduler().getJobKeys(GroupMatcher
+                        .groupContains("DEFAULT"));
+            } catch (SchedulerException se) {
+                se.printStackTrace();
+            }
+            if (keys == null) {
+                return;
+            }
+            long currenttime = Calendar.getInstance().getTime().getTime();
+            java.util.Iterator i = gui.config.schedule.getEvents().iterator();
+            while (i.hasNext()) {
+                EventModel event = (EventModel)i.next();
+                if (event.isCustomButton()) {
+                    continue;
+                }
+                java.util.Iterator j = keys.iterator();
+                while (j.hasNext()) {
+                    JobKey job = (JobKey)j.next();
+                    if (!job.getName().equals(event.getName())) {
+                        continue;
+                    }
+                    long comparetime = 0;
+                    try {
+                         comparetime = gui.getScheduler().getTriggersOfJob(job)
+                                .get(0).getNextFireTime().getTime();
+                    } catch (SchedulerException se) {
+                        se.printStackTrace();
+                    }
+                    if (comparetime != 0) {
+                        String timetilnextjob = daysHoursMinutesSecondsFromSeconds(
+                                (int)((comparetime - currenttime)/1000));
+                        event.setNextFireTime(timetilnextjob);
+                    }
+                }
+                
+            }
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    gui.taskSchedulerList.updateUI();
+                }
+            });
         }
     }
 
@@ -250,6 +237,4 @@ public class MainWorker extends BroadcastSchedulerListener implements java.util.
     private long serverPid;
     private MCServerModel server;
     private String version;
-    private java.util.List<JobKey> jobKeys;
-    private JobKey nextJob;
 }
