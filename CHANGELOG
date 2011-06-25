@@ -4,6 +4,8 @@ Version .9.1
     Fixed NullPointerException when trying to send input to the server without having ever started the server after launching the GUI.
     Added date/time to Proxy connection notices.
     Added in game help command.
+    The server status text in the bottom left is now ONLY for server status.
+    The GUI finally utilizes the progress bar (sort of). (When running a backup)
     Task entry dialog now has a properly titled border.
     Reversed the position of the Create/Cancel buttons on the Task Dialog to better reflect most other button layouts.
     Reversed the position of the Add/Cancel butons on the Server Warning Dialog to better reflect most other button layouts.
@@ -13,7 +15,7 @@ Version .9.1
     Server Warning Dialog now has a properly titled border.
     Merged multiple warning lists which may result in better reliability.
     GUI only auto-creates a missing backup directory when a backup is run instead of every time the GUI starts.
-    Backup paths are now saved just like everything else instead of ONLY when the save button the backup tab is pressed.
+    Backup paths are now saved just like everything else instead of ONLY when the save button on the backup tab is pressed.
     POSSIBLY fixed freezing/delay when checking/unchecking items on the backup tab.
     Merged multiple task lists which may result in better reliability.
     Added countdown timers to each (scheduled) task to show when it will next trigger.

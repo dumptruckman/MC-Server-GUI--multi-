@@ -42,3 +42,4 @@ In-game Commands
     Currently supported commands:
         task taskname - Executes the specified for taskname.
         repeat - repeats the last command.
+        help - shows commands available in game.
