@@ -9,6 +9,7 @@ import mcservergui.gui.GUI;
 import org.quartz.*;
 import java.util.List;
 import java.util.ArrayList;
+import javax.swing.SwingUtilities;
 import mcservergui.task.event.EventModel;
 import mcservergui.task.ServerWarning;
 
@@ -17,6 +18,8 @@ import mcservergui.task.ServerWarning;
  * @author dumptruckman
  */
 public class Task implements Job {
+
+    //Possibly not thread safe!
 
     @Override public void execute(JobExecutionContext context)
         throws JobExecutionException {

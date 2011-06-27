@@ -3,6 +3,7 @@ Version .9.4-dev
     Editing a Save Worlds task now work properly.
     The last digit of the seconds field in the console output for players connecting to the proxy is now present!
     Browsing for a java executable now actually save the path/file that you selected.
+    Made the GUI significantly more thread-safe.  This could clear up any random unpredictable issues.
     Added ability to execute tasks through the web interface.
     Added ability to retrieve a list of task names through the web interface.
 

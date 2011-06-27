@@ -7,6 +7,7 @@ Allow console output to be searched
 Add filtering to console output
 Add restoration of backups
 Auto-detect server jar
+Make the server port change to something other than the gui proxy port.
 Add plugin manager
 Fix server config tab for linux...
 Make sure to have web interface option to send de-marked up text
