@@ -11,13 +11,11 @@
 
 package mcservergui.task;
 
-import java.lang.reflect.InvocationTargetException;
 import mcservergui.config.Config;
 import mcservergui.task.event.EventModel;
 import mcservergui.listmodel.GUIListModel;
 import mcservergui.Main;
 import mcservergui.gui.GUI;
-import mcservergui.tools.RegexVerifier;
 import org.jdesktop.application.Action;
 import org.quartz.*;
 import javax.swing.SwingUtilities;
@@ -45,7 +43,7 @@ public class TaskDialog extends javax.swing.JDialog {
         //this.scheduleEvents = scheduleEvents;
         this.gui = gui;
         borderTitle = "New Task";
-        warningListModel = new GUIListModel();
+        warningListModel = new GUIListModel<ServerWarning>();
         warningListModel.clear();
         //serverWarningList = new java.util.ArrayList<ServerWarning>();
         //serverWarningList.clear();
@@ -75,7 +73,7 @@ public class TaskDialog extends javax.swing.JDialog {
         this.gui = gui;
         this.editEvent = editEvent;
         borderTitle = "Edit Task";
-        warningListModel = new GUIListModel();
+        warningListModel = new GUIListModel<ServerWarning>();
         warningListModel.clear();
         //serverWarningList = new java.util.ArrayList<ServerWarning>();
         //serverWarningList.clear();
@@ -1602,11 +1600,8 @@ public class TaskDialog extends javax.swing.JDialog {
                     params.add(Integer.toString((hours * 3600) + (minutes * 60) + seconds));
                 }
                 event.setParams(params);
-                //event.setWarningList(serverWarningList);
                 event.setWarningList(warningListModel);
                 if (editEvent != null) {
-                    //taskList.removeElement(editEvent.getName() + "<br><font size=2>" + editEvent.getTask());
-                    //scheduleEvents.remove(editEvent);
                     config.schedule.getEvents().removeElement(editEvent);
                     gui.customButtonBoxModel1.removeElement(editEvent.getName());
                     gui.customButtonBoxModel2.removeElement(editEvent.getName());
@@ -1616,17 +1611,15 @@ public class TaskDialog extends javax.swing.JDialog {
                         System.out.println("Error removing old task");
                     }
                 }
-                //taskList.add(taskNameField.getText() + "<br><font size=2>" + task);
-                //scheduleEvents.add(event);
                 config.schedule.getEvents().add(event);
-                //config.schedule.setEvents(scheduleEvents);
                 if (taskIsCustomButtonCheckBox.isSelected()) {
                     gui.customButtonBoxModel1.addElement(event.getName());
                     gui.customButtonBoxModel2.addElement(event.getName());
                 } else {
                     scheduleEvent(event, scheduler, gui);
                 }
-                config.save();
+                //config.save();
+                //configLoader.save();
                 closeTaskDialog();
             }
         });
@@ -1861,9 +1854,9 @@ public class TaskDialog extends javax.swing.JDialog {
     }
 
     private void parseEditEvent() {
-        try {
-            SwingUtilities.invokeAndWait(new Runnable() {
-                @Override public void run() {
+        //try {
+            //SwingUtilities.invokeAndWait(new Runnable() {
+                //@Override public void run() {
                     if (editEvent.isCustomButton()) {
                         taskIsCustomButtonCheckBox.setSelected(true);
                         enableTimingSettings(false);
@@ -1990,13 +1983,13 @@ public class TaskDialog extends javax.swing.JDialog {
                     secondsAgainField.setEnabled(secondsAgainCheckBox.isSelected());
                     minutesAgainField.setEnabled(minutesAgainCheckBox.isSelected());
                     hoursAgainField.setEnabled(hoursAgainCheckBox.isSelected());
-                }
-            });
-        } catch (InterruptedException e) {
-            taskNameField.setText("Error!");
-        } catch (java.lang.reflect.InvocationTargetException ite) {
-            taskNameField.setText("Error!");
-        }
+                //}
+            //});
+        //} catch (InterruptedException e) {
+            //taskNameField.setText("Error!");
+        //} catch (java.lang.reflect.InvocationTargetException ite) {
+            //taskNameField.setText("Error!");
+        //}
     }
 
     private void verifyAllSelected(
@@ -2034,7 +2027,7 @@ public class TaskDialog extends javax.swing.JDialog {
     }
 
     //private GUIListModel taskList;
-    private GUIListModel warningListModel;
+    private GUIListModel<ServerWarning> warningListModel;
     private Config config;
     private EventModel editEvent;
     private GUI gui;

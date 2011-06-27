@@ -16,7 +16,7 @@ public class EventModel implements Comparable<EventModel> {
 
     public EventModel() {
         //warningList = new java.util.ArrayList<ServerWarning>();
-        warningList = new GUIListModel();
+        warningList = new GUIListModel<ServerWarning>();
         params = new java.util.ArrayList<String>();
         _isCustomButton = false;
         nextFireTime = null;
@@ -27,14 +27,14 @@ public class EventModel implements Comparable<EventModel> {
     private String name, cronEx, task, nextFireTime;
     private java.util.List<String> params;
     //private java.util.List<ServerWarning> warningList;
-    private GUIListModel warningList;
+    private GUIListModel<ServerWarning> warningList;
     private boolean _isCustomButton;
 
     public String getName() { return name; }
     public String getCronEx() { return cronEx; }
     public String getTask() { return task; }
     public java.util.List<String> getParams() { return params; }
-    public GUIListModel getWarningList() { return warningList; }
+    public GUIListModel<ServerWarning> getWarningList() { return warningList; }
     //public java.util.List<ServerWarning> getWarningList() { return warningList; }
     public boolean isCustomButton() { return _isCustomButton; }
 
@@ -42,7 +42,7 @@ public class EventModel implements Comparable<EventModel> {
     public void setCronEx(String s) { cronEx = s; }
     public void setTask(String s) { task = s; }
     public void setParams(java.util.List<String> sl) { params = sl; }
-    public void setWarningList(GUIListModel l) { warningList = l; }
+    public void setWarningList(GUIListModel<ServerWarning> l) { warningList = l; }
     //public void setWarningList(java.util.List<ServerWarning> l) { warningList = l; }
     public void setCustomButton(boolean b) { _isCustomButton = b; }
 

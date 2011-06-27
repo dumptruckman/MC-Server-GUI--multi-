@@ -8,13 +8,11 @@ package mcservergui.webinterface;
 import java.io.*;
 import java.net.*;
 import java.nio.channels.*;
-import java.nio.channels.spi.*;
 import java.nio.*;
 import java.nio.charset.*;
 import java.util.*;
 
 import org.codehaus.jackson.*;
-import org.codehaus.jackson.map.*;
 
 import mcservergui.gui.GUI;
 import mcservergui.task.event.EventModel;
@@ -228,93 +226,94 @@ public class WebInterface {
     }
 
     private String processData(Socket client, String json) {
-        ObjectMapper mapper = new ObjectMapper();
+        JsonParser jp = null;
         String response = "";
-        java.util.Map<?,?>root = null;
-        // Convert json to map
         try {
-            root = mapper.readValue(json, java.util.Map.class);
-        } catch (IOException e) {
-            webLog(client, " sent invalid data!");
-            response = new ResponseWriter("Error", "Invalid Data")
-                    .getResponse();
-            return response;
-        }
-        if (root == null) {
-            webLog(client, " sent invalid data!");
-            response = new ResponseWriter("Error", "Invalid Data")
-                    .getResponse();
-            return response;
-        }
-        // Fail if the data does not contain the correct keys
-        if (!root.containsKey("Password") || !root.containsKey("Request") ||
-                !root.containsKey("Data")) {
-            webLog(client, " sent incomplete data!");
-            response = new ResponseWriter("Error", "Incomplete Data")
-                    .getResponse();
-            return response;
-        }
-        // Fail if the data does not contain the correct password
-        if (!root.get("Password").equals(gui.config.web.getPassword())) {
-            webLog(client, "did not pass authentication!");
-            response = new ResponseWriter("Error", "Authentication Error")
-                    .getResponse();
-            return response;
-        }
-
-        // Handle the request
-        if (root.get("Request").equals("Start Server")) {
-            gui.startServer();
-            webLog(client, "issued a Server Start");
-            response = new ResponseWriter("Success", "Server Started").getResponse();
-        } else if (root.get("Request").equals("Stop Server")) {
-            gui.stopServer();
-            webLog(client, "issued a Server Stop");
-            response = new ResponseWriter("Success", "Server Stopped").getResponse();
-        } else if (root.get("Request").equals("Send Input")) {
-            //java.util.List<String> data = getRequestData(jp);
-            java.util.List<String> data = (java.util.List<String>)root.get("Data");
-            System.out.println(data);
-            if (!data.isEmpty()) {
-                gui.sendInput(data.get(0));
-                webLog(client, "sent command '" + data.get(0) + "'");
-                response = new ResponseWriter("Success", "Command sent").getResponse();
+            jp = new JsonFactory().createJsonParser(json);
+            jp.nextToken();
+            if (jp.getCurrentToken() == null) {
+                webLog(client, " sent invalid data!");
+                response = new ResponseWriter("Error", "Invalid Data").getResponse();
+                return response;
+            }
+            jp.nextToken();
+            String auth = jp.getCurrentName();
+            jp.nextToken();
+            String password = jp.getText();
+            jp.nextToken();
+            String identifier = jp.getCurrentName();
+            if (auth.equalsIgnoreCase("Password") && password.equals(gui.config.web.getPassword())) {
+                jp.nextToken();
             } else {
-                response = new ResponseWriter("Error", "Did not specify command").getResponse();
+                webLog(client, "did not pass authentication!");
+                response = new ResponseWriter("Error", "Authentication Error").getResponse();
+                return response;
             }
-        } else if (root.get("Request").equals("Get Output")) {
-            if (!gui.config.web.isDisableGetRequests()) {
-                webLog(client, "requested server output");
+            String request = jp.getText();
+            if (!identifier.equalsIgnoreCase("Request")) {
+                webLog(client, " sent invalid data!");
+                response = new ResponseWriter("Error", "Incorrect Format").getResponse();
+                return response;
             }
-            response = new ResponseWriter("Success", gui.getConsoleOutput()).getResponse();
-        } else if (root.get("Request").equals("Execute Task")) {
-            java.util.List<String> data = (java.util.List<String>)root.get("Data");
-            System.out.println(data);
-            if (!data.isEmpty()) {
-                if (gui.startTaskByName(data.get(0))) {
-                    webLog(client, "executed task '" + data.get(0) + "'");
+            if (request.equalsIgnoreCase("Start Server")) {
+                gui.startServer();
+                webLog(client, "issued a Server Start");
+                response = new ResponseWriter("Success", "Server Started").getResponse();
+            } else if (request.equalsIgnoreCase("Stop Server")) {
+                gui.stopServer();
+                webLog(client, "issued a Server Stop");
+                response = new ResponseWriter("Success", "Server Stopped").getResponse();
+            } else if (request.equalsIgnoreCase("Send Input")) {
+                java.util.List<String> data = getRequestData(jp);
+                if (!data.isEmpty()) {
+                    gui.sendInput(data.get(0));
+                    webLog(client, "sent console command '" + data.get(0) + "'");
                     response = new ResponseWriter("Success", "Command sent").getResponse();
                 } else {
-                    response = new ResponseWriter("Error", "Invalid task").getResponse();
+                    response = new ResponseWriter("Error", "Did not specify command!").getResponse();
                 }
+            } else if (request.equalsIgnoreCase("Get Output")) {
+                if (!gui.config.web.isDisableGetRequests()) {
+                    webLog(client, "requested server output");
+                }
+                response = new ResponseWriter("Success", gui.getConsoleOutput()).getResponse();
+            } else if (request.equalsIgnoreCase("Execute Task")) {
+                java.util.List<String> data = getRequestData(jp);
+                System.out.println(data);
+                if (!data.isEmpty()) {
+                    if (gui.startTaskByName(data.get(0))) {
+                        webLog(client, "executed task '" + data.get(0) + "'");
+                        response = new ResponseWriter("Success", "Command sent").getResponse();
+                    } else {
+                        response = new ResponseWriter("Error", "Invalid task").getResponse();
+                    }
+                }
+            } else if (request.equalsIgnoreCase("Get Task Names")) {
+                if (!gui.config.web.isDisableGetRequests()) {
+                    webLog(client, "requested task names");
+                }
+                List<String> tasknames = new ArrayList<String>();
+                Iterator it = gui.config.schedule.getEvents().iterator();
+                while (it.hasNext()) {
+                    EventModel event = (EventModel)it.next();
+                    tasknames.add(event.getName());
+                }
+                response = new ResponseWriter("Success", tasknames).getResponse();
+            } else {
+                webLog(client, "sent an unrecognized request!");
+                response = new ResponseWriter("Error", "No such request").getResponse();
             }
-        } else if (root.get("Request").equals("Get Task Names")) {
-            if (!gui.config.web.isDisableGetRequests()) {
-                webLog(client, "requested task names");
+        } catch (IOException ioe) {
+            webLog(client, " sent invalid data!");
+            response = new ResponseWriter("Error", "Invalid Data").getResponse();
+        } finally {
+            if (jp != null) {
+                try {
+                    jp.close();
+                } catch (IOException ioe) { }
             }
-            List<String> tasknames = new ArrayList<String>();
-            Iterator it = gui.config.schedule.getEvents().iterator();
-            while (it.hasNext()) {
-                EventModel event = (EventModel)it.next();
-                tasknames.add(event.getName());
-            }
-            response = new ResponseWriter("Success", tasknames).getResponse();
-        } else {
-            webLog(client, "sent an unrecognized request!");
-            response = new ResponseWriter("Error", "No such request").getResponse();
+            return response;
         }
-        
-        return response;
     }
 
     private java.util.List<String> getRequestData(JsonParser jp) throws IOException {
@@ -346,29 +345,11 @@ public class WebInterface {
 
         public ResponseWriter(String s) {
             this();
-            /*
-            response = new StringWriter();
-            try {
-                jg = new JsonFactory().createJsonGenerator(response);
-                jg.writeStartObject();
-            } catch (IOException ioe) {
-                jg = null;
-            }
-             * 
-             */
             add(s, "");
         }
 
         public ResponseWriter(String s1, String s2) {
             this();
-            /*
-            response = new StringWriter();
-            try {
-                jg = new JsonFactory().createJsonGenerator(response);
-                jg.writeStartObject();
-            } catch (IOException ioe) {
-                jg = null;
-            }*/
             add(s1, s2);
         }
 
@@ -413,6 +394,5 @@ public class WebInterface {
             }
         }
     }
-
 }
 

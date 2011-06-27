@@ -938,6 +938,7 @@ public class GUI extends FrameView implements Observer {
             }
         });
 
+        extPortLabel.setLabelFor(extPortField);
         extPortLabel.setText(resourceMap.getString("extPortLabel.text")); // NOI18N
         extPortLabel.setName("extPortLabel"); // NOI18N
 
@@ -1010,10 +1011,12 @@ public class GUI extends FrameView implements Observer {
         serverIpField.setText(resourceMap.getString("serverIpField.text")); // NOI18N
         serverIpField.setName("serverIpField"); // NOI18N
 
+        serverPortLabel.setLabelFor(serverPortField);
         serverPortLabel.setText(resourceMap.getString("serverPortLabel.text")); // NOI18N
         serverPortLabel.setName("serverPortLabel"); // NOI18N
 
         serverPortField.setText(resourceMap.getString("serverPortField.text")); // NOI18N
+        serverPortField.setToolTipText(resourceMap.getString("serverPortField.toolTipText")); // NOI18N
         serverPortField.setInputVerifier(new RegexVerifier("^(6553[0-5]|655[0-2]\\d|65[0-4]\\d\\d|6[0-4]\\d{3}|[1-5]\\d{4}|[1-9]\\d{0,3}|0)$"));
         serverPortField.setName("serverPortField"); // NOI18N
 

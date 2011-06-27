@@ -61,6 +61,12 @@ public class ConsoleParser {
                 }
             } else if (tag.equals("WARNING")) {
                 tag = "[<font color = " + display.getWarningColor() + ">WARNING</font>]";
+                if (gui.config.getProxy() &&
+                        message.contains("**** FAILED TO BIND TO PORT!")) {
+                    gui.addTextToConsoleOutput(date + " " + time + " [WARNING] "
+                            + "Are the Proxy Port and Server Port the same?  "
+                            + "Check the Server Config tab!");
+                }
             } else if (tag.equals("SEVERE")) {
                 tag = "[<font color = " + display.getSevereColor() + ">SEVERE</font>]";
                 message = message.replaceFirst("NullPointerException",
@@ -125,7 +131,7 @@ public class ConsoleParser {
                         replace = "<font color=00ffff>";
                         break;
                     case 37:
-                        replace = "<font color=c0c0c0>";
+                        replace = "<font color=808080>";
                         break;
                     case 0:
                         replace = "</font>";

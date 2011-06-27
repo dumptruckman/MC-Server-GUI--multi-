@@ -26,7 +26,7 @@ public class Task implements Job {
         EventModel event = (EventModel)context.getMergedJobDataMap().get("Event");
         GUI gui = (GUI)context.getMergedJobDataMap().get("GUI");
 
-        List<ServerWarning> warninglist = event.getWarningList().getList();
+        List<ServerWarning> warninglist = event.getWarningList().toList();
         if (!warninglist.isEmpty()) {
             java.util.Collections.sort(warninglist);
             for (int i = 0; i < warninglist.size(); i++) {

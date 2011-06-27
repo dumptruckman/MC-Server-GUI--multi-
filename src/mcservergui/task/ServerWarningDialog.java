@@ -25,7 +25,7 @@ public class ServerWarningDialog extends javax.swing.JDialog {
 
     /** Creates new form ServerWarningDialog */
     public ServerWarningDialog(java.awt.Frame parent,
-            GUIListModel warningListModel/*,
+            GUIListModel<ServerWarning> warningListModel/*,
             java.util.List<ServerWarning> serverWarningList*/) {
         super(parent);
         this.warningListModel = warningListModel;
@@ -35,7 +35,7 @@ public class ServerWarningDialog extends javax.swing.JDialog {
     }
 
     public ServerWarningDialog(java.awt.Frame parent,
-            GUIListModel warningListModel,
+            GUIListModel<ServerWarning> warningListModel,
             /*java.util.List<ServerWarning> serverWarningList,*/
             ServerWarning oldWarning) {
         super(parent);
@@ -228,7 +228,7 @@ public class ServerWarningDialog extends javax.swing.JDialog {
         });
     }
 
-    private GUIListModel warningListModel;
+    private GUIListModel<ServerWarning> warningListModel;
     //private java.util.List<ServerWarning> serverWarningList;
     private ServerWarning oldWarning;
     private String borderTitle;

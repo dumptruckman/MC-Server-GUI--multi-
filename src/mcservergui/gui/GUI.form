@@ -970,6 +970,9 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="extPortLabel">
                       <Properties>
+                        <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                          <ComponentRef name="extPortField"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" resourceKey="extPortLabel.text"/>
                         <Property name="name" type="java.lang.String" value="extPortLabel" noResource="true"/>
                       </Properties>
@@ -1214,6 +1217,9 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="serverPortLabel">
                       <Properties>
+                        <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                          <ComponentRef name="serverPortField"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" resourceKey="serverPortLabel.text"/>
                         <Property name="name" type="java.lang.String" value="serverPortLabel" noResource="true"/>
                       </Properties>
@@ -1221,6 +1227,7 @@
                     <Component class="javax.swing.JTextField" name="serverPortField">
                       <Properties>
                         <Property name="text" type="java.lang.String" resourceKey="serverPortField.text"/>
+                        <Property name="toolTipText" type="java.lang.String" resourceKey="serverPortField.toolTipText"/>
                         <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="new RegexVerifier(&quot;^(6553[0-5]|655[0-2]\\d|65[0-4]\\d\\d|6[0-4]\\d{3}|[1-5]\\d{4}|[1-9]\\d{0,3}|0)$&quot;)" type="code"/>
                         </Property>

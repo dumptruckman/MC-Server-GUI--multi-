@@ -7,36 +7,43 @@ package mcservergui.listmodel;
 
 import java.util.*;
 
-import mcservergui.task.event.EventModel;
 
 /**
  *
  * @author dumptruckman
  */
-public class GUIListModel extends javax.swing.AbstractListModel {
+public class GUIListModel<T> extends javax.swing.AbstractListModel {
 
-    SortedSet model;
+    TreeSet<T> model;
 
     public GUIListModel() {
-        model = new TreeSet();
+        model = new TreeSet<T>();
     }
 
     @Override public int getSize() {
         return model.size();
     }
 
-    @Override public Object getElementAt(int index) {
-        return model.toArray()[index];
+    @Override public T getElementAt(int index) {
+        return (T)model.toArray()[index];
     }
 
-    public void add(Object element) {
+    public void setModel(TreeSet<T> model) {
+        this.model = model;
+    }
+
+    public TreeSet<T> getModel() {
+        return model;
+    }
+
+    public void add(T element) {
         if (model.add(element)) {
             fireContentsChanged(this, 0, getSize());
         }
     }
-
-    public void addAll(Object elements[]) {
-        Collection c = Arrays.asList(elements);
+    
+    public void addAll(T elements[]) {
+        Collection<T> c = Arrays.asList(elements);
         model.addAll(c);
         fireContentsChanged(this, 0, getSize());
     }
@@ -46,7 +53,7 @@ public class GUIListModel extends javax.swing.AbstractListModel {
         fireContentsChanged(this, 0, getSize());
     }
 
-    public boolean contains(Object element) {
+    public boolean contains(T element) {
         return model.contains(element);
     }
 
@@ -62,7 +69,7 @@ public class GUIListModel extends javax.swing.AbstractListModel {
         return model.last();
     }
 
-    public boolean removeElement(Object element) {
+    public boolean removeElement(T element) {
         boolean removed = model.remove(element);
         if (removed) {
             fireContentsChanged(this, 0, getSize());
@@ -70,11 +77,11 @@ public class GUIListModel extends javax.swing.AbstractListModel {
         return removed;
     }
 
-    public java.util.List getList() {
-        java.util.List list = new java.util.ArrayList();
+    public java.util.List<T> toList() {
+        java.util.List<T> list = new java.util.ArrayList<T>();
         java.util.Iterator it = this.iterator();
         while (it.hasNext()) {
-            list.add(it.next());
+            list.add((T)it.next());
         }
         return list;
     }

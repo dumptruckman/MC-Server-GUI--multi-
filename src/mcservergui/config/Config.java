@@ -45,6 +45,18 @@ public class Config {
     public Display display;
     public WebInterface web;
 
+    public CMDLine getCmdLine() { return cmdLine; }
+    public Backups getBackups() { return backups; }
+    public Schedule getSchedule() { return schedule; }
+    public Display getDisplay() { return display; }
+    public WebInterface getWebInterface() { return web; }
+
+    public void setCmdLine(CMDLine cmdLine) { this.cmdLine = cmdLine; }
+    public void setBackups(Backups backups) { this.backups = backups; }
+    public void setSchedule(Schedule schedule) { this.schedule = schedule; }
+    public void setDisplay(Display display) { this.display = display; }
+    public void setWebInterface(WebInterface web) { this.web = web; }
+
     public boolean getProxy() { return _proxy; }
     public int getExtPort() { return _extPort; }
     public String getWindowTitle() { return _windowTitle; }
@@ -250,17 +262,17 @@ public class Config {
     public class Schedule {
         public Schedule() {
             //events = new java.util.ArrayList<EventModel>();
-            events = new GUIListModel();
+            events = new GUIListModel<EventModel>();
         }
 
         //private java.util.List<EventModel> events;
-        private GUIListModel events;
+        private GUIListModel<EventModel> events;
 
         //public java.util.List<EventModel> getEvents() { return events; }
-        public GUIListModel getEvents() { return events; }
+        public GUIListModel<EventModel> getEvents() { return events; }
 
         //public void setEvents(java.util.List<EventModel> e) { events = e; }
-        public void setEvents(GUIListModel e) { events = e; }
+        public void setEvents(GUIListModel<EventModel> e) { events = e; }
     }
 
     public class WebInterface {
@@ -442,7 +454,7 @@ public class Config {
                             if ("Events".equals(schedulefield)) {
                                 //List<EventModel> eventlist =
                                 //        new ArrayList<EventModel>();
-                                GUIListModel eventlist = new GUIListModel();
+                                GUIListModel<EventModel> eventlist = new GUIListModel<EventModel>();
                                 while (jp.nextToken() != JsonToken.END_OBJECT) {
                                     EventModel event =
                                             new EventModel();
@@ -469,7 +481,7 @@ public class Config {
                                         } else if ("Warnings".equals(eventfield)) {
                                             //List<ServerWarning> warninglist =
                                             //        new ArrayList<ServerWarning>();
-                                            GUIListModel warninglist = new GUIListModel();
+                                            GUIListModel<ServerWarning> warninglist = new GUIListModel<ServerWarning>();
                                             while (jp.nextToken() != JsonToken.END_OBJECT) {
                                                 if (jp.getCurrentToken().equals(JsonToken.START_ARRAY)) {
                                                     ServerWarning warning =
@@ -575,7 +587,8 @@ public class Config {
             jg.writeObjectFieldStart("Schedule");
             // EventModel list
             jg.writeObjectFieldStart("Events");
-            java.util.List<EventModel> eventlist = schedule.getEvents().getList();
+            @SuppressWarnings("unchecked")
+            java.util.List<EventModel> eventlist = schedule.getEvents().toList();
             for (int i = 0; i < eventlist.size(); i++) {
                 jg.writeObjectFieldStart(eventlist.get(i).getName());
                 jg.writeBooleanField("Custom Button", eventlist.get(i).isCustomButton());
@@ -597,15 +610,6 @@ public class Config {
                     jg.writeEndArray();
                     j++;
                 }
-                /*
-                for (int j = 0; j < schedule.getEvents().get(i).getWarningList().size(); j++) {
-                    jg.writeArrayFieldStart(String.valueOf(j+1));
-                    jg.writeString(schedule.getEvents().get(i).getWarningList().get(j).getMessage());
-                    jg.writeNumber(schedule.getEvents().get(i).getWarningList().get(j).getTime());
-                    jg.writeEndArray();
-                }
-                 *
-                 */
                 jg.writeEndObject();
                 jg.writeEndObject();
             }

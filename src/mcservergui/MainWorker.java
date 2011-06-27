@@ -75,6 +75,7 @@ public class MainWorker implements java.util.Observer {
     }
 
     class ScheduleChecker extends TimerTask {
+        @SuppressWarnings("unchecked")
         @Override public void run() {
             class ListModeler implements Runnable {
                 javax.swing.ListModel lm;
