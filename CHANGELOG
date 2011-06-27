@@ -1,3 +1,11 @@
+Version .9.4-dev
+    Rewrote how the web interface interprets data... It now allows for the data to be in any order but proper case is required.
+    Editing a Save Worlds task now work properly.
+    The last digit of the seconds field in the console output for players connecting to the proxy is now present!
+    Browsing for a java executable now actually save the path/file that you selected.
+    Added ability to execute tasks through the web interface.
+    Added ability to retrieve a list of task names through the web interface.
+
 Version .9.3
     You can now use the Delete key to remove entries from the task list and a task's warning list.
     Slightly reworked how input was sent to the server, perhaps fixing a bug some users reported.

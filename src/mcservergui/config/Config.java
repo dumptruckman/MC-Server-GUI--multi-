@@ -160,7 +160,11 @@ public class Config {
         public List<String> getCmdLine() {
             List<String> cmdLine = new ArrayList<String>();
             if (!getUseCustomLaunch()) {
-                cmdLine.add(getJavaExec());
+                if (getJavaExec().contains(System.getProperty("file.separator"))) {
+                    cmdLine.add("\"" + getJavaExec() + "\"");
+                } else {
+                    cmdLine.add(getJavaExec());
+                }
                 if (getBukkit()) {
                     cmdLine.add("-Djline.terminal=jline.UnsupportedTerminal");
                 }

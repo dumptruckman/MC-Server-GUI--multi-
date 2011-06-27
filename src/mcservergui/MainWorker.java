@@ -21,6 +21,7 @@ import static mcservergui.tools.TimeTools.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.HttpURLConnection;
 
@@ -53,9 +54,17 @@ public class MainWorker implements java.util.Observer {
 
     @Override public void update(java.util.Observable o, Object arg) {
         if (arg.equals("pid")) {
-            serverPid = server.getPid();
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override public void run() {
+                    serverPid = server.getPid();
+                }
+            });
         } else if (arg.equals("piderror")) {
-            serverPid = -1;
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override public void run() {
+                    serverPid = -1;
+                }
+            });
         }
     }
 
@@ -67,7 +76,31 @@ public class MainWorker implements java.util.Observer {
 
     class ScheduleChecker extends TimerTask {
         @Override public void run() {
-            if (gui.taskSchedulerList.getModel() == null) {
+            class ListModeler implements Runnable {
+                javax.swing.ListModel lm;
+
+                public ListModeler() {
+                    super();
+                    lm = null;
+                }
+
+                @Override public void run() {
+                    lm = gui.taskSchedulerList.getModel();
+                }
+
+                public javax.swing.ListModel getTaskSchedulerListModel() {
+                    return lm;
+                }
+            }
+            ListModeler lm = new ListModeler();
+            try {
+                SwingUtilities.invokeAndWait(lm);
+            } catch (InterruptedException ie) {
+                return;
+            } catch (java.lang.reflect.InvocationTargetException ite) {
+                return;
+            }
+            if (lm.getTaskSchedulerListModel() == null) {
                 return;
             }
             java.util.Set<JobKey> keys = null;
@@ -112,7 +145,7 @@ public class MainWorker implements java.util.Observer {
                 
             }
             SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
+                @Override public void run() {
                     gui.taskSchedulerList.updateUI();
                 }
             });

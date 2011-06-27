@@ -11,6 +11,8 @@
 
 package mcservergui.task;
 
+import javax.swing.SwingUtilities;
+
 import mcservergui.listmodel.GUIListModel;
 import mcservergui.tools.RegexVerifier;
 import static mcservergui.tools.TimeTools.*;
@@ -173,7 +175,6 @@ public class ServerWarningDialog extends javax.swing.JDialog {
                     javax.swing.JOptionPane.YES_OPTION) {
             closeTaskDialog();
         }
-        //closeTaskDialog();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
@@ -185,38 +186,46 @@ public class ServerWarningDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_messageFieldActionPerformed
 
     private void addOldWarning() {
-        timeBeforeField.setText(hmsFromSeconds(oldWarning.getTime()));
-        String command = oldWarning.getMessage();
-        if (command.startsWith("say ")) {
-            command = command.replaceFirst("say ", "");
-            commandIsMessage.setSelected(true);
-        }
-        messageField.setText(command);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                timeBeforeField.setText(hmsFromSeconds(oldWarning.getTime()));
+                String command = oldWarning.getMessage();
+                if (command.startsWith("say ")) {
+                    command = command.replaceFirst("say ", "");
+                    commandIsMessage.setSelected(true);
+                }
+                messageField.setText(command);
+            }
+        });
     }
 
     private void closeAndAdd() {
-        if ((!timeBeforeField.getInputVerifier().verify(timeBeforeField)) ||
-                (timeBeforeField.getText().isEmpty())) {
-            timeBeforeField.requestFocus();
-        } else {
-            int seconds = secondsFromHms(timeBeforeField.getText());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if ((!timeBeforeField.getInputVerifier().verify(timeBeforeField)) ||
+                        (timeBeforeField.getText().isEmpty())) {
+                    timeBeforeField.requestFocus();
+                } else {
+                    int seconds = secondsFromHms(timeBeforeField.getText());
 
-            if (oldWarning != null) {
-                warningListModel.removeElement(oldWarning);
-                //warningListModel.removeElement(oldWarning.toString());
-                //serverWarningList.remove(oldWarning);
-            }
+                    if (oldWarning != null) {
+                        warningListModel.removeElement(oldWarning);
+                        //warningListModel.removeElement(oldWarning.toString());
+                        //serverWarningList.remove(oldWarning);
+                    }
 
-            String command = messageField.getText();
-            if (commandIsMessage.isSelected()) {
-                command = "say " + command;
+                    String command = messageField.getText();
+                    if (commandIsMessage.isSelected()) {
+                        command = "say " + command;
+                    }
+                    //serverWarningList.add(new ServerWarning(
+                    //        command,seconds));
+                    warningListModel.add(new ServerWarning(
+                            command,seconds));
+                    closeTaskDialog();
+                }
             }
-            //serverWarningList.add(new ServerWarning(
-            //        command,seconds));
-            warningListModel.add(new ServerWarning(
-                    command,seconds));
-            closeTaskDialog();
-        }
+        });
     }
 
     private GUIListModel warningListModel;

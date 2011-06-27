@@ -21,6 +21,7 @@ import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.HTMLDocument;
@@ -55,8 +56,11 @@ public class GUI extends FrameView implements Observer {
     public GUI(SingleFrameApplication app, MCServerModel newServer, Config newConfig, Scheduler scheduler) {
         super(app);
 
+        // Sets model for backup file check box tree
         backupFileSystem = new mcservergui.fileexplorer.FileSystemModel(".");
+        // Sets model for player list
         playerListModel = new PlayerList();
+        // Initializes the custom Button Combo Boxes
         customButtonBoxModel1 = new javax.swing.DefaultComboBoxModel();
         customButtonBoxModel1.addElement("Edit Tasks");
         customButtonBoxModel2 = new javax.swing.DefaultComboBoxModel();
@@ -64,6 +68,7 @@ public class GUI extends FrameView implements Observer {
 
         initComponents();
         fixComponents();
+        // GUI starts unhidden, indication of that:
         isHidden = false;
 
         // status bar initialization - message timeout, idle icon and busy animation, etc
@@ -119,16 +124,16 @@ public class GUI extends FrameView implements Observer {
                 }
             }
         });
-        
+
+        // Sets a control+s hotkey for the say checkbox
         sayCheckBox.getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW).put(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK),"sayOn");
         sayCheckBox.getActionMap().put("sayOn", sayToggle);
+        // Sets shift+enter as a hotkey to reverse the say setting.
         consoleInput.getInputMap().put(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ENTER, java.awt.event.InputEvent.SHIFT_MASK),"sayOn");
         consoleInput.getActionMap().put("sayOn", saySend);
 
+        // Grabs scheduler from params
         this.scheduler = scheduler;
-
-        //taskList = new GUIListModel();
-        //taskSchedulerList.setModel(taskList);
 
         serverProperties = new ServerProperties();
         config = newConfig;
@@ -353,9 +358,6 @@ public class GUI extends FrameView implements Observer {
         consoleOutput.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 consoleOutputMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                consoleOutputMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 consoleOutputMouseExited(evt);
@@ -1194,7 +1196,7 @@ public class GUI extends FrameView implements Observer {
 
         inputHistoryMaxSizeField.setText(resourceMap.getString("inputHistoryMaxSizeField.text")); // NOI18N
         inputHistoryMaxSizeField.setToolTipText(resourceMap.getString("inputHistoryMaxSizeField.toolTipText")); // NOI18N
-        inputHistoryMaxSizeField.setInputVerifier(new numberVerifier());
+        inputHistoryMaxSizeField.setInputVerifier(new RegexVerifier("\\d{1,4}"));
         inputHistoryMaxSizeField.setName("inputHistoryMaxSizeField"); // NOI18N
 
         startServerOnLaunchCheckBox.setText(resourceMap.getString("startServerOnLaunchCheckBox.text")); // NOI18N
@@ -2052,23 +2054,30 @@ public class GUI extends FrameView implements Observer {
                 .addComponent(serverPropertiesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(57, 57, 57))
         );
+        // Sets the checking model for the backup file checkbox tree
         backupFileChooser.getCheckingModel().setCheckingMode(CheckingMode.PROPAGATE_PRESERVING_CHECK);
+        // Sets html fomratting for some components
         taskSchedulerList.setCellRenderer(new TaskSchedulerListCellRenderer());
         consoleOutput.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
-        backupStatusLog.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
         consoleOutput.setStyledDocument(new javax.swing.text.html.HTMLDocument());
+        backupStatusLog.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
         backupStatusLog.setStyledDocument(new javax.swing.text.html.HTMLDocument());
         webLog.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
         webLog.setStyledDocument(new javax.swing.text.html.HTMLDocument());
+        // Sets the application icon
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(mcservergui.Main.class).getContext().getResourceMap(GUI.class);
         this.getFrame().setIconImage(resourceMap.getImageIcon("imageLabel.icon").getImage());
 
+        //Sets the version number on Main Window tab
         versionNumber = org.jdesktop.application.Application
                 .getInstance(mcservergui.Main.class).getContext()
                 .getResourceMap(AboutBox.class).getString("Application.version");
         versionLabel.setText("Version " + versionNumber);
     }
 
+    /**
+     * Sets the rendering of the task list
+     */
     private class TaskSchedulerListCellRenderer extends javax.swing.JTextPane implements javax.swing.ListCellRenderer {
         public TaskSchedulerListCellRenderer() {
             setOpaque(true);
@@ -2094,11 +2103,15 @@ public class GUI extends FrameView implements Observer {
      */
     javax.swing.Action sayToggle = new javax.swing.AbstractAction() {
         @Override public void actionPerformed(ActionEvent e) {
-            if (sayCheckBox.isSelected()) {
-                sayCheckBox.setSelected(false);
-            } else {
-                sayCheckBox.setSelected(true);
-            }
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override public void run() {
+                    if (sayCheckBox.isSelected()) {
+                        sayCheckBox.setSelected(false);
+                    } else {
+                        sayCheckBox.setSelected(true);
+                    }
+                }
+            });
         }
     };
 
@@ -2112,11 +2125,15 @@ public class GUI extends FrameView implements Observer {
     };
 
     private void startstopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startstopButtonActionPerformed
-        if (startstopButton.getText().equals("Start")) {
-            startServer();
-        } else {
-            stopServer();
-        }
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if (startstopButton.getText().equals("Start")) {
+                    startServer();
+                } else {
+                    stopServer();
+                }
+            }
+        });
     }//GEN-LAST:event_startstopButtonActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
@@ -2128,64 +2145,100 @@ public class GUI extends FrameView implements Observer {
     }//GEN-LAST:event_consoleInputActionPerformed
 
     private void windowTitleFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_windowTitleFieldActionPerformed
-        config.setWindowTitle(windowTitleField.getText());
-        getFrame().setTitle(windowTitleField.getText());
-        trayIcon.setToolTip(windowTitleField.getText());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                config.setWindowTitle(windowTitleField.getText());
+                getFrame().setTitle(windowTitleField.getText());
+                trayIcon.setToolTip(windowTitleField.getText());
+            }
+        });
     }//GEN-LAST:event_windowTitleFieldActionPerformed
 
     private void javaExecBrowseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_javaExecBrowseButtonActionPerformed
-        final JFileChooser fc = new JFileChooser();
-        int returnVal = fc.showOpenDialog(getFrame());
-        cmdLineField.setText(config.cmdLine.parseCmdLine());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                final JFileChooser fc = new JFileChooser();
+                int returnVal = fc.showOpenDialog(getFrame());
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    javaExecField.setText(fc.getSelectedFile().getPath());
+                    config.cmdLine.setJavaExec(fc.getSelectedFile().getPath());
+                }
+                cmdLineField.setText(config.cmdLine.parseCmdLine());
+            }
+        });
     }//GEN-LAST:event_javaExecBrowseButtonActionPerformed
 
     private void serverJarBrowseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serverJarBrowseButtonActionPerformed
-        try {
-            final JFileChooser fc = new JFileChooser(new File(".").getCanonicalPath());
-            int returnVal = fc.showOpenDialog(getFrame());
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                serverJarField.setText(fc.getSelectedFile().getName());
-                config.cmdLine.setServerJar(fc.getSelectedFile().getName());
-                cmdLineField.setText(config.cmdLine.parseCmdLine());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                try {
+                    final JFileChooser fc = new JFileChooser(new File(".").getCanonicalPath());
+                    int returnVal = fc.showOpenDialog(getFrame());
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        config.cmdLine.setServerJar(fc.getSelectedFile().getName());
+                        serverJarField.setText(fc.getSelectedFile().getName());
+                        cmdLineField.setText(config.cmdLine.parseCmdLine());
+                    }
+                } catch (IOException e) {
+                    System.out.println("Error retrieving path");
+                }
             }
-        } catch (IOException e) {
-            System.out.println("Error retrieving path");
-        }
+        });
     }//GEN-LAST:event_serverJarBrowseButtonActionPerformed
 
     private void bukkitCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bukkitCheckBoxActionPerformed
-        config.cmdLine.setBukkit(bukkitCheckBox.isSelected());
-        cmdLineField.setText(config.cmdLine.parseCmdLine());
-        if (bukkitCheckBox.isSelected()) {
-            //backupPluginsCheckBox.setEnabled(true);
-        } else {
-           // backupPluginsCheckBox.setEnabled(false);
-        }
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                config.cmdLine.setBukkit(bukkitCheckBox.isSelected());
+                cmdLineField.setText(config.cmdLine.parseCmdLine());
+            }
+        });
     }//GEN-LAST:event_bukkitCheckBoxActionPerformed
 
     private void xmxMemoryFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xmxMemoryFieldActionPerformed
-        config.cmdLine.setXmx(xmxMemoryField.getText());
-        cmdLineField.setText(config.cmdLine.parseCmdLine());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                config.cmdLine.setXmx(xmxMemoryField.getText());
+                cmdLineField.setText(config.cmdLine.parseCmdLine());
+            }
+        });
     }//GEN-LAST:event_xmxMemoryFieldActionPerformed
 
     private void xincgcCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xincgcCheckBoxActionPerformed
-        config.cmdLine.setXincgc(xincgcCheckBox.isSelected());
-        cmdLineField.setText(config.cmdLine.parseCmdLine());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                config.cmdLine.setXincgc(xincgcCheckBox.isSelected());
+                cmdLineField.setText(config.cmdLine.parseCmdLine());
+            }
+        });
+        
     }//GEN-LAST:event_xincgcCheckBoxActionPerformed
 
     private void extraArgsFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extraArgsFieldActionPerformed
-        config.cmdLine.setExtraArgs(extraArgsField.getText());
-        cmdLineField.setText(config.cmdLine.parseCmdLine());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                config.cmdLine.setExtraArgs(extraArgsField.getText());
+                cmdLineField.setText(config.cmdLine.parseCmdLine());
+            }
+        });
     }//GEN-LAST:event_extraArgsFieldActionPerformed
 
     private void serverJarFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serverJarFieldActionPerformed
-        config.cmdLine.setServerJar(serverJarField.getText());
-        cmdLineField.setText(config.cmdLine.parseCmdLine());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                config.cmdLine.setServerJar(serverJarField.getText());
+                cmdLineField.setText(config.cmdLine.parseCmdLine());
+            }
+        });
     }//GEN-LAST:event_serverJarFieldActionPerformed
 
     private void javaExecFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_javaExecFieldActionPerformed
-        config.cmdLine.setJavaExec(javaExecField.getText());
-        cmdLineField.setText(config.cmdLine.parseCmdLine());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                config.cmdLine.setJavaExec(javaExecField.getText());
+                cmdLineField.setText(config.cmdLine.parseCmdLine());
+            }
+        });
     }//GEN-LAST:event_javaExecFieldActionPerformed
 
     private void saveGuiConfigButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveGuiConfigButtonActionPerformed
@@ -2196,40 +2249,44 @@ public class GUI extends FrameView implements Observer {
         saveConfig();
     }//GEN-LAST:event_saveServerConfigButtonActionPerformed
 
-    private void consoleOutputMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consoleOutputMouseEntered
-        //if ((server.isRunning()) && (!consoleOutput.isFocusOwner())) {
-        //    textScrolling = false;
-        //}
-        //mouseInConsoleOutput = true;
-    }//GEN-LAST:event_consoleOutputMouseEntered
-
     private void consoleOutputMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consoleOutputMouseExited
-        int selMin = consoleOutput.getSelectionStart();
-        int selMax = consoleOutput.getSelectionEnd();
-        if (/*(!consoleOutput.isFocusOwner()) && */(server.isRunning()) && (selMax - selMin == 0)) {
-            textScrolling = true;
-        }
-        mouseInConsoleOutput = false;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                int selMin = consoleOutput.getSelectionStart();
+                int selMax = consoleOutput.getSelectionEnd();
+                if ((server.isRunning()) && (selMax - selMin == 0)) {
+                    textScrolling = true;
+                }
+                mouseInConsoleOutput = false;
+            }
+        });
     }//GEN-LAST:event_consoleOutputMouseExited
 
     private void consoleOutputFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_consoleOutputFocusGained
-        if (server.isRunning()) {
-            textScrolling = false;
-        }
+        textScrolling = false;
     }//GEN-LAST:event_consoleOutputFocusGained
 
     private void consoleOutputFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_consoleOutputFocusLost
-        int selMin = consoleOutput.getSelectionStart();
-        int selMax = consoleOutput.getSelectionEnd();
-        if ((selMax - selMin == 0) && (server.isRunning()) && (!mouseInConsoleOutput)) {
-            textScrolling = true;
-        }
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                int selMin = consoleOutput.getSelectionStart();
+                int selMax = consoleOutput.getSelectionEnd();
+                if ((selMax - selMin == 0) && (server.isRunning()) && (!mouseInConsoleOutput)) {
+                    textScrolling = true;
+                }
+            }
+        });
     }//GEN-LAST:event_consoleOutputFocusLost
 
     private void tabberKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabberKeyTyped
-        if(tabber.getSelectedIndex() == 0) {
-            giveInputFocus(evt);
-        }
+        final java.awt.event.KeyEvent event = evt;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if(tabber.getSelectedIndex() == 0) {
+                    giveInputFocus(event);
+                }
+            }
+        });
     }//GEN-LAST:event_tabberKeyTyped
 
     private void playerListKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_playerListKeyTyped
@@ -2249,74 +2306,87 @@ public class GUI extends FrameView implements Observer {
     }//GEN-LAST:event_consoleOutputKeyTyped
 
     private void consoleInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_consoleInputKeyPressed
-        if (!inputHistory.isEmpty()) {
-            if (evt.getKeyCode() == 38) {
-                inputHistoryIndex++;
-                if (inputHistoryIndex > inputHistory.size()) {
-                    inputHistoryIndex = 0;
-                }
-                if (inputHistoryIndex == inputHistory.size()) {
-                    consoleInput.setText("");
-                } else {
-                    consoleInput.setText(inputHistory.get(inputHistoryIndex));
-                }
-            } else if (evt.getKeyCode() == 40) {
-                inputHistoryIndex--;
-                if (inputHistoryIndex < 0) {
-                    inputHistoryIndex = inputHistory.size();
-                }
-                if (inputHistoryIndex == inputHistory.size()) {
-                    consoleInput.setText("");
-                } else {
-                    consoleInput.setText(inputHistory.get(inputHistoryIndex));
+        final java.awt.event.KeyEvent event = evt;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if (!inputHistory.isEmpty()) {
+                    if (event.getKeyCode() == 38) {
+                        // Move back through the input history
+                        inputHistoryIndex++;
+                        if (inputHistoryIndex > inputHistory.size()) {
+                            inputHistoryIndex = 0;
+                        }
+                        if (inputHistoryIndex == inputHistory.size()) {
+                            consoleInput.setText("");
+                        } else {
+                            consoleInput.setText(inputHistory.get(inputHistoryIndex));
+                        }
+                    } else if (event.getKeyCode() == 40) {
+                        // Move forward through the input history
+                        inputHistoryIndex--;
+                        if (inputHistoryIndex < 0) {
+                            inputHistoryIndex = inputHistory.size();
+                        }
+                        if (inputHistoryIndex == inputHistory.size()) {
+                            consoleInput.setText("");
+                        } else {
+                            consoleInput.setText(inputHistory.get(inputHistoryIndex));
+                        }
+                    }
                 }
             }
-        }
+        });
     }//GEN-LAST:event_consoleInputKeyPressed
 
     private void customLaunchCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customLaunchCheckBoxActionPerformed
-        config.cmdLine.setUseCustomLaunch(customLaunchCheckBox.isSelected());
-        cmdLineField.setText(config.cmdLine.parseCmdLine());
-        if (customLaunchCheckBox.isSelected()) {
-            if (java.util.regex.Pattern.matches("^\\s*$", config.cmdLine.getCustomLaunch())) {
-                config.cmdLine.setUseCustomLaunch(false);
-                config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
-                config.cmdLine.setUseCustomLaunch(true);
-                cmdLineField.setText(config.cmdLine.getCustomLaunch());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                config.cmdLine.setUseCustomLaunch(customLaunchCheckBox.isSelected());
+                cmdLineField.setText(config.cmdLine.parseCmdLine());
+                if (customLaunchCheckBox.isSelected()) {
+                    if (java.util.regex.Pattern.matches("^\\s*$", config.cmdLine.getCustomLaunch())) {
+                        config.cmdLine.setUseCustomLaunch(false);
+                        config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
+                        config.cmdLine.setUseCustomLaunch(true);
+                        cmdLineField.setText(config.cmdLine.getCustomLaunch());
+                    }
+                    cmdLineField.setEditable(true);
+                    javaExecField.setEditable(false);
+                    javaExecBrowseButton.setEnabled(false);
+                    serverJarField.setEditable(false);
+                    serverJarBrowseButton.setEnabled(false);
+                    xmxMemoryField.setEditable(false);
+                    xincgcCheckBox.setEnabled(false);
+                    extraArgsField.setEditable(false);
+                } else {
+                    if (java.util.regex.Pattern.matches("^\\s*$", config.cmdLine.getCustomLaunch())) {
+                        config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
+                    }
+                    cmdLineField.setEditable(false);
+                    javaExecField.setEditable(true);
+                    javaExecBrowseButton.setEnabled(true);
+                    serverJarField.setEditable(true);
+                    serverJarBrowseButton.setEnabled(true);
+                    xmxMemoryField.setEditable(true);
+                    xincgcCheckBox.setEnabled(true);
+                    extraArgsField.setEditable(true);
+                }
             }
-            cmdLineField.setEditable(true);
-            javaExecField.setEditable(false);
-            javaExecBrowseButton.setEnabled(false);
-            serverJarField.setEditable(false);
-            serverJarBrowseButton.setEnabled(false);
-            //bukkitCheckBox.setEnabled(false);
-            xmxMemoryField.setEditable(false);
-            xincgcCheckBox.setEnabled(false);
-            extraArgsField.setEditable(false);
-        } else {
-            if (java.util.regex.Pattern.matches("^\\s*$", config.cmdLine.getCustomLaunch())) {
-                config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
-            }
-            cmdLineField.setEditable(false);
-            javaExecField.setEditable(true);
-            javaExecBrowseButton.setEnabled(true);
-            serverJarField.setEditable(true);
-            serverJarBrowseButton.setEnabled(true);
-            //bukkitCheckBox.setEnabled(true);
-            xmxMemoryField.setEditable(true);
-            xincgcCheckBox.setEnabled(true);
-            extraArgsField.setEditable(true);
-        }
+        });  
     }//GEN-LAST:event_customLaunchCheckBoxActionPerformed
 
     private void cmdLineFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLineFieldActionPerformed
-        config.cmdLine.setCustomLaunch(cmdLineField.getText());
-        if (java.util.regex.Pattern.matches("^\\s*$", config.cmdLine.getCustomLaunch())) {
-            config.cmdLine.setUseCustomLaunch(false);
-            config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
-            config.cmdLine.setUseCustomLaunch(true);
-            cmdLineField.setText(config.cmdLine.getCustomLaunch());
-        }
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                config.cmdLine.setCustomLaunch(cmdLineField.getText());
+                if (java.util.regex.Pattern.matches("^\\s*$", config.cmdLine.getCustomLaunch())) {
+                    config.cmdLine.setUseCustomLaunch(false);
+                    config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
+                    config.cmdLine.setUseCustomLaunch(true);
+                    cmdLineField.setText(config.cmdLine.getCustomLaunch());
+                }
+            }
+        });
     }//GEN-LAST:event_cmdLineFieldActionPerformed
     
     private void saveWorldsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveWorldsButtonActionPerformed
@@ -2328,14 +2398,23 @@ public class GUI extends FrameView implements Observer {
     }//GEN-LAST:event_saveBackupControlButtonActionPerformed
 
     private void backupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupButtonActionPerformed
-        config.backups.setPath(backupPathField.getText());
-        backup();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                config.backups.setPath(backupPathField.getText());
+                backup();
+            }
+        });
+        
     }//GEN-LAST:event_backupButtonActionPerformed
 
     private void tabberStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabberStateChanged
-        if (tabber.getSelectedIndex() == 3) {
-            refreshBackupFileChooser();
-        }
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if (tabber.getSelectedIndex() == 3) {
+                    refreshBackupFileChooser();
+                }
+            }
+        });
     }//GEN-LAST:event_tabberStateChanged
 
     private void backupControlRefreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupControlRefreshButtonActionPerformed
@@ -2343,31 +2422,43 @@ public class GUI extends FrameView implements Observer {
     }//GEN-LAST:event_backupControlRefreshButtonActionPerformed
 
     private void backupPathBrowseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupPathBrowseButtonActionPerformed
-        try {
-            File backup = new File(backupPathField.getText());
-            final JFileChooser fc;
-            if (backup.exists()) {
-                fc = new JFileChooser(backup.getCanonicalPath());
-            } else {
-                fc = new JFileChooser(new File(".").getCanonicalPath());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                try {
+                    File backup = new File(backupPathField.getText());
+                    final JFileChooser fc;
+                    if (backup.exists()) {
+                        fc = new JFileChooser(backup.getCanonicalPath());
+                    } else {
+                        fc = new JFileChooser(new File(".").getCanonicalPath());
+                    }
+                    fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                    int returnVal = fc.showOpenDialog(getFrame());
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        backupPathField.setText(fc.getSelectedFile().getPath());
+                        config.backups.setPath(fc.getSelectedFile().getPath());
+                    }
+                } catch (IOException e) {
+                    System.err.println("[MC Server GUI] Error retrieving program path.");
+                }
             }
-            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            int returnVal = fc.showOpenDialog(getFrame());
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                backupPathField.setText(fc.getSelectedFile().getPath());
-                config.backups.setPath(fc.getSelectedFile().getPath());
-            }
-        } catch (IOException e) {
-            System.err.println("[MC Server GUI] Error retrieving program path.");
-        }
+        });
     }//GEN-LAST:event_backupPathBrowseButtonActionPerformed
 
     private void backupPathFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupPathFieldActionPerformed
-        config.backups.setPath(backupPathField.getText());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                config.backups.setPath(backupPathField.getText());
+            }
+        });
     }//GEN-LAST:event_backupPathFieldActionPerformed
 
     private void zipBackupCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zipBackupCheckBoxActionPerformed
-        config.backups.setZip(zipBackupCheckBox.isSelected());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                config.backups.setZip(zipBackupCheckBox.isSelected());
+            }
+        });
     }//GEN-LAST:event_zipBackupCheckBoxActionPerformed
 
     private void taskListAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taskListAddButtonActionPerformed
@@ -2375,10 +2466,11 @@ public class GUI extends FrameView implements Observer {
     }//GEN-LAST:event_taskListAddButtonActionPerformed
 
     private void taskListEditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taskListEditButtonActionPerformed
-        //if (getEventIndexFromSelected() != -1) {
-        //    editTaskListEntry(getEventIndexFromSelected());
-        //}
-        editTaskListEntry((EventModel)taskSchedulerList.getSelectedValue());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                editTaskListEntry((EventModel)taskSchedulerList.getSelectedValue());
+            }
+        });
     }//GEN-LAST:event_taskListEditButtonActionPerformed
 
     private void taskListRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taskListRemoveButtonActionPerformed
@@ -2386,223 +2478,288 @@ public class GUI extends FrameView implements Observer {
     }//GEN-LAST:event_taskListRemoveButtonActionPerformed
 
     public void removeTaskListEntry() {
-        if (javax.swing.JOptionPane.showConfirmDialog(this.getFrame(),
-                "Are you sure you wish to remove this event?\n"
-                + "If it is running it will be interrupted.\n",
-                "Remove scheduled task",
-                javax.swing.JOptionPane.YES_NO_OPTION) ==
-                javax.swing.JOptionPane.YES_OPTION) {
-            //int index = getEventIndexFromSelected();
-            //EventModel event = (EventModel)config.schedule.getEvents()
-            //      .getElementAt(index);
-            EventModel event = (EventModel)taskSchedulerList
-                    .getSelectedValue();
-            try {
-                scheduler.interrupt(JobKey.jobKey(event.getName()));
-                scheduler.deleteJob(JobKey.jobKey(event.getName()));
-            } catch (SchedulerException se) {
-                System.out.println("Error removing old task");
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if (javax.swing.JOptionPane.showConfirmDialog(GUI.this.getFrame(),
+                        "Are you sure you wish to remove this event?\n"
+                        + "If it is running it will be interrupted.\n",
+                        "Remove scheduled task",
+                        javax.swing.JOptionPane.YES_NO_OPTION) ==
+                        javax.swing.JOptionPane.YES_OPTION) {
+
+                    EventModel event = (EventModel)taskSchedulerList
+                            .getSelectedValue();
+                    try {
+                        scheduler.interrupt(JobKey.jobKey(event.getName()));
+                        scheduler.deleteJob(JobKey.jobKey(event.getName()));
+                    } catch (SchedulerException se) {
+                        System.out.println("Error removing old task");
+                    }
+                    customButtonBoxModel1.removeElement(event.getName());
+                    customButtonBoxModel2.removeElement(event.getName());
+                    config.schedule.getEvents().removeElement(event);
+                    config.save();
+                }
             }
-            customButtonBoxModel1.removeElement(event.getName());
-            customButtonBoxModel2.removeElement(event.getName());
-            config.schedule.getEvents().removeElement(event);
-            //taskList.removeElement(taskList.getElementAt(taskSchedulerList.getSelectedIndex()));
-            config.save();
-        }
+        });
     }
 
     private void textSizeFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_textSizeFieldPropertyChange
-        config.display.setTextSize(Integer.parseInt(textSizeField.getValue().toString()));
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                config.display.setTextSize(Integer.parseInt(textSizeField.getValue().toString()));
+            }
+        });
     }//GEN-LAST:event_textSizeFieldPropertyChange
 
     private void textColorBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textColorBoxMouseClicked
-        JFrame mainFrame = Main.getApplication().getMainFrame();
-        ColorChooser colorchooser = new ColorChooser(
-                mainFrame, textColorBox);
-        colorchooser.setLocationRelativeTo(mainFrame);
-        Main.getApplication().show(colorchooser);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                JFrame mainFrame = Main.getApplication().getMainFrame();
+                ColorChooser colorchooser = new ColorChooser(
+                        mainFrame, textColorBox);
+                colorchooser.setLocationRelativeTo(mainFrame);
+                Main.getApplication().show(colorchooser);
+            }
+        });
     }//GEN-LAST:event_textColorBoxMouseClicked
 
     private void bgColorBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bgColorBoxMouseClicked
-        JFrame mainFrame = Main.getApplication().getMainFrame();
-        ColorChooser colorchooser = new ColorChooser(
-                mainFrame, bgColorBox);
-        colorchooser.setLocationRelativeTo(mainFrame);
-        Main.getApplication().show(colorchooser);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                JFrame mainFrame = Main.getApplication().getMainFrame();
+                ColorChooser colorchooser = new ColorChooser(
+                        mainFrame, bgColorBox);
+                colorchooser.setLocationRelativeTo(mainFrame);
+                Main.getApplication().show(colorchooser);
+            }
+        });
     }//GEN-LAST:event_bgColorBoxMouseClicked
 
     private void infoColorBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_infoColorBoxMouseClicked
-        JFrame mainFrame = Main.getApplication().getMainFrame();
-        ColorChooser colorchooser = new ColorChooser(
-                mainFrame, infoColorBox);
-        colorchooser.setLocationRelativeTo(mainFrame);
-        Main.getApplication().show(colorchooser);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                JFrame mainFrame = Main.getApplication().getMainFrame();
+                ColorChooser colorchooser = new ColorChooser(
+                        mainFrame, infoColorBox);
+                colorchooser.setLocationRelativeTo(mainFrame);
+                Main.getApplication().show(colorchooser);
+            }
+        });
     }//GEN-LAST:event_infoColorBoxMouseClicked
 
     private void warningColorBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_warningColorBoxMouseClicked
-        JFrame mainFrame = Main.getApplication().getMainFrame();
-        ColorChooser colorchooser = new ColorChooser(
-                mainFrame, warningColorBox);
-        colorchooser.setLocationRelativeTo(mainFrame);
-        Main.getApplication().show(colorchooser);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                JFrame mainFrame = Main.getApplication().getMainFrame();
+                ColorChooser colorchooser = new ColorChooser(
+                        mainFrame, warningColorBox);
+                colorchooser.setLocationRelativeTo(mainFrame);
+                Main.getApplication().show(colorchooser);
+            }
+        });
     }//GEN-LAST:event_warningColorBoxMouseClicked
 
     private void severeColorBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_severeColorBoxMouseClicked
-        JFrame mainFrame = Main.getApplication().getMainFrame();
-        ColorChooser colorchooser = new ColorChooser(
-                mainFrame, severeColorBox);
-        colorchooser.setLocationRelativeTo(mainFrame);
-        Main.getApplication().show(colorchooser);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                JFrame mainFrame = Main.getApplication().getMainFrame();
+                ColorChooser colorchooser = new ColorChooser(
+                        mainFrame, severeColorBox);
+                colorchooser.setLocationRelativeTo(mainFrame);
+                Main.getApplication().show(colorchooser);
+            }
+        });
     }//GEN-LAST:event_severeColorBoxMouseClicked
 
     private void textColorBoxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textColorBoxFocusLost
-        String rgb = Integer.toHexString(textColorBox.getBackground().getRGB());
-        rgb = rgb.substring(2, rgb.length());
-        config.display.setTextColor(rgb);
-        /*
-        if (textColorField.getInputVerifier().verify(textColorField)) {
-            config.display.setTextColor(textColorField.getText());
-            textColorBox.setBackground(java.awt.Color.decode("0x"
-                    + textColorField.getText()));
-        }
-         * 
-         */
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                String rgb = Integer.toHexString(textColorBox.getBackground().getRGB());
+                rgb = rgb.substring(2, rgb.length());
+                config.display.setTextColor(rgb);
+            }
+        });
     }//GEN-LAST:event_textColorBoxFocusLost
 
     private void bgColorBoxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bgColorBoxFocusLost
-        String rgb = Integer.toHexString(bgColorBox.getBackground().getRGB());
-        rgb = rgb.substring(2, rgb.length());
-        config.display.setBgColor(rgb);
-        updateConsoleOutputBgColor();
-        /*
-        if (bgColorField.getInputVerifier().verify(bgColorField)) {
-            config.display.setBgColor(bgColorField.getText());
-            bgColorBox.setBackground(java.awt.Color.decode("0x"
-                    + bgColorField.getText()));
-            updateConsoleOutputBgColor();
-        }
-         *
-         */
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                String rgb = Integer.toHexString(bgColorBox.getBackground().getRGB());
+                rgb = rgb.substring(2, rgb.length());
+                config.display.setBgColor(rgb);
+                updateConsoleOutputBgColor();
+            }
+        });
     }//GEN-LAST:event_bgColorBoxFocusLost
 
     private void infoColorBoxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_infoColorBoxFocusLost
-        String rgb = Integer.toHexString(infoColorBox.getBackground().getRGB());
-        rgb = rgb.substring(2, rgb.length());
-        config.display.setInfoColor(rgb);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                String rgb = Integer.toHexString(infoColorBox.getBackground().getRGB());
+                rgb = rgb.substring(2, rgb.length());
+                config.display.setInfoColor(rgb);
+            }
+        });
     }//GEN-LAST:event_infoColorBoxFocusLost
 
     private void warningColorBoxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_warningColorBoxFocusLost
-        String rgb = Integer.toHexString(warningColorBox.getBackground().getRGB());
-        rgb = rgb.substring(2, rgb.length());
-        config.display.setWarningColor(rgb);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                String rgb = Integer.toHexString(warningColorBox.getBackground().getRGB());
+                rgb = rgb.substring(2, rgb.length());
+                config.display.setWarningColor(rgb);
+            }
+        });
     }//GEN-LAST:event_warningColorBoxFocusLost
 
     private void severeColorBoxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_severeColorBoxFocusLost
-        String rgb = Integer.toHexString(severeColorBox.getBackground().getRGB());
-        rgb = rgb.substring(2, rgb.length());
-        config.display.setSevereColor(rgb);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                String rgb = Integer.toHexString(severeColorBox.getBackground().getRGB());
+                rgb = rgb.substring(2, rgb.length());
+                config.display.setSevereColor(rgb);
+            }
+        });
     }//GEN-LAST:event_severeColorBoxFocusLost
 
     private void playerListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playerListMouseClicked
-        if (evt.getButton() == evt.BUTTON3 && (playerList.getSelectedIndex() > -1)) {
-            javax.swing.JPopupMenu playerListContextMenu = new javax.swing.JPopupMenu();
-            javax.swing.JMenuItem kickMenuItem;
-            kickMenuItem = new javax.swing.JMenuItem("Kick");
-            kickMenuItem.addActionListener(
-                    new ActionListener() {
-                @Override public void actionPerformed(ActionEvent ev) {
-                    String s = (String)javax.swing.JOptionPane.showInputDialog(
-                            GUI.this.getFrame(), "Add a kick message or just "
-                            + "press enter.", "Kick Player", javax.swing
-                            .JOptionPane.PLAIN_MESSAGE, null, null, "");
-                    playerListModel.findPlayer(playerListModel.getElementAt(
-                            playerList.getSelectedIndex())).kick(s);
+        final java.awt.event.MouseEvent event = evt;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if (event.getButton() == event.BUTTON3 && (playerList.getSelectedIndex() > -1)) {
+                    javax.swing.JPopupMenu playerListContextMenu = new javax.swing.JPopupMenu();
+                    javax.swing.JMenuItem kickMenuItem;
+                    kickMenuItem = new javax.swing.JMenuItem("Kick");
+                    kickMenuItem.addActionListener(
+                            new ActionListener() {
+                        @Override public void actionPerformed(ActionEvent ev) {
+                            String s = (String)javax.swing.JOptionPane.showInputDialog(
+                                    GUI.this.getFrame(), "Add a kick message or just "
+                                    + "press enter.", "Kick Player", javax.swing
+                                    .JOptionPane.PLAIN_MESSAGE, null, null, "");
+                            playerListModel.findPlayer(playerListModel.getElementAt(
+                                    playerList.getSelectedIndex())).kick(s);
+                        }
+                    });
+                    javax.swing.JMenuItem banMenuItem;
+                    banMenuItem = new javax.swing.JMenuItem("Ban");
+                    banMenuItem.addActionListener(
+                            new ActionListener() {
+                        @Override public void actionPerformed(ActionEvent ev) {
+                            String s = (String)javax.swing.JOptionPane.showInputDialog(
+                                    GUI.this.getFrame(), "Add a ban message or just "
+                                    + "press enter.", "Ban Player", javax.swing
+                                    .JOptionPane.PLAIN_MESSAGE, null, null, "Banned!");
+                            server.banKick(playerListModel.findPlayer(
+                                    playerListModel.getElementAt(
+                                    playerList.getSelectedIndex())).getName(), s);
+                        }
+                    });
+                    javax.swing.JMenuItem banIpMenuItem;
+                    banIpMenuItem = new javax.swing.JMenuItem("Ban IP");
+                    banIpMenuItem.addActionListener(
+                            new ActionListener() {
+                        @Override public void actionPerformed(ActionEvent ev) {
+                            String s = (String)javax.swing.JOptionPane.showInputDialog(
+                                    GUI.this.getFrame(), "Add a ban message or just "
+                                    + "press enter.", "Ban Player IP Address", javax.swing
+                                    .JOptionPane.PLAIN_MESSAGE, null, null, "Banned!");
+                            server.banKickIP(playerListModel.findPlayer(
+                                    playerListModel.getElementAt(
+                                    playerList.getSelectedIndex())).getIPAddress(), s);
+                        }
+                    });
+                    playerListContextMenu.add(kickMenuItem);
+                    playerListContextMenu.add(banMenuItem);
+                    playerListContextMenu.add(banIpMenuItem);
+                    playerListContextMenu.show(event.getComponent(), event.getX(), event.getY());
                 }
-            });
-            javax.swing.JMenuItem banMenuItem;
-            banMenuItem = new javax.swing.JMenuItem("Ban");
-            banMenuItem.addActionListener(
-                    new ActionListener() {
-                @Override public void actionPerformed(ActionEvent ev) {
-                    String s = (String)javax.swing.JOptionPane.showInputDialog(
-                            GUI.this.getFrame(), "Add a ban message or just "
-                            + "press enter.", "Ban Player", javax.swing
-                            .JOptionPane.PLAIN_MESSAGE, null, null, "Banned!");
-                    server.banKick(playerListModel.findPlayer(
-                            playerListModel.getElementAt(
-                            playerList.getSelectedIndex())).getName(), s);
-                }
-            });
-            javax.swing.JMenuItem banIpMenuItem;
-            banIpMenuItem = new javax.swing.JMenuItem("Ban IP");
-            banIpMenuItem.addActionListener(
-                    new ActionListener() {
-                @Override public void actionPerformed(ActionEvent ev) {
-                    String s = (String)javax.swing.JOptionPane.showInputDialog(
-                            GUI.this.getFrame(), "Add a ban message or just "
-                            + "press enter.", "Ban Player IP Address", javax.swing
-                            .JOptionPane.PLAIN_MESSAGE, null, null, "Banned!");
-                    server.banKickIP(playerListModel.findPlayer(
-                            playerListModel.getElementAt(
-                            playerList.getSelectedIndex())).getIPAddress(), s);
-                }
-            });
-            playerListContextMenu.add(kickMenuItem);
-            playerListContextMenu.add(banMenuItem);
-            playerListContextMenu.add(banIpMenuItem);
-            playerListContextMenu.show(evt.getComponent(), evt.getX(), evt.getY());
-        }
+            }
+        });
     }//GEN-LAST:event_playerListMouseClicked
 
     private void clearLogCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearLogCheckBoxActionPerformed
-        config.backups.setClearLog(clearLogCheckBox.isSelected());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                config.backups.setClearLog(clearLogCheckBox.isSelected());
+            }
+        });
     }//GEN-LAST:event_clearLogCheckBoxActionPerformed
 
     private void startServerOnLaunchCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startServerOnLaunchCheckBoxActionPerformed
-        config.setServerStartOnStartup(startServerOnLaunchCheckBox.isSelected());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                config.setServerStartOnStartup(startServerOnLaunchCheckBox.isSelected());
+            }
+        });
     }//GEN-LAST:event_startServerOnLaunchCheckBoxActionPerformed
 
     private void useWebInterfaceCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useWebInterfaceCheckBoxActionPerformed
-        config.web.setEnabled(useWebInterfaceCheckBox.isSelected());
-        if (useWebInterfaceCheckBox.isSelected()) {
-            config.web.setPassword(String.valueOf(webPasswordField.getPassword()));
-            if (webPortField.getInputVerifier().verify(webPortField)) {
-                config.web.setPort(Integer.valueOf(webPortField.getText()));
-                webServer.setPort(config.web.getPort());
-                webServer.start();
-            } else {
-                webPortField.requestFocusInWindow();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                config.web.setEnabled(useWebInterfaceCheckBox.isSelected());
+                if (useWebInterfaceCheckBox.isSelected()) {
+                    config.web.setPassword(String.valueOf(webPasswordField.getPassword()));
+                    if (webPortField.getInputVerifier().verify(webPortField)) {
+                        config.web.setPort(Integer.valueOf(webPortField.getText()));
+                        webServer.setPort(config.web.getPort());
+                        webServer.start();
+                    } else {
+                        webPortField.requestFocusInWindow();
+                    }
+                } else {
+                    webServer.stop();
+                }
             }
-        } else {
-            webServer.stop();
-        }
+        });
     }//GEN-LAST:event_useWebInterfaceCheckBoxActionPerformed
 
     private void webPortFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_webPortFieldFocusLost
-        config.web.setPort(Integer.valueOf(webPortField.getText()));
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                config.web.setPort(Integer.valueOf(webPortField.getText()));
+            }
+        });
     }//GEN-LAST:event_webPortFieldFocusLost
 
     private void showWebPasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showWebPasswordButtonActionPerformed
-        if (showWebPasswordButton.isSelected()) {
-            webPasswordField.setEchoChar((char)0);
-        } else {
-            webPasswordField.setEchoChar('\u25cf');
-        }
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if (showWebPasswordButton.isSelected()) {
+                    webPasswordField.setEchoChar((char)0);
+                } else {
+                    webPasswordField.setEchoChar('\u25cf');
+                }
+            }
+        });
     }//GEN-LAST:event_showWebPasswordButtonActionPerformed
 
     private void webPasswordFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_webPasswordFieldFocusLost
-        config.web.setPassword(String.valueOf(webPasswordField.getPassword()));
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                config.web.setPassword(String.valueOf(webPasswordField.getPassword()));
+            }
+        });
     }//GEN-LAST:event_webPasswordFieldFocusLost
 
     private void disableGetOutputNotificationsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disableGetOutputNotificationsCheckBoxActionPerformed
-        config.web.setDisableGetRequests(disableGetOutputNotificationsCheckBox.isSelected());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                config.web.setDisableGetRequests(disableGetOutputNotificationsCheckBox.isSelected());
+            }
+        });
     }//GEN-LAST:event_disableGetOutputNotificationsCheckBoxActionPerformed
 
     private void consoleOutputMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consoleOutputMouseClicked
-        if ((server.isRunning()) && (!consoleOutput.isFocusOwner())) {
-            textScrolling = false;
-        }
-        mouseInConsoleOutput = true;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if ((server.isRunning()) && (!consoleOutput.isFocusOwner())) {
+                    textScrolling = false;
+                }
+                mouseInConsoleOutput = true;
+            }
+        });
     }//GEN-LAST:event_consoleOutputMouseClicked
 
     private void customButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customButton1ActionPerformed
@@ -2614,25 +2771,41 @@ public class GUI extends FrameView implements Observer {
     }//GEN-LAST:event_customButton2ActionPerformed
 
     private void useProxyCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useProxyCheckBoxActionPerformed
-        config.setProxy(useProxyCheckBox.isSelected());
-        if (useProxyCheckBox.isSelected()) {
-            playerList.setToolTipText("This shows a list of players connected to the server.  Right click a to pull up the player action menu.");
-        } else {
-            playerList.setToolTipText("Player list is currently only supported when using the GUI's Proxy feature.");
-        }
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                config.setProxy(useProxyCheckBox.isSelected());
+                if (useProxyCheckBox.isSelected()) {
+                    playerList.setToolTipText("This shows a list of players connected to the server.  Right click a to pull up the player action menu.");
+                } else {
+                    playerList.setToolTipText("Player list is currently only supported when using the GUI's Proxy feature.");
+                }
+            }
+        });
     }//GEN-LAST:event_useProxyCheckBoxActionPerformed
 
     private void hideMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hideMenuMouseClicked
-        GUI.this.getApplication().hide(GUI.this);
-        isHidden = true;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                GUI.this.getApplication().hide(GUI.this);
+                isHidden = true;
+            }
+        }); 
     }//GEN-LAST:event_hideMenuMouseClicked
 
     private void textSizeFieldStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_textSizeFieldStateChanged
-        config.display.setTextSize(Integer.parseInt(textSizeField.getValue().toString()));
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                config.display.setTextSize(Integer.parseInt(textSizeField.getValue().toString()));
+            }
+        });
     }//GEN-LAST:event_textSizeFieldStateChanged
 
     private void commandPrefixFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_commandPrefixFieldActionPerformed
-        config.setCommandPrefix(commandPrefixField.getText());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                config.setCommandPrefix(commandPrefixField.getText());
+            }
+        });
     }//GEN-LAST:event_commandPrefixFieldActionPerformed
 
     private void launchSupportPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_launchSupportPageActionPerformed
@@ -2645,10 +2818,14 @@ public class GUI extends FrameView implements Observer {
     }//GEN-LAST:event_launchSupportPageActionPerformed
 
     private void viewChangeLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewChangeLogActionPerformed
-        JFrame mainFrame = Main.getApplication().getMainFrame();
-        ChangeLog changeLog = new ChangeLog(mainFrame, versionNumber);
-        changeLog.setLocationRelativeTo(mainFrame);
-        Main.getApplication().show(changeLog);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                JFrame mainFrame = Main.getApplication().getMainFrame();
+                ChangeLog changeLog = new ChangeLog(mainFrame, versionNumber);
+                changeLog.setLocationRelativeTo(mainFrame);
+                Main.getApplication().show(changeLog);
+            }
+        });
     }//GEN-LAST:event_viewChangeLogActionPerformed
 
     private void downloadLatestVersionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_downloadLatestVersionActionPerformed
@@ -2675,37 +2852,51 @@ public class GUI extends FrameView implements Observer {
     }//GEN-LAST:event_downloadLatestVersionActionPerformed
 
     private void pauseSchedulerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseSchedulerButtonActionPerformed
-        if (pauseSchedulerButton.isSelected()) {
-            try {
-                scheduler.pauseAll();
-                pauseSchedulerButton.setFont(new java.awt.Font("Tahoma",
-                        java.awt.Font.BOLD, 11));
-            } catch (SchedulerException se) {
-                pauseSchedulerButton.setSelected(false);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if (pauseSchedulerButton.isSelected()) {
+                    try {
+                        scheduler.pauseAll();
+                        pauseSchedulerButton.setFont(new java.awt.Font("Tahoma",
+                                java.awt.Font.BOLD, 11));
+                    } catch (SchedulerException se) {
+                        pauseSchedulerButton.setSelected(false);
+                    }
+                } else {
+                    try {
+                        scheduler.resumeAll();
+                        pauseSchedulerButton.setFont(new java.awt.Font("Tahoma",
+                                java.awt.Font.PLAIN, 11));
+                    } catch (SchedulerException se) {
+                        pauseSchedulerButton.setSelected(true);
+                    }
+                }
             }
-        } else {
-            try {
-                scheduler.resumeAll();
-                pauseSchedulerButton.setFont(new java.awt.Font("Tahoma",
-                        java.awt.Font.PLAIN, 11));
-            } catch (SchedulerException se) {
-                pauseSchedulerButton.setSelected(true);
-            }
-        }
+        });
     }//GEN-LAST:event_pauseSchedulerButtonActionPerformed
 
     private void taskSchedulerListKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_taskSchedulerListKeyTyped
-        if (evt.getKeyChar() == java.awt.event.KeyEvent.VK_DELETE) {
-            removeTaskListEntry();
-        }
+        final java.awt.event.KeyEvent event = evt;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if (event.getKeyChar() == java.awt.event.KeyEvent.VK_DELETE) {
+                    removeTaskListEntry();
+                }
+            }
+        });
     }//GEN-LAST:event_taskSchedulerListKeyTyped
 
     private void customButtonAction(javax.swing.JComboBox box) {
-        if (box.getSelectedItem().toString().equals("Edit Tasks")) {
-            tabber.setSelectedIndex(tabber.indexOfTab("Tasks"));
-        } else {
-            startTaskByName(box.getSelectedItem().toString());
-        }
+        final javax.swing.JComboBox boxxy = box;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if (boxxy.getSelectedItem().toString().equals("Edit Tasks")) {
+                    tabber.setSelectedIndex(tabber.indexOfTab("Tasks"));
+                } else {
+                    startTaskByName(boxxy.getSelectedItem().toString());
+                }
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -2863,14 +3054,24 @@ public class GUI extends FrameView implements Observer {
     // End of variables declaration//GEN-END:variables
 
     public void outOfDate(String version) {
-        versionNotifier.setForeground(Color.red);
-        versionNotifier.setText("New version " + version + " is available!");
+        final String ver = version;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                versionNotifier.setForeground(Color.red);
+                versionNotifier.setText("New version " + ver + " is available!");
+            }
+        });
     }
 
     public void setPlayerList(PlayerList playerListModel) {
-        this.playerListModel = playerListModel;
-        playerList.setModel(playerListModel);
-        playerList.updateUI();
+        final PlayerList pl = playerListModel;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                GUI.this.playerListModel = pl;
+                playerList.setModel(pl);
+                playerList.updateUI();
+            }
+        });
     }
 
     public boolean startTaskByName(String name) {
@@ -2882,98 +3083,80 @@ public class GUI extends FrameView implements Observer {
                 return true;
             }
         }
-        System.err.println("Could not find event by that name");
+        System.out.println("Could not find event by that name");
         return false;
     }
 
     private void enableSystemTrayIcon() {
-        trayIcon = null;
-        if (java.awt.SystemTray.isSupported()) {
-            hideMenu.setEnabled(true);
-            hideMenu.setToolTipText("Press this to minimize to tray.");
-            // get the SystemTray instance
-            java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
-            // load an image
-            org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(mcservergui.Main.class).getContext().getResourceMap(GUI.class);
-            // create a action listener to listen for default action executed on the tray icon
-            ActionListener listener = new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    if (!isHidden) {
-                        GUI.this.getApplication().hide(GUI.this);
-                        isHidden = true;
-                    } else {
-                        GUI.this.getApplication().show(GUI.this);
-                        isHidden = false;
-                    }
-                }
-            };
-            // create a popup menu
-            java.awt.PopupMenu popup = new java.awt.PopupMenu();
-            // create menu item for the default action
-            java.awt.MenuItem defaultItem = new java.awt.MenuItem("Show/Hide");
-            defaultItem.addActionListener(listener);
-            popup.add(defaultItem);
-            /// ... add other items
-            // construct a TrayIcon
-            
-            trayIcon = new java.awt.TrayIcon(resourceMap.getImageIcon("imageLabel.icon").getImage(), config.getWindowTitle(), popup);
-            trayIcon.setImageAutoSize(true);
-            // set the TrayIcon properties
-            trayIcon.addActionListener(listener);
-            // ...
-            // add the tray image
-            try {
-                tray.add(trayIcon);
-            } catch (java.awt.AWTException e) {
-                System.err.println(e);
-            }
-        } else {
-            hideMenu.setEnabled(false);
-            hideMenu.setToolTipText("Your Operating System does not support this action!");
-            // disable tray option in your application or
-            // perform other actions
-        }
-    }
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                trayIcon = null;
+                if (java.awt.SystemTray.isSupported()) {
+                    hideMenu.setEnabled(true);
+                    hideMenu.setToolTipText("Press this to minimize to tray.");
+                    // get the SystemTray instance
+                    java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
+                    // load an image
+                    org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(mcservergui.Main.class).getContext().getResourceMap(GUI.class);
+                    // create a action listener to listen for default action executed on the tray icon
+                    ActionListener listener = new ActionListener() {
+                        @Override public void actionPerformed(ActionEvent e) {
+                            if (!isHidden) {
+                                GUI.this.getApplication().hide(GUI.this);
+                                isHidden = true;
+                            } else {
+                                GUI.this.getApplication().show(GUI.this);
+                                isHidden = false;
+                            }
+                        }
+                    };
+                    // create a popup menu
+                    java.awt.PopupMenu popup = new java.awt.PopupMenu();
+                    // create menu item for the default action
+                    java.awt.MenuItem defaultItem = new java.awt.MenuItem("Show/Hide");
+                    defaultItem.addActionListener(listener);
+                    popup.add(defaultItem);
 
-    /*
-    private int getEventIndexFromSelected() {
-        try {
-            String taskname = taskList.getElementAt(
-                    taskSchedulerList.getSelectedIndex()).toString()
-                    .split("<br>")[0];
-            for (int i = 0; i < config.schedule.getEvents().size(); i++) {
-                if (config.schedule.getEvents().get(i).getName().equals(taskname)) {
-                    return i;
+                    trayIcon = new java.awt.TrayIcon(resourceMap.getImageIcon("imageLabel.icon").getImage(), config.getWindowTitle(), popup);
+                    trayIcon.setImageAutoSize(true);
+                    // set the TrayIcon properties
+                    trayIcon.addActionListener(listener);
+                    // add the tray image
+                    try {
+                        tray.add(trayIcon);
+                    } catch (java.awt.AWTException e) {
+                        System.err.println(e);
+                    }
+                } else {
+                    hideMenu.setEnabled(false);
+                    hideMenu.setToolTipText("Your Operating System does not support this action!");
                 }
             }
-            return -1;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return -1;
-        }
+        });
     }
-     *
-     */
 
     public void addTaskListEntry() {
-        JFrame mainFrame = Main.getApplication().getMainFrame();
-        //taskDialog = new TaskDialog(
-        //        mainFrame, /*taskList,*/ config, scheduler, config.schedule.getEvents(), this);
-        taskDialog = new TaskDialog(mainFrame, config, scheduler, this);
-        taskDialog.setLocationRelativeTo(mainFrame);
-        Main.getApplication().show(taskDialog);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                JFrame mainFrame = Main.getApplication().getMainFrame();
+                taskDialog = new TaskDialog(mainFrame, config, scheduler, GUI.this);
+                taskDialog.setLocationRelativeTo(mainFrame);
+                Main.getApplication().show(taskDialog);
+            }
+        });
     }
 
-    //public void editTaskListEntry(int i) {
-    public void editTaskListEntry(EventModel event) {
-        JFrame mainFrame = Main.getApplication().getMainFrame();
-        //taskDialog = new TaskDialog(
-        //        mainFrame, taskList, config, scheduler, config.schedule.getEvents(), this,
-        //        config.schedule.getEvents().get(i));
-        taskDialog = new TaskDialog(mainFrame, config, scheduler, this,
-        //        (EventModel)config.schedule.getEvents().getElementAt(i));
-                event);
-        taskDialog.setLocationRelativeTo(mainFrame);
-        Main.getApplication().show(taskDialog);
+    public void editTaskListEntry(EventModel evt) {
+        final EventModel event = evt;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                JFrame mainFrame = Main.getApplication().getMainFrame();
+                taskDialog = new TaskDialog(mainFrame, config, scheduler, GUI.this,
+                        event);
+                taskDialog.setLocationRelativeTo(mainFrame);
+                Main.getApplication().show(taskDialog);
+            }
+        });
     }
 
     public static javax.swing.tree.TreePath createTreePath(File f) {
@@ -2996,44 +3179,35 @@ public class GUI extends FrameView implements Observer {
     }
 
     private void refreshBackupFileChooser() {
-        if (!controlState.equals("BACKUP")) {
-            backupFileChooser.updateUI();
-        }
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if (!controlState.equals("BACKUP")) {
+                    backupFileChooser.updateUI();
+                }
+            }
+        });
     }
 
     public void backup() {
-        stateBeforeBackup = controlState;
-        controlSwitcher("BACKUP");
-        //statusBeforeBackup = serverStatusLabel.getText();
-        //serverStatusLabel.setText("Backing up...");
-        statusBarJob.setText("Backing up:");
-        TaskMonitor taskMonitor = getApplication().getContext().getTaskMonitor();
-        TaskService taskService = getApplication().getContext().getTaskService();
-        if (server.isRunning()) {
-            sendInput("save-off");
-            sendInput("say Backing up server...");
-        }
-        new File(config.backups.getPath()).mkdir(); // Creates backup directory if it doesn't exist
-        Backup backup = new Backup(this, backupStatusLog);
-        taskMonitor.setForegroundTask(backup.getTask());
-        backupStatusLog.setText("");
-        backup.addObserver(this);
-        taskService.execute(backup.getTask());
-    }
-
-    /**
-     * Verifies that the text entered is a number before focus is released.  If not, it shows the tooltip.
-     */
-    class numberVerifier extends javax.swing.InputVerifier {
-        @Override public boolean verify(javax.swing.JComponent input) {
-            javax.swing.JTextField tf = (javax.swing.JTextField) input;
-            if (java.util.regex.Pattern.matches("^\\d{1,4}$", tf.getText())){
-                return true;
-            } else {
-                tf.getActionMap().get("postTip").actionPerformed(new ActionEvent(tf, ActionEvent.ACTION_PERFORMED, "postTip"));
-                return false;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                stateBeforeBackup = controlState;
+                controlSwitcher("BACKUP");
+                statusBarJob.setText("Backing up:");
+                TaskMonitor taskMonitor = getApplication().getContext().getTaskMonitor();
+                TaskService taskService = getApplication().getContext().getTaskService();
+                if (server.isRunning()) {
+                    sendInput("save-off");
+                    sendInput("say Backing up server...");
+                }
+                new File(config.backups.getPath()).mkdir(); // Creates backup directory if it doesn't exist
+                Backup backup = new Backup(GUI.this, backupStatusLog);
+                taskMonitor.setForegroundTask(backup.getTask());
+                backupStatusLog.setText("");
+                backup.addObserver(GUI.this);
+                taskService.execute(backup.getTask());
             }
-        }
+        });
     }
 
     /**
@@ -3047,21 +3221,26 @@ public class GUI extends FrameView implements Observer {
      * Sends whatever is in the console box to the server.
      * @param shouldSay determines if "say " should be prepended to the text.
      */
-    public void sendInput(boolean shouldSay) {
-        String stringToSend = consoleInput.getText();
-        if (inputHistory.size() >= config.getInputHistoryMaxSize()) {
-            inputHistory.remove(inputHistory.size() - 1);
-        }
-        inputHistory.add(0, stringToSend);
-        if ((sayCheckBox.isSelected()) && (!shouldSay)) {
-            sendInput("say " + stringToSend);
-        } else if ((!sayCheckBox.isSelected()) && (shouldSay)) {
-            sendInput("say " + stringToSend);
-        } else {
-            sendInput(stringToSend);
-        }
-        consoleInput.setText("");
-        inputHistoryIndex = -1;
+    public void sendInput(boolean b) {
+        final boolean shouldSay = b;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                String stringToSend = consoleInput.getText();
+                if (inputHistory.size() >= config.getInputHistoryMaxSize()) {
+                    inputHistory.remove(inputHistory.size() - 1);
+                }
+                inputHistory.add(0, stringToSend);
+                if ((sayCheckBox.isSelected()) && (!shouldSay)) {
+                    sendInput("say " + stringToSend);
+                } else if ((!sayCheckBox.isSelected()) && (shouldSay)) {
+                    sendInput("say " + stringToSend);
+                } else {
+                    sendInput(stringToSend);
+                }
+                consoleInput.setText("");
+                inputHistoryIndex = -1;
+            }
+        });
     }
 
     /**
@@ -3085,24 +3264,18 @@ public class GUI extends FrameView implements Observer {
      * Basically any alpha-numeric keys will cause focus to be granted.
      * @param evt KeyEvent to be passed in.
      */
-    public void giveInputFocus(java.awt.event.KeyEvent evt) {
-        if ((evt.getKeyChar() != java.awt.event.KeyEvent.CHAR_UNDEFINED) && (consoleInput.isEnabled()) && ((int)evt.getKeyChar() > 32)) {
-            if (consoleInput.requestFocusInWindow()) {
-                consoleInput.setText(consoleInput.getText() + evt.getKeyChar());
+    public void giveInputFocus(java.awt.event.KeyEvent event) {
+        final java.awt.event.KeyEvent evt = event;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if ((evt.getKeyChar() != java.awt.event.KeyEvent.CHAR_UNDEFINED) && (consoleInput.isEnabled()) && ((int)evt.getKeyChar() > 32)) {
+                    if (consoleInput.requestFocusInWindow()) {
+                        consoleInput.setText(consoleInput.getText() + evt.getKeyChar());
+                    }
+                }
             }
-        }
+        });
     }
-
-    /**
-     * Defines the MainWorker so the view can have access.
-     * @param newMainWorker
-     */
-    /*
-    public void setMainWorker(MainWorker newMainWorker) {
-        mainWorker = newMainWorker;
-    }
-     * 
-     */
 
     public void startWebServer() {
         webServer.setPort(config.web.getPort());
@@ -3114,8 +3287,35 @@ public class GUI extends FrameView implements Observer {
     }
 
     public String getConsoleOutput() {
-        //String output = consoleOutput.getText().replaceAll("<br>", "\n");
-        String output = consoleOutput.getText();
+        String output = "";
+        
+        class ConsoleOutput implements Runnable {
+            String output;
+            
+            public ConsoleOutput() {
+                super();
+                output = "";
+            }
+            
+            @Override public void run() {
+                output = consoleOutput.getText();
+            }
+
+            public String getOutput() {
+                return output;
+            }
+        }
+        
+        try {
+            ConsoleOutput conOut = new ConsoleOutput();
+            SwingUtilities.invokeAndWait(conOut);
+            output = conOut.getOutput();
+        } catch (InterruptedException ie) {
+            output = "[MC Server GUI] Interrupted while retrieving output from GUI!";
+        } catch (java.lang.reflect.InvocationTargetException ite) {
+            output = "[MC Server GUI] Error retrieving output from GUI!";
+        }
+        
         output = output.replaceAll("(<html.*>|<body.*>|<head.*>|</head>|</body>|</html>)", "");
         return output;
     }
@@ -3141,252 +3341,277 @@ public class GUI extends FrameView implements Observer {
     }
 
     public void initSchedule() {
-        java.util.Iterator it = config.schedule.getEvents().iterator();
-        while (it.hasNext()) {
-            EventModel event = (EventModel)it.next();
-            if (!event.isCustomButton()) {
-                scheduleEvent(event, scheduler, this);
-            } else {
-                customCombo1.addItem(event.getName());
-                customCombo2.addItem(event.getName());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                java.util.Iterator it = config.schedule.getEvents().iterator();
+                while (it.hasNext()) {
+                    EventModel event = (EventModel)it.next();
+                    if (!event.isCustomButton()) {
+                        scheduleEvent(event, scheduler, GUI.this);
+                    } else {
+                        customCombo1.addItem(event.getName());
+                        customCombo2.addItem(event.getName());
+                    }
+                }
+                customCombo1.setSelectedItem(config.getCustomButton1());
+                customCombo2.setSelectedItem(config.getCustomButton2());
             }
-        }
-        customCombo1.setSelectedItem(config.getCustomButton1());
-        customCombo2.setSelectedItem(config.getCustomButton2());
+        });
     }
 
     public void updateGuiWithServerProperties() {
-        allowFlightCheckBox.setSelected(serverProperties.getAllowFlight());
-        allowNetherCheckBox.setSelected(serverProperties.getAllowNether());
-        onlineModeCheckBox.setSelected(serverProperties.getOnlineMode());
-        pvpCheckBox.setSelected(serverProperties.getPvp());
-        spawnAnimalsCheckBox.setSelected(serverProperties.getSpawnAnimals());
-        spawnMonstersCheckBox.setSelected(serverProperties.getSpawnMonsters());
-        whiteListCheckBox.setSelected(serverProperties.getWhiteList());
-        levelNameField.setText(serverProperties.getLevelName());
-        levelSeedField.setText(serverProperties.getLevelSeed());
-        serverIpField.setText(serverProperties.getServerIp());
-        serverPortField.setText(serverProperties.getServerPort());
-        spawnProtectionField.setText(serverProperties.getSpawnProtection());
-        maxPlayersSpinner.setValue(serverProperties.getMaxPlayers());
-        viewDistanceSpinner.setValue(serverProperties.getViewDistance());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                allowFlightCheckBox.setSelected(serverProperties.getAllowFlight());
+                allowNetherCheckBox.setSelected(serverProperties.getAllowNether());
+                onlineModeCheckBox.setSelected(serverProperties.getOnlineMode());
+                pvpCheckBox.setSelected(serverProperties.getPvp());
+                spawnAnimalsCheckBox.setSelected(serverProperties.getSpawnAnimals());
+                spawnMonstersCheckBox.setSelected(serverProperties.getSpawnMonsters());
+                whiteListCheckBox.setSelected(serverProperties.getWhiteList());
+                levelNameField.setText(serverProperties.getLevelName());
+                levelSeedField.setText(serverProperties.getLevelSeed());
+                serverIpField.setText(serverProperties.getServerIp());
+                serverPortField.setText(serverProperties.getServerPort());
+                spawnProtectionField.setText(serverProperties.getSpawnProtection());
+                maxPlayersSpinner.setValue(serverProperties.getMaxPlayers());
+                viewDistanceSpinner.setValue(serverProperties.getViewDistance());
+            }
+        });
     }
 
     public void updateGuiWithConfigValues() {
-        textColorBox.setBackground(java.awt.Color.decode("0x"
-                + config.display.getTextColor()));
-        bgColorBox.setBackground(java.awt.Color.decode("0x"
-                + config.display.getBgColor()));
-        infoColorBox.setBackground(java.awt.Color.decode("0x"
-                + config.display.getInfoColor()));
-        warningColorBox.setBackground(java.awt.Color.decode("0x"
-                + config.display.getWarningColor()));
-        severeColorBox.setBackground(java.awt.Color.decode("0x"
-                + config.display.getSevereColor()));
-        textSizeField.setValue(config.display.getTextSize());
-        webPortField.setText(Integer.toString(config.web.getPort()));
-        useWebInterfaceCheckBox.setSelected(config.web.isEnabled());
-        webPasswordField.setText(config.web.getPassword());
-        disableGetOutputNotificationsCheckBox.setSelected(config.web.isDisableGetRequests());
-        useProxyCheckBox.setSelected(config.getProxy());
-        extPortField.setText(Integer.toString(config.getExtPort()));
-        startServerOnLaunchCheckBox.setSelected(config.getServerStartOnStartup());
-        zipBackupCheckBox.setSelected(config.backups.getZip());
-        clearLogCheckBox.setSelected(config.backups.getClearLog());
-        pathsToBackup = config.backups.getPathsToBackup();
-        backupPathField.setText(config.backups.getPath());
-        backupFileChooser.setCheckingPaths(createTreePathArray(pathsToBackup));
-        windowTitleField.setText(config.getWindowTitle());
-        commandPrefixField.setText(config.getCommandPrefix());
-        getFrame().setTitle(windowTitleField.getText());
-        javaExecField.setText(config.cmdLine.getJavaExec());
-        serverJarField.setText(config.cmdLine.getServerJar());
-        bukkitCheckBox.setSelected(config.cmdLine.getBukkit());
-        xmxMemoryField.setText(config.cmdLine.getXmx());
-        xincgcCheckBox.setSelected(config.cmdLine.getXincgc());
-        extraArgsField.setText(config.cmdLine.getExtraArgs());
-        customLaunchCheckBox.setSelected(config.cmdLine.getUseCustomLaunch());
-        inputHistoryMaxSizeField.setText(Integer.toString(config.getInputHistoryMaxSize()));
-        if (!config.cmdLine.getUseCustomLaunch()) {
-            if (java.util.regex.Pattern.matches("^\\s*$", config.cmdLine.getCustomLaunch())) {
-                config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                textColorBox.setBackground(java.awt.Color.decode("0x"
+                        + config.display.getTextColor()));
+                bgColorBox.setBackground(java.awt.Color.decode("0x"
+                        + config.display.getBgColor()));
+                infoColorBox.setBackground(java.awt.Color.decode("0x"
+                        + config.display.getInfoColor()));
+                warningColorBox.setBackground(java.awt.Color.decode("0x"
+                        + config.display.getWarningColor()));
+                severeColorBox.setBackground(java.awt.Color.decode("0x"
+                        + config.display.getSevereColor()));
+                textSizeField.setValue(config.display.getTextSize());
+                webPortField.setText(Integer.toString(config.web.getPort()));
+                useWebInterfaceCheckBox.setSelected(config.web.isEnabled());
+                webPasswordField.setText(config.web.getPassword());
+                disableGetOutputNotificationsCheckBox.setSelected(config.web.isDisableGetRequests());
+                useProxyCheckBox.setSelected(config.getProxy());
+                extPortField.setText(Integer.toString(config.getExtPort()));
+                startServerOnLaunchCheckBox.setSelected(config.getServerStartOnStartup());
+                zipBackupCheckBox.setSelected(config.backups.getZip());
+                clearLogCheckBox.setSelected(config.backups.getClearLog());
+                pathsToBackup = config.backups.getPathsToBackup();
+                backupPathField.setText(config.backups.getPath());
+                backupFileChooser.setCheckingPaths(createTreePathArray(pathsToBackup));
+                windowTitleField.setText(config.getWindowTitle());
+                commandPrefixField.setText(config.getCommandPrefix());
+                getFrame().setTitle(windowTitleField.getText());
+                javaExecField.setText(config.cmdLine.getJavaExec());
+                serverJarField.setText(config.cmdLine.getServerJar());
+                bukkitCheckBox.setSelected(config.cmdLine.getBukkit());
+                xmxMemoryField.setText(config.cmdLine.getXmx());
+                xincgcCheckBox.setSelected(config.cmdLine.getXincgc());
+                extraArgsField.setText(config.cmdLine.getExtraArgs());
+                customLaunchCheckBox.setSelected(config.cmdLine.getUseCustomLaunch());
+                inputHistoryMaxSizeField.setText(Integer.toString(config.getInputHistoryMaxSize()));
+                if (!config.cmdLine.getUseCustomLaunch()) {
+                    if (java.util.regex.Pattern.matches("^\\s*$", config.cmdLine.getCustomLaunch())) {
+                        config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
+                    }
+                } else {
+                    if (java.util.regex.Pattern.matches("^\\s*$", config.cmdLine.getCustomLaunch())) {
+                        config.cmdLine.setUseCustomLaunch(false);
+                        config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
+                        config.cmdLine.setUseCustomLaunch(true);
+                    }
+                    cmdLineField.setEditable(true);
+                    javaExecField.setEditable(false);
+                    javaExecBrowseButton.setEnabled(false);
+                    serverJarField.setEditable(false);
+                    serverJarBrowseButton.setEnabled(false);
+                    xmxMemoryField.setEditable(false);
+                    xincgcCheckBox.setEnabled(false);
+                    extraArgsField.setEditable(false);
+                }
+                cmdLineField.setText(config.cmdLine.parseCmdLine());
+                taskSchedulerList.setModel(config.schedule.getEvents());
+                if (useProxyCheckBox.isSelected()) {
+                    playerList.setToolTipText("This shows a list of players connected to the server.  Right click a to pull up the player action menu.");
+                } else {
+                    playerList.setToolTipText("Player list is currently only supported when using the GUI's Proxy feature.");
+                }
             }
-        } else {
-            if (java.util.regex.Pattern.matches("^\\s*$", config.cmdLine.getCustomLaunch())) {
-                config.cmdLine.setUseCustomLaunch(false);
-                config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
-                config.cmdLine.setUseCustomLaunch(true);
-            }
-            cmdLineField.setEditable(true);
-            javaExecField.setEditable(false);
-            javaExecBrowseButton.setEnabled(false);
-            serverJarField.setEditable(false);
-            serverJarBrowseButton.setEnabled(false);
-            //bukkitCheckBox.setEnabled(false);
-            xmxMemoryField.setEditable(false);
-            xincgcCheckBox.setEnabled(false);
-            extraArgsField.setEditable(false);
-        }
-        cmdLineField.setText(config.cmdLine.parseCmdLine());
-        taskSchedulerList.setModel(config.schedule.getEvents());
-        /*
-        for (int i = 0; i < config.schedule.getEvents().size(); i++) {
-            taskList.add(config.schedule.getEvents().get(i).getName()
-                    + "<br><font size=2>"
-                    + config.schedule.getEvents().get(i).getTask());
-        }
-         * 
-         */
-        if (useProxyCheckBox.isSelected()) {
-            playerList.setToolTipText("This shows a list of players connected to the server.  Right click a to pull up the player action menu.");
-        } else {
-            playerList.setToolTipText("Player list is currently only supported when using the GUI's Proxy feature.");
-        }
+        });
     }
 
     /**
      * Saves the config file with any changes made by the user through the gui.
      */
     public void saveConfig() {
-        pathsToBackup.clear();
-        try {
-            int i = 0;
-            while(true) {
-                pathsToBackup.add(backupFileChooser.getCheckingRoots()[i].getLastPathComponent().toString());
-                i++;
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            config.backups.setPathsToBackup(pathsToBackup);
-        }
-        //String temp = serverStatusLabel.getText();
-        //serverStatusLabel.setText("Saving configuration...");
-        config.setWindowTitle(windowTitleField.getText());
-        getFrame().setTitle(windowTitleField.getText());
-        if (trayIcon != null) {
-            trayIcon.setToolTip(windowTitleField.getText());
-        }
-        config.setInputHistoryMaxSize(Integer.parseInt(inputHistoryMaxSizeField.getText()));
-        config.setCommandPrefix(commandPrefixField.getText());
-        config.setCustomButton1(customCombo1.getSelectedItem().toString());
-        config.setCustomButton2(customCombo2.getSelectedItem().toString());
-        config.cmdLine.setXmx(xmxMemoryField.getText());
-        config.cmdLine.setExtraArgs(extraArgsField.getText());
-        config.cmdLine.setServerJar(serverJarField.getText());
-        config.cmdLine.setJavaExec(javaExecField.getText());
-        config.display.setTextSize(Integer.valueOf(textSizeField.getValue().toString()));
-        if (config.cmdLine.getUseCustomLaunch()) {
-            config.cmdLine.setCustomLaunch(cmdLineField.getText());
-            if (java.util.regex.Pattern.matches("^\\s*$", cmdLineField.getText())) {
-                config.cmdLine.setUseCustomLaunch(false);
-                config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
-                config.cmdLine.setUseCustomLaunch(true);
-            } else {
-                config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
-            }
-            cmdLineField.setText(config.cmdLine.parseCmdLine());
-        } else {
-            cmdLineField.setText(config.cmdLine.parseCmdLine());
-            if (java.util.regex.Pattern.matches("^\\s*$", config.cmdLine.getCustomLaunch())) {
-                config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
-            }
-        }
-        config.backups.setPathsToBackup(pathsToBackup);
-        config.backups.setPath(backupPathField.getText());
-        config.setProxy(useProxyCheckBox.isSelected());
-        config.setExtPort(Integer.valueOf(extPortField.getText()));
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                pathsToBackup.clear();
+                try {
+                    int i = 0;
+                    while(true) {
+                        pathsToBackup.add(backupFileChooser.getCheckingRoots()[i].getLastPathComponent().toString());
+                        i++;
+                    }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    config.backups.setPathsToBackup(pathsToBackup);
+                }
+                config.setWindowTitle(windowTitleField.getText());
+                getFrame().setTitle(windowTitleField.getText());
+                if (trayIcon != null) {
+                    trayIcon.setToolTip(windowTitleField.getText());
+                }
+                config.setInputHistoryMaxSize(Integer.parseInt(inputHistoryMaxSizeField.getText()));
+                config.setCommandPrefix(commandPrefixField.getText());
+                config.setCustomButton1(customCombo1.getSelectedItem().toString());
+                config.setCustomButton2(customCombo2.getSelectedItem().toString());
+                config.cmdLine.setXmx(xmxMemoryField.getText());
+                config.cmdLine.setExtraArgs(extraArgsField.getText());
+                config.cmdLine.setServerJar(serverJarField.getText());
+                config.cmdLine.setJavaExec(javaExecField.getText());
+                config.display.setTextSize(Integer.valueOf(textSizeField.getValue().toString()));
+                if (config.cmdLine.getUseCustomLaunch()) {
+                    config.cmdLine.setCustomLaunch(cmdLineField.getText());
+                    if (java.util.regex.Pattern.matches("^\\s*$", cmdLineField.getText())) {
+                        config.cmdLine.setUseCustomLaunch(false);
+                        config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
+                        config.cmdLine.setUseCustomLaunch(true);
+                    } else {
+                        config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
+                    }
+                    cmdLineField.setText(config.cmdLine.parseCmdLine());
+                } else {
+                    cmdLineField.setText(config.cmdLine.parseCmdLine());
+                    if (java.util.regex.Pattern.matches("^\\s*$", config.cmdLine.getCustomLaunch())) {
+                        config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
+                    }
+                }
+                config.backups.setPathsToBackup(pathsToBackup);
+                config.backups.setPath(backupPathField.getText());
+                config.setProxy(useProxyCheckBox.isSelected());
+                config.setExtPort(Integer.valueOf(extPortField.getText()));
 
+
+                config.save();
+                saveServerProperties();
+            }
+        });
         
-        config.save();
-        saveServerProperties();
-        //serverStatusLabel.setText(temp);
     }
 
     public void saveServerProperties() {
-        serverProperties.setAllowFlight(allowFlightCheckBox.isSelected());
-        serverProperties.setAllowNether(allowNetherCheckBox.isSelected());
-        serverProperties.setOnlineMode(onlineModeCheckBox.isSelected());
-        serverProperties.setPvp(pvpCheckBox.isSelected());
-        serverProperties.setSpawnAnimals(spawnAnimalsCheckBox.isSelected());
-        serverProperties.setSpawnMonsters(spawnMonstersCheckBox.isSelected());
-        serverProperties.setWhiteList(whiteListCheckBox.isSelected());
-        serverProperties.setLevelName(levelNameField.getText());
-        serverProperties.setLevelSeed(levelSeedField.getText());
-        serverProperties.setServerIp(serverIpField.getText());
-        serverProperties.setServerPort(serverPortField.getText());
-        serverProperties.setSpawnProtection(spawnProtectionField.getText());
-        serverProperties.setMaxPlayers(Integer.valueOf(maxPlayersSpinner.getValue().toString()));
-        serverProperties.setViewDistance(Integer.valueOf(viewDistanceSpinner.getValue().toString()));
-        if (!server.isRunning()) {
-            try {
-                serverProperties.writeProps();
-            } catch (IOException ioe) {
-                
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                serverProperties.setAllowFlight(allowFlightCheckBox.isSelected());
+                serverProperties.setAllowNether(allowNetherCheckBox.isSelected());
+                serverProperties.setOnlineMode(onlineModeCheckBox.isSelected());
+                serverProperties.setPvp(pvpCheckBox.isSelected());
+                serverProperties.setSpawnAnimals(spawnAnimalsCheckBox.isSelected());
+                serverProperties.setSpawnMonsters(spawnMonstersCheckBox.isSelected());
+                serverProperties.setWhiteList(whiteListCheckBox.isSelected());
+                serverProperties.setLevelName(levelNameField.getText());
+                serverProperties.setLevelSeed(levelSeedField.getText());
+                serverProperties.setServerIp(serverIpField.getText());
+                serverProperties.setServerPort(serverPortField.getText());
+                serverProperties.setSpawnProtection(spawnProtectionField.getText());
+                serverProperties.setMaxPlayers(Integer.valueOf(maxPlayersSpinner.getValue().toString()));
+                serverProperties.setViewDistance(Integer.valueOf(viewDistanceSpinner.getValue().toString()));
+                if (!server.isRunning()) {
+                    try {
+                        serverProperties.writeProps();
+                    } catch (IOException ioe) {
+
+                    }
+                }
             }
-        }
+        });
     }
 
     /**
      * As long as textScrolling is true, this will cause the consoleOutput to be scrolled to the bottom.
      */
     public void scrollText() {
-        if (textScrolling) {
-            consoleOutput.setCaretPosition(consoleOutput.getDocument().getLength());
-        }
-        webLog.setCaretPosition(webLog.getDocument().getLength());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if (textScrolling) {
+                    consoleOutput.setCaretPosition(consoleOutput.getDocument().getLength());
+                }
+                webLog.setCaretPosition(webLog.getDocument().getLength());
+            }
+        });
     }
 
     public boolean isRestarting() { return restarting; }
 
     public void restartServer() { restartServer(0); }
 
-    public void restartServer(int delay) {
-        restarting = true;
-        stopServer();
-        System.out.println("Sent stop");
-        try {
-            System.out.println("Sleeping for " + delay);
-            Thread.sleep(delay * 1000);
-        } catch (InterruptedException ie) {
-            System.out.println("Interrupted while waiting to restart server.");
-        }
-        try {
-            while (!getControlState().equals("OFF")) {
-                System.out.println("Waiting for server to be stopped");
-                Thread.sleep(1000);
+    public void restartServer(int dly) {
+        final int delay = dly;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                restarting = true;
+                stopServer();
+                System.out.println("Sent stop");
+                try {
+                    System.out.println("Sleeping for " + delay);
+                    Thread.sleep(delay * 1000);
+                } catch (InterruptedException ie) {
+                    System.out.println("Interrupted while waiting to restart server.");
+                }
+                try {
+                    while (!getControlState().equals("OFF")) {
+                        System.out.println("Waiting for server to be stopped");
+                        Thread.sleep(1000);
+                    }
+                } catch (InterruptedException ie) {
+                    System.out.println("Interrupted while waiting for server to be shut down completely.");
+                }
+                startServer();
+                System.out.println("Sent start");
+                restarting = false;
             }
-        } catch (InterruptedException ie) {
-            System.out.println("Interrupted while waiting for server to be shut down completely.");
-        }
-        startServer();
-        System.out.println("Sent start");
-        restarting = false;
+        });
     }
 
     /**
      * Starts the Minecraft server and verifies that it started properly.
      */
     public void startServer() {
-        if (controlState.equals("OFF")) {
-            setConsoleOutput("");
-            server.setCmdLine(config.cmdLine.getCmdLine());
-            if (server.start().equals("SUCCESS")) {
-            } else if (server.start().equals("ERROR")) {
-                //setConsoleOutput("[MC Server GUI] Unknown error occured while launching the server.");
-            } else if (server.start().equals("INVALIDJAR")) {
-                setConsoleOutput("[MC Server GUI] The jar file you specified is not a valid file."
-                        + "  Please make corrections on the Server Config tab.");
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if (controlState.equals("OFF")) {
+                    setConsoleOutput("");
+                    server.setCmdLine(config.cmdLine.getCmdLine());
+                    if (server.start().equals("SUCCESS")) {
+                    } else if (server.start().equals("ERROR")) {
+                        //setConsoleOutput("[MC Server GUI] Unknown error occured while launching the server.");
+                    } else if (server.start().equals("INVALIDJAR")) {
+                        setConsoleOutput("[MC Server GUI] The jar file you specified is not a valid file."
+                                + "  Please make corrections on the Server Config tab.");
+                    }
+                }
             }
-        }
+        });
     }
 
     /**
      * Tells the Minecraft server to stop.
      */
     public void stopServer() {
-        if (controlState.equals("ON")) {
-            //serverStatusLabel.setText("Stopping server...");
-            server.stop();
-        }
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if (controlState.equals("ON")) {
+                    server.stop();
+                }
+            }
+        });
     }
 
     /**
@@ -3394,17 +3619,22 @@ public class GUI extends FrameView implements Observer {
      * @param textToAdd String of text to add.
      */
     public void addTextToConsoleOutput(String textToAdd) {
-        try
-        {
-            ((HTMLEditorKit)consoleOutput.getEditorKit())
-                    .insertHTML((HTMLDocument)consoleOutput.getDocument(),
-                    consoleOutput.getDocument().getEndPosition().getOffset()-1,
-                    parser.parseText(textToAdd),
-                    1, 0, null);
-        } catch ( Exception e ) {
-            e.printStackTrace();
-            System.err.println("Error appending text to console output: " + textToAdd);
-        }
+        final String text = textToAdd;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                try
+                {
+                    ((HTMLEditorKit)consoleOutput.getEditorKit())
+                            .insertHTML((HTMLDocument)consoleOutput.getDocument(),
+                            consoleOutput.getDocument().getEndPosition().getOffset()-1,
+                            parser.parseText(text),
+                            1, 0, null);
+                } catch ( Exception e ) {
+                    e.printStackTrace();
+                    System.err.println("Error appending text to console output: " + text);
+                }
+            }
+        });
         scrollText();
     }
 
@@ -3412,45 +3642,65 @@ public class GUI extends FrameView implements Observer {
         return scheduler;
     }
 
-    public void webLogAdd(String text) {
-        try
-        {
-            text = new SimpleDateFormat(DATE_FORMAT_NOW).format(
-                    Calendar.getInstance().getTime()) + " [Web Interface] "
-                    + text;
-            String textToAdd = parser.parseText(text);
+    public void webLogAdd(String textToAdd) {
+        textToAdd = new SimpleDateFormat(DATE_FORMAT_NOW).format(
+                Calendar.getInstance().getTime()) + " [Web Interface] "
+                + textToAdd;
+        final String text = textToAdd;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                try
+                {
+                    String textToAdd = parser.parseText(text);
 
-            ((HTMLEditorKit)webLog.getEditorKit())
-                    .insertHTML((HTMLDocument)webLog.getDocument(),
-                    webLog.getDocument().getEndPosition().getOffset()-1,
-                    textToAdd, 1, 0, null);
-            //System.out.println(webLog.getText());
-        } catch ( Exception e ) {
-            //e.printStackTrace();
-            System.err.println("Error appending text to web interface log: " + text);
-        }
-        scrollText();
+                    ((HTMLEditorKit)webLog.getEditorKit())
+                            .insertHTML((HTMLDocument)webLog.getDocument(),
+                            webLog.getDocument().getEndPosition().getOffset()-1,
+                            textToAdd, 1, 0, null);
+                    //System.out.println(webLog.getText());
+                } catch ( Exception e ) {
+                    //e.printStackTrace();
+                    System.err.println("Error appending text to web interface log: " + text);
+                }
+                scrollText();
+            }
+        });
+        
     }
 
-    public void setConsoleOutput(String text) {
-        consoleOutput.setText("<body bgcolor = " + config.display.getBgColor() 
-                + "><font color = \"" + config.display.getTextColor()
-                + "\" size = " + config.display.getTextSize() + ">" + text);
+    public void setConsoleOutput(String setText) {
+        final String text = setText;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                consoleOutput.setText("<body bgcolor = " + config.display.getBgColor()
+                        + "><font color = \"" + config.display.getTextColor()
+                        + "\" size = " + config.display.getTextSize() + ">" + text);
+            }
+        });
     }
 
-    public void webLogReplace(String text) {
-        webLog.setText("<body bgcolor = " + config.display.getBgColor()
-                + "><font color = \"" + config.display.getTextColor()
-                + "\" size = " + config.display.getTextSize() + ">" + text);
+    public void webLogReplace(String replaceText) {
+        final String text = replaceText;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                webLog.setText("<body bgcolor = " + config.display.getBgColor()
+                        + "><font color = \"" + config.display.getTextColor()
+                        + "\" size = " + config.display.getTextSize() + ">" + text);
+            }
+        });
     }
 
     public void updateConsoleOutputBgColor() {
-        consoleOutput.setText(consoleOutput.getText().replaceFirst(
-                "([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}",
-                config.display.getBgColor()));
-        webLog.setText(webLog.getText().replaceFirst(
-                "([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}",
-                config.display.getBgColor()));
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                consoleOutput.setText(consoleOutput.getText().replaceFirst(
+                        "([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}",
+                        config.display.getBgColor()));
+                webLog.setText(webLog.getText().replaceFirst(
+                        "([\\d,a,b,c,d,e,f,A,B,C,D,E,F]){6}",
+                        config.display.getBgColor()));
+            }
+        });
     }
 
     /**
@@ -3474,12 +3724,15 @@ public class GUI extends FrameView implements Observer {
         }
 
         if (arg.equals("finishedBackup")) {
-            if (server.isRunning()) {
-                sendInput("say Server backup complete!");
-                sendInput("save-on");
-            }
-            //serverStatusLabel.setText(statusBeforeBackup);
-            controlSwitcher("!BACKUP");
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override public void run() {
+                    if (server.isRunning()) {
+                        sendInput("say Server backup complete!");
+                        sendInput("save-on");
+                    }
+                    controlSwitcher("!BACKUP");
+                }
+            });
         }
     }
 
@@ -3487,56 +3740,61 @@ public class GUI extends FrameView implements Observer {
      * Switches GUI components into specific states based on param passed.
      * @param serverState Typically the state of the server. "ON" or "OFF"
      */
-    private void controlSwitcher(String serverState) {
-        controlState = serverState;
-        if (serverState.equals("ON")) {
-            // Switch GUI control to "ON" status
-            startstopButton.setText("Stop");
-            consoleInput.setEnabled(true);
-            submitButton.setEnabled(true);
-            serverStatusLabel.setForeground(Color.BLUE);
-            serverStatusLabel.setText("Server UP");
-            textScrolling = true;
-            saveWorldsButton.setEnabled(true);
-            useProxyCheckBox.setEnabled(false);
-        } else if (serverState.equals("OFF")) {
-            // Switch GUI controls to "OFF" status
-            startstopButton.setText("Start");
-            consoleInput.setEnabled(false);
-            submitButton.setEnabled(false);
-            serverStatusLabel.setForeground(Color.red);
-            serverStatusLabel.setText("Server DOWN");
-            textScrolling = false;
-            mouseInConsoleOutput = false;
-            saveWorldsButton.setEnabled(false);
-            useProxyCheckBox.setEnabled(true);
-        } else if (serverState.equals("BADCONFIG")) {
-            startstopButton.setEnabled(false);
-        } else if (serverState.equals("BACKUP")) {
-            startstopButton.setEnabled(false);
-            saveWorldsButton.setEnabled(false);
-            backupControlRefreshButton.setEnabled(false);
-            backupButton.setEnabled(false);
-            saveGuiConfigButton.setEnabled(false);
-            saveServerConfigButton.setEnabled(false);
-            saveBackupControlButton.setEnabled(false);
-            backupPathField.setEnabled(false);
-            backupPathBrowseButton.setEnabled(false);
-            backupFileChooser.setEnabled(false);
-        } else if (serverState.equals("!BACKUP")) {
-            startstopButton.setEnabled(true);
-            saveWorldsButton.setEnabled(true);
-            backupControlRefreshButton.setEnabled(true);
-            backupButton.setEnabled(true);
-            saveGuiConfigButton.setEnabled(true);
-            saveServerConfigButton.setEnabled(true);
-            saveBackupControlButton.setEnabled(true);
-            backupPathField.setEnabled(true);
-            backupPathBrowseButton.setEnabled(true);
-            backupFileChooser.setEnabled(true);
-            statusBarJob.setText("");
-            controlSwitcher(stateBeforeBackup);
-        }
+    private void controlSwitcher(String newServerState) {
+        final String serverState = newServerState;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                controlState = serverState;
+                if (serverState.equals("ON")) {
+                    // Switch GUI control to "ON" status
+                    startstopButton.setText("Stop");
+                    consoleInput.setEnabled(true);
+                    submitButton.setEnabled(true);
+                    serverStatusLabel.setForeground(Color.BLUE);
+                    serverStatusLabel.setText("Server UP");
+                    textScrolling = true;
+                    saveWorldsButton.setEnabled(true);
+                    useProxyCheckBox.setEnabled(false);
+                } else if (serverState.equals("OFF")) {
+                    // Switch GUI controls to "OFF" status
+                    startstopButton.setText("Start");
+                    consoleInput.setEnabled(false);
+                    submitButton.setEnabled(false);
+                    serverStatusLabel.setForeground(Color.red);
+                    serverStatusLabel.setText("Server DOWN");
+                    textScrolling = false;
+                    mouseInConsoleOutput = false;
+                    saveWorldsButton.setEnabled(false);
+                    useProxyCheckBox.setEnabled(true);
+                } else if (serverState.equals("BADCONFIG")) {
+                    startstopButton.setEnabled(false);
+                } else if (serverState.equals("BACKUP")) {
+                    startstopButton.setEnabled(false);
+                    saveWorldsButton.setEnabled(false);
+                    backupControlRefreshButton.setEnabled(false);
+                    backupButton.setEnabled(false);
+                    saveGuiConfigButton.setEnabled(false);
+                    saveServerConfigButton.setEnabled(false);
+                    saveBackupControlButton.setEnabled(false);
+                    backupPathField.setEnabled(false);
+                    backupPathBrowseButton.setEnabled(false);
+                    backupFileChooser.setEnabled(false);
+                } else if (serverState.equals("!BACKUP")) {
+                    startstopButton.setEnabled(true);
+                    saveWorldsButton.setEnabled(true);
+                    backupControlRefreshButton.setEnabled(true);
+                    backupButton.setEnabled(true);
+                    saveGuiConfigButton.setEnabled(true);
+                    saveServerConfigButton.setEnabled(true);
+                    saveBackupControlButton.setEnabled(true);
+                    backupPathField.setEnabled(true);
+                    backupPathBrowseButton.setEnabled(true);
+                    backupFileChooser.setEnabled(true);
+                    statusBarJob.setText("");
+                    controlSwitcher(stateBeforeBackup);
+                }
+            }
+        });
     }
 
     public String getControlState() {

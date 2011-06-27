@@ -136,7 +136,6 @@
                           </Properties>
                           <Events>
                             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="consoleOutputMouseClicked"/>
-                            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="consoleOutputMouseEntered"/>
                             <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="consoleOutputMouseExited"/>
                             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="consoleOutputFocusGained"/>
                             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="consoleOutputFocusLost"/>
@@ -1412,7 +1411,7 @@
                         <Property name="text" type="java.lang.String" resourceKey="inputHistoryMaxSizeField.text"/>
                         <Property name="toolTipText" type="java.lang.String" resourceKey="inputHistoryMaxSizeField.toolTipText"/>
                         <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="new numberVerifier()" type="code"/>
+                          <Connection code="new RegexVerifier(&quot;\\d{1,4}&quot;)" type="code"/>
                         </Property>
                         <Property name="name" type="java.lang.String" value="inputHistoryMaxSizeField" noResource="true"/>
                       </Properties>

@@ -19,6 +19,7 @@ import mcservergui.gui.GUI;
 import mcservergui.tools.RegexVerifier;
 import org.jdesktop.application.Action;
 import org.quartz.*;
+import javax.swing.SwingUtilities;
 import static mcservergui.task.event.EventScheduler.*;
 import static mcservergui.tools.TimeTools.*;
 
@@ -1012,105 +1013,109 @@ public class TaskDialog extends javax.swing.JDialog {
     }
 
     private void updateTimeSummary() {
-        if (taskIsCustomButtonCheckBox.isSelected()) {
-            timeSummaryField.setText("Task is triggered when it is selected and"
-                    + " Go button is pressed on the Main Window Tab");
-        } else {
-            String summary = "At ";
-            if (hoursAllCheckBox.isSelected()) {
-                summary += "**";
-            } else {
-                if (hoursAgainCheckBox.isSelected()
-                        && hoursAgainCheckBox.isEnabled()) {
-                    if (hoursField.getText().contains("-")) {
-                        hoursField.setText(hoursField.getText().split("-")[0]);
-                    }
-                    if (hoursField.getText().contains(",")) {
-                        hoursField.setText(hoursField.getText().split(",")[0]);
-                    }
-                    summary += hoursField.getText();
-                    int time = Integer.valueOf(hoursField.getText());
-                    int inc = Integer.valueOf(hoursAgainField.getText());
-                    while(time < 24) {
-                        time += inc;
-                        if (time < 24) {
-                            summary += "/" + time;
-                        }
-                    }
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if (taskIsCustomButtonCheckBox.isSelected()) {
+                    timeSummaryField.setText("Task is triggered when it is selected and"
+                            + " Go button is pressed on the Main Window Tab");
                 } else {
-                    summary += hoursField.getText();
-                }
-            }
-            summary += ":";
-            if (minutesAllCheckBox.isSelected()) {
-                summary += "**";
-            } else {
-                if (minutesAgainCheckBox.isSelected()
-                        && minutesAgainCheckBox.isEnabled()) {
-                    if (minutesField.getText().contains("-")) {
-                        minutesField.setText(minutesField.getText().split("-")[0]);
-                    }
-                    if (minutesField.getText().contains(",")) {
-                        minutesField.setText(minutesField.getText().split(",")[0]);
-                    }
-                    summary += minutesField.getText();
-                    int time = Integer.valueOf(minutesField.getText());
-                    int inc = Integer.valueOf(minutesAgainField.getText());
-                    while (time < 60) {
-                        time += inc;
-                        if (time < 60) {
-                            summary += "/" + time;
-                        }
-                    }
-                } else {
-                    summary += minutesField.getText();
-                }
-            }
-            summary += ":";
-            if (secondsAgainCheckBox.isSelected()
-                    && secondsAgainCheckBox.isEnabled()) {
-                if (secondsField.getText().contains("-")) {
-                    secondsField.setText(secondsField.getText().split("-")[0]);
-                }
-                if (secondsField.getText().contains(",")) {
-                    secondsField.setText(secondsField.getText().split(",")[0]);
-                }
-                summary += secondsField.getText();
-                int time = Integer.valueOf(secondsField.getText());
-                int inc = Integer.valueOf(secondsAgainField.getText());
-                while (time < 60) {
-                    time += inc;
-                    if (time < 60) {
-                        summary += "/" + time;
+                    String summary = "At ";
+                    if (hoursAllCheckBox.isSelected()) {
+                        summary += "**";
                     } else {
-                        break;
+                        if (hoursAgainCheckBox.isSelected()
+                                && hoursAgainCheckBox.isEnabled()) {
+                            if (hoursField.getText().contains("-")) {
+                                hoursField.setText(hoursField.getText().split("-")[0]);
+                            }
+                            if (hoursField.getText().contains(",")) {
+                                hoursField.setText(hoursField.getText().split(",")[0]);
+                            }
+                            summary += hoursField.getText();
+                            int time = Integer.valueOf(hoursField.getText());
+                            int inc = Integer.valueOf(hoursAgainField.getText());
+                            while(time < 24) {
+                                time += inc;
+                                if (time < 24) {
+                                    summary += "/" + time;
+                                }
+                            }
+                        } else {
+                            summary += hoursField.getText();
+                        }
                     }
+                    summary += ":";
+                    if (minutesAllCheckBox.isSelected()) {
+                        summary += "**";
+                    } else {
+                        if (minutesAgainCheckBox.isSelected()
+                                && minutesAgainCheckBox.isEnabled()) {
+                            if (minutesField.getText().contains("-")) {
+                                minutesField.setText(minutesField.getText().split("-")[0]);
+                            }
+                            if (minutesField.getText().contains(",")) {
+                                minutesField.setText(minutesField.getText().split(",")[0]);
+                            }
+                            summary += minutesField.getText();
+                            int time = Integer.valueOf(minutesField.getText());
+                            int inc = Integer.valueOf(minutesAgainField.getText());
+                            while (time < 60) {
+                                time += inc;
+                                if (time < 60) {
+                                    summary += "/" + time;
+                                }
+                            }
+                        } else {
+                            summary += minutesField.getText();
+                        }
+                    }
+                    summary += ":";
+                    if (secondsAgainCheckBox.isSelected()
+                            && secondsAgainCheckBox.isEnabled()) {
+                        if (secondsField.getText().contains("-")) {
+                            secondsField.setText(secondsField.getText().split("-")[0]);
+                        }
+                        if (secondsField.getText().contains(",")) {
+                            secondsField.setText(secondsField.getText().split(",")[0]);
+                        }
+                        summary += secondsField.getText();
+                        int time = Integer.valueOf(secondsField.getText());
+                        int inc = Integer.valueOf(secondsAgainField.getText());
+                        while (time < 60) {
+                            time += inc;
+                            if (time < 60) {
+                                summary += "/" + time;
+                            } else {
+                                break;
+                            }
+                        }
+                    } else {
+                        summary += secondsField.getText();
+                    }
+                    summary += " on ";
+                    if (domButton.isSelected()) {
+                        if (domAllCheckBox.isSelected()) {
+                            summary += "every day";
+                        } else {
+                            summary += "select days";
+                        }
+                    } else {
+                        if (dowAllButton.isSelected()) {
+                            summary += "every day";
+                        } else {
+                            summary += "select days";
+                        }
+                    }
+                    summary += " of ";
+                    if (monthAllButton.isSelected()) {
+                        summary += "every month.";
+                    } else {
+                        summary += "select months.";
+                    }
+                    timeSummaryField.setText(summary);
                 }
-            } else {
-                summary += secondsField.getText();
             }
-            summary += " on ";
-            if (domButton.isSelected()) {
-                if (domAllCheckBox.isSelected()) {
-                    summary += "every day";
-                } else {
-                    summary += "select days";
-                }
-            } else {
-                if (dowAllButton.isSelected()) {
-                    summary += "every day";
-                } else {
-                    summary += "select days";
-                }
-            }
-            summary += " of ";
-            if (monthAllButton.isSelected()) {
-                summary += "every month.";
-            } else {
-                summary += "select months.";
-            }
-            timeSummaryField.setText(summary);
-        }
+        });
     }
 
     private class WarningListCellRenderer extends javax.swing.JTextPane implements javax.swing.ListCellRenderer {
@@ -1163,27 +1168,31 @@ public class TaskDialog extends javax.swing.JDialog {
     }
 
     private void dowAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dowAllButtonActionPerformed
-        if (dowAllButton.isSelected()) {
-            for (int i = 1; i < 8; i++) {
-                dayOfWeek.get(i).setSelected(true);
-                boldButton(dayOfWeek.get(i));
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if (dowAllButton.isSelected()) {
+                    for (int i = 1; i < 8; i++) {
+                        dayOfWeek.get(i).setSelected(true);
+                        boldButton(dayOfWeek.get(i));
+                    }
+                    //dowAllButton.setText("None");
+                    domField.setEnabled(false);
+                    domAllCheckBox.setEnabled(false);
+                    domButton.setSelected(false);
+                } else {
+                    for (int i = 1; i < 8; i++) {
+                        dayOfWeek.get(i).setSelected(false);
+                        boldButton(dayOfWeek.get(i));
+                    }
+                    //dowAllButton.setText("All");
+                    domField.setEnabled(true);
+                    domAllCheckBox.setEnabled(true);
+                    domButton.setSelected(true);
+                }
+                boldButton(dowAllButton);
+                boldButton(domButton);
             }
-            //dowAllButton.setText("None");
-            domField.setEnabled(false);
-            domAllCheckBox.setEnabled(false);
-            domButton.setSelected(false);
-        } else {
-            for (int i = 1; i < 8; i++) {
-                dayOfWeek.get(i).setSelected(false);
-                boldButton(dayOfWeek.get(i));
-            }
-            //dowAllButton.setText("All");
-            domField.setEnabled(true);
-            domAllCheckBox.setEnabled(true);
-            domButton.setSelected(true);
-        }
-        boldButton(dowAllButton);
-        boldButton(domButton);
+        });
     }//GEN-LAST:event_dowAllButtonActionPerformed
 
     private void sunButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sunButtonActionPerformed
@@ -1215,20 +1224,24 @@ public class TaskDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_satButtonActionPerformed
 
     private void monthAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthAllButtonActionPerformed
-        if (monthAllButton.isSelected()) {
-            for (int i = 1; i < 13; i++) {
-                month.get(i).setSelected(true);
-                boldButton(month.get(i));
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if (monthAllButton.isSelected()) {
+                    for (int i = 1; i < 13; i++) {
+                        month.get(i).setSelected(true);
+                        boldButton(month.get(i));
+                    }
+                    //monthAllButton.setText("None");
+                } else {
+                    for (int i = 1; i < 13; i++) {
+                        month.get(i).setSelected(false);
+                        boldButton(month.get(i));
+                    }
+                   //monthAllButton.setText("All");
+                }
+                boldButton(monthAllButton);
             }
-            //monthAllButton.setText("None");
-        } else {
-            for (int i = 1; i < 13; i++) {
-                month.get(i).setSelected(false);
-                boldButton(month.get(i));
-            }
-           //monthAllButton.setText("All");
-        }
-        boldButton(monthAllButton);
+        });
     }//GEN-LAST:event_monthAllButtonActionPerformed
 
     private void janButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_janButtonActionPerformed
@@ -1280,118 +1293,158 @@ public class TaskDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_decButtonActionPerformed
 
     private void domButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_domButtonActionPerformed
-        if (domButton.isSelected()) {
-            for (int i = 0; i < 8; i++) {
-                dayOfWeek.get(i).setSelected(false);
-                boldButton(dayOfWeek.get(i));
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if (domButton.isSelected()) {
+                    for (int i = 0; i < 8; i++) {
+                        dayOfWeek.get(i).setSelected(false);
+                        boldButton(dayOfWeek.get(i));
+                    }
+                    //dayOfWeek.get(0).setText("All");
+                    domAllCheckBox.setEnabled(true);
+                    domField.setEnabled(!domAllCheckBox.isSelected());
+                } else {
+                    domButton.setSelected(true);
+                }
+                boldButton(domButton);
+                boldButton(dowAllButton);
+                updateTimeSummary();
             }
-            //dayOfWeek.get(0).setText("All");
-            domAllCheckBox.setEnabled(true);
-            domField.setEnabled(!domAllCheckBox.isSelected());
-        } else {
-            domButton.setSelected(true);
-        }
-        boldButton(domButton);
-        boldButton(dowAllButton);
-        updateTimeSummary();
+        });
     }//GEN-LAST:event_domButtonActionPerformed
 
     private void domAllCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_domAllCheckBoxActionPerformed
-        domField.setEnabled(!domAllCheckBox.isSelected());
-        updateTimeSummary();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                domField.setEnabled(!domAllCheckBox.isSelected());
+                updateTimeSummary();
+            }
+        });
     }//GEN-LAST:event_domAllCheckBoxActionPerformed
 
     private void minutesAllCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minutesAllCheckBoxActionPerformed
-        if (minutesAllCheckBox.isSelected()) {
-            if (javax.swing.JOptionPane.showConfirmDialog(this,
-                        "This option is rather dangerous!\n"
-                        + "Please be aware that this means the event will occur EVERY minute of the specified hour(s).\n"
-                        + "Are you sure you wish to this event to occure EVERY minute of the specified hour(s)?",
-                        "Confirm select ALL minutes",
-                        javax.swing.JOptionPane.YES_NO_OPTION) ==
-                        javax.swing.JOptionPane.NO_OPTION) {
-                minutesAllCheckBox.setSelected(false);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if (minutesAllCheckBox.isSelected()) {
+                    if (javax.swing.JOptionPane.showConfirmDialog(TaskDialog.this,
+                                "This option is rather dangerous!\n"
+                                + "Please be aware that this means the event will occur EVERY minute of the specified hour(s).\n"
+                                + "Are you sure you wish to this event to occure EVERY minute of the specified hour(s)?",
+                                "Confirm select ALL minutes",
+                                javax.swing.JOptionPane.YES_NO_OPTION) ==
+                                javax.swing.JOptionPane.NO_OPTION) {
+                        minutesAllCheckBox.setSelected(false);
+                    }
+                }
+                minutesField.setEnabled(!minutesAllCheckBox.isSelected());
+                minutesAgainCheckBox.setEnabled(!minutesAllCheckBox.isSelected());
+                minutesAgainField.setEnabled(!minutesAllCheckBox.isSelected());
+                updateTimeSummary();
             }
-        }
-        minutesField.setEnabled(!minutesAllCheckBox.isSelected());
-        minutesAgainCheckBox.setEnabled(!minutesAllCheckBox.isSelected());
-        minutesAgainField.setEnabled(!minutesAllCheckBox.isSelected());
-        updateTimeSummary();
+        });  
     }//GEN-LAST:event_minutesAllCheckBoxActionPerformed
 
     private void hoursAllCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hoursAllCheckBoxActionPerformed
-        hoursField.setEnabled(!hoursAllCheckBox.isSelected());
-        hoursAgainCheckBox.setEnabled(!hoursAllCheckBox.isSelected());
-        hoursAgainField.setEnabled(!hoursAllCheckBox.isSelected());
-        updateTimeSummary();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                hoursField.setEnabled(!hoursAllCheckBox.isSelected());
+                hoursAgainCheckBox.setEnabled(!hoursAllCheckBox.isSelected());
+                hoursAgainField.setEnabled(!hoursAllCheckBox.isSelected());
+                updateTimeSummary();
+            }
+        });
     }//GEN-LAST:event_hoursAllCheckBoxActionPerformed
 
     private void startServerRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startServerRadioActionPerformed
-        createButton.setEnabled(true);
-        sendCommandField.setEnabled(false);
-        remainDownLabel.setEnabled(false);
-        remainDownField.setEnabled(false);
-        warningList.setEnabled(false);
-        warningAddButton.setEnabled(false);
-        warningEditButton.setEnabled(false);
-        warningRemoveButton.setEnabled(false);
-        task = "Start Server";
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                createButton.setEnabled(true);
+                sendCommandField.setEnabled(false);
+                remainDownLabel.setEnabled(false);
+                remainDownField.setEnabled(false);
+                warningList.setEnabled(false);
+                warningAddButton.setEnabled(false);
+                warningEditButton.setEnabled(false);
+                warningRemoveButton.setEnabled(false);
+                task = "Start Server";
+            }
+        });
     }//GEN-LAST:event_startServerRadioActionPerformed
 
     private void sendCommandRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendCommandRadioActionPerformed
-        createButton.setEnabled(true);
-        sendCommandField.setEnabled(true);
-        remainDownLabel.setEnabled(false);
-        remainDownField.setEnabled(false);
-        warningList.setEnabled(true);
-        warningAddButton.setEnabled(true);
-        warningEditButton.setEnabled(true);
-        warningRemoveButton.setEnabled(true);
-        task = "Send Command";
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                createButton.setEnabled(true);
+                sendCommandField.setEnabled(true);
+                remainDownLabel.setEnabled(false);
+                remainDownField.setEnabled(false);
+                warningList.setEnabled(true);
+                warningAddButton.setEnabled(true);
+                warningEditButton.setEnabled(true);
+                warningRemoveButton.setEnabled(true);
+                task = "Send Command";
+            }
+        });
     }//GEN-LAST:event_sendCommandRadioActionPerformed
 
     private void stopServerRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopServerRadioActionPerformed
-        createButton.setEnabled(true);
-        sendCommandField.setEnabled(false);
-        remainDownLabel.setEnabled(false);
-        remainDownField.setEnabled(false);
-        warningList.setEnabled(true);
-        warningAddButton.setEnabled(true);
-        warningEditButton.setEnabled(true);
-        warningRemoveButton.setEnabled(true);
-        task = "Stop Server";
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                createButton.setEnabled(true);
+                sendCommandField.setEnabled(false);
+                remainDownLabel.setEnabled(false);
+                remainDownField.setEnabled(false);
+                warningList.setEnabled(true);
+                warningAddButton.setEnabled(true);
+                warningEditButton.setEnabled(true);
+                warningRemoveButton.setEnabled(true);
+                task = "Stop Server";
+            }
+        });
     }//GEN-LAST:event_stopServerRadioActionPerformed
 
     private void restartServerRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartServerRadioActionPerformed
-        createButton.setEnabled(true);
-        sendCommandField.setEnabled(false);
-        remainDownLabel.setEnabled(true);
-        remainDownField.setEnabled(true);
-        warningList.setEnabled(true);
-        warningAddButton.setEnabled(true);
-        warningEditButton.setEnabled(true);
-        warningRemoveButton.setEnabled(true);
-        task = "Restart Server";
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                createButton.setEnabled(true);
+                sendCommandField.setEnabled(false);
+                remainDownLabel.setEnabled(true);
+                remainDownField.setEnabled(true);
+                warningList.setEnabled(true);
+                warningAddButton.setEnabled(true);
+                warningEditButton.setEnabled(true);
+                warningRemoveButton.setEnabled(true);
+                task = "Restart Server";
+            }
+        });
     }//GEN-LAST:event_restartServerRadioActionPerformed
 
     private void backupRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupRadioActionPerformed
-        createButton.setEnabled(true);
-        sendCommandField.setEnabled(false);
-        remainDownLabel.setEnabled(false);
-        remainDownField.setEnabled(false);
-        warningList.setEnabled(true);
-        warningAddButton.setEnabled(true);
-        warningEditButton.setEnabled(true);
-        warningRemoveButton.setEnabled(true);
-        task = "Backup";
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                createButton.setEnabled(true);
+                sendCommandField.setEnabled(false);
+                remainDownLabel.setEnabled(false);
+                remainDownField.setEnabled(false);
+                warningList.setEnabled(true);
+                warningAddButton.setEnabled(true);
+                warningEditButton.setEnabled(true);
+                warningRemoveButton.setEnabled(true);
+                task = "Backup";
+            }
+        });
     }//GEN-LAST:event_backupRadioActionPerformed
 
     private void warningAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_warningAddButtonActionPerformed
-        javax.swing.JFrame mainFrame = Main.getApplication().getMainFrame();
-        warningDialog = new ServerWarningDialog(
-                mainFrame, warningListModel/*, serverWarningList*/);
-        warningDialog.setLocationRelativeTo(mainFrame);
-        Main.getApplication().show(warningDialog);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                javax.swing.JFrame mainFrame = Main.getApplication().getMainFrame();
+                warningDialog = new ServerWarningDialog(
+                        mainFrame, warningListModel/*, serverWarningList*/);
+                warningDialog.setLocationRelativeTo(mainFrame);
+                Main.getApplication().show(warningDialog);
+            }
+        });
     }//GEN-LAST:event_warningAddButtonActionPerformed
 
     private void warningRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_warningRemoveButtonActionPerformed
@@ -1399,27 +1452,35 @@ public class TaskDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_warningRemoveButtonActionPerformed
 
     public void removeWarningListEntry() {
-        ServerWarning warning = (ServerWarning)warningList.getSelectedValue();
-        if (warning != null) {
-            if (javax.swing.JOptionPane.showConfirmDialog(this,
-                    "Are you sure you wish to remove this warning?\n",
-                    "Remove warning message",
-                    javax.swing.JOptionPane.YES_NO_OPTION) ==
-                    javax.swing.JOptionPane.YES_OPTION) {
-                warningListModel.removeElement(warning);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                ServerWarning warning = (ServerWarning)warningList.getSelectedValue();
+                if (warning != null) {
+                    if (javax.swing.JOptionPane.showConfirmDialog(TaskDialog.this,
+                            "Are you sure you wish to remove this warning?\n",
+                            "Remove warning message",
+                            javax.swing.JOptionPane.YES_NO_OPTION) ==
+                            javax.swing.JOptionPane.YES_OPTION) {
+                        warningListModel.removeElement(warning);
+                    }
+                }
             }
-        }
+        });
     }
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        if (javax.swing.JOptionPane.showConfirmDialog(this,
-                    "Are you sure you wish to stop editing this event?\n"
-                    + "Any saved changes will be lost!",
-                    "Cancel task entry",
-                    javax.swing.JOptionPane.YES_NO_OPTION) ==
-                    javax.swing.JOptionPane.YES_OPTION) {
-            closeTaskDialog();
-        }
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if (javax.swing.JOptionPane.showConfirmDialog(TaskDialog.this,
+                        "Are you sure you wish to stop editing this event?\n"
+                        + "Any saved changes will be lost!",
+                        "Cancel task entry",
+                        javax.swing.JOptionPane.YES_NO_OPTION) ==
+                        javax.swing.JOptionPane.YES_OPTION) {
+                    closeTaskDialog();
+                }
+            }
+        });
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
@@ -1790,6 +1851,13 @@ public class TaskDialog extends javax.swing.JDialog {
             warningEditButton.setEnabled(true);
             warningRemoveButton.setEnabled(true);
             task = "Backup";
+        } else if (editEvent.getTask().equals("Save Worlds")) {
+            saveWorldsRadio.setSelected(true);
+            warningList.setEnabled(true);
+            warningAddButton.setEnabled(true);
+            warningEditButton.setEnabled(true);
+            warningRemoveButton.setEnabled(true);
+            task = "Save Worlds";
         }
         String cronex = editEvent.getCronEx();
         String seconds = cronex.split("\\s")[0];

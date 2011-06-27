@@ -8,6 +8,9 @@ Add filtering to console output
 Add restoration of backups
 Auto-detect server jar
 Add plugin manager
+Fix server config tab for linux...
+Make sure to have web interface option to send de-marked up text
+Add extra menu items to the up to date menu.
 Ability to give players items by right clicking name in player list
 Compatibility with many bukkit plugins (mcMMO or iConomy for instance)
 Ability to restart based on memory limits
@@ -15,3 +18,9 @@ Warnings when the server could be lagging
 Possibly have cooperability with something like MccRestart
 Delete backups after x amount of time or x amount of backups
 Compatibility with MCSoD
+Detect faulty server starts (for instance when java exec is wrong)
+Server up time
+Try to make the proxy connections make more sense
+Allow in game commands to work from console input
+
+Finish making task dialog thread-safe

@@ -13,23 +13,11 @@ import mcservergui.task.event.EventModel;
  *
  * @author dumptruckman
  */
-public class GUIListModel extends javax.swing.AbstractListModel 
-        /*implements javax.swing.ComboBoxModel*/ {
+public class GUIListModel extends javax.swing.AbstractListModel {
 
     SortedSet model;
-    //boolean isComboBoxModel;
-    //private Object selectedObject;
-
-    /*
-    public GUIListModel(boolean isComboBoxModel) {
-        this.isComboBoxModel = isComboBoxModel;
-        model = new TreeSet();
-    }
-     *
-     */
 
     public GUIListModel() {
-        //this.isComboBoxModel = false;
         model = new TreeSet();
     }
 
@@ -38,25 +26,8 @@ public class GUIListModel extends javax.swing.AbstractListModel
     }
 
     @Override public Object getElementAt(int index) {
-        //if (isComboBoxModel) {
-        //    EventModel event = (EventModel)model.toArray()[index];
-        //    return event.getName();
-        //} else {
-            return model.toArray()[index];
-        //}
+        return model.toArray()[index];
     }
-
-    /*
-    @Override public Object getSelectedItem() {
-        return selectedObject;
-    }
-
-    @Override public void setSelectedItem(Object o) {
-        selectedObject = o;
-        fireContentsChanged(this, -1, -1);
-    }
-     * 
-     */
 
     public void add(Object element) {
         if (model.add(element)) {

@@ -80,6 +80,7 @@
         <jar jarfile="${dist.jar}" update="true">
             <zipfileset src="${dist.jar}" includes="**/*.class" />
             <zipfileset src="${file.reference.jackson-core-asl-1.8.0.jar}" includes="**/*.class"/>
+            <zipfileset src="${file.reference.jackson-mapper-asl-1.8.2.jar}" includes="**/*.class"/>
             <zipfileset src="${file.reference.swing-worker-1.1.jar}" includes="**/*.class"/>
             <zipfileset src="${file.reference.appframework-1.0.3.jar}" includes="**/*.class"/>
             <zipfileset src="${file.reference.lablib-checkboxtree-3.2.jar}" includes="**/*.class"/>

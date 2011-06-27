@@ -8,6 +8,7 @@ package mcservergui.backup;
 import java.util.Observable;
 import java.io.*;
 import javax.swing.SwingWorker;
+import javax.swing.SwingUtilities;
 import java.util.zip.*;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.HTMLDocument;
@@ -39,17 +40,22 @@ public class Backup extends Observable {
     }
 
     public void addTextToBackupLog(String textToAdd) {
-        try
-        {
-            ((HTMLEditorKit)backupLog.getEditorKit())
-                    .insertHTML((HTMLDocument)backupLog.getDocument(),
-                    backupLog.getDocument().getEndPosition().getOffset()-1,
-                    textToAdd,
-                    1, 0, null);
-        } catch ( Exception e ) {
-            System.out.println("Error appending text to console output");
-        }
-        backupLog.setCaretPosition(backupLog.getDocument().getLength());
+        final String text = textToAdd;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                try
+                {
+                    ((HTMLEditorKit)backupLog.getEditorKit())
+                            .insertHTML((HTMLDocument)backupLog.getDocument(),
+                            backupLog.getDocument().getEndPosition().getOffset()-1,
+                            text,
+                            1, 0, null);
+                } catch ( Exception e ) {
+                    System.out.println("Error appending text to console output");
+                }
+                backupLog.setCaretPosition(backupLog.getDocument().getLength());
+            }
+        });
     }
 
     public BackupTask getTask() {

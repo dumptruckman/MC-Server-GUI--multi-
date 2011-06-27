@@ -93,7 +93,7 @@ public class Player {
         //isRobot = true;
         //} else {
         parent.gui.addTextToConsoleOutput(new SimpleDateFormat(DATE_FORMAT_NOW)
-                .format(Calendar.getInstance().getTime()) + "[MC Server GUI] IP"
+                .format(Calendar.getInstance().getTime()) + " [MC Server GUI] IP"
                 + " Connection from " + getIPAddress() + "!");
         //}
 
