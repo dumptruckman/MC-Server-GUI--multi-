@@ -1,12 +1,28 @@
-Version .9.4-dev
+Version .9.4
+    MAJOR STRUCTURAL CHANGES IN THIS VERSION.  It is highly recommended you make backups before updating!
     Editing a Save Worlds task now work properly.
     The last digit of the seconds field in the console output for players connecting to the proxy is now present!
-    Browsing for a java executable now actually save the path/file that you selected.
+    Browsing for a java executable now actually saves the path/file that you selected.
     Made the GUI significantly more thread-safe.  This could clear up any random unpredictable issues.
     Darkened the light gray ascii escape sequence color code.
     Added a simple warning message to help clear up any confusion about issues binding ports.
-    Added ability to execute tasks through the web interface.
-    Added ability to retrieve a list of task names through the web interface.
+    Web Interface now logs to a file called guiweb.log.
+    Added a donate menu item. ;)
+    GUI will now auto-detect a server jar if you have not yet set one.
+    Messages in the console output from the GUI now have a more uniform look.
+    GUI messages are now logged to a file called mcservergui.log.
+    Fixed bug where scheduled tasks would not trigger with the in-game task command.
+    Changed the response API for the web interface so that the first key:value pair contains only the success/error message.  This only affects Get Output and as such, puts the output in a new key:value pair with the key "Console Output".
+    Web interface API now allows for partial successes.
+    Added new API to the web interface:
+        Execute task.
+        Retrieve Task Names.
+        Retrieve Task Details.
+        Alternate output styles for Get Output:
+            Line break only (<br />).
+            Plain Text with new line options of CRLF, LFCR, CR, or LF.
+    These changes to the Web Interface API WILL break the old version of the Sample PHP Web Interface.
+    Included a new guilauncher.bat file.
 
 Version .9.3
     You can now use the Delete key to remove entries from the task list and a task's warning list.

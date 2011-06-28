@@ -6,7 +6,7 @@
 package mcservergui.tools;
 import mcservergui.config.Config;
 import mcservergui.gui.GUI;
-import java.util.regex.Pattern;
+import static mcservergui.tools.TimeTools.*;
 
 /**
  *
@@ -35,7 +35,7 @@ public class ConsoleParser {
 
             message = message.replaceAll("<", "&lt;");
             message = message.replaceAll(">", "&gt;");
-            message = message.replaceAll(System.getProperty("line.separator"), "<br>");
+            message = message.replaceAll(System.getProperty("line.separator"), "<br />");
             if (tag.equals("INFO")) {
                 tag = "[<font color = " + display.getInfoColor() + ">INFO</font>]";
                 /* Player speech highlighting
@@ -63,9 +63,9 @@ public class ConsoleParser {
                 tag = "[<font color = " + display.getWarningColor() + ">WARNING</font>]";
                 if (gui.config.getProxy() &&
                         message.contains("**** FAILED TO BIND TO PORT!")) {
-                    gui.addTextToConsoleOutput(date + " " + time + " [WARNING] "
-                            + "Are the Proxy Port and Server Port the same?  "
-                            + "Check the Server Config tab!");
+                    gui.guiLog("Are the Proxy Port and Server Port the same?  "
+                            + "Check the Server Config tab!",
+                            GUI.LogLevel.WARNING);
                 }
             } else if (tag.equals("SEVERE")) {
                 tag = "[<font color = " + display.getSevereColor() + ">SEVERE</font>]";
@@ -90,9 +90,9 @@ public class ConsoleParser {
                     + display.getTextSize() + ">" + text + "</font>";
         }
 
-        // Make sure the line has a <br> tag
-        if (!text.contains("<br>")) {
-            text += "<br>";
+        // Make sure the line has a <br /> tag
+        if (!text.contains("<br />")) {
+            text += "<br />";
         }
         
         // Detect and replace color codes

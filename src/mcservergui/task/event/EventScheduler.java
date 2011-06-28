@@ -46,9 +46,7 @@ public class EventScheduler {
     public static boolean scheduleImmediateEvent(EventModel event, Scheduler scheduler, GUI gui) {
         JobDetail job;
         Trigger trigger;
-        job = newJob(Task.class)
-                .withIdentity(event.getName())
-                .build();
+        job = newJob(Task.class).build();
         job.getJobDataMap().put("Event", event);
         job.getJobDataMap().put("GUI", gui);
 
@@ -62,6 +60,7 @@ public class EventScheduler {
             return true;
         } catch (SchedulerException se) {
             System.out.println("scheduling exception error");
+            se.printStackTrace();
             return false;
         }
     }

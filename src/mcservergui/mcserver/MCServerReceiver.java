@@ -39,6 +39,7 @@ public class MCServerReceiver extends Observable {
                         }
                         if ((!receivedFromServer.equals("")) && (!receivedFromServer.equals(">")) && (!receivedFromServer.equals(">>")) && (!receivedFromServer.equals(">>>"))) {
                             receivedFromServer += System.getProperty("line.separator");
+                            //receivedFromServer += "\\n";
                             // This part helps me find special characters
                             /*for (int i=0; i < receivedFromServer.length(); i++) {
                                 System.out.print(receivedFromServer.codePointAt(i) + " ");

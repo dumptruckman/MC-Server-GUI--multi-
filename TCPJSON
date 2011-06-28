@@ -1,10 +1,48 @@
 This is the format for the JSON for the Web Interface:
+    { "Password" : "password", "Request" : "request name", "Data" : [ "" ] }
 
-{ "Password" : "password", "Request" : "request name", "Data" : [ "" ] }
+The order of the JSON is important but it is not case sensitive.
 
-Password contains the password set in the gui on the Web Interface tab
+Password contains the password set in the gui on the Web Interface tab.
+Request is what you're wanting to achieve.
+Data is required for some requests and optional for others as detailed below.
+    Data can additionally have multiple values in some cases.  This should be
+            entered as:
+        "Data" : [ "Value 1", "Value 2" ]
 
-Request is either "Start Server", "Stop Server", "Get Output", "Send Input"
+Requests:
+    "Start Server" - starts the Minecraft server.
+    "Stop Server" - stops the Minecraft server.
+    "Get Output" - retrieves console output from the GUI.
+        Optional Data:
+            "" or no data present - return output with html markup.
+            "Line Break Only" - returns output only with <br> markup.
+            "Plain Text" - returns output with no html markup and lines ending
+                    in CRLF.
+                Additional Optional Data:
+                    "CRLF" - returns plain text output with CRLF line endings.
+                    "LFCR" - returns plain text output with LFCR line endings.
+                    "LF" - returns plain text output with LF line endings.
+                    "CR" - returns plain text output with CR line endings.
+    "Send Input" - sends a command to the Minecraft server.
+        Required Data:
+            Command that you wish to send, example: "save-all".
+    "Execute Task" - executes a task by name.
+        Required Data:
+            Task name that you wish to execute.
+    "Get Task Names" - returns a list of task names.
+    "Get Task Details" - returns the details of a task specified by name.
 
-Data an array containing data specific to the request.  Only "Send Input" uses
-this field and the first element is the input to send.
+
+The response comes back in a similar format.
+    { "Success" : "Success Message" }
+    { "Success" : "Success Message" , "Data" : "some data" }
+    { "Partial Success" : "Partial Success Message" , "Data" : "some data" }
+    { "Error" : "Error Message" }
+
+The Data Type is dependent on the request submitted
+The following requests return data:
+    "Get Output" - "Data" contains output from console.
+    "Get Task Names" - "Data" contains array of names [ "name1", "name2", ...]
+    "Get Task Details" - "Data" contains a task exactly as it appears in
+            guicofig.json

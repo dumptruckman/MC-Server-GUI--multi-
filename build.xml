@@ -88,6 +88,7 @@
             <zipfileset src="${file.reference.slf4j-api-1.6.1.jar}" includes="**/*.class"/>
             <zipfileset src="${file.reference.slf4j-log4j12-1.6.1.jar}" includes="**/*.class"/>
             <zipfileset src="${file.reference.sigar.jar}" includes="**/*.class"/>
+            <zipfileset src="${file.reference.jsoup-1.6.0.jar}" includes="**/*.class"/>
         </jar>
     </target>
 </project>

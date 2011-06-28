@@ -142,7 +142,7 @@ public class Config {
             _bukkit = true;
             _xmx = "1024M";
             _xincgc = true;
-            _serverJar = "craftbukkit.jar";
+            _serverJar = "";
             _extraArgs = "";
             _useCustomLaunch = false;
             _customLaunch = "";

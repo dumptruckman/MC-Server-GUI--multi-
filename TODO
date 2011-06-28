@@ -8,7 +8,6 @@ Major Features:
 Minor Features:
     Add tasks for scheduler:
         Launch with custom run line or change server properties
-    Auto-detect server jar
     Add filtering to console output
     Allow console output to be searched
     Server up time
@@ -18,17 +17,15 @@ Minor Features:
     Delete backups after x amount of time or x amount of backups
     Compatibility with MCSoD
     Have an option to have the GUI serve up it's OWN webpage
+    Add more in program help
+    Add start-up tips
 
 Changes:
-    Have the Web Interface log to a file as well
     Make sure to have web interface option to send de-marked up text
-    Add a lot more functionality to the Web Interface 
-    Add more info to tray tip  
-    Add extra menu items to the up to date menu.   
-    Try to make the proxy connections make more sense
+    Add a lot more functionality to the Web Interface
+    Add more info to tray tip
     Allow in game commands to work from console input
 
 Fixes:
-    Make the server port change to something other than the gui proxy port
     Fix server config tab for linux...
     Detect faulty server starts (for instance when java exec is wrong)

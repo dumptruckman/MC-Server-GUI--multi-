@@ -129,8 +129,9 @@ public class ProxyServer {
                         try {
                             address = InetAddress.getByName(ip);
                         } catch (UnknownHostException e) {
-                            gui.addTextToConsoleOutput("[MC Server GUI] " + e);
-                            gui.addTextToConsoleOutput("[MC Server GUI] Invalid listening address " + ip);
+                            gui.guiLog(e.toString(), GUI.LogLevel.SEVERE);
+                            gui.guiLog("Invalid listening address " + ip + "!"
+                                    + "<br>Aborting...", GUI.LogLevel.SEVERE);
                             startCode = -1;
                             this.notifyAll();
                             break;
@@ -140,20 +141,21 @@ public class ProxyServer {
                     try {
                         socket = new ServerSocket(port, 0, address);
                     } catch (java.io.IOException e) {
-                        gui.addTextToConsoleOutput("[MC Server GUI] " + e);
-                        gui.addTextToConsoleOutput("[MC Server GUI] Could not listen on port " + port
-                        + "!\nIs it already in use? Exiting application...");
+                        gui.guiLog(e.toString(), GUI.LogLevel.SEVERE);
+                        gui.guiLog("Could not listen on port " + port + "!<br>"
+                                + "Is it already in use? Aborting...",
+                                GUI.LogLevel.SEVERE);
                         startCode = -1;
                         this.notifyAll();
                         break;
                     }
 
-                    gui.addTextToConsoleOutput("[MC Server GUI] listening on "
-                            + socket.getInetAddress().getHostAddress() + ":"
-                            + socket.getLocalPort() + " (players connect here)");
+                    gui.guiLog("Listening on " + socket.getInetAddress()
+                            .getHostAddress() + ":" + socket.getLocalPort()
+                            + " (players connect here)");
                     if (socket.getInetAddress().getHostAddress().equals("0.0.0.0")) {
-                        gui.addTextToConsoleOutput("Note: 0.0.0.0 means all"
-                                + " IP addresses; you want this.");
+                        gui.guiLog("0.0.0.0 means all IP addresses; you want "
+                                + "this.");
                     }
                     startCode = 1;
                     this.notifyAll();
@@ -165,9 +167,10 @@ public class ProxyServer {
                         try {
                             client = socket.accept();
                         } catch (java.io.IOException e) {
-                            gui.addTextToConsoleOutput("[MC Server GUI] " + e);
-                            gui.addTextToConsoleOutput("[MC Server GUI] Accept failed on port "
-                                    + port + "!");
+                            gui.guiLog(e.toString(), GUI.LogLevel.WARNING);
+                            gui.guiLog("Accept failed on port " + port + "!"
+                                    + "  Server likely stopped.",
+                                    GUI.LogLevel.WARNING);
                             break;
                         }
                         new Player(client, ProxyServer.this);

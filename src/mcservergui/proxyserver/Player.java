@@ -28,9 +28,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.Calendar;
-import java.text.SimpleDateFormat;
 
+import static mcservergui.tools.TimeTools.*;
 import mcservergui.proxyserver.stream.StreamTunnel;
 import mcservergui.proxyserver.Coordinate.Dimension;
 
@@ -40,7 +39,6 @@ import mcservergui.proxyserver.Coordinate.Dimension;
  */
 public class Player {
     private static final LocalAddressFactory addressFactory = new LocalAddressFactory();
-    public static final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
 
     private final long connected;
     private final Socket extsocket;
@@ -92,9 +90,7 @@ public class Player {
         //+ ".");
         //isRobot = true;
         //} else {
-        parent.gui.addTextToConsoleOutput(new SimpleDateFormat(DATE_FORMAT_NOW)
-                .format(Calendar.getInstance().getTime()) + " [MC Server GUI] IP"
-                + " Connection from " + getIPAddress() + "!");
+        parent.gui.guiLog("Connection from " + getIPAddress() + "...");
         //}
 
         //if (server.isIPBanned(getIPAddress())) {
@@ -390,7 +386,8 @@ public class Player {
                 return false;
             }
         } catch (IOException e) {
-            server.gui.addTextToConsoleOutput("[MC Server GUI] " + e.getMessage());
+            server.gui.guiLog(e.getMessage(),
+                    mcservergui.gui.GUI.LogLevel.WARNING);
             return false;
         }
 

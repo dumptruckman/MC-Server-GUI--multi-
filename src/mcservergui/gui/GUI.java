@@ -8,12 +8,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -34,6 +33,8 @@ import org.jdesktop.application.FrameView;
 import org.jdesktop.application.TaskMonitor;
 import org.jdesktop.application.TaskService;
 import org.quartz.*;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 
 import mcservergui.backup.Backup;
 import mcservergui.config.Config;
@@ -47,6 +48,7 @@ import mcservergui.proxyserver.PlayerList;
 import mcservergui.webinterface.WebInterface;
 import mcservergui.task.event.EventModel;
 import static mcservergui.task.event.EventScheduler.*;
+import static mcservergui.tools.TimeTools.*;
 
 /**
  * The application's main frame.
@@ -322,6 +324,7 @@ public class GUI extends FrameView implements Observer {
         launchSupportPage = new javax.swing.JMenuItem();
         viewChangeLog = new javax.swing.JMenuItem();
         downloadLatestVersion = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         statusPanel = new javax.swing.JPanel();
         javax.swing.JSeparator statusPanelSeparator = new javax.swing.JSeparator();
         serverStatusLabel = new javax.swing.JLabel();
@@ -1933,6 +1936,15 @@ public class GUI extends FrameView implements Observer {
         });
         versionNotifier.add(downloadLatestVersion);
 
+        jMenuItem1.setText(resourceMap.getString("jMenuItem1.text")); // NOI18N
+        jMenuItem1.setName("jMenuItem1"); // NOI18N
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        versionNotifier.add(jMenuItem1);
+
         menuBar.add(versionNotifier);
 
         statusPanel.setName("statusPanel"); // NOI18N
@@ -2889,6 +2901,15 @@ public class GUI extends FrameView implements Observer {
         });
     }//GEN-LAST:event_taskSchedulerListKeyTyped
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        String url = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9XY8KKATD26GL";
+        try {
+            java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
+        } catch (IOException ioe) {
+            System.out.println("Error launching page.");
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     private void customButtonAction(javax.swing.JComboBox box) {
         final javax.swing.JComboBox boxxy = box;
         SwingUtilities.invokeLater(new Runnable() {
@@ -2951,6 +2972,7 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JLabel inputHistoryMaxSizeLabel;
     public javax.swing.JCheckBox jCheckBox1;
     public javax.swing.JLabel jLabel2;
+    public javax.swing.JMenuItem jMenuItem1;
     public javax.swing.JPanel jPanel1;
     public javax.swing.JPanel jPanel2;
     public javax.swing.JPanel jPanel4;
@@ -3078,16 +3100,24 @@ public class GUI extends FrameView implements Observer {
     }
 
     public boolean startTaskByName(String name) {
+        EventModel event = getTaskByName(name);
+        if (event != null) {
+            scheduleImmediateEvent(event, scheduler, this);
+            return true;
+        }
+        System.out.println("Could not find event by that name");
+        return false;
+    }
+
+    public EventModel getTaskByName(String name) {
         java.util.Iterator it = config.schedule.getEvents().iterator();
         while (it.hasNext()) {
             EventModel event = (EventModel)it.next();
             if (event.getName().equalsIgnoreCase(name)) {
-                scheduleImmediateEvent(event, scheduler, this);
-                return true;
+                return event;
             }
         }
-        System.out.println("Could not find event by that name");
-        return false;
+        return null;
     }
 
     private void enableSystemTrayIcon() {
@@ -3289,6 +3319,36 @@ public class GUI extends FrameView implements Observer {
         webServer.stop();
     }
 
+    public String getConsoleOutput(OutputFormat format) {
+        String output = getConsoleOutput();
+        output = Jsoup.clean(output, Whitelist.none().addTags("br"));
+        switch (format) {
+            case LINEBREAK:
+                //output = output.replaceAll("(<font.*>|</font>)", "");
+                break;
+            case PLAINTEXTCRLF:
+                //output = output.replaceAll("(<font.*>|</font>)", "");
+                output = output.replaceAll("<br />", Character.toString((char)13)
+                        + Character.toString((char)10));
+                break;
+            case PLAINTEXTLFCR:
+                //output = output.replaceAll("(<font.*>|</font>)", "");
+                output = output.replaceAll("<br />", Character.toString((char)10)
+                        + Character.toString((char)13));
+                break;
+            case PLAINTEXTLF:
+                //output = output.replaceAll("(<font.*>|</font>)", "");
+                output = output.replaceAll("<br />", Character.toString((char)10));
+                break;
+            case PLAINTEXTCR:
+                //output = output.replaceAll("(<font.*>|</font>)", "");
+                output = output.replaceAll("<br />", Character.toString((char)13));
+                break;
+            default:
+        }
+        return output;
+    }
+
     public String getConsoleOutput() {
         String output = "";
         
@@ -3328,19 +3388,45 @@ public class GUI extends FrameView implements Observer {
      * Usually this is only called once during the constructor.
      */
     public void initConfig() {
+        setConsoleOutput("");
         if (config.load()) {
-            setConsoleOutput("Configuration file loaded succesfully!");
+            guiLog("Configuration file loaded succesfully!");
         } else {
-            setConsoleOutput("Configuration file not found or invalid!  Creating new config file with default values.");
+            guiLog("Configuration file not found or invalid!", LogLevel.WARNING);
+            guiLog("Creating new config file with default values.");
+        }
+        if (config.cmdLine.getServerJar().isEmpty()) {
+            if (detectServerJar()) {
+                guiLog("Automatically detected server jar file: "
+                        + config.cmdLine.getServerJar());
+            } else {
+                guiLog("Could not locate a server jar file automatically!",
+                        LogLevel.WARNING);
+            }
         }
         updateGuiWithConfigValues();
         updateGuiWithServerProperties();
         initSchedule();
+        
         saveConfig();
         
         if (config.web.isEnabled()) {
             startWebServer();
         }
+    }
+
+    public boolean detectServerJar() {
+        File dir = new File(".");
+        File[] files = dir.listFiles();
+
+        for (int i = 0; i < files.length; i++) {
+            if (files[i].getName().matches("(\\S*bukkit\\S*.jar|\\S*server\\S*"
+                    + ".jar)")) {
+                config.cmdLine.setServerJar(files[i].getName());
+                return true;
+            }
+        }
+        return false;
     }
 
     public void initSchedule() {
@@ -3594,10 +3680,11 @@ public class GUI extends FrameView implements Observer {
                     server.setCmdLine(config.cmdLine.getCmdLine());
                     if (server.start().equals("SUCCESS")) {
                     } else if (server.start().equals("ERROR")) {
-                        //setConsoleOutput("[MC Server GUI] Unknown error occured while launching the server.");
+                        
                     } else if (server.start().equals("INVALIDJAR")) {
-                        setConsoleOutput("[MC Server GUI] The jar file you specified is not a valid file."
-                                + "  Please make corrections on the Server Config tab.");
+                        guiLog("The jar file you specified is not a valid file."
+                                + "  Please make corrections on the Server "
+                                + "Config tab.", LogLevel.WARNING);
                     }
                 }
             }
@@ -3615,6 +3702,54 @@ public class GUI extends FrameView implements Observer {
                 }
             }
         });
+    }
+
+    public void guiLog(String message, LogLevel level) {
+        // format message
+        String text = getTimeStamp() + " ";
+        switch (level) {
+            case INFO:
+                text += "[INFO]";
+                break;
+            case WARNING:
+                text += "[WARNING]";
+                break;
+            case SEVERE:
+                text += "[SEVERE]";
+                break;
+            default:
+                text += "[INFO]";
+        }
+        message = text + " MC Server GUI: " + message;
+        // put message in console output
+        addTextToConsoleOutput(message);
+
+        // log message to file
+        File logFile = new File("mcservergui.log");
+        if (!logFile.exists()) {
+            try {
+                logFile.createNewFile();
+            } catch (IOException ignore) { }
+        }
+        if (!logFile.canWrite()) {
+            return;
+        }
+        FileWriter logWriter = null;
+        try {
+            logWriter = new FileWriter(logFile, true);
+            logWriter.append(message + System.getProperty("line.separator"));
+        } catch (IOException ignore) { }
+        finally {
+            if (logWriter != null) {
+                try {
+                    logWriter.close();
+                } catch (IOException ignore) { }
+            }
+        }
+    }
+
+    public void guiLog(String message) {
+        guiLog(message, LogLevel.INFO);
     }
 
     /**
@@ -3646,9 +3781,6 @@ public class GUI extends FrameView implements Observer {
     }
 
     public void webLogAdd(String textToAdd) {
-        textToAdd = new SimpleDateFormat(DATE_FORMAT_NOW).format(
-                Calendar.getInstance().getTime()) + " [Web Interface] "
-                + textToAdd;
         final String text = textToAdd;
         SwingUtilities.invokeLater(new Runnable() {
             @Override public void run() {
@@ -3804,6 +3936,14 @@ public class GUI extends FrameView implements Observer {
         return controlState;
     }
 
+    public String getServerStatus() {
+        if (server.isRunning()) {
+            return "UP";
+        } else {
+            return "DOWN";
+        }
+    }
+
     public MCServerModel server;
     //private MCServerReceiver serverReceiver;
     //private MainWorker mainWorker;
@@ -3831,7 +3971,10 @@ public class GUI extends FrameView implements Observer {
     private WebInterface webServer;
     private String versionNumber;
 
-    public static final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
+    public static enum LogLevel { INFO, WARNING, SEVERE }
+    public static enum OutputFormat { 
+        LINEBREAK, PLAINTEXTCRLF, PLAINTEXTLFCR, PLAINTEXTCR, PLAINTEXTLF
+    }
 
     //Auto created
     private final Timer messageTimer;

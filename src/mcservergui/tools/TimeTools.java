@@ -5,11 +5,16 @@
 
 package mcservergui.tools;
 
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
+
 /**
  *
  * @author dumptruckman
  */
 public class TimeTools {
+
+    public static final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
 
     public static String hmsFromSeconds(int second) {
         int minute = second / 60;
@@ -159,5 +164,10 @@ public class TimeTools {
             seconds = Integer.parseInt(hms.split("second")[0].replaceAll(" ", ""));
         }
         return (hours * 3600) + (minutes * 60) + seconds;
+    }
+
+    public static String getTimeStamp() {
+        return new SimpleDateFormat(DATE_FORMAT_NOW)
+                .format(Calendar.getInstance().getTime());
     }
 }

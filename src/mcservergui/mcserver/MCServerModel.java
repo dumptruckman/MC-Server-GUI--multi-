@@ -75,9 +75,8 @@ public class MCServerModel extends Observable implements Observer, java.beans.Pr
         if (config.getProxy()) {
             proxyServer = new ProxyServer(gui, config, serverProps);
             if (proxyServer.getStartCode() == -1) {
-                gui.addTextToConsoleOutput("[MC Server GUI] Proxy Server "
-                        + "failed to starts correctly.  Aborting server "
-                        + "start.");
+                gui.guiLog("Proxy Server failed to starts correctly.  Aborting"
+                        + " server fstart.", GUI.LogLevel.SEVERE);
                 return "ERROR";
             } else {
                 // continue
@@ -125,7 +124,8 @@ public class MCServerModel extends Observable implements Observer, java.beans.Pr
            
             return "SUCCESS";
         } catch (Exception e) {
-            gui.addTextToConsoleOutput("[MC Server GUI] Unknown error occured while launching server.");
+            gui.guiLog("Unknown error occured while launching server.",
+                    GUI.LogLevel.SEVERE);
             return "ERROR";
         }
     }
@@ -170,9 +170,8 @@ public class MCServerModel extends Observable implements Observer, java.beans.Pr
                 osw.write(string + "\n");
                 osw.flush();
             } catch (IOException e) {
-                gui.addTextToConsoleOutput("[MC Server GUI] Error "
-                        + "sending server input.  Server is likely not "
-                        + "running!");
+                gui.guiLog("Error sending server input.  Server is likely not"
+                        + " running!", GUI.LogLevel.WARNING);
             }
         }
     }

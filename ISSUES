@@ -1,3 +1,2 @@
 GUI freezes when selecting ./plugins in the backup tab?
-Issue with server props loading correctly? (port was off)
 Fix gui component positioning issues in linux.

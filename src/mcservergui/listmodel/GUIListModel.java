@@ -79,7 +79,7 @@ public class GUIListModel<T> extends javax.swing.AbstractListModel {
 
     public java.util.List<T> toList() {
         java.util.List<T> list = new java.util.ArrayList<T>();
-        java.util.Iterator it = this.iterator();
+        java.util.Iterator<T> it = this.iterator();
         while (it.hasNext()) {
             list.add((T)it.next());
         }
