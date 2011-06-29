@@ -1,3 +1,6 @@
+Version .9.5
+    Fixed GUI freeze issue when issued a server restart in a number of cases.
+
 Version .9.4
     MAJOR STRUCTURAL CHANGES IN THIS VERSION.  It is highly recommended you make backups before updating!
     Editing a Save Worlds task now work properly.

@@ -3587,12 +3587,10 @@ public class GUI extends FrameView implements Observer {
                 config.setProxy(useProxyCheckBox.isSelected());
                 config.setExtPort(Integer.valueOf(extPortField.getText()));
 
-
                 config.save();
                 saveServerProperties();
             }
         });
-        
     }
 
     public void saveServerProperties() {
@@ -3641,32 +3639,11 @@ public class GUI extends FrameView implements Observer {
 
     public void restartServer() { restartServer(0); }
 
-    public void restartServer(int dly) {
-        final int delay = dly;
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override public void run() {
-                restarting = true;
-                stopServer();
-                System.out.println("Sent stop");
-                try {
-                    System.out.println("Sleeping for " + delay);
-                    Thread.sleep(delay * 1000);
-                } catch (InterruptedException ie) {
-                    System.out.println("Interrupted while waiting to restart server.");
-                }
-                try {
-                    while (!getControlState().equals("OFF")) {
-                        System.out.println("Waiting for server to be stopped");
-                        Thread.sleep(1000);
-                    }
-                } catch (InterruptedException ie) {
-                    System.out.println("Interrupted while waiting for server to be shut down completely.");
-                }
-                startServer();
-                System.out.println("Sent start");
-                restarting = false;
-            }
-        });
+    public void restartServer(int delay) {
+        restarting = true;
+        restartDelay = delay;
+        stopServer();
+        System.out.println("Sent stop");
     }
 
     /**
@@ -3689,6 +3666,23 @@ public class GUI extends FrameView implements Observer {
                 }
             }
         });
+    }
+
+    public void startServer(int delay) {
+        final int dly = delay;
+        class ServerStartThread extends Thread {
+            // This method is called when the thread runs
+            @Override public void run() {
+                try {
+                    System.out.println("sleeping for " + dly);
+                    Thread.sleep(dly * 1000);
+                } catch (InterruptedException ie) { }
+                startServer();
+                System.out.println("Sent start");
+                restarting = false;
+            }
+        }
+        new ServerStartThread().start();
     }
 
     /**
@@ -3853,6 +3847,9 @@ public class GUI extends FrameView implements Observer {
 
         if (arg.equals("serverStopped")) {
             controlSwitcher("OFF");
+            if (restarting) {
+                startServer(restartDelay);
+            }
         }
         if (arg.equals("serverStarted")) {
             controlSwitcher("ON");
@@ -3970,6 +3967,7 @@ public class GUI extends FrameView implements Observer {
     private java.awt.TrayIcon trayIcon;
     private WebInterface webServer;
     private String versionNumber;
+    private int restartDelay;
 
     public static enum LogLevel { INFO, WARNING, SEVERE }
     public static enum OutputFormat { 
