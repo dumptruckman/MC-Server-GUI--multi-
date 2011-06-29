@@ -63,6 +63,7 @@ public class Task implements Job {
             }
         } else if (event.getTask().equals("Backup")) {
             waitWhileRestarting(gui);
+            waitForCheckingFinish(gui);
             gui.backup();
         } else if (event.getTask().equals("Save Worlds")) {
             waitWhileRestarting(gui);
@@ -81,6 +82,18 @@ public class Task implements Job {
             }
         }
     }
+
+    private void waitForCheckingFinish(GUI gui) {
+        while (gui.isPropagatingChecks()) {
+            try {
+                System.out.println("Waiting for server to finish propagating checks.");
+                Thread.sleep(1000);
+            } catch (InterruptedException ie) {
+                System.out.println("Interrupted while waiting for server to finish propagating checks.");
+            }
+        }
+    }
+
     private void waitWhileRestarting(GUI gui) {
         while (gui.isRestarting()) {
             try {

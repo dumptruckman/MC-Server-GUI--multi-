@@ -26,6 +26,7 @@ import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.HTMLDocument;
 
 import it.cnr.imaa.essi.lablib.gui.checkboxtree.TreeCheckingModel.CheckingMode;
+import it.cnr.imaa.essi.lablib.gui.checkboxtree.*;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -67,6 +68,7 @@ public class GUI extends FrameView implements Observer {
         customButtonBoxModel1.addElement("Edit Tasks");
         customButtonBoxModel2 = new javax.swing.DefaultComboBoxModel();
         customButtonBoxModel2.addElement("Edit Tasks");
+        propagatingChecks = false;
 
         initComponents();
         fixComponents();
@@ -2070,7 +2072,22 @@ public class GUI extends FrameView implements Observer {
                 .addGap(57, 57, 57))
         );
         // Sets the checking model for the backup file checkbox tree
-        backupFileChooser.getCheckingModel().setCheckingMode(CheckingMode.PROPAGATE_PRESERVING_CHECK);
+        //backupFileChooser.getCheckingModel().setCheckingMode(CheckingMode.PROPAGATE_PRESERVING_CHECK);
+        /*
+        DefaultTreeCheckingModel checkingModel = new DefaultTreeCheckingModel(backupFileChooser.getModel()) {
+            @Override public void setCheckingMode(CheckingMode mode) {
+                setPreservingCheckTreeCheckingMode();
+            }
+            public void setPreservingCheckTreeCheckingMode() {
+                this.checkingMode = new GUITreeCheckingMode(this, GUI.this);
+            }
+        };
+         * 
+         */
+        //checkingModel.setCheckingMode(CheckingMode.SIMPLE);
+        //backupFileChooser.setCheckingModel(checkingModel);
+        //backupFileChooser.setCheckingModel(new GUITreeCheckingModel(backupFileChooser.getModel(), this));
+        //backupFileChooser.getCheckingModel().setCheckingMode(CheckingMode.SIMPLE);
         // Sets html fomratting for some components
         taskSchedulerList.setCellRenderer(new TaskSchedulerListCellRenderer());
         consoleOutput.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
@@ -3448,6 +3465,25 @@ public class GUI extends FrameView implements Observer {
         });
     }
 
+    public void initBackupFileChooser() {
+        //backupFileChooser.getCheckingModel().setCheckingMode(CheckingMode.SIMPLE);
+        //backupFileChooser.setCheckingPaths(createTreePathArray(pathsToBackup));
+        //System.out.println(createTreePathArray(pathsToBackup)[0].toString());
+        /*DefaultTreeCheckingModel checkingModel = new DefaultTreeCheckingModel(backupFileChooser.getModel()) {
+            @Override public void setCheckingMode(CheckingMode mode) {
+                setPreservingCheckTreeCheckingMode();
+            }
+            public void setPreservingCheckTreeCheckingMode() {
+                this.checkingMode = new GUITreeCheckingMode(this, GUI.this);
+            }
+        };
+
+
+        checkingModel.setCheckingMode(CheckingMode.SIMPLE);
+        backupFileChooser.setCheckingModel(checkingModel);*/
+        backupFileChooser.setCheckingModel(new GUITreeCheckingModel(backupFileChooser.getModel(), this, createTreePathArray(pathsToBackup)));
+    }
+
     public void updateGuiWithServerProperties() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override public void run() {
@@ -3494,7 +3530,8 @@ public class GUI extends FrameView implements Observer {
                 clearLogCheckBox.setSelected(config.backups.getClearLog());
                 pathsToBackup = config.backups.getPathsToBackup();
                 backupPathField.setText(config.backups.getPath());
-                backupFileChooser.setCheckingPaths(createTreePathArray(pathsToBackup));
+                //backupFileChooser.setCheckingPaths(createTreePathArray(pathsToBackup));
+                initBackupFileChooser();
                 windowTitleField.setText(config.getWindowTitle());
                 commandPrefixField.setText(config.getCommandPrefix());
                 getFrame().setTitle(windowTitleField.getText());
@@ -3536,22 +3573,48 @@ public class GUI extends FrameView implements Observer {
         });
     }
 
+    public void saveBackupPathsToConfig() {
+        pathsToBackup.clear();
+        for (int i = 0; i < backupFileChooser.getCheckingPaths().length; i++) {
+            if (backupFileChooser.getCheckingPaths()[i].getParentPath() != null) {
+                if (backupFileChooser.getCheckingModel().isPathChecked(backupFileChooser.getCheckingPaths()[i].getParentPath())) {
+                    if (!pathsToBackup.contains(backupFileChooser.getCheckingPaths()[i].getParentPath().getLastPathComponent().toString())) {
+                        pathsToBackup.add(backupFileChooser.getCheckingPaths()[i].getParentPath().getLastPathComponent().toString());
+                        System.out.println(backupFileChooser.getCheckingPaths()[i].getParentPath().getLastPathComponent().toString());
+                    }
+                } else {
+                    pathsToBackup.add(backupFileChooser.getCheckingPaths()[i].getLastPathComponent().toString());
+                    System.out.println(backupFileChooser.getCheckingPaths()[i].getLastPathComponent().toString());
+                }
+            } else {
+                if (!pathsToBackup.contains(backupFileChooser.getCheckingPaths()[i].getLastPathComponent().toString())) {
+                    pathsToBackup.add(backupFileChooser.getCheckingPaths()[i].getLastPathComponent().toString());
+                    System.out.println(backupFileChooser.getCheckingPaths()[i].getLastPathComponent().toString());
+                }
+            }
+        }
+        config.backups.setPathsToBackup(pathsToBackup);
+        /*
+        try {
+            int i = 0;
+            while(true) {
+                //pathsToBackup.add(backupFileChooser.getCheckingRoots()[i].getLastPathComponent().toString());
+                //pathsToBackup.add(backupFileChooser.getCheckingPaths()[i].getLastPathComponent().toString());
+                i++;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            config.backups.setPathsToBackup(pathsToBackup);
+        }
+         * 
+         */
+    }
+
     /**
      * Saves the config file with any changes made by the user through the gui.
      */
     public void saveConfig() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override public void run() {
-                pathsToBackup.clear();
-                try {
-                    int i = 0;
-                    while(true) {
-                        pathsToBackup.add(backupFileChooser.getCheckingRoots()[i].getLastPathComponent().toString());
-                        i++;
-                    }
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    config.backups.setPathsToBackup(pathsToBackup);
-                }
                 config.setWindowTitle(windowTitleField.getText());
                 getFrame().setTitle(windowTitleField.getText());
                 if (trayIcon != null) {
@@ -3929,6 +3992,14 @@ public class GUI extends FrameView implements Observer {
         });
     }
 
+    public boolean isPropagatingChecks() {
+        return propagatingChecks;
+    }
+
+    public void setPropagatingChecks(boolean b) {
+        propagatingChecks = b;
+    }
+
     public String getControlState() {
         return controlState;
     }
@@ -3968,6 +4039,7 @@ public class GUI extends FrameView implements Observer {
     private WebInterface webServer;
     private String versionNumber;
     private int restartDelay;
+    private boolean propagatingChecks;
 
     public static enum LogLevel { INFO, WARNING, SEVERE }
     public static enum OutputFormat { 

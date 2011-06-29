@@ -1,2 +1,2 @@
-GUI freezes when selecting ./plugins in the backup tab?
+GUI freezes when selecting ./plugins in the backup tab? (fixed in .9.6-dev)
 Fix gui component positioning issues in linux.

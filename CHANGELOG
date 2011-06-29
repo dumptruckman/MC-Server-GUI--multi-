@@ -1,3 +1,6 @@
+Version .9.6-dev
+    Dealt with selecting large directories to backup freezing the GUI... It now propagates the checkboxes on another thread and disables the file selector while doing so.  There is also an indicator for showing that it is working.
+
 Version .9.5
     Fixed GUI freeze issue when issued a server restart in a number of cases.
 
