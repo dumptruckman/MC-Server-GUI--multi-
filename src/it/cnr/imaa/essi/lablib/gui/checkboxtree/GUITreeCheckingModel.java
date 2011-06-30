@@ -15,12 +15,8 @@ import mcservergui.gui.GUI;
  */
 public class GUITreeCheckingModel extends DefaultTreeCheckingModel {
 
-    public GUITreeCheckingModel(TreeModel model, GUI gui, TreePath[] paths) {
+    public GUITreeCheckingModel(TreeModel model, GUI gui) {
         super(model);
         this.checkingMode = new GUITreeCheckingMode(this, gui);
-        for (int i = 0; i < paths.length; i++) {
-            System.out.println(paths[i]);
-            this.addToCheckedPathsSet(paths[i]);
-        }
     }
 }

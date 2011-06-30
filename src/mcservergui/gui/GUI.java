@@ -3225,6 +3225,7 @@ public class GUI extends FrameView implements Observer {
             treepatharray[i] = createTreePath(new File(paths.get(i)));
             i++;
         }
+
         return treepatharray;
     }
 
@@ -3466,22 +3467,20 @@ public class GUI extends FrameView implements Observer {
     }
 
     public void initBackupFileChooser() {
-        //backupFileChooser.getCheckingModel().setCheckingMode(CheckingMode.SIMPLE);
-        //backupFileChooser.setCheckingPaths(createTreePathArray(pathsToBackup));
-        //System.out.println(createTreePathArray(pathsToBackup)[0].toString());
-        /*DefaultTreeCheckingModel checkingModel = new DefaultTreeCheckingModel(backupFileChooser.getModel()) {
-            @Override public void setCheckingMode(CheckingMode mode) {
-                setPreservingCheckTreeCheckingMode();
-            }
-            public void setPreservingCheckTreeCheckingMode() {
-                this.checkingMode = new GUITreeCheckingMode(this, GUI.this);
-            }
-        };
+        backupFileChooser.setCheckingModel(new GUITreeCheckingModel(backupFileSystem, GUI.this));
+        //backupFileChooser.setCheckingPaths(createTreePathArray(config.backups.getPathsToBackup()));
+        //javax.swing.tree.TreePath[] paths = createTreePathArray(config.backups.getPathsToBackup());
+        //for (int i = 0; i < paths.length; i++) {
+//backupFileChooser.addCheckingPath(paths[i]);
+            Thread initBackupPaths = new Thread() {
+                @Override
+                public void run() {
+backupFileChooser.setCheckingPaths(createTreePathArray(config.backups.getPathsToBackup()));
+                }
+            };
+            initBackupPaths.start();
 
-
-        checkingModel.setCheckingMode(CheckingMode.SIMPLE);
-        backupFileChooser.setCheckingModel(checkingModel);*/
-        backupFileChooser.setCheckingModel(new GUITreeCheckingModel(backupFileChooser.getModel(), this, createTreePathArray(pathsToBackup)));
+        //}
     }
 
     public void updateGuiWithServerProperties() {
@@ -3528,7 +3527,7 @@ public class GUI extends FrameView implements Observer {
                 startServerOnLaunchCheckBox.setSelected(config.getServerStartOnStartup());
                 zipBackupCheckBox.setSelected(config.backups.getZip());
                 clearLogCheckBox.setSelected(config.backups.getClearLog());
-                pathsToBackup = config.backups.getPathsToBackup();
+                //pathsToBackup = config.backups.getPathsToBackup();
                 backupPathField.setText(config.backups.getPath());
                 //backupFileChooser.setCheckingPaths(createTreePathArray(pathsToBackup));
                 initBackupFileChooser();
@@ -3574,39 +3573,11 @@ public class GUI extends FrameView implements Observer {
     }
 
     public void saveBackupPathsToConfig() {
-        pathsToBackup.clear();
-        for (int i = 0; i < backupFileChooser.getCheckingPaths().length; i++) {
-            if (backupFileChooser.getCheckingPaths()[i].getParentPath() != null) {
-                if (backupFileChooser.getCheckingModel().isPathChecked(backupFileChooser.getCheckingPaths()[i].getParentPath())) {
-                    if (!pathsToBackup.contains(backupFileChooser.getCheckingPaths()[i].getParentPath().getLastPathComponent().toString())) {
-                        pathsToBackup.add(backupFileChooser.getCheckingPaths()[i].getParentPath().getLastPathComponent().toString());
-                        System.out.println(backupFileChooser.getCheckingPaths()[i].getParentPath().getLastPathComponent().toString());
-                    }
-                } else {
-                    pathsToBackup.add(backupFileChooser.getCheckingPaths()[i].getLastPathComponent().toString());
-                    System.out.println(backupFileChooser.getCheckingPaths()[i].getLastPathComponent().toString());
-                }
-            } else {
-                if (!pathsToBackup.contains(backupFileChooser.getCheckingPaths()[i].getLastPathComponent().toString())) {
-                    pathsToBackup.add(backupFileChooser.getCheckingPaths()[i].getLastPathComponent().toString());
-                    System.out.println(backupFileChooser.getCheckingPaths()[i].getLastPathComponent().toString());
-                }
-            }
+        config.backups.getPathsToBackup().clear();
+        for (int i = 0; i < backupFileChooser.getCheckingRoots().length; i++) {
+            config.backups.getPathsToBackup().add(backupFileChooser.getCheckingRoots()[i].getLastPathComponent().toString());
         }
-        config.backups.setPathsToBackup(pathsToBackup);
-        /*
-        try {
-            int i = 0;
-            while(true) {
-                //pathsToBackup.add(backupFileChooser.getCheckingRoots()[i].getLastPathComponent().toString());
-                //pathsToBackup.add(backupFileChooser.getCheckingPaths()[i].getLastPathComponent().toString());
-                i++;
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            config.backups.setPathsToBackup(pathsToBackup);
-        }
-         * 
-         */
+        //config.backups.setPathsToBackup(pathsToBackup);
     }
 
     /**
@@ -3645,7 +3616,7 @@ public class GUI extends FrameView implements Observer {
                         config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
                     }
                 }
-                config.backups.setPathsToBackup(pathsToBackup);
+                //config.backups.setPathsToBackup(pathsToBackup);
                 config.backups.setPath(backupPathField.getText());
                 config.setProxy(useProxyCheckBox.isSelected());
                 config.setExtPort(Integer.valueOf(extPortField.getText()));
@@ -4018,7 +3989,7 @@ public class GUI extends FrameView implements Observer {
     private boolean textScrolling;
     private boolean mouseInConsoleOutput;
     private List<String> inputHistory;
-    private List<String> pathsToBackup;
+    //private List<String> pathsToBackup;
     private int inputHistoryIndex;
     private String controlState;
     private String stateBeforeBackup;

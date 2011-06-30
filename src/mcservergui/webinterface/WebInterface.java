@@ -475,7 +475,6 @@ public class WebInterface {
         java.util.List<String> data = new java.util.ArrayList<String>();
         jp.nextToken();
         if (!jp.getText().equalsIgnoreCase("Data")) {
-            System.out.println("no data");
             return data;
         }
         jp.nextToken();
