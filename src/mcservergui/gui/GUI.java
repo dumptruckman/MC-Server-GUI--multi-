@@ -3746,7 +3746,6 @@ public class GUI extends FrameView implements Observer {
         restarting = true;
         restartDelay = delay;
         stopServer();
-        System.out.println("Sent stop");
     }
 
     /**
@@ -3763,10 +3762,11 @@ public class GUI extends FrameView implements Observer {
                         taskMonitor.getForegroundTask().cancel(true);
                     }
                     server.setCmdLine(config.cmdLine.getCmdLine());
-                    if (server.start().equals("SUCCESS")) {
-                    } else if (server.start().equals("ERROR")) {
+                    String start = server.start();
+                    if (start.equals("SUCCESS")) {
+                    } else if (start.equals("ERROR")) {
                         
-                    } else if (server.start().equals("INVALIDJAR")) {
+                    } else if (start.equals("INVALIDJAR")) {
                         guiLog("The jar file you specified is not a valid file."
                                 + "  Please make corrections on the Server "
                                 + "Config tab.", LogLevel.WARNING);
@@ -3782,11 +3782,9 @@ public class GUI extends FrameView implements Observer {
             // This method is called when the thread runs
             @Override public void run() {
                 try {
-                    System.out.println("sleeping for " + dly);
                     Thread.sleep(dly * 1000);
                 } catch (InterruptedException ie) { }
                 startServer();
-                System.out.println("Sent start");
                 restarting = false;
             }
         }
@@ -3804,7 +3802,9 @@ public class GUI extends FrameView implements Observer {
                     guiLog("Stopping backup first.");
                     taskMonitor.getForegroundTask().cancel(true);
                 }
-                server.stop();
+                if (server.isRunning()) {
+                    server.stop();
+                }
             }
         });
     }
@@ -3897,7 +3897,6 @@ public class GUI extends FrameView implements Observer {
                             .insertHTML((HTMLDocument)webLog.getDocument(),
                             webLog.getDocument().getEndPosition().getOffset()-1,
                             textToAdd, 1, 0, null);
-                    //System.out.println(webLog.getText());
                 } catch ( Exception e ) {
                     //e.printStackTrace();
                     System.err.println("Error appending text to web interface log: " + text);

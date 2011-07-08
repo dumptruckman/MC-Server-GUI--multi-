@@ -178,10 +178,16 @@ public class MCServerModel extends Observable implements Observer, java.beans.Pr
 
     // Method for stopping server
     public void stop() {
-        send("stop");
-        MCServerStopper serverStopper = new MCServerStopper(ps, br, osw);
-        serverStopper.addPropertyChangeListener(this);
-        serverStopper.execute();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if (isRunning()) {
+                    send("stop");
+                    MCServerStopper serverStopper = new MCServerStopper(ps, br, osw);
+                    serverStopper.addPropertyChangeListener(MCServerModel.this);
+                    serverStopper.execute();
+                }
+            }
+        });
     }
 
     private Process ps;

@@ -52,10 +52,12 @@ public class Task implements Job {
         } else if (event.getTask().equals("Send Command")) {
             gui.sendInput(event.getParams().get(0));
         } else if (event.getTask().equals("Stop Server")) {
+            System.out.println("Stop Server Task");
             waitForBackupFinish(gui);
             gui.stopServer();
         } else if (event.getTask().equals("Restart Server")) {
             waitForBackupFinish(gui);
+            System.out.println("Restart task");
             if (!event.getParams().isEmpty()) {
                 gui.restartServer(Integer.valueOf(event.getParams().get(0)));
             } else {

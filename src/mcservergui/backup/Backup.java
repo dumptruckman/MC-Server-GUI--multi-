@@ -139,14 +139,17 @@ public class Backup extends Observable {
         @Override protected void finished() {
             try {
                 backupSuccess = (Boolean)get();
+                wantsToRun = false;
                 if (backupSuccess) {
                     addTextToBackupLog(nl + "<font color=green>Backup operation completed succesfully!");
                 } else {
                     addTextToBackupLog(nl + "<font color=red>Backup operation encountered an error.  Aborting.");
                 }
             } catch (InterruptedException e) {
+                wantsToRun = false;
                 e.printStackTrace();
             } catch (java.util.concurrent.ExecutionException e) {
+                wantsToRun = false;
                 e.printStackTrace();
             } catch (java.util.concurrent.CancellationException e) {
                 wantsToRun = false;
@@ -159,80 +162,6 @@ public class Backup extends Observable {
             super.finished();
         }
     }
-   /* private SwingWorker backupWorker = new SwingWorker<Boolean, Integer>() {
-        @Override public Boolean doInBackground() {
-            if (!config.backups.getPathsToBackup().isEmpty()) {
-                // Copy paths to backup
-                String now = java.util.Calendar.getInstance().getTime().toString().replaceAll(":", ".");
-                File backupfolder = new File(config.backups.getPath() + fs + now);
-                if (backupfolder.mkdir()) {
-                    addTextToBackupLog("Created backup folder " + backupfolder.toString() + nl);
-                } else {
-                    addTextToBackupLog("<font color=red>Failed to create backup folder " + backupfolder.toString() + nl);
-                    return false;
-                }
-                // Perform the backup
-                for (int i = 0 ; i < config.backups.getPathsToBackup().size(); i++) {
-                    backup(new File(config.backups.getPathsToBackup().get(i)), backupfolder);
-                }
-                // Delete the server log if set to do so
-                if (config.backups.getClearLog()) {
-                    addTextToBackupLog("Deleting server.log...");
-                    if (new File("./server.log").delete()) {
-                        addTextToBackupLog("<font color=green>Success!");
-                    } else {
-                        addTextToBackupLog("<font color=red>Failed!");
-                    }
-                }
-
-                // Compression
-                if (config.backups.getZip()) {
-                    addTextToBackupLog(nl + "<br>Zipping backup folder to " + backupfolder.getName() + ".zip...");
-                    try {
-                        ZipOutputStream zipout = new ZipOutputStream(
-                                new BufferedOutputStream(
-                                new FileOutputStream(
-                                config.backups.getPath() + fs + backupfolder.getName() + ".7z")));
-                        depth = 0;
-                        addDirToZip(backupfolder, zipout);
-                        addTextToBackupLog(nl + "Finished compiling " + backupfolder.getName() + ".7z" + nl);
-                        try {
-                            zipout.close();
-                            deleteDir(backupfolder);
-                        } catch (IOException e) {
-                            addTextToBackupLog(nl + "<font color=green>Successfully created " + backupfolder.getName() + ".zip!" + nl);
-                        }
-                    } catch (FileNotFoundException e) {
-                        addTextToBackupLog("<font color=red>failure! Could not find file to compress!" + nl);
-                        return true;
-                    }
-                } else {
-                    addTextToBackupLog(nl + "Backup compression disabled...skipping." + nl);
-                }
-                return true;
-            } else {
-                addTextToBackupLog("Nothing selected to backup!" + nl);
-                return true;
-            }
-        }
-
-        @Override public void done() {
-            try {
-                backupSuccess = this.get();
-                if (backupSuccess) {
-                    addTextToBackupLog(nl + "<font color=green>Backup operation completed succesfully!");
-                } else {
-                    addTextToBackupLog(nl + "<font color=red>Backup operation encountered an error.  Aborting.");
-                }
-                setChanged();
-                notifyObservers("finishedBackup");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (java.util.concurrent.ExecutionException e) {
-                e.printStackTrace();
-            }
-        }
-    };*/
 
     public boolean deleteDir(File dir) {
         if (dir.isDirectory()) {

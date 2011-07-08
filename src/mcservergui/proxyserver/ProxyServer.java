@@ -185,7 +185,9 @@ public class ProxyServer {
                 //ProxyServer.this.stop();
             }
             ProxyServer.this.stop();
-            gui.stopServer();
+            if (gui.server.isRunning()) {
+                gui.stopServer();
+            }
         }
     }
 

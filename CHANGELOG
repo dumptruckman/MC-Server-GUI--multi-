@@ -1,3 +1,7 @@
+Version .9.6.1
+    Fixed issue where GUI restart tasks would cause the server to stop immediately.
+    Potentially fixed other cases where GUI would cause premature server stops
+
 Version .9.6
     Dealt with selecting large directories to backup freezing the GUI... Switched to a simpler checking mode.  It's not as pretty/intuitive but it solves the problem.
     Fixed issue where the console would not cease scrolling in the correct situations.

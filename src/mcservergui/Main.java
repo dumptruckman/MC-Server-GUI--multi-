@@ -101,6 +101,7 @@ public class Main extends SingleFrameApplication implements Application.ExitList
         gui.saveConfigAction();
         if (server.isRunning()) {
             wantsToQuit = true;
+            System.out.println("Server is running and GUI would like to exit");
             gui.stopServer();
             return false;
         } else {
