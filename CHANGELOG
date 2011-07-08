@@ -4,6 +4,7 @@ Version .9.6
     The config should now always save on GUI close, once again.
     Minor fix to the Proxy code.
     You may now start/stop the server during a backup.  Doing so will attempt to immediately cancel the backup operation.
+    UPDATE: There is a bug in this version that causes the server to immediately stop after starting.
 
 Version .9.5
     Fixed GUI freeze issue when issued a server restart in a number of cases.
