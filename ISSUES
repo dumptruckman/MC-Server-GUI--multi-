@@ -1,6 +1,6 @@
-GUI freezes when selecting ./plugins in the backup tab? (fixed in .9.6-dev)
-Fix gui component positioning issues in linux.
-Text not scrolling correctly.
-Task trigger times are linking together.
-Config isn't always saving when GUI exits
-Spawn protection is not saving?
+GUI component positioning issues in linux.
+Menu not present on OSX?
+Task trigger times are linking together?
+Backups making gui quite slow?
+Possible memory leak?
+Semi-incompatible with Bukkit spawn protection

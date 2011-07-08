@@ -7,7 +7,6 @@ package mcservergui.backup;
 
 import java.util.Observable;
 import java.io.*;
-import javax.swing.SwingWorker;
 import javax.swing.SwingUtilities;
 import java.util.zip.*;
 import javax.swing.text.html.HTMLEditorKit;
@@ -66,11 +65,15 @@ public class Backup extends Observable {
 
         public BackupTask(org.jdesktop.application.Application app) {
             super(app);
+            wantsToRun = true;
         }
+
+       
 
         @Override protected Boolean doInBackground() {
             message("startMessage");
             if (!config.backups.getPathsToBackup().isEmpty()) {
+
                 // Copy paths to backup
                 String now = java.util.Calendar.getInstance().getTime().toString().replaceAll(":", ".");
                 File backupfolder = new File(config.backups.getPath() + fs + now);
@@ -82,9 +85,12 @@ public class Backup extends Observable {
                     return false;
                 }
                 // Perform the backup
+                if (!wantsToRun) return false;
                 for (int i = 0 ; i < config.backups.getPathsToBackup().size(); i++) {
+                    if (!wantsToRun) return false;
                     backup(new File(config.backups.getPathsToBackup().get(i)), backupfolder);
                 }
+                if (!wantsToRun) return false;
                 // Delete the server log if set to do so
                 if (config.backups.getClearLog()) {
                     addTextToBackupLog("Deleting server.log...");
@@ -95,6 +101,7 @@ public class Backup extends Observable {
                     }
                 }
 
+                if (!wantsToRun) return false;
                 // Compression
                 if (config.backups.getZip()) {
                     addTextToBackupLog(nl + "<br>Zipping backup folder to " + backupfolder.getName() + ".zip...");
@@ -104,7 +111,9 @@ public class Backup extends Observable {
                                 new FileOutputStream(
                                 config.backups.getPath() + fs + backupfolder.getName() + ".7z")));
                         depth = 0;
+                        if (!wantsToRun) return false;
                         addDirToZip(backupfolder, zipout);
+                        if (!wantsToRun) return false;
                         addTextToBackupLog(nl + "Finished compiling " + backupfolder.getName() + ".7z" + nl);
                         try {
                             zipout.close();
@@ -135,13 +144,18 @@ public class Backup extends Observable {
                 } else {
                     addTextToBackupLog(nl + "<font color=red>Backup operation encountered an error.  Aborting.");
                 }
-                setChanged();
-                notifyObservers("finishedBackup");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (java.util.concurrent.ExecutionException e) {
                 e.printStackTrace();
+            } catch (java.util.concurrent.CancellationException e) {
+                wantsToRun = false;
+                System.out.println("oop");
+                addTextToBackupLog("<font color=red>Backup operation was cancelled!");
+                cancel(true);
             }
+            setChanged();
+            notifyObservers("finishedBackup");
             super.finished();
         }
     }
@@ -239,6 +253,7 @@ public class Backup extends Observable {
         byte[] tmpBuf = new byte[1024];
 
         for (int i = 0; i < files.length; i++) {
+            if (!wantsToRun) return;
             if (files[i].isDirectory()) {
                 depth++;
                 addDirToZip(files[i], out);
@@ -279,6 +294,7 @@ public class Backup extends Observable {
                     if (backupfrom.canRead()) {
                         File[] files = backupfrom.listFiles();
                         if (files == null || files.length == 0) {
+                            if (!wantsToRun) return;
                             java.util.List<File> backupto = new java.util.ArrayList<File>();
                             backupto.add(new File(backupfolder.getPath() +
                                     backupfrom.getPath().replaceFirst(".", "")));
@@ -368,4 +384,5 @@ public class Backup extends Observable {
     private BackupTask task;
     private javax.swing.JTextPane backupLog;
     private boolean backupSuccess;
+    public boolean wantsToRun;
 }

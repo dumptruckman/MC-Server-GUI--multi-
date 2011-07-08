@@ -33,6 +33,3 @@ Fixes:
     Fix server config tab for linux...
     Detect faulty server starts (for instance when java exec is wrong)
     Have GUI start server even when stopped on a server restart event
-
-Dev:
-    Make checking disable saves and make gui close wait.

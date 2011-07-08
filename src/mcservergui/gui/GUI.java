@@ -3,6 +3,7 @@
  */
 package mcservergui.gui;
 
+import javax.swing.tree.TreePath;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,7 +27,6 @@ import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.HTMLDocument;
 
 import it.cnr.imaa.essi.lablib.gui.checkboxtree.TreeCheckingModel.CheckingMode;
-import it.cnr.imaa.essi.lablib.gui.checkboxtree.*;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -363,6 +363,9 @@ public class GUI extends FrameView implements Observer {
         consoleOutput.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 consoleOutputMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                consoleOutputMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 consoleOutputMouseExited(evt);
@@ -1556,6 +1559,11 @@ public class GUI extends FrameView implements Observer {
         backupFileChooser.setToolTipText(resourceMap.getString("backupFileChooser.toolTipText")); // NOI18N
         backupFileChooser.setName("backupFileChooser"); // NOI18N
         backupFileChooser.setToggleClickCount(3);
+        backupFileChooser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backupFileChooserMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(backupFileChooser);
 
         javax.swing.GroupLayout backupFileChooserPanelLayout = new javax.swing.GroupLayout(backupFileChooserPanel);
@@ -2786,10 +2794,9 @@ public class GUI extends FrameView implements Observer {
     private void consoleOutputMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consoleOutputMouseClicked
         SwingUtilities.invokeLater(new Runnable() {
             @Override public void run() {
-                if ((server.isRunning()) && (!consoleOutput.isFocusOwner())) {
+                if (server.isRunning()) {
                     textScrolling = false;
                 }
-                mouseInConsoleOutput = true;
             }
         });
     }//GEN-LAST:event_consoleOutputMouseClicked
@@ -2926,6 +2933,57 @@ public class GUI extends FrameView implements Observer {
             System.out.println("Error launching page.");
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void backupFileChooserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backupFileChooserMouseClicked
+        /* Trying to add a right-click menu but the options seem impossible.
+        final java.awt.event.MouseEvent event = evt;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                if (event.getButton() == event.BUTTON3 && (backupFileChooser.getSelectionPath() != null)) {
+                    final TreePath path = backupFileChooser.getSelectionPath();
+                    final int children = backupFileChooser.getModel().getChildCount(path);
+                    if (children == 0) {
+                        return;
+                    }
+                    javax.swing.JPopupMenu backupContextMenu = new javax.swing.JPopupMenu();
+                    javax.swing.JMenuItem checkChildrenMenuItem;
+                    checkChildrenMenuItem = new javax.swing.JMenuItem("Check children");
+                    checkChildrenMenuItem.addActionListener(
+                        new ActionListener() {
+                            @Override public void actionPerformed(ActionEvent ev) {
+                                for (int i = 0; i < children; i++) {
+                                    TreePath child = (TreePath)backupFileChooser.getModel().getChild(path, i);
+                                    backupFileChooser.addCheckingPath(child);
+                                }
+                            }
+                        }
+                    );
+                    javax.swing.JMenuItem uncheckChildrenMenuItem;
+                    uncheckChildrenMenuItem = new javax.swing.JMenuItem("Uncheck children");
+                    uncheckChildrenMenuItem.addActionListener(
+                        new ActionListener() {
+                            @Override public void actionPerformed(ActionEvent ev) {
+
+                            }
+                        }
+                    );
+                    backupContextMenu.add(checkChildrenMenuItem);
+                    backupContextMenu.add(uncheckChildrenMenuItem);
+                    backupContextMenu.show(event.getComponent(), event.getX(), event.getY());
+                }
+            }
+        });
+         * 
+         */
+    }//GEN-LAST:event_backupFileChooserMouseClicked
+
+    private void consoleOutputMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consoleOutputMouseEntered
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                mouseInConsoleOutput = true;
+            }
+        });
+    }//GEN-LAST:event_consoleOutputMouseEntered
 
     private void customButtonAction(javax.swing.JComboBox box) {
         final javax.swing.JComboBox boxxy = box;
@@ -3467,20 +3525,25 @@ public class GUI extends FrameView implements Observer {
     }
 
     public void initBackupFileChooser() {
-        backupFileChooser.setCheckingModel(new GUITreeCheckingModel(backupFileSystem, GUI.this));
+        //backupFileChooser.setCheckingModel(new GUITreeCheckingModel(backupFileSystem, GUI.this));
+        backupFileChooser.getCheckingModel().setCheckingMode(CheckingMode.SIMPLE);
         //backupFileChooser.setCheckingPaths(createTreePathArray(config.backups.getPathsToBackup()));
         //javax.swing.tree.TreePath[] paths = createTreePathArray(config.backups.getPathsToBackup());
         //for (int i = 0; i < paths.length; i++) {
-//backupFileChooser.addCheckingPath(paths[i]);
+        //backupFileChooser.addCheckingPath(paths[i]);
+        /*
             Thread initBackupPaths = new Thread() {
                 @Override
                 public void run() {
-backupFileChooser.setCheckingPaths(createTreePathArray(config.backups.getPathsToBackup()));
+                    backupFileChooser.setCheckingPaths(createTreePathArray(config.backups.getPathsToBackup()));
                 }
             };
             initBackupPaths.start();
 
+         * 
+         */
         //}
+        backupFileChooser.setCheckingPaths(createTreePathArray(config.backups.getPathsToBackup()));
     }
 
     public void updateGuiWithServerProperties() {
@@ -3574,55 +3637,61 @@ backupFileChooser.setCheckingPaths(createTreePathArray(config.backups.getPathsTo
 
     public void saveBackupPathsToConfig() {
         config.backups.getPathsToBackup().clear();
-        for (int i = 0; i < backupFileChooser.getCheckingRoots().length; i++) {
-            config.backups.getPathsToBackup().add(backupFileChooser.getCheckingRoots()[i].getLastPathComponent().toString());
+        //for (int i = 0; i < backupFileChooser.getCheckingRoots().length; i++) {
+        //    config.backups.getPathsToBackup().add(backupFileChooser.getCheckingRoots()[i].getLastPathComponent().toString());
+        //}
+        for (int i = 0; i < backupFileChooser.getCheckingPaths().length; i++) {
+            config.backups.getPathsToBackup().add(backupFileChooser.getCheckingPaths()[i].getLastPathComponent().toString());
         }
         //config.backups.setPathsToBackup(pathsToBackup);
     }
 
+    public void saveConfigAction() {
+        config.setWindowTitle(windowTitleField.getText());
+        getFrame().setTitle(windowTitleField.getText());
+        if (trayIcon != null) {
+            trayIcon.setToolTip(windowTitleField.getText());
+        }
+        config.setInputHistoryMaxSize(Integer.parseInt(inputHistoryMaxSizeField.getText()));
+        config.setCommandPrefix(commandPrefixField.getText());
+        config.setCustomButton1(customCombo1.getSelectedItem().toString());
+        config.setCustomButton2(customCombo2.getSelectedItem().toString());
+        config.cmdLine.setXmx(xmxMemoryField.getText());
+        config.cmdLine.setExtraArgs(extraArgsField.getText());
+        config.cmdLine.setServerJar(serverJarField.getText());
+        config.cmdLine.setJavaExec(javaExecField.getText());
+        config.display.setTextSize(Integer.valueOf(textSizeField.getValue().toString()));
+        if (config.cmdLine.getUseCustomLaunch()) {
+            config.cmdLine.setCustomLaunch(cmdLineField.getText());
+            if (java.util.regex.Pattern.matches("^\\s*$", cmdLineField.getText())) {
+                config.cmdLine.setUseCustomLaunch(false);
+                config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
+                config.cmdLine.setUseCustomLaunch(true);
+            } else {
+                config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
+            }
+            cmdLineField.setText(config.cmdLine.parseCmdLine());
+        } else {
+            cmdLineField.setText(config.cmdLine.parseCmdLine());
+            if (java.util.regex.Pattern.matches("^\\s*$", config.cmdLine.getCustomLaunch())) {
+                config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
+            }
+        }
+        config.backups.setPath(backupPathField.getText());
+        saveBackupPathsToConfig();
+        config.setProxy(useProxyCheckBox.isSelected());
+        config.setExtPort(Integer.valueOf(extPortField.getText()));
+
+        config.save();
+        saveServerProperties();
+    }
     /**
      * Saves the config file with any changes made by the user through the gui.
      */
     public void saveConfig() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override public void run() {
-                config.setWindowTitle(windowTitleField.getText());
-                getFrame().setTitle(windowTitleField.getText());
-                if (trayIcon != null) {
-                    trayIcon.setToolTip(windowTitleField.getText());
-                }
-                config.setInputHistoryMaxSize(Integer.parseInt(inputHistoryMaxSizeField.getText()));
-                config.setCommandPrefix(commandPrefixField.getText());
-                config.setCustomButton1(customCombo1.getSelectedItem().toString());
-                config.setCustomButton2(customCombo2.getSelectedItem().toString());
-                config.cmdLine.setXmx(xmxMemoryField.getText());
-                config.cmdLine.setExtraArgs(extraArgsField.getText());
-                config.cmdLine.setServerJar(serverJarField.getText());
-                config.cmdLine.setJavaExec(javaExecField.getText());
-                config.display.setTextSize(Integer.valueOf(textSizeField.getValue().toString()));
-                if (config.cmdLine.getUseCustomLaunch()) {
-                    config.cmdLine.setCustomLaunch(cmdLineField.getText());
-                    if (java.util.regex.Pattern.matches("^\\s*$", cmdLineField.getText())) {
-                        config.cmdLine.setUseCustomLaunch(false);
-                        config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
-                        config.cmdLine.setUseCustomLaunch(true);
-                    } else {
-                        config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
-                    }
-                    cmdLineField.setText(config.cmdLine.parseCmdLine());
-                } else {
-                    cmdLineField.setText(config.cmdLine.parseCmdLine());
-                    if (java.util.regex.Pattern.matches("^\\s*$", config.cmdLine.getCustomLaunch())) {
-                        config.cmdLine.setCustomLaunch(config.cmdLine.parseCmdLine());
-                    }
-                }
-                //config.backups.setPathsToBackup(pathsToBackup);
-                config.backups.setPath(backupPathField.getText());
-                config.setProxy(useProxyCheckBox.isSelected());
-                config.setExtPort(Integer.valueOf(extPortField.getText()));
-
-                config.save();
-                saveServerProperties();
+                saveConfigAction();
             }
         });
     }
@@ -3688,6 +3757,11 @@ backupFileChooser.setCheckingPaths(createTreePathArray(config.backups.getPathsTo
             @Override public void run() {
                 if (controlState.equals("OFF")) {
                     setConsoleOutput("");
+                    TaskMonitor taskMonitor = getApplication().getContext().getTaskMonitor();
+                    if ((taskMonitor.getForegroundTask() != null) && taskMonitor.getForegroundTask().isStarted()) {
+                        guiLog("Stopping backup first.");
+                        taskMonitor.getForegroundTask().cancel(true);
+                    }
                     server.setCmdLine(config.cmdLine.getCmdLine());
                     if (server.start().equals("SUCCESS")) {
                     } else if (server.start().equals("ERROR")) {
@@ -3725,9 +3799,12 @@ backupFileChooser.setCheckingPaths(createTreePathArray(config.backups.getPathsTo
     public void stopServer() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override public void run() {
-                if (controlState.equals("ON")) {
-                    server.stop();
+                TaskMonitor taskMonitor = getApplication().getContext().getTaskMonitor();
+                if ((taskMonitor.getForegroundTask() != null) && taskMonitor.getForegroundTask().isStarted()) {
+                    guiLog("Stopping backup first.");
+                    taskMonitor.getForegroundTask().cancel(true);
                 }
+                server.stop();
             }
         });
     }
@@ -3935,7 +4012,7 @@ backupFileChooser.setCheckingPaths(createTreePathArray(config.backups.getPathsTo
                 } else if (serverState.equals("BADCONFIG")) {
                     startstopButton.setEnabled(false);
                 } else if (serverState.equals("BACKUP")) {
-                    startstopButton.setEnabled(false);
+                    //startstopButton.setEnabled(false);
                     saveWorldsButton.setEnabled(false);
                     backupControlRefreshButton.setEnabled(false);
                     backupButton.setEnabled(false);
@@ -3946,7 +4023,7 @@ backupFileChooser.setCheckingPaths(createTreePathArray(config.backups.getPathsTo
                     backupPathBrowseButton.setEnabled(false);
                     backupFileChooser.setEnabled(false);
                 } else if (serverState.equals("!BACKUP")) {
-                    startstopButton.setEnabled(true);
+                    //startstopButton.setEnabled(true);
                     saveWorldsButton.setEnabled(true);
                     backupControlRefreshButton.setEnabled(true);
                     backupButton.setEnabled(true);

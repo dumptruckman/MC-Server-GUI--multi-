@@ -1,5 +1,9 @@
-Version .9.6-dev
-    Dealt with selecting large directories to backup freezing the GUI... It now propagates the checkboxes on another thread and disables the file selector while doing so.  There is also an indicator for showing that it is working.
+Version .9.6
+    Dealt with selecting large directories to backup freezing the GUI... Switched to a simpler checking mode.  It's not as pretty/intuitive but it solves the problem.
+    Fixed issue where the console would not cease scrolling in the correct situations.
+    The config should now always save on GUI close, once again.
+    Minor fix to the Proxy code.
+    You may now start/stop the server during a backup.  Doing so will attempt to immediately cancel the backup operation.
 
 Version .9.5
     Fixed GUI freeze issue when issued a server restart in a number of cases.

@@ -12,6 +12,7 @@ import org.jdesktop.application.SingleFrameApplication;
 import java.util.Observer;
 import java.util.Observable;
 import java.util.EventObject;
+import javax.swing.SwingUtilities;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 
@@ -97,7 +98,7 @@ public class Main extends SingleFrameApplication implements Application.ExitList
      * @return true if allowed to exit, false if not
      */
     @Override public boolean canExit(EventObject e) {
-        gui.saveConfig();
+        gui.saveConfigAction();
         if (server.isRunning()) {
             wantsToQuit = true;
             gui.stopServer();

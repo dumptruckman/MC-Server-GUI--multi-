@@ -175,77 +175,6 @@ public class StreamTunnel {
                         }
                     }
                 }
-                /*
-                if (isServerTunnel && server.options.getBoolean("useMsgFormats")) {
-
-                    Matcher colorMatcher = COLOR_PATTERN.matcher(message);
-                    String cleanMessage = colorMatcher.replaceAll("");
-
-                    Matcher messageMatcher = MESSAGE_PATTERN.matcher(cleanMessage);
-                    if (messageMatcher.find()) {
-                        Player friend = server.findPlayerExact(messageMatcher.group(1));
-
-                        if (friend != null) {
-                            String color = "f";
-                            String title = "";
-                            String format = server.options.get("msgFormat");
-                            Group group = friend.getGroup();
-
-                            if (group != null) {
-                                color = group.getColor();
-                                if (group.showTitle()) {
-                                    title = group.getName();
-                                    format = server.options.get("msgTitleFormat");
-                                }
-                            }
-
-                            try {
-                                message = String.format(format, friend.getName(), title, color)
-                                        + messageMatcher.group(2);
-                            } catch (IllegalFormatException e) {
-                                System.out.println("[SimpleServer] There is an error in your msgFormat/msgTitleFormat settings!");
-                            }
-
-                        }
-                    } else if (cleanMessage.matches(CONSOLE_CHAT_PATTERN) && !server.options.getBoolean("chatConsoleToOps")) {
-                        break;
-                    }
-
-
-                    if (server.options.getBoolean("msgWrap")) {
-                        sendMessage(message);
-                    } else {
-                        if (message.length() > MAXIMUM_MESSAGE_SIZE) {
-                            message = message.substring(0, MAXIMUM_MESSAGE_SIZE);
-                        }
-                        write(packetId);
-                        write(message);
-                    }
-                } else if (!isServerTunnel) {
-
-                    if (player.isMuted() && !message.startsWith("/")
-                            && !message.startsWith("!")) {
-                        player.addMessage("\u00a7cYou are muted! You may not send messages to all players.");
-                        break;
-                    }
-                    if (player.parseCommand(message)) {
-                        break;
-                    }
-
-                    if (player.localChat() && !message.startsWith("/") && !message.startsWith("!")) {
-                        player.execute(LocalSayCommand.class, message);
-                        break;
-                    }
-
-                    if (message.length() > MAXIMUM_MESSAGE_SIZE) {
-                        message = message.substring(0, MAXIMUM_MESSAGE_SIZE);
-                    }
-
-                    write(packetId);
-                    write(message);
-                }
-                 * 
-                 */
                 write(packetId);
                 write(message);
                 break;
@@ -269,16 +198,6 @@ public class StreamTunnel {
             case 0x07: // Use Entity?
                 int user = in.readInt();
                 int target = in.readInt();
-                /*
-                Player targetPlayer = server.playerList.findPlayer(target);
-                if (targetPlayer != null) {
-                    if (targetPlayer.godModeEnabled()) {
-                        in.readBoolean();
-                        break;
-                    }
-                }
-                 * 
-                 */
                 write(packetId);
                 write(user);
                 write(target);
@@ -791,13 +710,14 @@ public class StreamTunnel {
                 copyNBytes(5);
                 break;
             case (byte) 0xe6: // ModLoaderMP by SDK
+                write(packetId);
                 write(in.readInt()); // mod
                 write(in.readInt()); // packet id
                 copyNBytes(write(in.readInt()) * 4); // ints
                 copyNBytes(write(in.readInt()) * 4); // floats
                 int sizeString = write(in.readInt()); // strings
                 for (int i = 0; i < sizeString; i++) {
-                    copyNBytes(write(in.readInt()));
+                  copyNBytes(write(in.readInt()));
                 }
                 break;
             case (byte) 0xff: // Disconnect/Kick
