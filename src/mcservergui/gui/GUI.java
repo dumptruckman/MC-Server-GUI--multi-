@@ -2545,6 +2545,26 @@ public class GUI extends FrameView implements Observer {
         });
     }
 
+    public void removeTaskByName(String name) {
+        final String taskname = name;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override public void run() {
+                EventModel event = getTaskByName(taskname);
+                if (event == null) return;
+                try {
+                    scheduler.interrupt(JobKey.jobKey(event.getName()));
+                    scheduler.deleteJob(JobKey.jobKey(event.getName()));
+                } catch (SchedulerException se) {
+                    System.out.println("Error removing old task");
+                }
+                customButtonBoxModel1.removeElement(event.getName());
+                customButtonBoxModel2.removeElement(event.getName());
+                config.schedule.getEvents().removeElement(event);
+                config.save();
+            }
+        });
+    }
+
     private void textSizeFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_textSizeFieldPropertyChange
         SwingUtilities.invokeLater(new Runnable() {
             @Override public void run() {
