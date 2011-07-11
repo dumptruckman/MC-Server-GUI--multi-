@@ -155,6 +155,7 @@ public class GUI extends FrameView implements Observer {
         parser = new ConsoleParser(config.display, this);
 
         webServer = new WebInterface(this);
+        schedulePaused = false;
     }
 
     @Action
@@ -2891,28 +2892,55 @@ public class GUI extends FrameView implements Observer {
     }//GEN-LAST:event_downloadLatestVersionActionPerformed
 
     private void pauseSchedulerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseSchedulerButtonActionPerformed
-        SwingUtilities.invokeLater(new Runnable() {
+        pauseSchedule();
+    }//GEN-LAST:event_pauseSchedulerButtonActionPerformed
+
+    public boolean pauseSchedule() {
+        class SchedulePauser implements Runnable {
+            public SchedulePauser() {
+                super();
+            }
+
             @Override public void run() {
-                if (pauseSchedulerButton.isSelected()) {
+                schedulePaused = !schedulePaused;
+                if (schedulePaused) {
+                    pauseSchedulerButton.setSelected(true);
                     try {
                         scheduler.pauseAll();
                         pauseSchedulerButton.setFont(new java.awt.Font("Tahoma",
                                 java.awt.Font.BOLD, 11));
                     } catch (SchedulerException se) {
+                        schedulePaused = !schedulePaused;
                         pauseSchedulerButton.setSelected(false);
                     }
                 } else {
+                    pauseSchedulerButton.setSelected(false);
                     try {
                         scheduler.resumeAll();
                         pauseSchedulerButton.setFont(new java.awt.Font("Tahoma",
                                 java.awt.Font.PLAIN, 11));
                     } catch (SchedulerException se) {
+                        schedulePaused = !schedulePaused;
                         pauseSchedulerButton.setSelected(true);
                     }
                 }
             }
-        });
-    }//GEN-LAST:event_pauseSchedulerButtonActionPerformed
+
+            public boolean getPaused() {
+                return schedulePaused;
+            }
+        }
+
+        try {
+            SchedulePauser pause = new SchedulePauser();
+            SwingUtilities.invokeAndWait(pause);
+            return pause.getPaused();
+        } catch (InterruptedException ie) {
+            return schedulePaused;
+        } catch (java.lang.reflect.InvocationTargetException ite) {
+            return schedulePaused;
+        }
+    }
 
     private void taskSchedulerListKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_taskSchedulerListKeyTyped
         final java.awt.event.KeyEvent event = evt;
@@ -4087,6 +4115,7 @@ public class GUI extends FrameView implements Observer {
     private String versionNumber;
     private int restartDelay;
     private boolean propagatingChecks;
+    private boolean schedulePaused;
 
     public static enum LogLevel { INFO, WARNING, SEVERE }
     public static enum OutputFormat { 
