@@ -705,6 +705,11 @@ public class StreamTunnel {
                 write(length);
                 copyNBytes(0xff & length);
                 break;
+            case (byte) 0xc3: // BukkitContrib
+                write(packetId);
+                write(in.readInt());
+                copyNBytes(write(in.readInt()));
+                break;
             case (byte) 0xc8: // Statistic
                 write(packetId);
                 copyNBytes(5);
