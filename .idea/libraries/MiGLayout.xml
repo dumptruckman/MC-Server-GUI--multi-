@@ -2,8 +2,8 @@
   <library name="MiGLayout">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/MigLayout/miglayout-3.7.4.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/MigLayout/miglayout-3.7.4-swing.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/MigLayout/miglayout-3.7.4-ideutil.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/MigLayout/miglayout-3.7.4-swing.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$PROJECT_DIR$/lib/MigLayout/miglayout-3.7.4-javadoc.jar!/" />

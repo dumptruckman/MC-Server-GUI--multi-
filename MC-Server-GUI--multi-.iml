@@ -10,28 +10,28 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/jni/sigar.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" name="jsoup" level="project" />
-    <orderEntry type="library" name="quartz-2.0.1" level="project" />
-    <orderEntry type="library" name="JSON" level="project" />
-    <orderEntry type="library" name="swing-app-framework" level="project" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/hyperic-sigar-1.6.4/sigar-bin/lib/sigar.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="JSON" level="project" />
+    <orderEntry type="library" name="quartz-2.0.1" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/jni/sigar.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="library" name="CheckBoxTree" level="project" />
-    <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="swing-app-framework" level="project" />
     <orderEntry type="library" name="MiGLayout" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="jsoup" level="project" />
   </component>
 </module>
 

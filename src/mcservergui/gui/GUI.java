@@ -3,7 +3,7 @@
  */
 package mcservergui.gui;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -17,9 +17,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
+import javax.swing.plaf.BorderUIResource;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.HTMLDocument;
 
@@ -57,7 +56,7 @@ public class GUI extends FrameView implements Observer {
     public GUI(SingleFrameApplication app, MCServerModel newServer, Config newConfig, Scheduler scheduler) {
         super(app);
 
-
+        UIManager.put("TitledBorder.border", new BorderUIResource(new EtchedBorder()));
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -236,7 +235,7 @@ public class GUI extends FrameView implements Observer {
         xincgcCheckBox = new javax.swing.JCheckBox();
         extraArgsLabel = new javax.swing.JLabel();
         extraArgsField = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        customCommandLineLabel = new javax.swing.JLabel();
         cmdLineField = new javax.swing.JTextField();
         customLaunchCheckBox = new javax.swing.JCheckBox();
         saveServerConfigButton = new javax.swing.JButton();
@@ -244,6 +243,8 @@ public class GUI extends FrameView implements Observer {
         useProxyCheckBox = new javax.swing.JCheckBox();
         extPortLabel = new javax.swing.JLabel();
         extPortField = new javax.swing.JTextField();
+        intPortLabel = new javax.swing.JLabel();
+        intPortField = new javax.swing.JTextField();
         serverPropertiesPanel = new javax.swing.JPanel();
         allowFlightCheckBox = new javax.swing.JCheckBox();
         allowNetherCheckBox = new javax.swing.JCheckBox();
@@ -268,7 +269,7 @@ public class GUI extends FrameView implements Observer {
         viewDistanceSpinner = new javax.swing.JSpinner();
         whiteListCheckBox = new javax.swing.JCheckBox();
         guiConfigTab = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
+        guiConfigPanel = new javax.swing.JPanel();
         windowTitleLabel = new javax.swing.JLabel();
         windowTitleField = new javax.swing.JTextField();
         inputHistoryMaxSizeLabel = new javax.swing.JLabel();
@@ -343,8 +344,6 @@ public class GUI extends FrameView implements Observer {
         statusAnimationLabel = new javax.swing.JLabel();
         progressBar = new javax.swing.JProgressBar();
         statusBarJob = new javax.swing.JLabel();
-        
-        Border eBorder = BorderFactory.createLoweredBevelBorder();
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(mcservergui.Main.class).getContext().getResourceMap(GUI.class);
 
@@ -364,13 +363,13 @@ public class GUI extends FrameView implements Observer {
 
         mainPanel.add(tabber, "grow");
         {
-            mainWindowTab.setName("mainWindowTab"); // NOI18N
-            mainWindowTab.setLayout(new MigLayout("fill", "[13%][20%][13%][20%][7%][26%]", "[60%][10%][30%]"));
+            mainWindowTab.setName("mainWindowTab");
+            mainWindowTab.setLayout(new MigLayout("fill", "0[13%]0[20%]0[13%]0[20%]0[7%]0[26%]0", "0[60%]0[10%]0[30%]0"));
             tabber.addTab(resourceMap.getString("mainWindowTab.TabConstraints.tabTitle"), mainWindowTab);
             {
-                consoleOutputPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(eBorder, resourceMap.getString("consoleOutputPanel.border.title")));
+                consoleOutputPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("consoleOutputPanel.border.title")));
                 consoleOutputPanel.setName("consoleOutputPanel");
-                consoleOutputPanel.setLayout(new MigLayout("fill"));
+                consoleOutputPanel.setLayout(new MigLayout("fill", "0[]0", "0[]0"));
                 mainWindowTab.add(consoleOutputPanel, "grow, span 5");
                 {
                     consoleOutScrollPane.setName("consoleOutScrollPane");
@@ -409,9 +408,9 @@ public class GUI extends FrameView implements Observer {
                     }
                 }
 
-                playerListPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(eBorder, resourceMap.getString("playerListPanel.border.title")));
+                playerListPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("playerListPanel.border.title")));
                 playerListPanel.setName("playerListPanel");
-                playerListPanel.setLayout(new MigLayout("fill"));
+                playerListPanel.setLayout(new MigLayout("fill", "0[]0", "0[]0"));
                 mainWindowTab.add(playerListPanel, "grow, wrap");
                 {
                     playerListScrollPane.setName("playerListScrollPane");
@@ -435,9 +434,9 @@ public class GUI extends FrameView implements Observer {
                     }
                 }
 
-                consoleInputPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(eBorder, resourceMap.getString("consoleInputPanel.border.title")));
+                consoleInputPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("consoleInputPanel.border.title")));
                 consoleInputPanel.setName("consoleInputPanel");
-                consoleInputPanel.setLayout(new MigLayout("fill", "[5%][86%][9%]", ""));
+                consoleInputPanel.setLayout(new MigLayout("fill", "0[5%]0[86%]0[9%]0", "0[]0"));
                 mainWindowTab.add(consoleInputPanel, "grow, span 6, wrap");
                 {
                     sayCheckBox.setText(resourceMap.getString("sayCheckBox.text")); // NOI18N
@@ -480,9 +479,9 @@ public class GUI extends FrameView implements Observer {
                     consoleInputPanel.add(submitButton);
                 }
 
-                serverControlPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(eBorder, resourceMap.getString("serverControlPanel.border.title")));
+                serverControlPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("serverControlPanel.border.title")));
                 serverControlPanel.setName("serverControlPanel");
-                serverControlPanel.setLayout(new MigLayout("fill", "[35%][55%][10%]", ""));
+                serverControlPanel.setLayout(new MigLayout("fill", "0[35%]0[55%]0[10%]0", "0[]0"));
                 mainWindowTab.add(serverControlPanel, "grow, span 2");
                 {
                     startstopButton.setText(resourceMap.getString("startstopButton.text"));
@@ -512,6 +511,8 @@ public class GUI extends FrameView implements Observer {
 
                     customButton1.setText(resourceMap.getString("customButton1.text"));
                     customButton1.setToolTipText(resourceMap.getString("customButton1.toolTipText"));
+                    customButton1.putClientProperty("JComponent.sizeVariant", "small");
+                    SwingUtilities.updateComponentTreeUI(customButton1);
                     customButton1.setMargin(new java.awt.Insets(2, 2, 2, 2));
                     customButton1.setName("customButton1");
                     customButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -528,6 +529,8 @@ public class GUI extends FrameView implements Observer {
 
                     customButton2.setText(resourceMap.getString("customButton2.text"));
                     customButton2.setToolTipText(resourceMap.getString("customButton2.toolTipText"));
+                    customButton2.putClientProperty("JComponent.sizeVariant", "small");
+                    SwingUtilities.updateComponentTreeUI(customButton2);
                     customButton2.setMargin(new java.awt.Insets(2, 2, 2, 2));
                     customButton2.setName("customButton2");
                     customButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -538,7 +541,7 @@ public class GUI extends FrameView implements Observer {
                     serverControlPanel.add(customButton2, "right, growx");
                 }
 
-                serverInfoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(eBorder, "Server Information"));
+                serverInfoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Server Information"));
                 serverInfoPanel.setName("serverInfoPanel");
                 serverInfoPanel.setLayout(new MigLayout());
                 mainWindowTab.add(serverInfoPanel, "grow, span 2");
@@ -576,7 +579,7 @@ public class GUI extends FrameView implements Observer {
                     serverInfoPanel.add(transmittingBytes);
                 }
 
-                guiInfoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(eBorder, "GUI Information"));
+                guiInfoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("GUI Information"));
                 guiInfoPanel.setName("guiInfoPanel");
                 guiInfoPanel.setLayout(new MigLayout());
                 mainWindowTab.add(guiInfoPanel, "grow, span 2");
@@ -607,245 +610,272 @@ public class GUI extends FrameView implements Observer {
                     guiInfoPanel.add(useNetStat, "span 2");
                 }
             }
+
+            serverConfigTab.setName("serverConfigTab");
+            serverConfigTab.setLayout(new MigLayout("fill", "", "[][][][min!]"));
+            tabber.addTab(resourceMap.getString("serverConfigTab.TabConstraints.tabTitle"), serverConfigTab);
+            {
+                serverCmdLinePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("serverCmdLinePanel.border.title"))); // NOI18N
+                serverCmdLinePanel.setName("serverCmdLinePanel");
+                serverCmdLinePanel.setLayout(new MigLayout("fill", "0[min!]0[]0[min!]0", "0[]0[]0[]0[]0"));
+                serverConfigTab.add(serverCmdLinePanel, "grow, wrap");
+                {
+                    javaExecLabel.setText(resourceMap.getString("javaExecLabel.text"));
+                    javaExecLabel.setName("javaExecLabel");
+                    serverCmdLinePanel.add(javaExecLabel, "grow 0");
+
+                    javaExecField.setText(resourceMap.getString("javaExecField.text"));
+                    javaExecField.putClientProperty("JComponent.sizeVariant", "small");
+                    SwingUtilities.updateComponentTreeUI(javaExecField);
+                    javaExecField.setToolTipText(resourceMap.getString("javaExecField.toolTipText"));
+                    javaExecField.setName("javaExecField");
+                    javaExecField.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            javaExecFieldActionPerformed(evt);
+                        }
+                    });
+                    serverCmdLinePanel.add(javaExecField, "growx, growy 0");
+
+                    javaExecBrowseButton.setText(resourceMap.getString("javaExecBrowseButton.text"));
+                    javaExecBrowseButton.putClientProperty("JComponent.sizeVariant", "mini");
+                    SwingUtilities.updateComponentTreeUI(javaExecBrowseButton);
+                    javaExecBrowseButton.setToolTipText(resourceMap.getString("javaExecBrowseButton.toolTipText"));
+                    javaExecBrowseButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
+                    javaExecBrowseButton.setName("javaExecBrowseButton");
+                    javaExecBrowseButton.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            javaExecBrowseButtonActionPerformed(evt);
+                        }
+                    });
+                    serverCmdLinePanel.add(javaExecBrowseButton, "wrap, growx 0");
+
+                    serverJarLabel.setText(resourceMap.getString("serverJarLabel.text"));
+                    serverJarLabel.setName("serverJarLabel");
+                    serverCmdLinePanel.add(serverJarLabel, "growx 0");
+
+                    serverJarField.setText(resourceMap.getString("serverJarField.text"));
+                    serverJarField.setName("serverJarField");
+                    serverJarField.putClientProperty("JComponent.sizeVariant", "small");
+                    SwingUtilities.updateComponentTreeUI(serverJarField);
+                    serverJarField.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            serverJarFieldActionPerformed(evt);
+                        }
+                    });
+                    serverCmdLinePanel.add(serverJarField, "growx, split 2");
+
+                    bukkitCheckBox.setText("Is CraftBukkit"); // NOI18N
+                    bukkitCheckBox.setName("bukkitCheckBox"); // NOI18N
+                    bukkitCheckBox.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            bukkitCheckBoxActionPerformed(evt);
+                        }
+                    });
+                    serverCmdLinePanel.add(bukkitCheckBox, "growx 0");
+
+                    serverJarBrowseButton.setText(resourceMap.getString("serverJarBrowseButton.text"));
+                    serverJarBrowseButton.setToolTipText(resourceMap.getString("serverJarBrowseButton.toolTipText"));
+                    serverJarBrowseButton.putClientProperty("JComponent.sizeVariant", "mini");
+                    SwingUtilities.updateComponentTreeUI(serverJarBrowseButton);
+                    serverJarBrowseButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
+                    serverJarBrowseButton.setName("serverJarBrowseButton");
+                    serverJarBrowseButton.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            serverJarBrowseButtonActionPerformed(evt);
+                        }
+                    });
+                    serverCmdLinePanel.add(serverJarBrowseButton, "growx 0, wrap");
+
+                    xmxMemoryLabel.setText(resourceMap.getString("xmxMemoryLabel.text"));
+                    xmxMemoryLabel.setName("xmxMemoryLabel");
+                    serverCmdLinePanel.add(xmxMemoryLabel, "span 3, split 5");
+
+                    xmxMemoryField.setText(resourceMap.getString("xmxMemoryField.text"));
+                    xmxMemoryField.setToolTipText(resourceMap.getString("xmxMemoryField.toolTipText"));
+                    xmxMemoryField.setName("xmxMemoryField");
+                    xmxMemoryField.putClientProperty("JComponent.sizeVariant", "small");
+                    SwingUtilities.updateComponentTreeUI(xmxMemoryField);
+                    xmxMemoryField.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            xmxMemoryFieldActionPerformed(evt);
+                        }
+                    });
+                    serverCmdLinePanel.add(xmxMemoryField, "growx 10");
+
+                    xincgcCheckBox.setText(resourceMap.getString("xincgcCheckBox.text"));
+                    xincgcCheckBox.setToolTipText(resourceMap.getString("xincgcCheckBox.toolTipText"));
+                    xincgcCheckBox.setName("xincgcCheckBox");
+                    xincgcCheckBox.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            xincgcCheckBoxActionPerformed(evt);
+                        }
+                    });
+                    serverCmdLinePanel.add(xincgcCheckBox, "growx 0");
+
+                    extraArgsLabel.setText(resourceMap.getString("extraArgsLabel.text"));
+                    extraArgsLabel.setName("extraArgsLabel");
+                    serverCmdLinePanel.add(extraArgsLabel, "gapleft 20, growx 0");
+
+                    extraArgsField.setText(resourceMap.getString("extraArgsField.text"));
+                    extraArgsField.setToolTipText(resourceMap.getString("extraArgsField.toolTipText"));
+                    extraArgsField.setName("extraArgsField");
+                    extraArgsField.putClientProperty("JComponent.sizeVariant", "small");
+                    SwingUtilities.updateComponentTreeUI(extraArgsField);
+                    extraArgsField.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            extraArgsFieldActionPerformed(evt);
+                        }
+                    });
+                    serverCmdLinePanel.add(extraArgsField, "growx, wrap");
+
+                    customCommandLineLabel.setText(resourceMap.getString("customCommandLineLabel.text"));
+                    customCommandLineLabel.setName("customCommandLineLabel");
+                    serverCmdLinePanel.add(customCommandLineLabel, "growx 0, span 3, split 3");
+
+                    cmdLineField.setEditable(false);
+                    cmdLineField.setText(resourceMap.getString("cmdLineField.text"));
+                    cmdLineField.setToolTipText(resourceMap.getString("cmdLineField.toolTipText"));
+                    cmdLineField.setName("cmdLineField");
+                    cmdLineField.putClientProperty("JComponent.sizeVariant", "small");
+                    SwingUtilities.updateComponentTreeUI(cmdLineField);
+                    cmdLineField.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            cmdLineFieldActionPerformed(evt);
+                        }
+                    });
+                    serverCmdLinePanel.add(cmdLineField, "growx");
+
+                    customLaunchCheckBox.setText(resourceMap.getString("customLaunchCheckBox.text"));
+                    customLaunchCheckBox.setToolTipText(resourceMap.getString("customLaunchCheckBox.toolTipText"));
+                    customLaunchCheckBox.setName("customLaunchCheckBox");
+                    customLaunchCheckBox.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            customLaunchCheckBoxActionPerformed(evt);
+                        }
+                    });
+                    serverCmdLinePanel.add(customLaunchCheckBox, "growx 0");
+                }
+
+                serverPropertiesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("serverPropertiesPanel.border.title"))); // NOI18N
+                serverPropertiesPanel.setName("serverPropertiesPanel");
+                serverPropertiesPanel.setLayout(new MigLayout("fill"));
+                serverConfigTab.add(serverPropertiesPanel, "grow, wrap");
+                {
+                    // @TODO
+                }
+
+                guiConfigPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("guiConfigPanel.border.title")));
+                guiConfigPanel.setName("guiConfigPanel");
+                guiConfigPanel.setLayout(new MigLayout("fill"));
+                serverConfigTab.add(guiConfigPanel, "grow, wrap");
+                {
+                    // @TODO
+                    useProxyCheckBox.setText(resourceMap.getString("useProxyCheckBox.text"));
+                    useProxyCheckBox.setToolTipText(resourceMap.getString("useProxyCheckBox.toolTipText"));
+                    useProxyCheckBox.setName("useProxyCheckBox");
+                    useProxyCheckBox.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            useProxyCheckBoxActionPerformed(evt);
+                        }
+                    });
+                    guiConfigPanel.add(useProxyCheckBox, "growx 0, split 5");
+
+                    extPortLabel.setLabelFor(extPortField);
+                    extPortLabel.setText(resourceMap.getString("extPortLabel.text"));
+                    extPortLabel.setName("extPortLabel");
+                    guiConfigPanel.add(extPortLabel, "gapleft 20, growx 0");
+
+                    extPortField.setText(resourceMap.getString("extPortField.text"));
+                    extPortField.setToolTipText(resourceMap.getString("extPortField.toolTipText"));
+                    extPortField.putClientProperty("JComponent.sizeVariant", "small");
+                    SwingUtilities.updateComponentTreeUI(extPortField);
+                    extPortField.setInputVerifier(new RegexVerifier("^(6553[0-5]|655[0-2]\\d|65[0-4]\\d\\d|6[0-4]\\d{3}|[1-5]\\d{4}|[1-9]\\d{0,3}|0)$"));
+                    extPortField.setName("extPortField");
+                    guiConfigPanel.add(extPortField, "growx 100");
+
+                    intPortLabel.setLabelFor(intPortField);
+                    intPortLabel.setText(resourceMap.getString("intPortLabel.text"));
+                    intPortLabel.setName("intPortLabel");
+                    guiConfigPanel.add(intPortLabel, "growx 0");
+
+                    intPortField.setText(resourceMap.getString("intPortField.text"));
+                    intPortField.setToolTipText(resourceMap.getString("intPortField.toolTipText"));
+                    intPortField.putClientProperty("JComponent.sizeVariant", "small");
+                    SwingUtilities.updateComponentTreeUI(intPortField);
+                    intPortField.setInputVerifier(new RegexVerifier("^(6553[0-5]|655[0-2]\\d|65[0-4]\\d\\d|6[0-4]\\d{3}|[1-5]\\d{4}|[1-9]\\d{0,3}|0)$"));
+                    intPortField.setName("intPortField");
+                    guiConfigPanel.add(intPortField, "growx 100");
+
+                    windowTitleLabel.setText(resourceMap.getString("windowTitleLabel.text")); // NOI18N
+                    windowTitleLabel.setName("windowTitleLabel"); // NOI18N
+                    //guiConfigPanel.add();
+
+                    windowTitleField.setText(resourceMap.getString("windowTitleField.text")); // NOI18N
+                    windowTitleField.setName("windowTitleField"); // NOI18N
+                    windowTitleField.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            windowTitleFieldActionPerformed(evt);
+                        }
+                    });
+                    //guiConfigPanel.add();
+
+                    inputHistoryMaxSizeLabel.setText(resourceMap.getString("inputHistoryMaxSizeLabel.text")); // NOI18N
+                    inputHistoryMaxSizeLabel.setName("inputHistoryMaxSizeLabel"); // NOI18N
+                    //guiConfigPanel.add();
+
+                    inputHistoryMaxSizeField.setText(resourceMap.getString("inputHistoryMaxSizeField.text")); // NOI18N
+                    inputHistoryMaxSizeField.setToolTipText(resourceMap.getString("inputHistoryMaxSizeField.toolTipText")); // NOI18N
+                    inputHistoryMaxSizeField.setInputVerifier(new RegexVerifier("\\d{1,4}"));
+                    inputHistoryMaxSizeField.setName("inputHistoryMaxSizeField"); // NOI18N
+                    //guiConfigPanel.add();
+
+                    startServerOnLaunchCheckBox.setText(resourceMap.getString("startServerOnLaunchCheckBox.text")); // NOI18N
+                    startServerOnLaunchCheckBox.setName("startServerOnLaunchCheckBox"); // NOI18N
+                    startServerOnLaunchCheckBox.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            startServerOnLaunchCheckBoxActionPerformed(evt);
+                        }
+                    });
+                    //guiConfigPanel.add();
+
+                    commandPrefixLabel.setText(resourceMap.getString("commandPrefixLabel.text")); // NOI18N
+                    commandPrefixLabel.setName("commandPrefixLabel"); // NOI18N
+                    //guiConfigPanel.add();
+
+                    commandPrefixField.setText(resourceMap.getString("commandPrefixField.text")); // NOI18N
+                    commandPrefixField.setToolTipText(resourceMap.getString("commandPrefixField.toolTipText")); // NOI18N
+                    commandPrefixField.setName("commandPrefixField"); // NOI18N
+                    commandPrefixField.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            commandPrefixFieldActionPerformed(evt);
+                        }
+                    });
+                    //guiConfigPanel.add();
+                }
+
+                saveServerConfigButton.setText(resourceMap.getString("saveServerConfigButton.text"));
+                saveServerConfigButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
+                saveServerConfigButton.setName("saveServerConfigButton");
+                saveServerConfigButton.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        saveServerConfigButtonActionPerformed(evt);
+                    }
+                });
+                serverConfigTab.add(saveServerConfigButton, "growx");
+            }
         }
 
-        serverConfigTab.setName("serverConfigTab"); // NOI18N
 
-        serverCmdLinePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("serverCmdLinePanel.border.title"))); // NOI18N
-        serverCmdLinePanel.setMaximumSize(new java.awt.Dimension(252, 239));
-        serverCmdLinePanel.setName("serverCmdLinePanel"); // NOI18N
-        serverCmdLinePanel.setPreferredSize(new java.awt.Dimension(252, 239));
 
-        javaExecLabel.setText(resourceMap.getString("javaExecLabel.text")); // NOI18N
-        javaExecLabel.setName("javaExecLabel"); // NOI18N
-
-        javaExecField.setText(resourceMap.getString("javaExecField.text")); // NOI18N
-        javaExecField.setToolTipText(resourceMap.getString("javaExecField.toolTipText")); // NOI18N
-        javaExecField.setName("javaExecField"); // NOI18N
-        javaExecField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                javaExecFieldActionPerformed(evt);
-            }
-        });
-
-        serverJarLabel.setText(resourceMap.getString("serverJarLabel.text")); // NOI18N
-        serverJarLabel.setName("serverJarLabel"); // NOI18N
-
-        serverJarField.setText(resourceMap.getString("serverJarField.text")); // NOI18N
-        serverJarField.setName("serverJarField"); // NOI18N
-        serverJarField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                serverJarFieldActionPerformed(evt);
-            }
-        });
-
-        bukkitCheckBox.setText(resourceMap.getString("bukkitCheckBox.text")); // NOI18N
-        bukkitCheckBox.setName("bukkitCheckBox"); // NOI18N
-        bukkitCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bukkitCheckBoxActionPerformed(evt);
-            }
-        });
-
-        javaExecBrowseButton.setText(resourceMap.getString("javaExecBrowseButton.text")); // NOI18N
-        javaExecBrowseButton.setToolTipText(resourceMap.getString("javaExecBrowseButton.toolTipText")); // NOI18N
-        javaExecBrowseButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
-        javaExecBrowseButton.setName("javaExecBrowseButton"); // NOI18N
-        javaExecBrowseButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                javaExecBrowseButtonActionPerformed(evt);
-            }
-        });
-
-        serverJarBrowseButton.setText(resourceMap.getString("serverJarBrowseButton.text")); // NOI18N
-        serverJarBrowseButton.setToolTipText(resourceMap.getString("serverJarBrowseButton.toolTipText")); // NOI18N
-        serverJarBrowseButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
-        serverJarBrowseButton.setName("serverJarBrowseButton"); // NOI18N
-        serverJarBrowseButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                serverJarBrowseButtonActionPerformed(evt);
-            }
-        });
-
-        xmxMemoryLabel.setText(resourceMap.getString("xmxMemoryLabel.text")); // NOI18N
-        xmxMemoryLabel.setName("xmxMemoryLabel"); // NOI18N
-
-        xmxMemoryField.setText(resourceMap.getString("xmxMemoryField.text")); // NOI18N
-        xmxMemoryField.setToolTipText(resourceMap.getString("xmxMemoryField.toolTipText")); // NOI18N
-        xmxMemoryField.setName("xmxMemoryField"); // NOI18N
-        xmxMemoryField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                xmxMemoryFieldActionPerformed(evt);
-            }
-        });
-
-        xincgcCheckBox.setText(resourceMap.getString("xincgcCheckBox.text")); // NOI18N
-        xincgcCheckBox.setToolTipText(resourceMap.getString("xincgcCheckBox.toolTipText")); // NOI18N
-        xincgcCheckBox.setName("xincgcCheckBox"); // NOI18N
-        xincgcCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                xincgcCheckBoxActionPerformed(evt);
-            }
-        });
-
-        extraArgsLabel.setText(resourceMap.getString("extraArgsLabel.text")); // NOI18N
-        extraArgsLabel.setName("extraArgsLabel"); // NOI18N
-
-        extraArgsField.setText(resourceMap.getString("extraArgsField.text")); // NOI18N
-        extraArgsField.setToolTipText(resourceMap.getString("extraArgsField.toolTipText")); // NOI18N
-        extraArgsField.setName("extraArgsField"); // NOI18N
-        extraArgsField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                extraArgsFieldActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
-        jLabel2.setName("jLabel2"); // NOI18N
-
-        cmdLineField.setEditable(false);
-        cmdLineField.setText(resourceMap.getString("cmdLineField.text")); // NOI18N
-        cmdLineField.setToolTipText(resourceMap.getString("cmdLineField.toolTipText")); // NOI18N
-        cmdLineField.setName("cmdLineField"); // NOI18N
-        cmdLineField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdLineFieldActionPerformed(evt);
-            }
-        });
-
-        customLaunchCheckBox.setText(resourceMap.getString("customLaunchCheckBox.text")); // NOI18N
-        customLaunchCheckBox.setToolTipText(resourceMap.getString("customLaunchCheckBox.toolTipText")); // NOI18N
-        customLaunchCheckBox.setName("customLaunchCheckBox"); // NOI18N
-        customLaunchCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                customLaunchCheckBoxActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout serverCmdLinePanelLayout = new javax.swing.GroupLayout(serverCmdLinePanel);
-        serverCmdLinePanel.setLayout(serverCmdLinePanelLayout);
-        serverCmdLinePanelLayout.setHorizontalGroup(
-            serverCmdLinePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(serverCmdLinePanelLayout.createSequentialGroup()
-                .addComponent(customLaunchCheckBox)
-                .addContainerGap())
-            .addGroup(serverCmdLinePanelLayout.createSequentialGroup()
-                .addGroup(serverCmdLinePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, serverCmdLinePanelLayout.createSequentialGroup()
-                        .addComponent(serverJarLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(serverJarField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, serverCmdLinePanelLayout.createSequentialGroup()
-                        .addComponent(javaExecLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(javaExecField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(serverCmdLinePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(serverJarBrowseButton)
-                    .addComponent(javaExecBrowseButton))
-                .addGap(119, 119, 119))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, serverCmdLinePanelLayout.createSequentialGroup()
-                .addGroup(serverCmdLinePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(bukkitCheckBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, serverCmdLinePanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(cmdLineField, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, serverCmdLinePanelLayout.createSequentialGroup()
-                        .addComponent(extraArgsLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(extraArgsField, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, serverCmdLinePanelLayout.createSequentialGroup()
-                        .addComponent(xmxMemoryLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(xmxMemoryField, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(xincgcCheckBox)))
-                .addGap(125, 125, 125))
-        );
-        serverCmdLinePanelLayout.setVerticalGroup(
-            serverCmdLinePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(serverCmdLinePanelLayout.createSequentialGroup()
-                .addGroup(serverCmdLinePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(javaExecLabel)
-                    .addComponent(javaExecField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(javaExecBrowseButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(serverCmdLinePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(serverJarLabel)
-                    .addComponent(serverJarField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(serverJarBrowseButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bukkitCheckBox)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(serverCmdLinePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(xmxMemoryLabel)
-                    .addComponent(xmxMemoryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(xincgcCheckBox))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(serverCmdLinePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(extraArgsLabel)
-                    .addComponent(extraArgsField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(customLaunchCheckBox)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmdLineField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        saveServerConfigButton.setText(resourceMap.getString("saveServerConfigButton.text")); // NOI18N
-        saveServerConfigButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
-        saveServerConfigButton.setName("saveServerConfigButton"); // NOI18N
-        saveServerConfigButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveServerConfigButtonActionPerformed(evt);
-            }
-        });
-
-        proxyServerPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("proxyServerPanel.border.title"))); // NOI18N
+        proxyServerPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("proxyServerPanel.border.title")));
         proxyServerPanel.setMaximumSize(new java.awt.Dimension(252, 50));
-        proxyServerPanel.setName("proxyServerPanel"); // NOI18N
+        proxyServerPanel.setName("proxyServerPanel");
 
-        useProxyCheckBox.setText(resourceMap.getString("useProxyCheckBox.text")); // NOI18N
-        useProxyCheckBox.setToolTipText(resourceMap.getString("useProxyCheckBox.toolTipText")); // NOI18N
-        useProxyCheckBox.setName("useProxyCheckBox"); // NOI18N
-        useProxyCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                useProxyCheckBoxActionPerformed(evt);
-            }
-        });
 
-        extPortLabel.setLabelFor(extPortField);
-        extPortLabel.setText(resourceMap.getString("extPortLabel.text")); // NOI18N
-        extPortLabel.setName("extPortLabel"); // NOI18N
 
-        extPortField.setText(resourceMap.getString("extPortField.text")); // NOI18N
-        extPortField.setToolTipText(resourceMap.getString("extPortField.toolTipText")); // NOI18N
-        extPortField.setInputVerifier(new RegexVerifier("^(6553[0-5]|655[0-2]\\d|65[0-4]\\d\\d|6[0-4]\\d{3}|[1-5]\\d{4}|[1-9]\\d{0,3}|0)$"));
-        extPortField.setName("extPortField"); // NOI18N
 
-        javax.swing.GroupLayout proxyServerPanelLayout = new javax.swing.GroupLayout(proxyServerPanel);
-        proxyServerPanel.setLayout(proxyServerPanelLayout);
-        proxyServerPanelLayout.setHorizontalGroup(
-            proxyServerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(proxyServerPanelLayout.createSequentialGroup()
-                .addComponent(useProxyCheckBox)
-                .addGap(18, 18, 18)
-                .addComponent(extPortLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(extPortField, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE))
-        );
-        proxyServerPanelLayout.setVerticalGroup(
-            proxyServerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(proxyServerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(useProxyCheckBox)
-                .addComponent(extPortLabel)
-                .addComponent(extPortField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
 
-        serverPropertiesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("serverPropertiesPanel.border.title"))); // NOI18N
-        serverPropertiesPanel.setName("serverPropertiesPanel"); // NOI18N
+
 
         allowFlightCheckBox.setText(resourceMap.getString("allowFlightCheckBox.text")); // NOI18N
         allowFlightCheckBox.setName("allowFlightCheckBox"); // NOI18N
@@ -921,6 +951,7 @@ public class GUI extends FrameView implements Observer {
         whiteListCheckBox.setText(resourceMap.getString("whiteListCheckBox.text")); // NOI18N
         whiteListCheckBox.setName("whiteListCheckBox"); // NOI18N
 
+        /*
         javax.swing.GroupLayout serverPropertiesPanelLayout = new javax.swing.GroupLayout(serverPropertiesPanel);
         serverPropertiesPanel.setLayout(serverPropertiesPanelLayout);
         serverPropertiesPanelLayout.setHorizontalGroup(
@@ -1022,8 +1053,9 @@ public class GUI extends FrameView implements Observer {
                     .addComponent(viewDistanceSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(whiteListCheckBox))
-        );
+        );*/
 
+        /*
         javax.swing.GroupLayout serverConfigTabLayout = new javax.swing.GroupLayout(serverConfigTab);
         serverConfigTab.setLayout(serverConfigTabLayout);
         serverConfigTabLayout.setHorizontalGroup(
@@ -1053,55 +1085,15 @@ public class GUI extends FrameView implements Observer {
                     .addComponent(serverPropertiesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
+        */
 
-        tabber.addTab(resourceMap.getString("serverConfigTab.TabConstraints.tabTitle"), serverConfigTab); // NOI18N
 
         guiConfigTab.setName("guiConfigTab"); // NOI18N
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel4.border.title"))); // NOI18N
-        jPanel4.setName("jPanel4"); // NOI18N
 
-        windowTitleLabel.setText(resourceMap.getString("windowTitleLabel.text")); // NOI18N
-        windowTitleLabel.setName("windowTitleLabel"); // NOI18N
-
-        windowTitleField.setText(resourceMap.getString("windowTitleField.text")); // NOI18N
-        windowTitleField.setName("windowTitleField"); // NOI18N
-        windowTitleField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                windowTitleFieldActionPerformed(evt);
-            }
-        });
-
-        inputHistoryMaxSizeLabel.setText(resourceMap.getString("inputHistoryMaxSizeLabel.text")); // NOI18N
-        inputHistoryMaxSizeLabel.setName("inputHistoryMaxSizeLabel"); // NOI18N
-
-        inputHistoryMaxSizeField.setText(resourceMap.getString("inputHistoryMaxSizeField.text")); // NOI18N
-        inputHistoryMaxSizeField.setToolTipText(resourceMap.getString("inputHistoryMaxSizeField.toolTipText")); // NOI18N
-        inputHistoryMaxSizeField.setInputVerifier(new RegexVerifier("\\d{1,4}"));
-        inputHistoryMaxSizeField.setName("inputHistoryMaxSizeField"); // NOI18N
-
-        startServerOnLaunchCheckBox.setText(resourceMap.getString("startServerOnLaunchCheckBox.text")); // NOI18N
-        startServerOnLaunchCheckBox.setName("startServerOnLaunchCheckBox"); // NOI18N
-        startServerOnLaunchCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                startServerOnLaunchCheckBoxActionPerformed(evt);
-            }
-        });
-
-        commandPrefixLabel.setText(resourceMap.getString("commandPrefixLabel.text")); // NOI18N
-        commandPrefixLabel.setName("commandPrefixLabel"); // NOI18N
-
-        commandPrefixField.setText(resourceMap.getString("commandPrefixField.text")); // NOI18N
-        commandPrefixField.setToolTipText(resourceMap.getString("commandPrefixField.toolTipText")); // NOI18N
-        commandPrefixField.setName("commandPrefixField"); // NOI18N
-        commandPrefixField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                commandPrefixFieldActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
+/*
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(guiConfigPanel);
+        guiConfigPanel.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
@@ -1137,7 +1129,7 @@ public class GUI extends FrameView implements Observer {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(commandPrefixLabel)
                     .addComponent(commandPrefixField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
+        );*/
 
         saveGuiConfigButton.setText(resourceMap.getString("saveGuiConfigButton.text")); // NOI18N
         saveGuiConfigButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
@@ -1303,13 +1295,14 @@ public class GUI extends FrameView implements Observer {
                     .addComponent(textSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
+        /*
         javax.swing.GroupLayout guiConfigTabLayout = new javax.swing.GroupLayout(guiConfigTab);
         guiConfigTab.setLayout(guiConfigTabLayout);
         guiConfigTabLayout.setHorizontalGroup(
             guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(guiConfigTabLayout.createSequentialGroup()
                 .addGroup(guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(guiConfigPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(guiConfigTabLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(saveGuiConfigButton)))
@@ -1322,12 +1315,12 @@ public class GUI extends FrameView implements Observer {
             .addGroup(guiConfigTabLayout.createSequentialGroup()
                 .addGroup(guiConfigTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(guiConfigTabLayout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(guiConfigPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(saveGuiConfigButton))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(168, Short.MAX_VALUE))
-        );
+        );*/
 
         tabber.addTab(resourceMap.getString("guiConfigTab.TabConstraints.tabTitle"), guiConfigTab); // NOI18N
 
@@ -2953,6 +2946,8 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JMenuItem downloadLatestVersion;
     public javax.swing.JTextField extPortField;
     public javax.swing.JLabel extPortLabel;
+    public javax.swing.JTextField intPortField;
+    public javax.swing.JLabel intPortLabel;
     public javax.swing.JTextField extraArgsField;
     public javax.swing.JLabel extraArgsLabel;
     public javax.swing.JPanel guiConfigTab;
@@ -2967,11 +2962,11 @@ public class GUI extends FrameView implements Observer {
     public javax.swing.JTextField inputHistoryMaxSizeField;
     public javax.swing.JLabel inputHistoryMaxSizeLabel;
     public javax.swing.JCheckBox jCheckBox1;
-    public javax.swing.JLabel jLabel2;
+    public javax.swing.JLabel customCommandLineLabel;
     public javax.swing.JMenuItem jMenuItem1;
     public javax.swing.JPanel jPanel1;
     public javax.swing.JPanel jPanel2;
-    public javax.swing.JPanel jPanel4;
+    public javax.swing.JPanel guiConfigPanel;
     public javax.swing.JScrollPane consoleOutScrollPane;
     public javax.swing.JScrollPane playerListScrollPane;
     public javax.swing.JScrollPane jScrollPane3;
