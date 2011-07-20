@@ -51,7 +51,7 @@ public class ChangeLog extends javax.swing.JDialog {
         changeLogPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("changeLogPanel.border.title"))); // NOI18N
         changeLogPanel.setName("changeLogPanel"); // NOI18N
 
-        jScrollPane1.setName("jScrollPane1"); // NOI18N
+        jScrollPane1.setName("consoleOutScrollPane"); // NOI18N
 
         changeLogField.setName("changeLogField"); // NOI18N
         jScrollPane1.setViewportView(changeLogField);

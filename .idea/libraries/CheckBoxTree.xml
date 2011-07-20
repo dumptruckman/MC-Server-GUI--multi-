@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="CheckBoxTree">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/CheckBoxTree/lablib-checkboxtree-3.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/CheckBoxTree/lablib-checkboxtree-3.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/CheckBoxTree/lablib-checkboxtree-3.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

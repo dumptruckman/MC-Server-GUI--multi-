@@ -677,7 +677,7 @@ public class TaskDialog extends javax.swing.JDialog {
         serverWarningLabel.setText(resourceMap.getString("serverWarningLabel.text")); // NOI18N
         serverWarningLabel.setName("serverWarningLabel"); // NOI18N
 
-        jScrollPane1.setName("jScrollPane1"); // NOI18N
+        jScrollPane1.setName("consoleOutScrollPane"); // NOI18N
 
         warningList.setModel(warningListModel);
         warningList.setToolTipText(resourceMap.getString("warningList.toolTipText")); // NOI18N
@@ -733,7 +733,7 @@ public class TaskDialog extends javax.swing.JDialog {
             }
         });
 
-        jScrollPane2.setName("jScrollPane2"); // NOI18N
+        jScrollPane2.setName("playerListScrollPane"); // NOI18N
 
         timeSummaryField.setColumns(20);
         timeSummaryField.setEditable(false);
