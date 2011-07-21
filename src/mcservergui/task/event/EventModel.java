@@ -59,11 +59,11 @@ public class EventModel implements Comparable<EventModel> {
         if (name == null || task == null) {
             return "";
         }
-        String string = name + "<br><font size=2>" + task;
+        String string = "<html>" + name + "<br><font size=2>" + task;
         if (nextFireTime != null) {
             string += "  in  " + nextFireTime;
         }
-        string += "</font>";
+        string += "</font></html>";
         return string;
     }
 

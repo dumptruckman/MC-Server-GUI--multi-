@@ -6,6 +6,7 @@ Version .9.7-dev
     Merged Server Config tab and GUI Config tab into new Configuration tab.
     Added an Internal port field for increased compatibility and maybe easier to understand?
     Added a minimum resize size so that no components would never NOT show (With the default Nimbus theme).
+    Fixed NullPointerException when trying to edit a task when no task was selected.
 
 Version .9.6.1
     Fixed issue where GUI restart tasks would cause the server to stop immediately.

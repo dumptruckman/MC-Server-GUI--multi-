@@ -14,10 +14,12 @@ import java.util.*;
  */
 public class GUIListModel<T> extends javax.swing.AbstractListModel {
 
-    TreeSet<T> model;
+    //TreeSet<T> model;
+    List<T> model;
 
     public GUIListModel() {
-        model = new TreeSet<T>();
+        //model = new TreeSet<T>();
+        model = new ArrayList<T>();
     }
 
     public int getSize() {
@@ -25,15 +27,14 @@ public class GUIListModel<T> extends javax.swing.AbstractListModel {
     }
 
     public T getElementAt(int index) {
-        T[] a = null;
-        return model.toArray(a)[index];
+        return this.toList().get(index);
     }
 
-    public void setModel(TreeSet<T> model) {
+    public void setModel(List<T> model/*TreeSet<T> model*/) {
         this.model = model;
     }
 
-    public TreeSet<T> getModel() {
+    public List<T> getModel() {
         return model;
     }
 
@@ -58,16 +59,22 @@ public class GUIListModel<T> extends javax.swing.AbstractListModel {
         return model.contains(element);
     }
 
-    public Object firstElement() {
-        return model.first();
+    public T firstElement() throws NoSuchElementException {
+        if (model.isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        return model.get(0);
     }
 
-    public Iterator iterator() {
+    public Iterator<T> iterator() {
         return model.iterator();
     }
 
-    public Object lastElement() {
-        return model.last();
+    public T lastElement() throws NoSuchElementException {
+        if (model.isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        return model.get(model.size() - 1);
     }
 
     public boolean removeElement(T element) {
@@ -79,11 +86,6 @@ public class GUIListModel<T> extends javax.swing.AbstractListModel {
     }
 
     public java.util.List<T> toList() {
-        java.util.List<T> list = new java.util.ArrayList<T>();
-        java.util.Iterator<T> it = this.iterator();
-        while (it.hasNext()) {
-            list.add((T)it.next());
-        }
-        return list;
+        return model;
     }
 }

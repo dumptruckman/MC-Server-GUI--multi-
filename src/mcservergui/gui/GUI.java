@@ -324,7 +324,7 @@ public class GUI extends FrameView implements Observer, ComponentListener {
         startServerOnLaunchCheckBox = new javax.swing.JCheckBox();
         commandPrefixLabel = new javax.swing.JLabel();
         commandPrefixField = new javax.swing.JTextField();
-        saveGuiConfigButton = new javax.swing.JButton();
+        saveThemeButton = new javax.swing.JButton();
         colorizationPanel = new javax.swing.JPanel();
         textColorLabel = new javax.swing.JLabel();
         bgColorLabel = new javax.swing.JLabel();
@@ -1096,7 +1096,6 @@ public class GUI extends FrameView implements Observer, ComponentListener {
             webInterfaceTab.setLayout(new MigLayout("fill", "0[]0", "0[min!]0[]0"));
             tabber.addTab(resourceMap.getString("webInterfaceTab.TabConstraints.tabTitle"), webInterfaceTab);
             {
-                //@TODO
                 webInterfaceConfigPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("webInterfaceConfigPanel.border.title")));
                 webInterfaceConfigPanel.setName("webInterfaceConfigPanel");
                 webInterfaceConfigPanel.setLayout(new MigLayout("fill", "0[]0", "0[]0[]0"));
@@ -1180,126 +1179,143 @@ public class GUI extends FrameView implements Observer, ComponentListener {
             }
 
             themeTab.setName("themeTab");
-            themeTab.setLayout(new MigLayout("fill", "0[]0", "0[]0"));
+            themeTab.setLayout(new MigLayout("fill", "0[]0", "0[]0[min!]0"));
             tabber.addTab(resourceMap.getString("themeTab.TabConstraints.tabTitle"), themeTab);
             {
-                //@TODO
                 colorizationPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("colorizationPanel.border.title")));
                 colorizationPanel.setName("colorizationPanel");
+                colorizationPanel.setLayout(new MigLayout("fill", "0[]0", "0[]0"));
+                themeTab.add(colorizationPanel, "grow, wrap");
+                {
+                    textColorLabel.setText(resourceMap.getString("textColorLabel.text"));
+                    textColorLabel.setName("textColorLabel");
+                    colorizationPanel.add(textColorLabel, "growx 0");
 
-                textColorLabel.setText(resourceMap.getString("textColorLabel.text")); // NOI18N
-                textColorLabel.setName("textColorLabel"); // NOI18N
+                    textColorBox.setEditable(false);
+                    textColorBox.setText(resourceMap.getString("textColorBox.text"));
+                    textColorBox.setToolTipText(resourceMap.getString("textColorBox.toolTipText"));
+                    textColorBox.setName("textColorBox");
+                    textColorBox.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseClicked(java.awt.event.MouseEvent evt) {
+                            textColorBoxMouseClicked(evt);
+                        }
+                    });
+                    textColorBox.addFocusListener(new java.awt.event.FocusAdapter() {
+                        public void focusLost(java.awt.event.FocusEvent evt) {
+                            textColorBoxFocusLost(evt);
+                        }
+                    });
+                    colorizationPanel.add(textColorBox, "grow, wrap");
 
-                bgColorLabel.setText(resourceMap.getString("bgColorLabel.text")); // NOI18N
-                bgColorLabel.setName("bgColorLabel"); // NOI18N
+                    bgColorLabel.setText(resourceMap.getString("bgColorLabel.text"));
+                    bgColorLabel.setName("bgColorLabel");
+                    colorizationPanel.add(bgColorLabel, "growx 0");
 
-                infoColorLabel.setText(resourceMap.getString("infoColorLabel.text")); // NOI18N
-                infoColorLabel.setName("infoColorLabel"); // NOI18N
+                    bgColorBox.setEditable(false);
+                    bgColorBox.setToolTipText(resourceMap.getString("bgColorBox.toolTipText")); // NOI18N
+                    bgColorBox.setName("bgColorBox"); // NOI18N
+                    bgColorBox.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseClicked(java.awt.event.MouseEvent evt) {
+                            bgColorBoxMouseClicked(evt);
+                        }
+                    });
+                    bgColorBox.addFocusListener(new java.awt.event.FocusAdapter() {
+                        public void focusLost(java.awt.event.FocusEvent evt) {
+                            bgColorBoxFocusLost(evt);
+                        }
+                    });
+                    colorizationPanel.add(bgColorBox, "grow, wrap");
 
-                warningColorLabel.setText(resourceMap.getString("warningColorLabel.text")); // NOI18N
-                warningColorLabel.setName("warningColorLabel"); // NOI18N
+                    infoColorLabel.setText(resourceMap.getString("infoColorLabel.text"));
+                    infoColorLabel.setName("infoColorLabel");
+                    colorizationPanel.add(infoColorLabel, "growx 0");
 
-                severeColorLabel.setText(resourceMap.getString("severeColorLabel.text")); // NOI18N
-                severeColorLabel.setName("severeColorLabel"); // NOI18N
+                    infoColorBox.setEditable(false);
+                    infoColorBox.setToolTipText(resourceMap.getString("infoColorBox.toolTipText")); // NOI18N
+                    infoColorBox.setName("infoColorBox"); // NOI18N
+                    infoColorBox.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseClicked(java.awt.event.MouseEvent evt) {
+                            infoColorBoxMouseClicked(evt);
+                        }
+                    });
+                    infoColorBox.addFocusListener(new java.awt.event.FocusAdapter() {
+                        public void focusLost(java.awt.event.FocusEvent evt) {
+                            infoColorBoxFocusLost(evt);
+                        }
+                    });
+                    colorizationPanel.add(infoColorBox, "grow, wrap");
 
-                textColorBox.setEditable(false);
-                textColorBox.setText(resourceMap.getString("textColorBox.text")); // NOI18N
-                textColorBox.setToolTipText(resourceMap.getString("textColorBox.toolTipText")); // NOI18N
-                textColorBox.setName("textColorBox"); // NOI18N
-                textColorBox.addMouseListener(new java.awt.event.MouseAdapter() {
-                    public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        textColorBoxMouseClicked(evt);
+                    warningColorLabel.setText(resourceMap.getString("warningColorLabel.text"));
+                    warningColorLabel.setName("warningColorLabel");
+                    colorizationPanel.add(warningColorLabel, "growx 0");
+
+                    warningColorBox.setEditable(false);
+                    warningColorBox.setToolTipText(resourceMap.getString("warningColorBox.toolTipText")); // NOI18N
+                    warningColorBox.setName("warningColorBox"); // NOI18N
+                    warningColorBox.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseClicked(java.awt.event.MouseEvent evt) {
+                            warningColorBoxMouseClicked(evt);
+                        }
+                    });
+                    warningColorBox.addFocusListener(new java.awt.event.FocusAdapter() {
+                        public void focusLost(java.awt.event.FocusEvent evt) {
+                            warningColorBoxFocusLost(evt);
+                        }
+                    });
+                    colorizationPanel.add(warningColorBox, "grow, wrap");
+
+                    severeColorLabel.setText(resourceMap.getString("severeColorLabel.text"));
+                    severeColorLabel.setName("severeColorLabel");
+                    colorizationPanel.add(severeColorLabel, "growx 0");
+    
+                    severeColorBox.setEditable(false);
+                    severeColorBox.setToolTipText(resourceMap.getString("severeColorBox.toolTipText")); // NOI18N
+                    severeColorBox.setName("severeColorBox"); // NOI18N
+                    severeColorBox.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseClicked(java.awt.event.MouseEvent evt) {
+                            severeColorBoxMouseClicked(evt);
+                        }
+                    });
+                    severeColorBox.addFocusListener(new java.awt.event.FocusAdapter() {
+                        public void focusLost(java.awt.event.FocusEvent evt) {
+                            severeColorBoxFocusLost(evt);
+                        }
+                    });
+                    colorizationPanel.add(severeColorBox, "grow, wrap");
+
+                    textSizeLabel.setText(resourceMap.getString("textSizeLabel.text")); // NOI18N
+                    textSizeLabel.setName("textSizeLabel"); // NOI18N
+                    colorizationPanel.add(textSizeLabel, "growx 0");
+
+                    textSizeField.setModel(new javax.swing.SpinnerNumberModel(3, 1, 10, 1));
+                    textSizeField.setName("textSizeField"); // NOI18N
+                    textSizeField.addChangeListener(new javax.swing.event.ChangeListener() {
+                        public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                            textSizeFieldStateChanged(evt);
+                        }
+                    });
+                    textSizeField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+                        public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                            textSizeFieldPropertyChange(evt);
+                        }
+                    });
+                    colorizationPanel.add(textSizeField, "grow");
+                }
+
+                saveThemeButton.setText(resourceMap.getString("saveThemeButton.text")); // NOI18N
+                saveThemeButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
+                saveThemeButton.setName("saveThemeButton"); // NOI18N
+                saveThemeButton.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        saveGuiConfigButtonActionPerformed(evt);
                     }
                 });
-                textColorBox.addFocusListener(new java.awt.event.FocusAdapter() {
-                    public void focusLost(java.awt.event.FocusEvent evt) {
-                        textColorBoxFocusLost(evt);
-                    }
-                });
-
-                bgColorBox.setEditable(false);
-                bgColorBox.setToolTipText(resourceMap.getString("bgColorBox.toolTipText")); // NOI18N
-                bgColorBox.setName("bgColorBox"); // NOI18N
-                bgColorBox.addMouseListener(new java.awt.event.MouseAdapter() {
-                    public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        bgColorBoxMouseClicked(evt);
-                    }
-                });
-                bgColorBox.addFocusListener(new java.awt.event.FocusAdapter() {
-                    public void focusLost(java.awt.event.FocusEvent evt) {
-                        bgColorBoxFocusLost(evt);
-                    }
-                });
-
-                infoColorBox.setEditable(false);
-                infoColorBox.setToolTipText(resourceMap.getString("infoColorBox.toolTipText")); // NOI18N
-                infoColorBox.setName("infoColorBox"); // NOI18N
-                infoColorBox.addMouseListener(new java.awt.event.MouseAdapter() {
-                    public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        infoColorBoxMouseClicked(evt);
-                    }
-                });
-                infoColorBox.addFocusListener(new java.awt.event.FocusAdapter() {
-                    public void focusLost(java.awt.event.FocusEvent evt) {
-                        infoColorBoxFocusLost(evt);
-                    }
-                });
-
-                warningColorBox.setEditable(false);
-                warningColorBox.setToolTipText(resourceMap.getString("warningColorBox.toolTipText")); // NOI18N
-                warningColorBox.setName("warningColorBox"); // NOI18N
-                warningColorBox.addMouseListener(new java.awt.event.MouseAdapter() {
-                    public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        warningColorBoxMouseClicked(evt);
-                    }
-                });
-                warningColorBox.addFocusListener(new java.awt.event.FocusAdapter() {
-                    public void focusLost(java.awt.event.FocusEvent evt) {
-                        warningColorBoxFocusLost(evt);
-                    }
-                });
-
-                severeColorBox.setEditable(false);
-                severeColorBox.setToolTipText(resourceMap.getString("severeColorBox.toolTipText")); // NOI18N
-                severeColorBox.setName("severeColorBox"); // NOI18N
-                severeColorBox.addMouseListener(new java.awt.event.MouseAdapter() {
-                    public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        severeColorBoxMouseClicked(evt);
-                    }
-                });
-                severeColorBox.addFocusListener(new java.awt.event.FocusAdapter() {
-                    public void focusLost(java.awt.event.FocusEvent evt) {
-                        severeColorBoxFocusLost(evt);
-                    }
-                });
-
-                textSizeLabel.setText(resourceMap.getString("textSizeLabel.text")); // NOI18N
-                textSizeLabel.setName("textSizeLabel"); // NOI18N
-
-                textSizeField.setModel(new javax.swing.SpinnerNumberModel(3, 1, 10, 1));
-                textSizeField.setName("textSizeField"); // NOI18N
-                textSizeField.addChangeListener(new javax.swing.event.ChangeListener() {
-                    public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                        textSizeFieldStateChanged(evt);
-                    }
-                });
-                textSizeField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-                    public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                        textSizeFieldPropertyChange(evt);
-                    }
-                });
+                themeTab.add(saveThemeButton, "growx");
             }
         }
 
 
-        saveGuiConfigButton.setText(resourceMap.getString("saveGuiConfigButton.text")); // NOI18N
-        saveGuiConfigButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
-        saveGuiConfigButton.setName("saveGuiConfigButton"); // NOI18N
-        saveGuiConfigButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveGuiConfigButtonActionPerformed(evt);
-            }
-        });
+
 
 
 
@@ -1398,16 +1414,7 @@ public class GUI extends FrameView implements Observer, ComponentListener {
         backupStatusLog.setName("backupStatusLog"); // NOI18N
         jScrollPane4.setViewportView(backupStatusLog);
 
-        javax.swing.GroupLayout backupStatusPanelLayout = new javax.swing.GroupLayout(backupStatusPanel);
-        backupStatusPanel.setLayout(backupStatusPanelLayout);
-        backupStatusPanelLayout.setHorizontalGroup(
-            backupStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-        );
-        backupStatusPanelLayout.setVerticalGroup(
-            backupStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-        );
+
 
         backupControlRefreshButton.setText(resourceMap.getString("backupControlRefreshButton.text")); // NOI18N
         backupControlRefreshButton.setMargin(new java.awt.Insets(2, 5, 2, 5));
@@ -1417,6 +1424,8 @@ public class GUI extends FrameView implements Observer, ComponentListener {
                 backupControlRefreshButtonActionPerformed(evt);
             }
         });
+
+
 
 
 
@@ -1539,7 +1548,7 @@ public class GUI extends FrameView implements Observer, ComponentListener {
                     .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(3, 3, 3))
         );
-
+        
         setComponent(mainPanel);
         setMenuBar(menuBar);
         setStatusBar(statusPanel);
@@ -1549,7 +1558,6 @@ public class GUI extends FrameView implements Observer, ComponentListener {
      * Fixes the oddities of the component placing that netbeans does.
      */
     public final void fixComponents() {
-        taskSchedulerList.setCellRenderer(new TaskSchedulerListCellRenderer());
         consoleOutput.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
         consoleOutput.setStyledDocument(new javax.swing.text.html.HTMLDocument());
         backupStatusLog.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
@@ -1565,29 +1573,6 @@ public class GUI extends FrameView implements Observer, ComponentListener {
                 .getInstance(mcservergui.Main.class).getContext()
                 .getResourceMap(AboutBox.class).getString("Application.version");
         versionLabel.setText("Version " + versionNumber);
-    }
-
-    /**
-     * Sets the rendering of the task list
-     */
-    private class TaskSchedulerListCellRenderer extends javax.swing.JTextPane implements javax.swing.ListCellRenderer {
-        public TaskSchedulerListCellRenderer() {
-            setOpaque(true);
-            this.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
-        }
-
-         public java.awt.Component getListCellRendererComponent(
-                javax.swing.JList list,
-                Object value,
-                int index,
-                boolean isSelected,
-                boolean cellHasFocus)
-        {
-            setText(value.toString());
-            setBackground(isSelected ? java.awt.Color.lightGray : java.awt.Color.white);
-            setForeground(isSelected ? java.awt.Color.white : java.awt.Color.black);
-            return this;
-        }
     }
 
     /**
@@ -1960,7 +1945,10 @@ public class GUI extends FrameView implements Observer, ComponentListener {
     private void taskListEditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taskListEditButtonActionPerformed
         SwingUtilities.invokeLater(new Runnable() {
              public void run() {
-                editTaskListEntry((EventModel)taskSchedulerList.getSelectedValue());
+                 EventModel event = (EventModel)taskSchedulerList.getSelectedValue();
+                 if (event != null) {
+                    editTaskListEntry(event);
+                 }
             }
         });
     }//GEN-LAST:event_taskListEditButtonActionPerformed
@@ -2541,7 +2529,7 @@ public class GUI extends FrameView implements Observer, ComponentListener {
     public javax.swing.JLabel receivingBytes;
     public javax.swing.JLabel receivingBytesLabel;
     public javax.swing.JButton saveBackupControlButton;
-    public javax.swing.JButton saveGuiConfigButton;
+    public javax.swing.JButton saveThemeButton;
     public javax.swing.JButton saveServerConfigButton;
     public javax.swing.JButton saveWorldsButton;
     public javax.swing.JCheckBox sayCheckBox;
@@ -3468,7 +3456,7 @@ public class GUI extends FrameView implements Observer, ComponentListener {
                     saveWorldsButton.setEnabled(false);
                     backupControlRefreshButton.setEnabled(false);
                     backupButton.setEnabled(false);
-                    saveGuiConfigButton.setEnabled(false);
+                    saveThemeButton.setEnabled(false);
                     saveServerConfigButton.setEnabled(false);
                     saveBackupControlButton.setEnabled(false);
                     backupPathField.setEnabled(false);
@@ -3479,7 +3467,7 @@ public class GUI extends FrameView implements Observer, ComponentListener {
                     saveWorldsButton.setEnabled(true);
                     backupControlRefreshButton.setEnabled(true);
                     backupButton.setEnabled(true);
-                    saveGuiConfigButton.setEnabled(true);
+                    saveThemeButton.setEnabled(true);
                     saveServerConfigButton.setEnabled(true);
                     saveBackupControlButton.setEnabled(true);
                     backupPathField.setEnabled(true);

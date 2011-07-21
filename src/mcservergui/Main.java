@@ -24,7 +24,6 @@ public class Main extends SingleFrameApplication implements Application.ExitList
 
     public Main() {
         //config = new Config();
-
         wantsToQuit = false;
     }
     
