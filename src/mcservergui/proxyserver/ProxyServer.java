@@ -33,14 +33,13 @@ import java.net.*;
  */
 public class ProxyServer {
 
-    public ProxyServer(GUI gui, Config config, ServerProperties serverProps) {
+    public ProxyServer(GUI gui, ServerProperties serverProps) {
         listener = new Listener();
         run = true;
         startCode = 0;
         //this.addObserver(gui.server);
         listener.start();
         this.gui = gui;
-        this.config = config;
         this.serverProps = serverProps;
     }
 
@@ -115,11 +114,12 @@ public class ProxyServer {
                 gui.setPlayerList(playerList);
 
                 //String ip = options.get("ipAddress");
-                String ip = serverProps.getServerIp();
+
+                String ip = "0.0.0.0";
                 if (ip.isEmpty()) {
                     ip = "0.0.0.0";
                 }
-                int port = config.getExtPort();
+                int port = gui.config.getExtPort();
 
                 synchronized (this) {
                     InetAddress address;
@@ -197,6 +197,6 @@ public class ProxyServer {
     public PlayerList playerList;
     public ServerProperties serverProps;
     public GUI gui;
-    private Config config;
+    //private Config config;
     private boolean run;
 }

@@ -22,14 +22,17 @@ Minor Features:
     Add start-up tips
 
 Changes:
-    Make sure to have web interface option to send de-marked up text
+    Make sure to have web interface option to send de-marked up text (Added in .9.7)
     Add a lot more functionality to the Web Interface
     Add more info to tray tip
     Allow in game commands to work from console input
-    Add option to parse the ascii escape sequence colors
-    Allow background colors for other boxes.
+    Add option to not parse the ascii escape sequence colors
+    Allow background colors for other boxes
+    Completely redesign backup file selection
+    Allow Configuration sections to be "minimized" (vertical buttons on the side?)
 
 Fixes:
-    Fix server config tab for linux...
+    Fix server config tab for linux... (fixed in .9.7?)
     Detect faulty server starts (for instance when java exec is wrong)
     Have GUI start server even when stopped on a server restart event
+    Make pause scheduler more sensible

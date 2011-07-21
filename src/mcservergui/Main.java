@@ -23,7 +23,7 @@ import org.quartz.SchedulerException;
 public class Main extends SingleFrameApplication implements Application.ExitListener, Observer {
 
     public Main() {
-        config = new Config();
+        //config = new Config();
 
         wantsToQuit = false;
     }
@@ -42,17 +42,12 @@ public class Main extends SingleFrameApplication implements Application.ExitList
             se.printStackTrace();
         }
         addExitListener(this);
-        server = new MCServerModel(config);
-        show(gui = new GUI(this, server, config, scheduler));
-        server.setGui(gui);
+        //server = new MCServerModel(config);
+        show(gui = new GUI(this,/*, server, config, */scheduler));
+        //server.setGui(gui);
         
-        mainWorker = new MainWorker(gui, server);
-        gui.initConfig();
-        server.addObserver(gui);
-        server.addObserver(this);
-        server.addObserver(mainWorker);
-        mainWorker.startMainWorker();
-        if (config.getServerStartOnStartup()) {
+
+        if (gui.config.getServerStartOnStartup()) {
             gui.startServer();
         }
     }
@@ -78,7 +73,7 @@ public class Main extends SingleFrameApplication implements Application.ExitList
      * @param o
      * @param arg
      */
-    @Override public void update(Observable o, Object arg) {
+    public void update(Observable o, Object arg) {
         if ((arg.equals("serverStopped")) && (wantsToQuit)) {
             try {
                 while(!scheduler.getCurrentlyExecutingJobs().isEmpty()) {
@@ -97,9 +92,9 @@ public class Main extends SingleFrameApplication implements Application.ExitList
      * @param e is the EventObject
      * @return true if allowed to exit, false if not
      */
-    @Override public boolean canExit(EventObject e) {
+    public boolean canExit(EventObject e) {
         gui.saveConfigAction();
-        if (server.isRunning()) {
+        if (gui.server.isRunning()) {
             wantsToQuit = true;
             System.out.println("Server is running and GUI would like to exit");
             gui.stopServer();
@@ -118,7 +113,7 @@ public class Main extends SingleFrameApplication implements Application.ExitList
      *
      * @param e is the EventObject
      */
-    @Override public void willExit(java.util.EventObject e) {
+    public void willExit(java.util.EventObject e) {
     }
 
     /**
@@ -130,8 +125,8 @@ public class Main extends SingleFrameApplication implements Application.ExitList
 
     private boolean wantsToQuit;
     private GUI gui;
-    private MCServerModel server;
-    private Config config;
-    private MainWorker mainWorker;
-    private Scheduler scheduler;
+    //private MCServerModel server;
+    //private Config config;
+    //public MainWorker mainWorker;
+    public Scheduler scheduler;
 }

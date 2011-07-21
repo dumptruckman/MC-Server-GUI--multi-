@@ -23,10 +23,10 @@ import mcservergui.proxyserver.Player;
  */
 public class MCServerModel extends Observable implements Observer, java.beans.PropertyChangeListener {
     
-    public MCServerModel(Config newConfig)
+    public MCServerModel(GUI gui/*Config newConfig*/)
     {
-        config = newConfig;
-        serverRunning = false;
+        this.gui = gui;
+        this.serverRunning = false;
     }
 
     public void setGui(GUI gui) {
@@ -71,9 +71,9 @@ public class MCServerModel extends Observable implements Observer, java.beans.Pr
 
     // Method for starting the server
     public String start() {
-        File jar = new File(config.cmdLine.getServerJar());
-        if (config.getProxy()) {
-            proxyServer = new ProxyServer(gui, config, serverProps);
+        File jar = new File(gui.config.cmdLine.getServerJar());
+        if (gui.config.getProxy()) {
+            proxyServer = new ProxyServer(gui, serverProps);
             if (proxyServer.getStartCode() == -1) {
                 gui.guiLog("Proxy Server failed to starts correctly.  Aborting"
                         + " server fstart.", GUI.LogLevel.SEVERE);
@@ -130,18 +130,18 @@ public class MCServerModel extends Observable implements Observer, java.beans.Pr
         }
     }
 
-    @Override public void update(Observable o, Object arg) {
+    public void update(Observable o, Object arg) {
         receivedFromServer = serverReceiver.get();
         this.setChanged();
         notifyObservers("newOutput");
     }
 
-    @Override public void propertyChange(java.beans.PropertyChangeEvent evt) {
+    public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (evt.getNewValue().equals(false)) {
             serverRunning = false;
             pid = 0;
             //guiServer.stop();
-            if (config.getProxy()) {
+            if (gui.config.getProxy()) {
                 proxyServer.stop();
             }
             setChanged();
@@ -179,7 +179,7 @@ public class MCServerModel extends Observable implements Observer, java.beans.Pr
     // Method for stopping server
     public void stop() {
         SwingUtilities.invokeLater(new Runnable() {
-            @Override public void run() {
+            public void run() {
                 if (isRunning()) {
                     send("stop");
                     MCServerStopper serverStopper = new MCServerStopper(ps, br, osw);
@@ -197,7 +197,7 @@ public class MCServerModel extends Observable implements Observer, java.beans.Pr
     private BufferedReader br;
     private OutputStreamWriter osw;
     private MCServerReceiver serverReceiver;
-    private Config config;
+    //private Config config;
     private ProxyServer proxyServer;
     private boolean serverRunning;
     private GUI gui;

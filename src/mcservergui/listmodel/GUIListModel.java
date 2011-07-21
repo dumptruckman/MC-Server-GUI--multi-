@@ -20,12 +20,13 @@ public class GUIListModel<T> extends javax.swing.AbstractListModel {
         model = new TreeSet<T>();
     }
 
-    @Override public int getSize() {
+    public int getSize() {
         return model.size();
     }
 
-    @Override public T getElementAt(int index) {
-        return (T)model.toArray()[index];
+    public T getElementAt(int index) {
+        T[] a = null;
+        return model.toArray(a)[index];
     }
 
     public void setModel(TreeSet<T> model) {

@@ -31,15 +31,15 @@ import java.net.HttpURLConnection;
  */
 public class MainWorker implements java.util.Observer {
 
-    public MainWorker(GUI newGui, MCServerModel server) {
-        gui = newGui;
+    public MainWorker(GUI gui/*, MCServerModel server*/) {
+        this.gui = gui;
         timer = new java.util.Timer();
         sigarImpl = new Sigar();
         version = org.jdesktop.application.Application
                 .getInstance(mcservergui.Main.class).getContext()
                 .getResourceMap(AboutBox.class).getString("Application.version");
         serverPid = 0;
-        this.server = server;
+        //this.server = server;
         try {
             rxBytes = 0;
             txBytes = 0;
@@ -52,16 +52,16 @@ public class MainWorker implements java.util.Observer {
 
     }
 
-    @Override public void update(java.util.Observable o, Object arg) {
+    public void update(java.util.Observable o, Object arg) {
         if (arg.equals("pid")) {
             SwingUtilities.invokeLater(new Runnable() {
-                @Override public void run() {
-                    serverPid = server.getPid();
+                public void run() {
+                    serverPid = gui.server.getPid();
                 }
             });
         } else if (arg.equals("piderror")) {
             SwingUtilities.invokeLater(new Runnable() {
-                @Override public void run() {
+                public void run() {
                     serverPid = -1;
                 }
             });
@@ -85,7 +85,7 @@ public class MainWorker implements java.util.Observer {
                     lm = null;
                 }
 
-                @Override public void run() {
+               public void run() {
                     lm = gui.taskSchedulerList.getModel();
                 }
 
@@ -146,7 +146,7 @@ public class MainWorker implements java.util.Observer {
                 
             }
             SwingUtilities.invokeLater(new Runnable() {
-                @Override public void run() {
+                public void run() {
                     gui.taskSchedulerList.updateUI();
                 }
             });
@@ -272,6 +272,6 @@ public class MainWorker implements java.util.Observer {
     private long txBytes;
     private SigarProxy sigar;
     private long serverPid;
-    private MCServerModel server;
+    //private MCServerModel server;
     private String version;
 }

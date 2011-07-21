@@ -75,7 +75,7 @@ public class ServerWarningDialog extends javax.swing.JDialog {
         setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(borderTitle));
-        jPanel1.setName("jPanel1"); // NOI18N
+        jPanel1.setName("colorizationPanel"); // NOI18N
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(mcservergui.Main.class).getContext().getResourceMap(ServerWarningDialog.class);
         timeBeforeLabel.setText(resourceMap.getString("timeBeforeLabel.text")); // NOI18N

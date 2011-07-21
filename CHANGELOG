@@ -1,3 +1,12 @@
+Version .9.7-dev
+    HUGE code overhaul:
+        Optimized some code.
+        100% remade the GUI by hand.  Now uses MiGLayout.  This should fix issues with some tabs not displaying correctly on some systems.
+    GUI now has potential for alternate themes.
+    Merged Server Config tab and GUI Config tab into new Configuration tab.
+    Added an Internal port field for increased compatibility and maybe easier to understand?
+    Added a minimum resize size so that no components would never NOT show (With the default Nimbus theme).
+
 Version .9.6.1
     Fixed issue where GUI restart tasks would cause the server to stop immediately.
     Potentially fixed other cases where GUI would cause premature server stops
