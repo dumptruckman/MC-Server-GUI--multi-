@@ -1,12 +1,22 @@
-Version .9.7-dev
+Version .9.7
     HUGE code overhaul:
         Optimized some code.
         100% remade the GUI by hand.  Now uses MiGLayout.  This should fix issues with some tabs not displaying correctly on some systems.
     GUI now has potential for alternate themes.
     Merged Server Config tab and GUI Config tab into new Configuration tab.
+    Added a Theme tab which for now only houses the color changing and text size options.
     Added an Internal port field for increased compatibility and maybe easier to understand?
     Added a minimum resize size so that no components would never NOT show (With the default Nimbus theme).
     Fixed NullPointerException when trying to edit a task when no task was selected.
+    Completely re-made the backup tab.
+    The backup process is more efficient when zipping.  It no longer backs up to a folder first and then zips.  It just zips.
+    Redid the progress bar to make more sense.  It is only used for backups now and it actually shows the progress.
+    Added BukkitContrib/Spout compatibility.
+    Added quite a number of additional checks to make sure new users understand better issues they are having with the Proxy.
+    Any files missing at the time of backup will be removed from the file list.
+    Removed spawn protection from server properties box
+    Updated proxy for 1.8.1 but doesn't seem to work (not sure how to fix) :(
+    Probably stuff I forgot about.
 
 Version .9.6.1
     Fixed issue where GUI restart tasks would cause the server to stop immediately.
